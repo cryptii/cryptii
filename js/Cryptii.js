@@ -899,13 +899,47 @@ var _gaq = _gaq || [];
 		// OPTION DEFINITION
 		//
 		options: {
-			separator: { title: 'Separator', type: 'text' },
-			fillUpBytes: { title: 'Fill up bytes', type: 'boolean' },
-			morsecodeLongChar: { title: 'Long', type: 'text' },
-			morsecodeShortChar: { title: 'Short', type: 'text' },
-			morsecodeSpaceChar: { title: 'Space', type: 'text' },
-			shift: { title: 'Shift', type: 'text' },
-			density: { title: 'Density', type: 'slider', minimum: 0, maximum: 100 }
+			separator: {
+				title: 'Separator',
+				type: 'text'
+			},
+			fillUpBytes: {
+				title: 'Fill up bytes',
+				type: 'boolean'
+			},
+			morsecodeLongChar: {
+				title: 'Long',
+				type: 'text'
+			},
+			morsecodeShortChar: {
+				title: 'Short',
+				type: 'text'
+			},
+			morsecodeSpaceChar: {
+				title: 'Space',
+				type: 'text'
+			},
+			shift: {
+				title: 'Shift',
+				type: 'slider',
+				minimum: 0,
+				maximum: 25
+			},
+			density: {
+				title: 'Density',
+				type: 'slider',
+				minimum: 0,
+				maximum: 100
+			},
+			textTransform: {
+				title: 'Transform',
+				type: 'select',
+				options: {
+					'none': 'None',
+					'uppercase': 'Uppercase letters',
+					'lowercase': 'Lowercase letters'
+				}
+			}
 		},
 
 		//
@@ -947,12 +981,22 @@ var _gaq = _gaq || [];
 				},
 				convert: {
 					options: {
+						textTransform: 'none'
 					},
 					run: function(conversion, options) {
 						for (var i = 0; i < conversion.splittedContent.length; i ++) {
 							var entry = conversion.splittedContent[i];
-							if (entry.decimal != null)
-								entry.result = cryptii.conversion.chr(entry.decimal);
+							if (entry.decimal != null) {
+								var result = cryptii.conversion.chr(entry.decimal);
+
+								// transform if requested
+								if (options.textTransform == 'uppercase')
+									result = result.toUpperCase();
+								else if (options.textTransform == 'lowercase')
+									result = result.toLowerCase();
+
+								entry.result = result;
+							}
 						}
 					}
 				}
