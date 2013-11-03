@@ -447,6 +447,13 @@ h1 a {
 	background: #1f1f1f;
 }
 
+#convertOptions .option select,
+#interpretOptions .option select {
+	width: 277px;
+	margin: 6px 10px 0;
+	outline: none;
+}
+
 /* --- FORMAT SELECTION --- */
 
 #interpretSelection,

@@ -521,16 +521,21 @@ var _gaq = _gaq || [];
 			var optionDef = cryptii.conversion.options[option];
 			var field = null;
 			if (optionDef.type == 'text')
+			{
 				field = $(document.createElement('input'))
 					.attr('type', 'text')
 					.addClass('text')
 					.val(value);
+			}
 			else if (optionDef.type == 'boolean')
+			{
 				field = $(document.createElement('input'))
 					.attr('type', 'checkbox')
 					.prop('checked', value)
 					.addClass('checkbox');
+			}
 			else if (optionDef.type == 'slider')
+			{
 				field = $(document.createElement('div'))
 					.slider({
 						range: 'max',
@@ -539,6 +544,22 @@ var _gaq = _gaq || [];
 						value: value
 					})
 					.addClass('slider');
+			}
+			else if (optionDef.type == 'select')
+			{
+				field = $(document.createElement('select'))
+					.addClass('select');
+				$.each(optionDef.options, function(key, title) {
+					// add each option to select
+					field.append(
+						$(document.createElement('option'))
+						.text(title)
+						.attr('value', key)
+						.prop('selected', key == value)
+					);
+				});
+			}
+
 			return {
 				$option: $(document.createElement('div'))
 					.addClass('option')
@@ -562,9 +583,10 @@ var _gaq = _gaq || [];
 				value = optionField.val();
 			else if (optionDef.type == 'boolean')
 				value = optionField.prop('checked');
-			else if (optionDef.type == 'slider') {
+			else if (optionDef.type == 'slider')
 				value = optionField.slider('option', 'value');
-			}
+			else if (optionDef.type == 'select')
+				value = optionField.val();
 			return value;
 		},
 
