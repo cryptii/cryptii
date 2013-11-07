@@ -195,7 +195,7 @@ else
 		<script src="js/jquery.history.js"></script>
 
 		<!-- include analytics -->
-		<script src="http://www.google-analytics.com/ga.js" async></script>
+		<script src="http://www.google-analytics.com/ga.js"></script>
 		<script>
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-4208952-24']);
