@@ -47,14 +47,6 @@ h1 .local {
 	color: #525252;
 }
 
-h2 {
-	display: block;
-	font-size: 18px;
-	font-weight: bold;
-	margin: 20px 0 0 0;
-	text-transform: uppercase;
-}
-
 hgroup h2 {
 	display: none;
 }

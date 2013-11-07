@@ -1,0 +1,67 @@
+//
+// Cryptii
+// Conversion
+// Text format
+//
+
+(function($, cryptii) {
+	
+	"use strict";
+
+	cryptii.conversion.formats['text'] = {
+
+		title: 'Text',
+		category: 'Alphabet',
+		url: 'http://en.wikipedia.org/wiki/ASCII',
+
+		interpret: {
+			options: {
+				
+			},
+			run: function(conversion, options) {
+				conversion.isSplittedContentConversion = true;
+				for (var i = 0; i < conversion.content.length; i ++) {
+					var content = conversion.content[i];
+					conversion.splittedContent.push({
+						content: content,
+						decimal: ord(content),
+						result: null
+					});
+				}
+			}
+		},
+
+		convert: {
+			options: {
+				transform: {
+					title: 'Transform',
+					type: 'select',
+					options: {
+						'none': 'None',
+						'uppercase': 'Uppercase letters',
+						'lowercase': 'Lowercase letters'
+					},
+					default: 'none'
+				}
+			},
+			run: function(conversion, options) {
+				for (var i = 0; i < conversion.splittedContent.length; i ++) {
+					var entry = conversion.splittedContent[i];
+					if (entry.decimal != null) {
+						var result = chr(entry.decimal);
+
+						// transform if requested
+						if (options.transform == 'uppercase')
+							result = result.toUpperCase();
+						else if (options.transform == 'lowercase')
+							result = result.toLowerCase();
+
+						entry.result = result;
+					}
+				}
+			}
+		}
+
+	};
+
+})($, cryptii);
