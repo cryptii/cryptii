@@ -1404,7 +1404,7 @@ var _gaq = _gaq || [];
 			// ATBASH ROMAN
 			//
 			'atbash': {
-				title: 'Atbash Roman',
+				title: 'Atbash Latin',
 				url: 'http://en.wikipedia.org/wiki/Atbash',
 				convertDecimal: function(decimal) {
 					// convert single decimal block
