@@ -53,9 +53,6 @@
 					cryptii.view.setViewMode(0, true);
 			});
 
-			// hide more description
-			$('#more').hide();
-
 			// create environment
 			cryptii.view.$container = $('#application')
 				.click(function(event){
@@ -557,9 +554,16 @@
 		},
 
 		updateToolbox: function() {
+
 			// get format definitions
-			var interpretFormatDef = cryptii.conversion.formats[cryptii.conversion.interpretFormat];
-			var convertFormatDef = cryptii.conversion.formats[cryptii.conversion.convertFormat];
+			var interpretFormat = cryptii.conversion.interpretFormat;
+			var interpretFormatDef = cryptii.conversion.formats[interpretFormat];
+
+			var convertFormat = cryptii.conversion.convertFormat;
+			var convertFormatDef = cryptii.conversion.formats[convertFormat];
+
+			// collect information
+			var githubFormatCodeBaseUrl = cryptii.options.githubFormatCodeBaseUrl;
 
 			// clear toolboxes
 			cryptii.view.$interpretToolbox.html('');
@@ -567,22 +571,46 @@
 
 			// interpret toolbox
 			if (interpretFormatDef.url != null) {
+
+				// help link
 				cryptii.view.$interpretToolbox.append(
 					$(document.createElement('a'))
 						.addClass('help')
 						.attr('href', interpretFormatDef.url)
 						.attr('target', '_blank')
+						.attr('title', 'Read more about ' + interpretFormatDef.title)
 						.text(interpretFormatDef.title));
+
+				// code link
+				cryptii.view.$interpretToolbox.append(
+					$(document.createElement('a'))
+						.addClass('code')
+						.attr('href', githubFormatCodeBaseUrl + interpretFormat + '.js')
+						.attr('target', '_blank')
+						.attr('title', 'Show source code')
+						.text('Show source code'));
 			}
 
 			// convert toolbox
 			if (convertFormatDef.url != null) {
+
+				// help link
 				cryptii.view.$convertToolbox.append(
 					$(document.createElement('a'))
 						.addClass('help')
 						.attr('href', convertFormatDef.url)
 						.attr('target', '_blank')
+						.attr('title', 'Read more about ' + convertFormatDef.title)
 						.text(convertFormatDef.title));
+
+				// code link
+				cryptii.view.$convertToolbox.append(
+					$(document.createElement('a'))
+						.addClass('code')
+						.attr('href', githubFormatCodeBaseUrl + convertFormat + '.js')
+						.attr('target', '_blank')
+						.attr('title', 'Show source code')
+						.text('Show source code'));
 			}
 		},
 

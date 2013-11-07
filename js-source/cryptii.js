@@ -19,6 +19,8 @@ var _gaq = _gaq || [];
 		minimumContentHeight: 200,
 		defaultInputContent:
 			'The quick brown fox jumps over 13 lazy dogs.',
+		// links
+		githubFormatCodeBaseUrl: 'https://github.com/the2f/Cryptii/blob/master/js-source/conversion/formats/',
 		// conversion
 		defaultInterpretFormat: 'text',
 		defaultConvertFormat: 'decimal'
