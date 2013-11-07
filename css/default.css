@@ -254,13 +254,17 @@ h1 a {
 	margin: 0 0 0 50px;
 }
 
-#pipe .step:hover .value:after {
+#pipe .step .value:after {
 	content: "";
 	display: inline-block;
-	width: 19px;
-	height: 19px;
+	width: 21px;
+	height: 12px;
 	margin: 0 0 0 3px;
-	background: url(../images/icons.png) no-repeat -136px -10px;
+	background: url(../images/icons.png) no-repeat -158px -22px;
+}
+
+#pipe .step:hover .value:after {
+	background-position: -158px -10px;
 }
 
 /* --- PIPE STEP HOVER --- */
