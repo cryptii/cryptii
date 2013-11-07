@@ -234,19 +234,19 @@ else
 		<script src="js/php.js/sha1.js"></script>
 		<script src="js/php.js/md5.js"></script>
 
-		<!-- include main application script -->
-		<script src="js/Cryptii.js"></script>
-		<script>
-		// start application
-		cryptii.init();
-		</script>
-
 		<!-- include analytics -->
 		<script src="http://www.google-analytics.com/ga.js"></script>
 		<script>
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-4208952-24']);
 		_gaq.push(['_trackPageview']);
+		</script>
+
+		<!-- include main application script -->
+		<script src="js/Cryptii.js"></script>
+		<script>
+		// start application
+		cryptii.init();
 		</script>
 
 	</body>
