@@ -251,12 +251,22 @@ h1 a {
 	display: inline-block;
 	width: 21px;
 	height: 12px;
-	margin: 0 0 0 5px;
+	margin: 0 0 3px 8px;
 	background: url(../images/icons.png) no-repeat -158px -22px;
 }
 
 #pipe .step:hover .value:after {
 	background-position: -158px -10px;
+}
+
+.view-1 #pipe #step_interpret.step .value:after,
+.view-2 #pipe #step_convert.step .value:after {
+	background-position: -178px -10px;
+}
+
+.view-1 #pipe #step_interpret.step:hover .value:after,
+.view-2 #pipe #step_convert.step:hover .value:after {
+	background-position: -178px -22px;
 }
 
 /* --- PIPE STEP HOVER --- */

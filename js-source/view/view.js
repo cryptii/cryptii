@@ -326,6 +326,10 @@
 					element.show();
 				}
 			}
+			// update class
+			$('#application')
+				.attr('class', '')
+				.addClass('view-' + viewMode);
 		},
 
 		updateContentHeight: function() {
