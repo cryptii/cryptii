@@ -140,7 +140,7 @@ else
 
 				<div id="about">
 					<p>
-						Coded and designed with &#60;3<br>
+						Designed and coded with &#60;3<br>
 						Brought to you by <a href="http://fraenz.frieder.es/" target="_blank">ffraenz</a>
 					</p>
 					<div id="social">
@@ -151,10 +151,15 @@ else
 				</div>
 
 				<p class="intro">
-					Don't make it that easy, don't leave your content plaintext on public places.<br>
-					Cryptii is a place where you can convert, encrypt and decrypt content between different formats. Notice that this process
-					happens in your browser using JavaScript, no content will be sent to any kind of server. If you have any questions or suggestions
-					to improve this app, leave me a tweet — <a href="http://fraenz.frieder.es/portfolio/cryptii/" target="_blank">Read more</a>
+					Don't leave your messages plaintext on public places.
+					Cryptii is an OpenSource web application under the
+					<a href="https://github.com/the2f/Cryptii#license" target="_blank">MIT license</a>
+					where you can convert, encrypt and decrypt content between different format systems.
+					This happens fully in your browser using
+					<a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a>,
+					no content will be sent to any kind of server.
+					Any feedback appreciated, just leave me a tweet or contribute to this project
+					 — <a href="http://fraenz.frieder.es/portfolio/cryptii/" target="_blank">Read more</a>
 				</p>
 
 				<!-- this sitemap mentions other possible conversions -->

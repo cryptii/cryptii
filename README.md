@@ -1,11 +1,17 @@
 Cryptii
 =======
-Cryptii is a web application where you can convert, encrypt and decrypt content between different formats like text, binary, leetspeak, morsecode and more. In addition, you can download and use this web app offline.
+Don't leave your messages plaintext on public places.
+Cryptii is an OpenSource web application under the MIT license where you can convert, encrypt and decrypt content between different format systems.
+This happens fully in your browser using JavaScript, no content will be sent to any kind of server.
+In addition, you can download and use this web app offline as described below.
+Any feedback appreciated, just leave me a tweet or contribute to this project.
 
 Visit the web application: [http://cryptii.com/](http://cryptii.com/)
 
 ## How to use it offline?
 To use Cryptii offline just download or clone this repository on your computer and open the `local.html` file in you browser. Please note that the local version will not be updated automatically, use the online version of Cryptii to be up-to-date.
+
+In case you want to edit and test the application scripts, use the `source.html` file. It includes the uncompressed source scripts from the `source-js` folder.
 
 ## License
 The MIT License (MIT)
