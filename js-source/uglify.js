@@ -38,6 +38,7 @@ var result = UglifyJS.minify([
 			'conversion/formats/htmlentities.js',
 			'conversion/formats/morsecode.js',
 			'conversion/formats/leetspeak.js',
+			'conversion/formats/navajo.js',
 
 			// numeric
 			'conversion/formats/decimal.js',

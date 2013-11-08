@@ -6,14 +6,14 @@
 
 // interpret formats
 $interpret = array(
-	'text', 'htmlentities', 'morsecode',
+	'text', 'htmlentities', 'morsecode', 'navajo',
 	'decimal', 'binary', 'octal', 'hexadecimal',
 	'atbash', 'caesar', 'ita2', 'rot13',
 	'base64');
 
 // convert formats
 $convert = array(
-	'text', 'flipped', 'htmlentities', 'morsecode', 'leetspeak',
+	'text', 'flipped', 'htmlentities', 'morsecode', 'leetspeak', 'navajo',
 	'decimal', 'binary', 'octal', 'hexadecimal',
 	'atbash', 'caesar', 'ita2', 'pigpen', 'rot13',
 	'base64',
@@ -26,6 +26,7 @@ $formats = array(
 	'htmlentities' => 'HTML Entities',
 	'morsecode' => 'Morsecode',
 	'leetspeak' => 'Leetspeak',
+	'navajo' => 'Navajo code',
 	'decimal' => 'Decimal',
 	'binary' => 'Binary',
 	'octal' => 'Octal',

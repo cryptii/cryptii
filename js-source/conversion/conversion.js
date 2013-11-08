@@ -280,9 +280,12 @@
 				conversion.isSplittedContentConversion = false;
 
 			// set splitted result separator
-			conversion.splittedContentSeparator =
-				options.convert.separator != undefined
-					? options.convert.separator : '';
+			if (options.convert != null)
+				conversion.splittedContentSeparator =
+					options.convert.separator != undefined
+						? options.convert.separator : '';
+			else
+				conversion.splittedContentSeparator = false;
 
 			// following methods interpret, convert and store results
 			//  in the conversion object created before
@@ -290,9 +293,13 @@
 			// interpret
 			cryptii.conversion.formats[options.interpret.format].interpret.run(
 				conversion, options.interpret);
+
 			// convert
-			cryptii.conversion.formats[options.convert.format].convert.run(
+			if (options.convert != null)
+			{
+				cryptii.conversion.formats[options.convert.format].convert.run(
 				conversion, options.convert);
+			}
 
 			// sum splitted result
 			//  to display it immediately
