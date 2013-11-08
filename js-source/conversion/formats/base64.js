@@ -8,7 +8,7 @@
 	
 	"use strict";
 
-	cryptii.conversion.formats['base64'] = {
+	var format = {
 
 		title: 'Base64',
 		category: 'Encoding',
@@ -20,8 +20,10 @@
 			options: {
 
 			},
-			run: function(conversion, options) {
+			run: function(conversion, options)
+			{
 				var alphabet = cryptii.conversion.formats['base64'].alphabet;
+
 				// the resulting text can be splitted content converted
 				conversion.isSplittedContentConversion = true;
 
@@ -69,19 +71,20 @@
 			options: {
 
 			},
-			run: function(conversion, options) {
+			run: function(conversion, options)
+			{
 				var alphabet = cryptii.conversion.formats['base64'].alphabet;
+
 				// this can't be splitted content converted
 				conversion.isSplittedContentConversion = false;
+
 				// convert content to text
 				var text = cryptii.conversion.convert(
 					conversion.content, {
 						interpret: conversion.options.interpret,
-						convert: {
-							format: 'text',
-							separator: ''
-						}
+						convert: { format: 'text' }
 					}).result;
+
 				// escape text
 				text = escape(text);
 				// reset
@@ -111,5 +114,8 @@
 		}
 
 	};
+
+	// register format
+	cryptii.conversion.registerFormat('base64', format);
 
 })($, cryptii);

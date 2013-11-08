@@ -8,7 +8,7 @@
 	
 	"use strict";
 
-	cryptii.conversion.formats['md5'] = {
+	var format = {
 
 		title: 'MD5',
 		category: 'Hash',
@@ -18,23 +18,27 @@
 			options: {
 				
 			},
-			run: function(conversion, options) {
-				// this can't be splitted content converted
+			run: function(conversion, options)
+			{
+				// this can't be converted splitted
 				conversion.isSplittedContentConversion = false;
-				// convert content to text
+
+				// first convert content to text
 				var text = cryptii.conversion.convert(
 					conversion.content, {
 						interpret: conversion.options.interpret,
-						convert: {
-							format: 'text',
-							separator: ''
-						}
+						convert: { format: 'text' }
 					}).result;
+				
 				// convert text to md5
+				//  using php.js library
 				conversion.result = md5(text);
 			}
 		}
 
 	};
+
+	// register format
+	cryptii.conversion.registerFormat('md5', format);
 
 })($, cryptii);

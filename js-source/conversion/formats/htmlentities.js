@@ -8,7 +8,7 @@
 	
 	"use strict";
 
-	cryptii.conversion.formats['htmlentities'] = {
+	var format = {
 
 		title: 'HTML Entities',
 		category: 'Alphabet',
@@ -18,12 +18,15 @@
 			options: {
 
 			},
-			run: function(conversion, options) {
+			run: function(conversion, options)
+			{
 				conversion.isSplittedContentConversion = true;
+
 				// go through the provided content and search for entities
 				var content = conversion.content;
 				var i = 0;
-				while (i < content.length) {
+				while (i < content.length)
+				{
 					if (content[i] == '&') {
 						// read the next entity
 						i ++;
@@ -73,9 +76,12 @@
 			options: {
 
 			},
-			run: function(conversion, options) {
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
+			run: function(conversion, options)
+			{
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
+				{
 					var entry = conversion.splittedContent[i];
+					
 					if (entry.decimal != null)
 						// compose html entity
 						entry.result = '&#' + entry.decimal + ';';
@@ -84,5 +90,8 @@
 		}
 
 	};
+
+	// register format
+	cryptii.conversion.registerFormat('htmlentities', format);
 
 })($, cryptii);

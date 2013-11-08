@@ -8,7 +8,7 @@
 	
 	"use strict";
 
-	cryptii.conversion.formats['leetspeak'] = {
+	var format = {
 
 		title: 'Leetspeak',
 		category: 'Alphabet',
@@ -27,7 +27,8 @@
 			'j': ['_|', '¿'],
 			'k': ['|<', '|{', '|(', 'X'],
 			'l': ['1', '|_', '£', '|', '1', '][_'],
-			'm': ['|\\/|', '/\\/\\', '|\'|\'|', '/v\\', ']V[', 'AA', '[]V[]', '|11', '/|\\', '^^', '(V)', '|Y|'],
+			'm': ['|\\/|', '/\\/\\', '|\'|\'|', '/v\\', ']V[', 'AA',
+				  '[]V[]', '|11', '/|\\', '^^', '(V)', '|Y|'],
 			'n': ['|\\|', '/\\/', '/|/', '/V', '|V', '/\\\\/', '|1', '2', '?', '(\\)', '11', 'r'],
 			'o': ['0', '9', '()', '[]', '*', '°', '<>', 'ø', '{[]}'],
 			'p': ['9', '|°', 'p', '|>', '|*', '|2', '|D', '][D', '|²', '|?'],
@@ -56,32 +57,38 @@
 					default: 50
 				}
 			},
-			run: function(conversion, options) {
+			run: function(conversion, options)
+			{
+				// collect information
 				var alphabet = cryptii.conversion.formats['leetspeak'].alphabet;
 				var density = options.density / 100.0;
-				// translate
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
+
+				// translate each entry
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
+				{
 					var entry = conversion.splittedContent[i];
-					if (entry.decimal != null) {
+					if (entry.decimal != null)
+					{
 						var letter = chr(entry.decimal);
 						var useLeet = (density > Math.random());
-						if (useLeet && alphabet[letter.toLowerCase()] != undefined) {
 
+						entry.result = letter
+
+						if (useLeet && alphabet[letter.toLowerCase()] != undefined)
+						{
+							// select random char from leet alphabet
 							var chars = alphabet[letter.toLowerCase()];
-							if (typeof chars === 'string')
-								// pick this char
-								entry.result = chars;
-							else
-								// pick random one
-								entry.result = chars[parseInt(Math.random() * chars.length)];
+							entry.result = chars[parseInt(Math.random() * chars.length)];
 
-						} else
-							entry.result = letter;
+						}
 					}
 				}
 			}
 		}
 
 	};
+
+	// register format
+	cryptii.conversion.registerFormat('leetspeak', format);
 
 })($, cryptii);

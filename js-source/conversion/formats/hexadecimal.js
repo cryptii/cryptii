@@ -8,7 +8,7 @@
 	
 	"use strict";
 
-	cryptii.conversion.formats['hexadecimal'] = {
+	var format = {
 
 		title: 'Hexadecimal',
 		category: 'Numeric',
@@ -22,10 +22,13 @@
 					default: ' '
 				}
 			},
-			run: function(conversion, options) {
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
+			run: function(conversion, options)
+			{
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
+				{
 					var entry = conversion.splittedContent[i];
 					var decimal = parseInt(entry.content, 16);
+
 					if (!isNaN(decimal))
 						entry.decimal = decimal;
 				}
@@ -44,16 +47,22 @@
 					default: true
 				}
 			},
-			run: function(conversion, options) {
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
+			run: function(conversion, options)
+			{
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
+				{
 					var entry = conversion.splittedContent[i];
-					if (entry.decimal != null) {
+
+					if (entry.decimal != null)
+					{
 						// convert decimal to hexadecimal
 						var hexadecimal = entry.decimal.toString(16);
+
 						// fill up bytes if requested
 						if (options.fillUpBytes)
 							while (hexadecimal.length < 2)
 								hexadecimal = '0' + hexadecimal;
+						
 						// store
 						entry.result = hexadecimal;
 					}
@@ -62,5 +71,8 @@
 		}
 
 	};
+
+	// register format
+	cryptii.conversion.registerFormat('hexadecimal', format);
 
 })($, cryptii);

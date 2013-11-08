@@ -8,7 +8,7 @@
 	
 	"use strict";
 
-	cryptii.conversion.formats['decimal'] = {
+	var format = {
 
 		title: 'Decimal',
 		category: 'Numeric',
@@ -22,10 +22,13 @@
 					default: ' '
 				}
 			},
-			run: function(conversion, options) {
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
+			run: function(conversion, options)
+			{
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
+				{
 					var entry = conversion.splittedContent[i];
 					var decimal = parseInt(entry.content);
+
 					if (!isNaN(decimal))
 						entry.decimal = decimal;
 				}
@@ -40,9 +43,12 @@
 					default: ' '
 				}
 			},
-			run: function(conversion, options) {
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
+			run: function(conversion, options)
+			{
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
+				{
 					var entry = conversion.splittedContent[i];
+					
 					if (entry.decimal != null)
 						entry.result = entry.decimal;
 				}
@@ -50,5 +56,8 @@
 		}
 
 	};
+
+	// register format
+	cryptii.conversion.registerFormat('decimal', format);
 
 })($, cryptii);

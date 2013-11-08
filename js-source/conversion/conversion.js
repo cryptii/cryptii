@@ -16,6 +16,9 @@
 		convertFormat: null,
 		convertOptions: null,
 
+		// format definition
+		formats: {},
+
 		init: function() {
 			if (cryptii.conversion.interpretFormat == null
 				|| cryptii.conversion.convertFormat == null) {
@@ -25,6 +28,10 @@
 				cryptii.conversion.setInterpretFormat(interpretFormat);
 				cryptii.conversion.setConvertFormat(convertFormat);
 			}
+		},
+
+		registerFormat: function(name, formatDef) {
+			cryptii.conversion.formats[name] = formatDef;
 		},
 
 		//
@@ -303,21 +310,6 @@
 			}
 
 			return conversion;
-		},
-
-		//
-		// FORMAT DEFINITION
-		//
-		// All formats are described below. In addition, it contains the
-		//  interpret and convert options and methods to run the actual
-		//  conversion between formats.
-		//
-		formats: {},
-
-		replaceAll: function(source, find, replace) {
-			if (find == '.')
-				return source.replace(/\./g, replace);
-			return source.replace(new RegExp(find, "g"), replace);
 		}
 	};
 

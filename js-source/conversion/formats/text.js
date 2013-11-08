@@ -8,7 +8,7 @@
 	
 	"use strict";
 
-	cryptii.conversion.formats['text'] = {
+	var format = {
 
 		title: 'Text',
 		category: 'Alphabet',
@@ -18,10 +18,15 @@
 			options: {
 				
 			},
-			run: function(conversion, options) {
+			run: function(conversion, options)
+			{
 				conversion.isSplittedContentConversion = true;
-				for (var i = 0; i < conversion.content.length; i ++) {
+
+				for (var i = 0; i < conversion.content.length; i ++)
+				{
 					var content = conversion.content[i];
+
+					// translate each letter to decimal
 					conversion.splittedContent.push({
 						content: content,
 						decimal: ord(content),
@@ -44,10 +49,15 @@
 					default: 'none'
 				}
 			},
-			run: function(conversion, options) {
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
+			run: function(conversion, options)
+			{
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
+				{
 					var entry = conversion.splittedContent[i];
-					if (entry.decimal != null) {
+
+					// translate each decimal to letters
+					if (entry.decimal != null)
+					{
 						var result = chr(entry.decimal);
 
 						// transform if requested
@@ -63,5 +73,8 @@
 		}
 
 	};
+
+	// register format
+	cryptii.conversion.registerFormat('text', format);
 
 })($, cryptii);

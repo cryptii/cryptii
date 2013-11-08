@@ -8,7 +8,7 @@
 	
 	"use strict";
 
-	cryptii.conversion.formats['ita2'] = {
+	var format = {
 
 		title: 'ITA2 / CCITT-2',
 		category: 'Cipher',
@@ -56,24 +56,29 @@
 					default: ' '
 				}
 			},
-			run: function(conversion, options) {
+			run: function(conversion, options)
+			{
 				var ita2Code = cryptii.conversion.formats['ita2'].codes;
+
 				// shift
 				var letterShift = true;
-				// go through splitted content
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
-					var entry = conversion.splittedContent[i];
 
+				// go through splitted content
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
+				{
+					var entry = conversion.splittedContent[i];
 					var row = ita2Code[entry.content];
-					if (row != undefined) {
+
+					if (row != undefined)
+					{
 						var ita2Entry = row[letterShift ? 0 : 1];
+
 						if (ita2Entry == 'letters')
 							letterShift = true;
 						else if (ita2Entry == 'figures')
 							letterShift = false;
-						else {
+						else
 							entry.decimal = ord(ita2Entry);
-						}
 					}
 				}
 			}
@@ -87,31 +92,44 @@
 					default: ' '
 				}
 			},
-			run: function(conversion, options) {
+			run: function(conversion, options)
+			{
 				var ita2Code = cryptii.conversion.formats['ita2'].codes;
 				var flippedIta2Code = {};
-				for (var code in ita2Code) {
+
+				for (var code in ita2Code)
+				{
 					flippedIta2Code[ita2Code[code][0]] = code + 'l';
 					flippedIta2Code[ita2Code[code][1]] = code + 'f';
 				}
+
 				// shift
 				var letterShift = true;
+
 				// go through splitted content
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
+				{
 					var entry = conversion.splittedContent[i];
 
-					if (entry.decimal != null) {
+					if (entry.decimal != null)
+					{
 						var asciiChar = chr(entry.decimal).toLowerCase();
 						var ita2Entry = flippedIta2Code[asciiChar];
 
 						var result = '';
 
-						if (ita2Entry != undefined) {
+						if (ita2Entry != undefined)
+						{
 							var code = ita2Entry.substr(0, 5);
 							var isLetterShift = (ita2Entry.substr(5, 1) == 'l');
+
 							if (isLetterShift != letterShift
-								&& (asciiChar != ' ' && asciiChar != "\t" && asciiChar != "\n")) {
-								result = flippedIta2Code[isLetterShift ? 'letters' : 'figures'].substr(0, 5)
+								&& (asciiChar != ' ' 
+									&& asciiChar != "\t"
+									&& asciiChar != "\n"))
+							{
+								var key = isLetterShift ? 'letters' : 'figures';
+								result = flippedIta2Code[key].substr(0, 5)
 									+ options.separator;
 								letterShift = isLetterShift;
 							}
@@ -125,5 +143,8 @@
 		}
 
 	};
+
+	// register format
+	cryptii.conversion.registerFormat('ita2', format);
 
 })($, cryptii);

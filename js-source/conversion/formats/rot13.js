@@ -21,15 +21,15 @@
 		default: 'rot13'
 	};
 
-	// register format
-	cryptii.conversion.formats['rot13'] = {
+	// format definition
+	var format = {
 
 		title: 'ROT13',
 		category: 'Cipher',
 		url: 'http://en.wikipedia.org/wiki/ROT13',
 
-		convertDecimalToRotVariant: function(decimal, variant) {
-
+		convertDecimalToRotVariant: function(decimal, variant)
+		{
 			if (variant == 'rot5')
 			{
 				if (decimal >= 48 && decimal <= 57) {
@@ -92,14 +92,17 @@
 			options: {
 				variant: variantOption
 			},
-			run: function(conversion, options) {
+			run: function(conversion, options)
+			{
 				var formatDefinition = cryptii.conversion.formats['rot13'];
+
 				conversion.isSplittedContentConversion = true;
 
 				for (var i = 0; i < conversion.content.length; i ++)
 				{
 					var content = conversion.content[i];
-					var decimal = formatDefinition.convertDecimalToRotVariant(ord(content), options.variant);
+					var decimal = formatDefinition.convertDecimalToRotVariant(
+						ord(content), options.variant);
 
 					conversion.splittedContent.push({
 						content: content,
@@ -114,14 +117,18 @@
 			options: {
 				variant: variantOption
 			},
-			run: function(conversion, options) {
+			run: function(conversion, options)
+			{
 				var formatDefinition = cryptii.conversion.formats['rot13'];
 
 				for (var i = 0; i < conversion.splittedContent.length; i ++)
 				{
 					var entry = conversion.splittedContent[i];
-					if (entry.decimal != null) {
-						var decimal = formatDefinition.convertDecimalToRotVariant(entry.decimal, options.variant);
+
+					if (entry.decimal != null)
+					{
+						var decimal = formatDefinition.convertDecimalToRotVariant(
+							entry.decimal, options.variant);
 						entry.result = chr(decimal);
 					}
 				}
@@ -129,5 +136,8 @@
 		}
 
 	};
+
+	// register format
+	cryptii.conversion.registerFormat('rot13', format);
 
 })($, cryptii);
