@@ -578,7 +578,7 @@ h1 a {
 
 /* --- FORMAT BASED OUTPUT --- */
 
-#outputField.pigpen span.pigpen {
+.o-pigpen {
 	display: inline-block;
 	text-indent: -20000px;
 	position: relative;
@@ -587,4 +587,54 @@ h1 a {
 	height: 10px;
 	margin: 0 2px;
 	background: url(../images/icons.png) no-repeat left top;
+	opacity: 0.88;
 }
+
+/* adapt color of pigpen chars
+   in format selection */
+.format .o-pigpen {
+	opacity: 0.68;
+}
+
+.o-ita2 {
+	display: inline-block;
+	text-indent: -2000px;
+	width: 10px;
+	height: 63px;
+	background: url(../images/icons.png) no-repeat -10px -70px;
+	margin: 0 0 20px;
+	opacity: 0.88;
+}
+
+.o-ita2-11111 { background-position:    0   -70px; }
+.o-ita2-00000 { background-position:  -10px -70px; }
+.o-ita2-00011 { background-position:  -20px -70px; }
+.o-ita2-11001 { background-position:  -30px -70px; }
+.o-ita2-01110 { background-position:  -40px -70px; }
+.o-ita2-01001 { background-position:  -50px -70px; }
+.o-ita2-00001 { background-position:  -60px -70px; }
+.o-ita2-01101 { background-position:  -70px -70px; }
+.o-ita2-11010 { background-position:  -80px -70px; }
+.o-ita2-10100 { background-position:  -90px -70px; }
+.o-ita2-00110 { background-position: -100px -70px; }
+.o-ita2-01011 { background-position: -110px -70px; }
+.o-ita2-01111 { background-position: -120px -70px; }
+.o-ita2-10010 { background-position: -130px -70px; }
+.o-ita2-11100 { background-position: -140px -70px; }
+.o-ita2-01100 { background-position: -150px -70px; }
+.o-ita2-11000 { background-position: -160px -70px; }
+.o-ita2-10110 { background-position: -170px -70px; }
+.o-ita2-10111 { background-position: -180px -70px; }
+.o-ita2-01010 { background-position: -190px -70px; }
+.o-ita2-00101 { background-position: -200px -70px; }
+.o-ita2-10000 { background-position: -210px -70px; }
+.o-ita2-00111 { background-position: -220px -70px; }
+.o-ita2-11110 { background-position: -230px -70px; }
+.o-ita2-10011 { background-position: -240px -70px; }
+.o-ita2-11101 { background-position: -250px -70px; }
+.o-ita2-10101 { background-position: -260px -70px; }
+.o-ita2-10001 { background-position: -270px -70px; }
+.o-ita2-01000 { background-position: -280px -70px; }
+.o-ita2-00010 { background-position: -290px -70px; }
+.o-ita2-00100 { background-position: -300px -70px; }
+.o-ita2-11011 { background-position: -310px -70px; }

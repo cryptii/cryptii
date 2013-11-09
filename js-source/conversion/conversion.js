@@ -234,7 +234,12 @@
 			});
 
 			// create sample content
-			var content = cryptii.conversion.convert(inputContent, conversionOptions).result;
+			var conversion = cryptii.conversion.convert(inputContent, conversionOptions);
+
+			// use html result if compatible
+			var content = conversion.result;
+			if (conversion.canHtmlResultBeDisplayedInSelection)
+				content = conversion.resultHtml;
 
 			// check if content is valid
 			if (content == '' || content == null)
@@ -255,10 +260,13 @@
 				content: content,
 				options: options,
 				result: null,
+				resultHtml: null,
 				splittedContent: [],
 				isSplittedContentConversion: true,
 				splittedContentSeparator: null,
-				isTextBasedOutput: true
+				splittedContentHtmlSeparator: null,
+				isResultHtmlAvailable: false,
+				canHtmlResultBeDisplayedInSelection: false
 			};
 			// if a seperator is defined in the interpret part of the format
 			//  this creates a splitted content array by this seperator
@@ -271,7 +279,8 @@
 					conversion.splittedContent.push({
 						content: splittedContent[i],
 						decimal: null,
-						result: null
+						result: null,
+						resultHtml: null
 					});
 			} else
 				// here splitted content conversion is not supported
@@ -287,6 +296,9 @@
 			else
 				conversion.splittedContentSeparator = false;
 
+			// by default, the html separator is the same as the plain text separator
+			conversion.splittedContentHtmlSeparator = conversion.splittedContentSeparator;
+
 			// following methods interpret, convert and store results
 			//  in the conversion object created before
 
@@ -299,21 +311,59 @@
 			{
 				cryptii.conversion.formats[options.convert.format].convert.run(
 				conversion, options.convert);
-			}
 
-			// sum splitted result
-			//  to display it immediately
-			if (conversion.isTextBasedOutput
-				&& conversion.isSplittedContentConversion) {
+				// sum splitted result
+				//  to display it immediately
+				if (conversion.isSplittedContentConversion) {
 
-				conversion.result = '';
-				for (var i = 0; i < conversion.splittedContent.length; i ++) {
-					var entryResult = conversion.splittedContent[i].result;
-					if (entryResult != null)
-						conversion.result += (conversion.result != ''
-							? conversion.splittedContentSeparator : '')
-							+ entryResult;
+					conversion.result = '';
+					conversion.resultHtml = [];
+
+					var htmlOutputAvailable = false;
+
+					for (var i = 0; i < conversion.splittedContent.length; i ++)
+					{
+						var entry = conversion.splittedContent[i];
+
+						// treat text based result
+						if (entry.result != null)
+							conversion.result += (conversion.result != ''
+								? conversion.splittedContentSeparator : '')
+								+ entry.result;
+
+						// treat html based result
+						if (conversion.isResultHtmlAvailable)
+						{
+							if (conversion.resultHtml.length > 0
+								&& (entry.resultHtml != null || entry.result != null)
+								&& conversion.splittedContentHtmlSeparator != null)
+								// add separator
+								conversion.resultHtml.push(
+									conversion.splittedContentHtmlSeparator);
+
+							if (entry.resultHtml != null)
+							{
+								// html entry available
+								htmlOutputAvailable = true;
+
+								// is it all html elements of this single entry
+								$.each(entry.resultHtml, function(index, singleResultHtml) {
+									conversion.resultHtml.push(singleResultHtml);
+								});
+							}
+							else if (entry.result != null)
+							{
+								// add plaintext char to list
+								conversion.resultHtml.push(entry.result);
+							}
+						}
+					}
+
+					// clear result html, if not available
+					if (!conversion.isResultHtmlAvailable)
+						conversion.resultHtml = null;
 				}
+			
 			}
 
 			return conversion;

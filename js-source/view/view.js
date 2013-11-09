@@ -211,63 +211,19 @@
 			// clear previous content
 			cryptii.view.$inputField.html('');
 			cryptii.view.$inputField.removeClass();
-			cryptii.view.$outputField.html('');
 			cryptii.view.$outputField.removeClass();
+
 			// add format classes to fields
 			cryptii.view.$inputField.addClass(result.options.interpret.format);
 			cryptii.view.$outputField.addClass(result.options.convert.format);
-			// is this content text based
-			if (result.isTextBasedOutput) {
-				// is splitted content converted
-				if (result.isSplittedContentConversion) {
-					// add each splitted content entry
-					for (var i = 0; i < result.splittedContent.length; i ++) {
-						var entry = result.splittedContent[i];
-						// only add splitted entries when result exists
-						if (entry.result != null) {
-							var $result = $(document.createElement('span'))
-								.text(entry.result);
-							// append it
-							cryptii.view.$outputField.append(
-								i > 0 ? result.splittedContentSeparator : null,
-								$result);
-						}
-					}
-				} else {
-					// just insert output
-					cryptii.view.$outputField.text(result.result);
-				}
 
-			} else {
-				// this output is not text based
-				// output depends on convert format
-				var convertFormat = result.options.convert.format;
-				if (convertFormat == 'pigpen') {
-					// add each splitted content entry
-					for (var i = 0; i < result.splittedContent.length; i ++) {
-						var entry = result.splittedContent[i];
-						if (entry.result.length == 2
-							&& entry.result[0] == 'p') {
-							// this is a pigpen symbol
-							var symbol = entry.result[1].toLowerCase();
-							var decimal = entry.decimal;
-							if (decimal <= 90)
-								decimal += 32;
-							var backgroundPositionLeft = - (decimal - 97) * 10;
-							cryptii.view.$outputField.append(
-								$(document.createElement('span'))
-									.addClass('pigpen')
-									.css({
-										backgroundPosition: backgroundPositionLeft + 'px 0'
-									})
-									.text(symbol));
-						} else {
-							// add non-pigpen symbol
-							cryptii.view.$outputField.append(entry.result);
-						}
-					}
-				}
-			}
+			// add result content to output field
+			if (result.resultHtml == null)
+				// text result
+				cryptii.view.$outputField.text(result.result);
+			else
+				// html result
+				cryptii.view.$outputField.html(result.resultHtml);
 		},
 
 		elementsForViewMode: function(viewMode) {
@@ -384,17 +340,25 @@
 							lastInterpretCategory = formatDef.category;
 						}
 
-						// add format to convert selection
+						// create example div
+						var $example = $(document.createElement('span'))
+							.addClass('example');
+
+						// add text or html array to example
 						var preview = cryptii.conversion.convertPreviewContent(format, false);
+						if (typeof preview == 'string')
+							$example.text(preview);
+						else
+							$example.html(preview);
+
+						// add format to convert selection
 						var $format = $(document.createElement('div'))
 							.addClass('format')
 							.append(
 								$(document.createElement('span'))
 									.addClass('title')
 									.text(formatDef.title),
-								$(document.createElement('span'))
-									.addClass('example')
-									.text(preview)
+								$example
 							);
 
 						// click event
@@ -422,17 +386,25 @@
 						lastConvertCategory = formatDef.category;
 					}
 
-					// add format to convert selection
+					// create example div
+					var $example = $(document.createElement('span'))
+						.addClass('example');
+
+					// add text or html array to example
 					var preview = cryptii.conversion.convertPreviewContent(format, true);
+					if (typeof preview == 'string')
+						$example.text(preview);
+					else
+						$example.html(preview);
+
+					// add format to convert selection
 					var $format = $(document.createElement('div'))
 						.addClass('format')
 						.append(
 							$(document.createElement('span'))
 								.addClass('title')
 								.text(formatDef.title),
-							$(document.createElement('span'))
-								.addClass('example')
-								.text(preview)
+							$example
 						);
 
 					// click event
@@ -542,8 +514,12 @@
 			// if isConvertOption, use convert options,
 			//  if not use interpret options
 			// collect information
-			var optionDef = isConvertOption ? cryptii.conversion.getConvertOption(name) : cryptii.conversion.getInterpretOption(name);
-			var optionField = isConvertOption ? cryptii.view.$convertOptionFields[name] : cryptii.view.$interpretOptionFields[name];
+			var optionDef = isConvertOption
+				? cryptii.conversion.getConvertOption(name)
+				: cryptii.conversion.getInterpretOption(name);
+			var optionField = isConvertOption
+				? cryptii.view.$convertOptionFields[name]
+				: cryptii.view.$interpretOptionFields[name];
 			// read value of this option field
 			var value = null;
 			if (optionDef.type == 'text')

@@ -10,7 +10,7 @@
 
 	var format = {
 
-		title: 'ITA2 / CCITT-2',
+		title: 'Baudot-Murray-Code',
 		category: 'Cipher',
 		url: 'http://en.wikipedia.org/wiki/ITA2',
 
@@ -87,13 +87,24 @@
 		convert: {
 			options: {
 				separator: {
-					title: 'Separator',
+					title: 'Separator (code)',
 					type: 'text',
 					default: ' '
+				},
+				paperTape: {
+					title: 'Paper tape',
+					type: 'boolean',
+					default: true
 				}
 			},
 			run: function(conversion, options)
 			{
+				// conversion settings
+				//  ensures the proper output
+				conversion.isResultHtmlAvailable = options.paperTape;
+				conversion.canHtmlResultBeDisplayedInSelection = false;
+				conversion.splittedContentHtmlSeparator = null;
+
 				var ita2Code = cryptii.conversion.formats['ita2'].codes;
 				var flippedIta2Code = {};
 
@@ -117,6 +128,7 @@
 						var ita2Entry = flippedIta2Code[asciiChar];
 
 						var result = '';
+						var resultHtml = [];
 
 						if (ita2Entry != undefined)
 						{
@@ -129,13 +141,40 @@
 									&& asciiChar != "\n"))
 							{
 								var key = isLetterShift ? 'letters' : 'figures';
-								result = flippedIta2Code[key].substr(0, 5)
-									+ options.separator;
+								var flagCode = flippedIta2Code[key].substr(0, 5);
+
+								// add letters / figures flag to result
+								// text based
+								result = flagCode
+									+ (result == '' ? conversion.splittedContentSeparator : '');
+
+								// html based
+								if (options.paperTape)
+									resultHtml.push(
+										$(document.createElement('span'))
+											.addClass('o-ita2')
+											.addClass('o-ita2-' + flagCode)
+											.text(flagCode)
+									);
+
 								letterShift = isLetterShift;
 							}
 
+							// text based
 							result += code;
+
+							// html based
+							if (options.paperTape)
+								resultHtml.push(
+									$(document.createElement('span'))
+										.addClass('o-ita2')
+										.addClass('o-ita2-' + code)
+										.text(code)
+								);
+
+							// add results to entry
 							entry.result = result;
+							entry.resultHtml = resultHtml;
 						}
 					}
 				}

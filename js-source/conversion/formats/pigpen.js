@@ -20,23 +20,39 @@
 			},
 			run: function(conversion, options)
 			{
-				// this is not a text based output
-				conversion.isTextBasedOutput = false;
+				// pigpen cipher can be displayed in the format selection
+				conversion.isResultHtmlAvailable = true;
+				conversion.canHtmlResultBeDisplayedInSelection = true;
 
 				for (var i = 0; i < conversion.splittedContent.length; i ++)
 				{
 					var entry = conversion.splittedContent[i];
-					if (entry.decimal == null)
+					var decimal = entry.decimal;
+					if (decimal == null)
 						return null;
 
 					// uppercase letters
-					if (entry.decimal >= 97 && entry.decimal <= 122)
-						entry.decimal -= 32;
+					if (decimal >= 97 && decimal <= 122)
+						decimal -= 32;
+
+					var letter = chr(decimal);
+
+					// pass plain text result
+					entry.result = letter;
 					
 					// check if a pigpen symbol exists for this decimal
-					if (entry.decimal >= 65 && entry.decimal <= 90)
-						entry.result = 'p' + chr(entry.decimal);
-					else entry.result = chr(entry.decimal);
+					if (decimal >= 65 && decimal <= 90)
+					{
+						// valid pigpen letter
+						// calculate left margin in background image
+						var left = - (decimal - 65) * 10;
+
+						// prepare html output
+						entry.resultHtml = $(document.createElement('span'))
+							.addClass('o-pigpen')
+							.css({ backgroundPosition: left + 'px 0' })
+							.text(letter);
+					}
 				}
 			}
 		}

@@ -49,9 +49,9 @@ var result = UglifyJS.minify([
 			// cipher
 			'conversion/formats/atbash.js',
 			'conversion/formats/caesar.js',
+			'conversion/formats/rot13.js',
 			'conversion/formats/ita2.js',
 			'conversion/formats/pigpen.js',
-			'conversion/formats/rot13.js',
 
 			// encoding
 			'conversion/formats/base64.js',
