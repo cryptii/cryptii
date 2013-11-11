@@ -45,6 +45,7 @@ var result = UglifyJS.minify([
 			'conversion/formats/binary.js',
 			'conversion/formats/octal.js',
 			'conversion/formats/hexadecimal.js',
+			'conversion/formats/roman-numerals.js',
 
 			// cipher
 			'conversion/formats/atbash.js',

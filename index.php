@@ -7,14 +7,14 @@
 // interpret formats
 $interpret = array(
 	'text', 'htmlentities', 'morsecode', 'navajo',
-	'decimal', 'binary', 'octal', 'hexadecimal',
+	'decimal', 'binary', 'octal', 'hexadecimal', 'roman-numerals',
 	'atbash', 'caesar', 'ita2', 'rot13',
 	'base64');
 
 // convert formats
 $convert = array(
 	'text', 'flipped', 'htmlentities', 'morsecode', 'leetspeak', 'navajo',
-	'decimal', 'binary', 'octal', 'hexadecimal',
+	'decimal', 'binary', 'octal', 'hexadecimal', 'roman-numerals',
 	'atbash', 'caesar', 'ita2', 'pigpen', 'rot13',
 	'base64',
 	'md5', 'sha1');
@@ -31,6 +31,7 @@ $formats = array(
 	'binary' => 'Binary',
 	'octal' => 'Octal',
 	'hexadecimal' => 'Hexadecimal',
+	'roman-numerals' => 'Roman numerals',
 	'atbash' => 'Atbash Roman',
 	'caesar' => 'Caesar Cipher',
 	'ita2' => 'ITA2 / CCITT-2',
