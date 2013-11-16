@@ -19,38 +19,50 @@
 		// format definition
 		formats: {},
 
-		init: function() {
-			if (cryptii.conversion.interpretFormat == null
-				|| cryptii.conversion.convertFormat == null) {
-				var interpretFormat = cryptii.options.defaultInterpretFormat;
-				var convertFormat = cryptii.options.defaultConvertFormat;
-				// apply format
-				cryptii.conversion.setInterpretFormat(interpretFormat);
-				cryptii.conversion.setConvertFormat(convertFormat);
-			}
+		init: function()
+		{
+			if (cryptii.conversion.interpretFormat == null)
+				cryptii.conversion.setInterpretFormat(
+					cryptii.options.defaultInterpretFormat);
+
+			if (cryptii.conversion.convertFormat == null)
+				cryptii.conversion.setConvertFormat(
+					cryptii.options.defaultConvertFormat);
 		},
 
-		registerFormat: function(name, formatDef) {
+		registerFormat: function(name, formatDef)
+		{
 			cryptii.conversion.formats[name] = formatDef;
 		},
 
 		//
 		// EVENTS
 		//
-		inputContentHasChangedEvent: function() {
+		inputContentHasChangedEvent: function()
+		{
+			if (cryptii.view.viewMode == 2)
+				// convert format selection visible
+				// update preview
+				cryptii.view.updateSelections();
+
+			// launch conversion
 			cryptii.conversion.launch();
 		},
-		formatHasChangedEvent: function() {
+		formatHasChangedEvent: function()
+		{
 			cryptii.conversion.launch();
 		},
-		optionsHasChangedEvent: function() {
-			cryptii.conversion.launch();
+		optionsHasChangedEvent: function()
+		{
+			// treat this as a content has changed event
+			cryptii.conversion.inputContentHasChangedEvent();
 		},
 
 		//
 		// METHODS
 		//
-		setInterpretFormat: function(format) {
+		setInterpretFormat: function(format)
+		{
 			if (cryptii.conversion.interpretFormat == format)
 				// nothing to do.
 				return;
@@ -72,10 +84,10 @@
 				cryptii.conversion.convertPreviewContent(format, false)
 			);
 
-			// update url
-			cryptii.view.updateUrl();
-
-			if (cryptii.isInitialized) {
+			if (cryptii.isInitialized)
+			{
+				// update url
+				cryptii.view.updateUrl();
 				// fire input content has changed event
 				cryptii.conversion.formatHasChangedEvent();
 				// activate has format changed flag
@@ -85,7 +97,8 @@
 			}
 		},
 
-		getInterpretOptions: function() {
+		getInterpretOptions: function()
+		{
 			var format = cryptii.conversion.interpretFormat;
 			var options = cryptii.conversion.formats[format].interpret.options;
 
@@ -96,19 +109,22 @@
 			return options;
 		},
 
-		getInterpretOption: function(name) {
+		getInterpretOption: function(name)
+		{
 			var options = cryptii.conversion.getInterpretOptions();
 			return options[name];
 		},
 
-		setInterpretOption: function(name, value) {
+		setInterpretOption: function(name, value)
+		{
 			// store option value
 			cryptii.conversion.interpretOptions[name] = value;
 			// event
 			cryptii.conversion.optionsHasChangedEvent();
 		},
 
-		setConvertFormat: function(format) {
+		setConvertFormat: function(format)
+		{
 			if (cryptii.conversion.convertFormat == format)
 				// nothing to do.
 				return;
@@ -125,10 +141,10 @@
 				cryptii.conversion.convertOptions[name] = optionDef.default;
 			});
 
-			// update url
-			cryptii.view.updateUrl();
-
-			if (cryptii.isInitialized) {
+			if (cryptii.isInitialized)
+			{
+				// update url
+				cryptii.view.updateUrl();
 				// fire input content has changed event
 				cryptii.conversion.formatHasChangedEvent();
 				// activate has format changed flag
@@ -138,7 +154,8 @@
 			}
 		},
 
-		getConvertOptions: function() {
+		getConvertOptions: function()
+		{
 			var format = cryptii.conversion.convertFormat;
 			var options = cryptii.conversion.formats[format].convert.options;
 
@@ -149,19 +166,22 @@
 			return options;
 		},
 
-		getConvertOption: function(name) {
+		getConvertOption: function(name)
+		{
 			var options = cryptii.conversion.getConvertOptions();
 			return options[name];
 		},
 
-		setConvertOption: function(name, value) {
+		setConvertOption: function(name, value)
+		{
 			// store option value
 			cryptii.conversion.convertOptions[name] = value;
 			// event
 			cryptii.conversion.optionsHasChangedEvent();
 		},
 
-		getHistoryState: function() {
+		getHistoryState: function()
+		{
 			// compose url
 			var interpretFormat = cryptii.conversion.interpretFormat;
 			var convertFormat = cryptii.conversion.convertFormat;
@@ -181,9 +201,54 @@
 			return null;
 		},
 
-		launch: function() {
+		getShareUrl: function()
+		{
+			// collect information
+			var interpretFormat = cryptii.conversion.interpretFormat;
+			var interpretOptions = cryptii.conversion.getInterpretOptions();
+			var convertFormat = cryptii.conversion.convertFormat;
+			var convertOptions = cryptii.conversion.getConvertOptions();
+			var content = cryptii.view.getInputContent();
+
+			// compose url
+			var url = 'http://cryptii.com';
+
+			// interpret format
+			url += '/' + interpretFormat;
+			$.each(interpretOptions, function(name, option) {
+				// prepare value
+				var value = urlencode(option.value)
+					.replace(/:/g, '%3a')
+					.replace(/;/g, '%3b');
+				// append to url
+				url += ';' + name + ':' + value;
+			});
+
+			// convert format
+			url += '/' + convertFormat;
+			$.each(convertOptions, function(name, option) {
+				// prepare value
+				var value = urlencode(option.value)
+					.replace(/:/g, '%3a')
+					.replace(/;/g, '%3b');
+				// append to url
+				url += ';' + name + ':' + value;
+			});
+
+			// append content
+			url += '/' + urlencode(content);
+
+			return url;
+		},
+
+		launch: function()
+		{
 			// this method launches the actual conversion
 			//  from input content to output
+
+			// don't launch conversion if not already initiated
+			if (!cryptii.isInitialized)
+				return;
 
 			var content = cryptii.view.getInputContent();
 			// compose conversion options
@@ -201,8 +266,8 @@
 			cryptii.view.setOutputContent(result);
 		},
 
-		convertPreviewContent: function(format, useCurrentInputContent) {
-
+		convertPreviewContent: function(format, useCurrentInputContent)
+		{
 			// collect information
 			var inputContent = cryptii.options.defaultInputContent;
 			var interpretFormat = 'text';
@@ -225,10 +290,18 @@
 			};
 
 			// collect and apply format option defaults
-			$.each(cryptii.conversion.formats[interpretFormat].interpret.options, function(name, option) {
-				conversionOptions.interpret[name] = option.default;
-			});
+			if (useCurrentInputContent)
+				// use interpret options
+				$.each(cryptii.conversion.getInterpretOptions(), function(name, option) {
+					conversionOptions.interpret[name] = option.value;
+				});
+			else
+				// use defaults
+				$.each(cryptii.conversion.formats[interpretFormat].interpret.options, function(name, option) {
+					conversionOptions.interpret[name] = option.default;
+				});
 
+			// use convert option defaults
 			$.each(cryptii.conversion.formats[convertFormat].convert.options, function(name, option) {
 				conversionOptions.convert[name] = option.default;
 			});
@@ -248,7 +321,8 @@
 			return content;
 		},
 
-		convert: function(content, options) {
+		convert: function(content, options)
+		{
 			// this method converts content with given options
 			//  it is used to convert the input content and do show
 			//  examples behind the format titles in the selection

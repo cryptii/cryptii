@@ -44,8 +44,8 @@
 		// 2 - input field and convert selection visible
 		viewMode: -1,
 		
-		init: function() {
-
+		init: function()
+		{
 			// allow click outside application frame to close
 			$('html').click(function() {
 				// reset view mode
@@ -187,24 +187,28 @@
 			cryptii.view.windowSizeHasChanged();
 		},
 
-		windowSizeHasChanged: function() {
+		windowSizeHasChanged: function()
+		{
 			// update size of application
 			cryptii.view.$container.css({
 				minHeight: $(window).height() - 70
 			});
 		},
 
-		setInputContent: function(content) {
+		setInputContent: function(content)
+		{
 			cryptii.view.$inputTextarea.val(content);
 			cryptii.view.updateContentHeight();
 		},
 
-		getInputContent: function() {
+		getInputContent: function()
+		{
 			// returns current input
 			return cryptii.view.$inputTextarea.val();
 		},
 
-		setOutputContent: function(result) {
+		setOutputContent: function(result)
+		{
 			// show output content by result object
 			//  see cryptii.conversion (result is a conversion object)
 
@@ -226,7 +230,8 @@
 				cryptii.view.$outputField.html(result.resultHtml);
 		},
 
-		elementsForViewMode: function(viewMode) {
+		elementsForViewMode: function(viewMode)
+		{
 			// this method collects views which should
 			//  be displayed in a specific view mode
 			if (viewMode == -1)
@@ -256,7 +261,8 @@
 					cryptii.view.$interpretOptions];
 		},
 
-		setViewMode: function(viewMode, animated) {
+		setViewMode: function(viewMode, animated)
+		{
 			// store last view mode
 			var lastViewMode = cryptii.view.viewMode;
 			// update actual view mode
@@ -264,7 +270,7 @@
 			var visibleElements = cryptii.view.elementsForViewMode(lastViewMode);
 			var showElements = cryptii.view.elementsForViewMode(viewMode);
 			// update selections if needed
-			if (cryptii.isInitialized && viewMode != 0)
+			if (viewMode == 2)
 				cryptii.view.updateSelections();
 			// hide elements
 			for (var i = 0; i < visibleElements.length; i ++) {
@@ -288,7 +294,8 @@
 				.addClass('view-' + viewMode);
 		},
 
-		updateContentHeight: function() {
+		updateContentHeight: function()
+		{
 			// this method mesures the hight needed by the input content
 
 			// replace special tags
@@ -303,7 +310,8 @@
 			cryptii.view.$inputTextarea.height(height - 4);
 		},
 
-		updateSelections: function() {
+		updateSelections: function()
+		{
 			// this method updates the interpret and convert
 			//  selection including the examples behind
 			//  the format labels
@@ -323,10 +331,10 @@
 			{
 				var formatDef = cryptii.conversion.formats[format];
 
-				// create convert selection when cryptii is initialized
-				//  to apply the preview on the input content
-				if (!cryptii.isInitialized) {
-
+				// interpret format selection needs to be created only once
+				//  during the initialization process
+				if (!cryptii.isInitialized)
+				{
 					if (formatDef.interpret != undefined) {
 
 						// add category if needed
@@ -374,54 +382,60 @@
 					}
 				}
 
-				if (formatDef.convert != undefined) {
-					// add category if needed
-					if (lastConvertCategory != formatDef.category)
-					{
-						var $category = $(document.createElement('div'))
-							.text(formatDef.category)
-							.addClass('category');
+				// convert format selection gets updated
+				//  each time the user opens it
+				if (cryptii.isInitialized)
+				{
+					if (formatDef.convert != undefined) {
+						// add category if needed
+						if (lastConvertCategory != formatDef.category)
+						{
+							var $category = $(document.createElement('div'))
+								.text(formatDef.category)
+								.addClass('category');
 
-						cryptii.view.$convertSelection.append($category);
-						lastConvertCategory = formatDef.category;
+							cryptii.view.$convertSelection.append($category);
+							lastConvertCategory = formatDef.category;
+						}
+
+						// create example div
+						var $example = $(document.createElement('span'))
+							.addClass('example');
+
+						// add text or html array to example
+						var preview = cryptii.conversion.convertPreviewContent(format, true);
+						if (typeof preview == 'string')
+							$example.text(preview);
+						else
+							$example.html(preview);
+
+						// add format to convert selection
+						var $format = $(document.createElement('div'))
+							.addClass('format')
+							.append(
+								$(document.createElement('span'))
+									.addClass('title')
+									.text(formatDef.title),
+								$example
+							);
+
+						// click event
+						$format.click($.proxy(function(event) {
+							// change format
+							cryptii.conversion.setConvertFormat(this.format);
+							// reset view mode
+							cryptii.view.setViewMode(0, true);
+						}, { format: format }));
+						
+						// view it
+						cryptii.view.$convertSelection.append($format);
 					}
-
-					// create example div
-					var $example = $(document.createElement('span'))
-						.addClass('example');
-
-					// add text or html array to example
-					var preview = cryptii.conversion.convertPreviewContent(format, true);
-					if (typeof preview == 'string')
-						$example.text(preview);
-					else
-						$example.html(preview);
-
-					// add format to convert selection
-					var $format = $(document.createElement('div'))
-						.addClass('format')
-						.append(
-							$(document.createElement('span'))
-								.addClass('title')
-								.text(formatDef.title),
-							$example
-						);
-
-					// click event
-					$format.click($.proxy(function(event) {
-						// change format
-						cryptii.conversion.setConvertFormat(this.format);
-						// reset view mode
-						cryptii.view.setViewMode(0, true);
-					}, { format: format }));
-					
-					// view it
-					cryptii.view.$convertSelection.append($format);
 				}
 			}
 		},
 
-		updateOptions: function() {
+		updateOptions: function()
+		{
 			// clear options
 			cryptii.view.$interpretOptions.html('');
 			cryptii.view.$interpretOptionFields = [];
@@ -457,7 +471,8 @@
 			}
 		},
 
-		createOption: function(option) {
+		createOption: function(option)
+		{
 			var field = null;
 			if (option.type == 'text')
 			{
@@ -510,7 +525,8 @@
 			};
 		},
 
-		getOptionValue: function(isConvertOption, name) {
+		getOptionValue: function(isConvertOption, name)
+		{
 			// if isConvertOption, use convert options,
 			//  if not use interpret options
 			// collect information
@@ -533,8 +549,8 @@
 			return value;
 		},
 
-		updateToolbox: function() {
-
+		updateToolbox: function()
+		{
 			// get format definitions
 			var interpretFormat = cryptii.conversion.interpretFormat;
 			var interpretFormatDef = cryptii.conversion.formats[interpretFormat];
@@ -594,7 +610,8 @@
 			}
 		},
 
-		updateUrl: function() {
+		updateUrl: function()
+		{
 			var state = cryptii.conversion.getHistoryState();
 			// read hash
 			var urlParts = History.getState().hash.split('?');
@@ -610,23 +627,83 @@
 			}
 		},
 
-		urlHasChangedEvent: function() {
+		urlHasChangedEvent: function()
+		{
 			var state = History.getState();
+
 			// read hash
 			var hashParts = state.hash.split('?');
 			hashParts = hashParts[0].split('/');
-			// check if format exists and apply
-			var interpretFormat = hashParts[1];
-			if (cryptii.conversion.formats[interpretFormat] != undefined
-				&& cryptii.conversion.formats[interpretFormat].interpret != undefined)
-				cryptii.conversion.setInterpretFormat(interpretFormat);
-			var convertFormat = hashParts[2];
-			if (cryptii.conversion.formats[convertFormat] != undefined
-				&& cryptii.conversion.formats[convertFormat].convert != undefined)
-				cryptii.conversion.setConvertFormat(convertFormat);
+
+			// read from format
+			var interpretPart = hashParts[1];
+			if (interpretPart != undefined)
+			{
+				var parts = interpretPart.split(';');
+				var interpretFormat = parts[0];
+
+				// check if format exist
+				if (cryptii.conversion.formats[interpretFormat] != undefined
+					&& cryptii.conversion.formats[interpretFormat].interpret != undefined)
+				{
+					// apply format
+					cryptii.conversion.setInterpretFormat(interpretFormat);
+
+					// read options
+					for (var i = 1; i < parts.length; i ++)
+					{
+						var optionParts = parts[i].split(':');
+						var name = optionParts[0];
+						var value = urldecode(optionParts[1]);
+
+						// apply option
+						if (name != undefined && value != undefined)
+							cryptii.conversion.setInterpretOption(name, value);
+					}
+				}
+			}
+
+			// read to format
+			var convertPart = hashParts[2];
+			if (convertPart != undefined)
+			{
+				var parts = convertPart.split(';');
+				var convertFormat = parts[0];
+
+				// check if format exist
+				if (cryptii.conversion.formats[convertFormat] != undefined
+					&& cryptii.conversion.formats[convertFormat].convert != undefined)
+				{
+					// apply format
+					cryptii.conversion.setConvertFormat(convertFormat);
+
+					// read options
+					for (var i = 1; i < parts.length; i ++)
+					{
+						var optionParts = parts[i].split(':');
+						var name = optionParts[0];
+						var value = urldecode(optionParts[1]);
+
+						// apply option
+						if (name != undefined && value != undefined)
+							cryptii.conversion.setConvertOption(name, value);
+					}
+				}
+			}
+
+			// read content
+			var content = hashParts[3];
+			if (content != undefined)
+			{
+				// decode url
+				content = urldecode(content);
+				// update input content
+				cryptii.view.setInputContent(content);
+			}
 		},
 
-		updateView: function() {
+		updateView: function()
+		{
 			if (cryptii.view.hasInputContentChanged)
 				// update heights
 				cryptii.view.updateContentHeight();

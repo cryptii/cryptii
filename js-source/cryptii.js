@@ -71,7 +71,11 @@ var _gaq = _gaq || [];
 		cryptii.view.urlHasChangedEvent();
 		// init conversion
 		cryptii.conversion.init();
-		// update selections
+		// update url
+		//  this removes the data from
+		//  the shared link (if available)
+		cryptii.view.updateUrl();
+		// update interpret selections
 		cryptii.view.updateSelections();
 		// update options
 		cryptii.view.updateOptions();
@@ -91,6 +95,8 @@ var _gaq = _gaq || [];
 		cryptii.view.$inputTextarea.val(cachedValue);
 		// activate initialized flag
 		cryptii.isInitialized = true;
+		// launch conversion for the first time
+		cryptii.conversion.launch();
 	};
 
 })($, window, document, cryptii, _gaq);

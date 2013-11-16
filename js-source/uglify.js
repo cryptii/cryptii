@@ -18,8 +18,10 @@ var result = UglifyJS.minify([
 	'libraries/phpjs/chr.js',
 	'libraries/phpjs/ord.js',
 	'libraries/phpjs/sha1.js',
-	'libraries/phpjs/utf8_encode.js',
 	'libraries/phpjs/md5.js',
+	'libraries/phpjs/utf8_encode.js',
+	'libraries/phpjs/urlencode.js',
+	'libraries/phpjs/urldecode.js',
 
 	// application
 	'cryptii.js',
@@ -65,9 +67,15 @@ var result = UglifyJS.minify([
 ]);
 
 fs.writeFile(outputFilename, result.code, function(err) {
-    if(err) {
+
+    if (err) {
+
         console.log(err);
+
     } else {
+
         console.log('Minified version saved to ' + outputFilename);
+
     }
+
 });
