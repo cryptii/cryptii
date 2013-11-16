@@ -93,8 +93,8 @@ else if ($url != '/')
 {
 	$url_parts = explode('/', $url);
 	// add formats to title
-	$_interpret_format = $url_parts[1];
-	$_convert_format = $url_parts[2];
+	list($_interpret_format) = explode(';', $url_parts[1]);
+	list($_convert_format) = explode(';', $url_parts[2]);
 	$title = null;
 	// interpret url
 	if ($formats[$_interpret_format]
