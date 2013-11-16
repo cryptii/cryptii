@@ -1,7 +1,7 @@
 //
 // Cryptii
 // Conversion
-// Caesar format
+// Caesar Cipher
 //
 
 (function($, cryptii) {
@@ -14,7 +14,9 @@
 		category: 'Cipher',
 		url: 'http://en.wikipedia.org/wiki/Caesar_cipher',
 
-		convertDecimal: function(decimal, shift)
+		// this shift method is also used by
+		//  Vigenère Cipher format
+		shiftDecimal: function(decimal, shift)
 		{
 			// convert single decimal block
 			shift = shift % 26;
@@ -27,20 +29,20 @@
 			if (decimal > 90)
 				decimal -= 32;
 
+			// check if it is alphabetic
+			if (decimal < 65 || decimal > 90)
+				return -1;
+
 			// shift decimal
-			var resultDecimalValue = decimal - shift;
+			decimal -= shift;
 
 			// limits
-			if (resultDecimalValue < 65)
-				resultDecimalValue += 26;
-			if (resultDecimalValue > 90)
-				resultDecimalValue -= 26;
+			if (decimal < 65)
+				decimal += 26;
+			if (decimal > 90)
+				decimal -= 26;
 
-			// check if it is alphabetic
-			if (decimal >= 65 && decimal <= 90)
-				return resultDecimalValue;
-
-			return -1;
+			return decimal;
 		},
 
 		interpret: {
@@ -58,24 +60,22 @@
 				var shift = parseInt(options.shift, 10);
 				var formatDefinition = cryptii.conversion.formats['caesar'];
 
-				if (!isNaN(shift))
+				conversion.isSplittedContentConversion = true;
+
+				for (var i = 0; i < conversion.content.length; i ++)
 				{
-					conversion.isSplittedContentConversion = true;
+					var content = conversion.content[i];
+					var decimal = formatDefinition.shiftDecimal(ord(content), shift);
 
-					for (var i = 0; i < conversion.content.length; i ++)
-					{
-						var content = conversion.content[i];
-						var decimal = formatDefinition.convertDecimal(ord(content), -shift);
+					// allow non alphabet characters
+					decimal = (decimal == -1 ? ord(content) : decimal);
 
-						if (decimal == -1)
-							decimal = ord(content);
-
-						conversion.splittedContent.push({
-							content: content,
-							decimal: decimal,
-							result: null
-						});
-					}
+					conversion.splittedContent.push({
+						content: content,
+						decimal: decimal,
+						result: null,
+						resultHtml: null
+					});
 				}
 			}
 		},
@@ -95,21 +95,18 @@
 				var shift = parseInt(options.shift, 10);
 				var formatDefinition = cryptii.conversion.formats['caesar'];
 				
-				if (!isNaN(shift))
+				for (var i = 0; i < conversion.splittedContent.length; i ++)
 				{
-					for (var i = 0; i < conversion.splittedContent.length; i ++)
+					var entry = conversion.splittedContent[i];
+
+					if (entry.decimal != null)
 					{
-						var entry = conversion.splittedContent[i];
+						var decimal = formatDefinition.shiftDecimal(
+							entry.decimal, -shift);
 
-						if (entry.decimal != null)
-						{
-							var decimal = formatDefinition.convertDecimal(
-								entry.decimal, shift);
-
-							// if conversion valid, use the result
-							//  if not use the original letter
-							entry.result = (decimal != -1 ? chr(decimal) : chr(entry.decimal));
-						}
+						// if conversion valid, use the result
+						//  if not use the original letter
+						entry.result = (decimal != -1 ? chr(decimal) : chr(entry.decimal));
 					}
 				}
 			}
