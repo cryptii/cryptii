@@ -154,7 +154,7 @@ https://github.com/the2f/Cryptii
 
 				<hgroup>
 					<h1>
-						<a href="/text/decimal">Cryptii</a>
+						<a href="/">Cryptii</a>
 						<span class="format"><?= $title ? ' — ' . $title : '' ?></span>
 					</h1>
 					<h2>Convert, encode, encrypt, decode and decrypt your content online</h2>
