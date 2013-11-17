@@ -780,7 +780,7 @@
 				.replace(/%2F/g, '%19');
 
 			// append rel
-			url += '?ref=share';
+			url += '?utm_campaign=share_link';
 
 			return url;
 		},
