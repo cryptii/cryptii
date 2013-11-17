@@ -448,7 +448,8 @@
 			if (Object.keys(interpretOptions).length > 0) {
 				for (var name in interpretOptions)
 				{
-					var option = cryptii.view.createOption(interpretOptions[name]);
+					var option = cryptii.view.createOption(
+						interpretOptions[name], 'interpret_option_' + name);
 					// append field to view
 					cryptii.view.$interpretOptions.append(option.$option);
 					// store field to track updates
@@ -462,7 +463,8 @@
 			if (Object.keys(convertOptions).length > 0) {
 				for (var name in convertOptions)
 				{
-					var option = cryptii.view.createOption(convertOptions[name]);
+					var option = cryptii.view.createOption(
+						convertOptions[name], 'convert_option_' + name);
 					// append field to view
 					cryptii.view.$convertOptions.append(option.$option);
 					// store field to track updates
@@ -471,13 +473,14 @@
 			}
 		},
 
-		createOption: function(option)
+		createOption: function(option, name)
 		{
 			var field = null;
 			if (option.type == 'text')
 			{
 				field = $(document.createElement('input'))
 					.attr('type', 'text')
+					.attr('id', name)
 					.addClass('text')
 					.val(option.value);
 			}
@@ -485,12 +488,14 @@
 			{
 				field = $(document.createElement('input'))
 					.attr('type', 'checkbox')
+					.attr('id', name)
 					.prop('checked', option.value)
 					.addClass('checkbox');
 			}
 			else if (option.type == 'slider')
 			{
 				field = $(document.createElement('div'))
+					.attr('id', name)
 					.slider({
 						range: 'max',
 						min: option.minimum,
@@ -502,6 +507,7 @@
 			else if (option.type == 'select')
 			{
 				field = $(document.createElement('select'))
+					.attr('id', name)
 					.addClass('select');
 				$.each(option.options, function(key, title) {
 					// add each option to select
@@ -519,7 +525,8 @@
 					.addClass('option')
 					.append(
 						$(document.createElement('label'))
-							.text(option.title),
+							.text(option.title)
+							.attr('for', name),
 						field),
 				$field: field
 			};
@@ -607,6 +614,38 @@
 						.attr('target', '_blank')
 						.attr('title', 'Show source code')
 						.text('Show source code'));
+
+				// separator
+				cryptii.view.$convertToolbox.append(
+					$(document.createElement('span'))
+						.addClass('separator'));
+
+				// share container
+				var shareLinkInput = $(document.createElement('input'))
+					.attr('type', 'text')
+					.css({ display: 'none' })
+					.addClass('share-link')
+					.focusout(function() {
+						$(this).hide();
+					});
+
+				cryptii.view.$convertToolbox.append(shareLinkInput);
+
+				// share button
+				cryptii.view.$convertToolbox.append(
+					$(document.createElement('a'))
+						.addClass('share')
+						.attr('href', 'javascript:void(0);')
+						.attr('title', 'Share')
+						.click(function() {
+							shareLinkInput.toggle();
+							if (shareLinkInput.is(":visible"))
+							{
+								shareLinkInput.val(cryptii.conversion.getShareUrl());
+								shareLinkInput.select();
+							}
+						})
+						.text('Share'));
 			}
 		},
 

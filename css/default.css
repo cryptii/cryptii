@@ -356,6 +356,15 @@ h1 a {
 	height: 20px;
 }
 
+#interpretToolbox .separator,
+#convertToolbox .separator {
+	display: inline-block;
+	height: 16px;
+	border-left: 1px solid #bbbbbb;
+	margin: 2px 2px 2px 8px;
+	float: right;
+}
+
 #interpretToolbox a,
 #convertToolbox a {
 	display: inline-block;
@@ -381,6 +390,24 @@ h1 a {
 #interpretToolbox a.code,
 #convertToolbox a.code {
 	background-position: -120px -42px;
+}
+
+#interpretToolbox a.share,
+#convertToolbox a.share {
+	background-position: -136px -42px;
+}
+
+#convertToolbox input.share-link {
+	display: inline-block;
+	float: right;
+	margin: 1px 2px 1px 6px;
+	padding: 0 2px;
+	height: 16px;
+	width: 100px;
+	border: 1px solid #bbbbbb;
+	background: #f7f7f7;
+	color: #525252;
+	outline: none;
 }
 
 /* --- FORMAT OPTIONS --- */

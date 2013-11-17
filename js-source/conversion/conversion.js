@@ -238,6 +238,9 @@
 			// append content
 			url += '/' + urlencode(content);
 
+			// append rel
+			url += '?ref=share';
+
 			return url;
 		},
 
