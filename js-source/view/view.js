@@ -745,8 +745,13 @@
 			$.each(interpretOptions, function(name, option) {
 				// prepare value
 				var value = urlencode(option.value)
+					// escape : and ; to prevent breaking split
 					.replace(/:/g, '%3a')
-					.replace(/;/g, '%3b');
+					.replace(/;/g, '%3b')
+					// use another code for slash (/)
+					//  to prevent the url to break
+					//  http://stackoverflow.com/questions/3235219
+					.replace(/%2F/g, '%19');
 				// append to url
 				url += ';' + name + ':' + value;
 			});
@@ -756,14 +761,23 @@
 			$.each(convertOptions, function(name, option) {
 				// prepare value
 				var value = urlencode(option.value)
+					// escape : and ; to prevent breaking split
 					.replace(/:/g, '%3a')
-					.replace(/;/g, '%3b');
+					.replace(/;/g, '%3b')
+					// use another code for slash (/)
+					//  to prevent the url to break
+					//  http://stackoverflow.com/questions/3235219
+					.replace(/%2F/g, '%19');
 				// append to url
 				url += ';' + name + ':' + value;
 			});
 
 			// append content
-			url += '/' + urlencode(content);
+			url += '/' + urlencode(content)
+				// use another code for slash (/)
+				//  to prevent the url to break
+				//  http://stackoverflow.com/questions/3235219
+				.replace(/%2F/g, '%19');
 
 			// append rel
 			url += '?ref=share';
@@ -869,7 +883,9 @@
 					{
 						var optionParts = parts[i].split(':');
 						var name = optionParts[0];
-						var value = urldecode(optionParts[1]);
+						var value = urldecode(
+							// replace the code through backslash (/) again
+							optionParts[1].replace(/%19/g, '%2F'));
 
 						// apply option
 						if (name != undefined && value != undefined)
@@ -903,7 +919,9 @@
 					{
 						var optionParts = parts[i].split(':');
 						var name = optionParts[0];
-						var value = urldecode(optionParts[1]);
+						var value = urldecode(
+							// replace the code through backslash (/) again
+							optionParts[1].replace(/%19/g, '%2F'));
 
 						// apply option
 						if (name != undefined && value != undefined)
@@ -921,7 +939,9 @@
 			if (contentPart != undefined)
 			{
 				// decode url
-				contentPart = urldecode(contentPart);
+				contentPart = urldecode(
+					// replace the code through backslash (/) again
+					contentPart.replace(/%19/g, '%2F'));
 				// update input content
 				cryptii.view.setInputContent(contentPart);
 			}
