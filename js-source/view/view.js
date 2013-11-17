@@ -37,6 +37,7 @@
 		lastInputContent: null,
 		hasInputContentChanged: false,
 		hasFormatChanged: false,
+		pauseTrackingAndProvokingUrlChanges: false,
 
 		// view modes
 		// 0 - input and output field visible
@@ -265,13 +266,16 @@
 		{
 			// store last view mode
 			var lastViewMode = cryptii.view.viewMode;
+
 			// update actual view mode
 			cryptii.view.viewMode = viewMode;
 			var visibleElements = cryptii.view.elementsForViewMode(lastViewMode);
 			var showElements = cryptii.view.elementsForViewMode(viewMode);
+
 			// update selections if needed
 			if (viewMode == 2)
 				cryptii.view.updateSelections();
+
 			// hide elements
 			for (var i = 0; i < visibleElements.length; i ++) {
 				var element = visibleElements[i];
@@ -280,6 +284,7 @@
 					element.hide();
 				}
 			}
+
 			// show elements
 			for (var i = 0; i < showElements.length; i ++) {
 				var element = showElements[i];
@@ -288,10 +293,15 @@
 					element.show();
 				}
 			}
+
 			// update class
 			$('#application')
 				.attr('class', '')
 				.addClass('view-' + viewMode);
+
+			// update url
+			if (cryptii.isInitialized)
+				cryptii.view.updateUrl();
 		},
 
 		updateContentHeight: function()
@@ -384,7 +394,7 @@
 
 				// convert format selection gets updated
 				//  each time the user opens it
-				if (cryptii.isInitialized)
+				if (cryptii.isInitialized || cryptii.view.viewMode == 2)
 				{
 					if (formatDef.convert != undefined) {
 						// add category if needed
@@ -641,103 +651,11 @@
 							shareLinkInput.toggle();
 							if (shareLinkInput.is(":visible"))
 							{
-								shareLinkInput.val(cryptii.conversion.getShareUrl());
+								shareLinkInput.val(cryptii.view.getShareUrl());
 								shareLinkInput.select();
 							}
 						})
 						.text('Share'));
-			}
-		},
-
-		updateUrl: function()
-		{
-			var state = cryptii.conversion.getHistoryState();
-			// read hash
-			var urlParts = History.getState().hash.split('?');
-			var currentUrl = urlParts[0];
-			// is this a new state
-			if (state != null && currentUrl != state.url) {
-				// push state
-				History.pushState({},
-					state.title,
-					state.url);
-				// track pageview
-				_gaq.push(['_trackPageview']);
-			}
-		},
-
-		urlHasChangedEvent: function()
-		{
-			var state = History.getState();
-
-			// read hash
-			var hashParts = state.hash.split('?');
-			hashParts = hashParts[0].split('/');
-
-			// read from format
-			var interpretPart = hashParts[1];
-			if (interpretPart != undefined)
-			{
-				var parts = interpretPart.split(';');
-				var interpretFormat = parts[0];
-
-				// check if format exist
-				if (cryptii.conversion.formats[interpretFormat] != undefined
-					&& cryptii.conversion.formats[interpretFormat].interpret != undefined)
-				{
-					// apply format
-					cryptii.conversion.setInterpretFormat(interpretFormat);
-
-					// read options
-					for (var i = 1; i < parts.length; i ++)
-					{
-						var optionParts = parts[i].split(':');
-						var name = optionParts[0];
-						var value = urldecode(optionParts[1]);
-
-						// apply option
-						if (name != undefined && value != undefined)
-							cryptii.conversion.setInterpretOption(name, value);
-					}
-				}
-			}
-
-			// read to format
-			var convertPart = hashParts[2];
-			if (convertPart != undefined)
-			{
-				var parts = convertPart.split(';');
-				var convertFormat = parts[0];
-
-				// check if format exist
-				if (cryptii.conversion.formats[convertFormat] != undefined
-					&& cryptii.conversion.formats[convertFormat].convert != undefined)
-				{
-					// apply format
-					cryptii.conversion.setConvertFormat(convertFormat);
-
-					// read options
-					for (var i = 1; i < parts.length; i ++)
-					{
-						var optionParts = parts[i].split(':');
-						var name = optionParts[0];
-						var value = urldecode(optionParts[1]);
-
-						// apply option
-						if (name != undefined && value != undefined)
-							cryptii.conversion.setConvertOption(name, value);
-					}
-				}
-			}
-
-			// read content
-			var content = hashParts[3];
-			if (content != undefined)
-			{
-				// decode url
-				content = urldecode(content);
-				// update input content
-				cryptii.view.setInputContent(content);
 			}
 		},
 
@@ -772,6 +690,222 @@
 				// update last input content
 				cryptii.view.lastInputContent = cryptii.view.getInputContent();
 			}
+		},
+
+		//
+		// URL Handling
+		//
+
+		getHistoryState: function()
+		{
+			// compose url
+			var interpretFormat = cryptii.conversion.interpretFormat;
+			var convertFormat = cryptii.conversion.convertFormat;
+
+			// check if current state could be pushed
+			if (interpretFormat != null
+				&& convertFormat != null)
+			{
+				// get format definitions and titles
+				var interpretFormatDef = cryptii.conversion.formats[interpretFormat];
+				var convertFormatDef = cryptii.conversion.formats[convertFormat];
+
+				var url = '/';
+
+				// append interpret format or select
+				url += (cryptii.view.viewMode == 1 ? '/select' : '/' + interpretFormat);
+
+				// append convert format or select
+				url += (cryptii.view.viewMode == 2 ? '/select' : '/' + convertFormat);
+
+				// push state
+				return {
+					title: 'Cryptii — ' + interpretFormatDef.title + ' to ' + convertFormatDef.title,
+					url: url
+				};
+			}
+
+			return null;
+		},
+
+		getShareUrl: function()
+		{
+			// collect information
+			var interpretFormat = cryptii.conversion.interpretFormat;
+			var interpretOptions = cryptii.conversion.getInterpretOptions();
+			var convertFormat = cryptii.conversion.convertFormat;
+			var convertOptions = cryptii.conversion.getConvertOptions();
+			var content = cryptii.view.getInputContent();
+
+			// compose url
+			var url = 'http://cryptii.com';
+
+			// interpret format
+			url += '/' + interpretFormat;
+			$.each(interpretOptions, function(name, option) {
+				// prepare value
+				var value = urlencode(option.value)
+					.replace(/:/g, '%3a')
+					.replace(/;/g, '%3b');
+				// append to url
+				url += ';' + name + ':' + value;
+			});
+
+			// convert format
+			url += '/' + convertFormat;
+			$.each(convertOptions, function(name, option) {
+				// prepare value
+				var value = urlencode(option.value)
+					.replace(/:/g, '%3a')
+					.replace(/;/g, '%3b');
+				// append to url
+				url += ';' + name + ':' + value;
+			});
+
+			// append content
+			url += '/' + urlencode(content);
+
+			// append rel
+			url += '?ref=share';
+
+			return url;
+		},
+
+		updateUrl: function()
+		{
+			var state = cryptii.view.getHistoryState();
+
+			// don't update url during this period (prevent loops)
+			if (cryptii.view.pauseTrackingAndProvokingUrlChanges)
+				return;
+
+			// read hash
+			var urlParts = History.getState().hash.split('?');
+			var currentUrl = urlParts[0];
+
+			// is this a new state
+			if (state != null && currentUrl != state.url) {
+				// push state
+				History.pushState({},
+					state.title,
+					state.url);
+				// track pageview
+				_gaq.push(['_trackPageview']);
+			}
+		},
+
+		urlHasChangedEvent: function()
+		{
+			var state = History.getState();
+
+			// prevent url changes to cause new url changes (prevent loops)
+			if (cryptii.view.pauseTrackingAndProvokingUrlChanges)
+				return;
+
+			cryptii.view.pauseTrackingAndProvokingUrlChanges = true;
+
+			// read hash
+			var hashParts = state.hash.split('?');
+			hashParts = hashParts[0].split('/');
+
+			var interpretPart = hashParts[1];
+			var convertPart = hashParts[2];
+			var contentPart = hashParts[3];
+
+			// interpret special cases
+			if ((
+					interpretPart == undefined
+					|| interpretPart == ''
+					|| interpretPart == 'select')
+				&& (
+					convertPart == undefined
+					|| convertPart == ''
+					|| convertPart == 'select')
+			)
+			{
+				interpretPart = cryptii.options.defaultInterpretFormat;
+				convertPart = 'select';
+			}
+
+			// read from format
+			if (interpretPart != undefined
+				&& interpretPart != 'select'
+				&& interpretPart != '')
+			{
+				var parts = interpretPart.split(';');
+				var interpretFormat = parts[0];
+
+				// check if format exist
+				if (cryptii.conversion.formats[interpretFormat] != undefined
+					&& cryptii.conversion.formats[interpretFormat].interpret != undefined)
+				{
+					// apply format
+					cryptii.conversion.setInterpretFormat(interpretFormat);
+
+					// read options
+					for (var i = 1; i < parts.length; i ++)
+					{
+						var optionParts = parts[i].split(':');
+						var name = optionParts[0];
+						var value = urldecode(optionParts[1]);
+
+						// apply option
+						if (name != undefined && value != undefined)
+							cryptii.conversion.setInterpretOption(name, value);
+					}
+				}
+			}
+			else
+			{
+				// change view mode to show convert format selection
+				cryptii.view.setViewMode(1);
+			}
+
+			// read to format
+			if (convertPart != undefined
+				&& convertPart != 'select'
+				&& convertPart != '')
+			{
+				var parts = convertPart.split(';');
+				var convertFormat = parts[0];
+
+				// check if format exist
+				if (cryptii.conversion.formats[convertFormat] != undefined
+					&& cryptii.conversion.formats[convertFormat].convert != undefined)
+				{
+					// apply format
+					cryptii.conversion.setConvertFormat(convertFormat);
+
+					// read options
+					for (var i = 1; i < parts.length; i ++)
+					{
+						var optionParts = parts[i].split(':');
+						var name = optionParts[0];
+						var value = urldecode(optionParts[1]);
+
+						// apply option
+						if (name != undefined && value != undefined)
+							cryptii.conversion.setConvertOption(name, value);
+					}
+				}
+			}
+			else
+			{
+				// change view mode to show convert format selection
+				cryptii.view.setViewMode(2);
+			}
+
+			// read content
+			if (contentPart != undefined)
+			{
+				// decode url
+				contentPart = urldecode(contentPart);
+				// update input content
+				cryptii.view.setInputContent(contentPart);
+			}
+
+			// finished reading url changes
+			cryptii.view.pauseTrackingAndProvokingUrlChanges = false;
 		}
 
 	};

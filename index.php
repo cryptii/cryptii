@@ -9,7 +9,7 @@ $interpret = array(
 	'text', 'htmlentities', 'morsecode', 'navajo',
 	'decimal', 'binary', 'octal', 'hexadecimal', 'roman-numerals',
 	'atbash', 'caesar', 'vigenere', 'ita2', 'rot13',
-	'base64');
+	'base64', 'select');
 
 // convert formats
 $convert = array(
@@ -17,7 +17,7 @@ $convert = array(
 	'decimal', 'binary', 'octal', 'hexadecimal', 'roman-numerals',
 	'atbash', 'caesar', 'vigenere', 'ita2', 'pigpen', 'rot13',
 	'base64',
-	'md5', 'sha1');
+	'md5', 'sha1', 'select');
 
 // format titles
 $formats = array(
@@ -40,7 +40,8 @@ $formats = array(
 	'rot13' => 'ROT13',
 	'base64' => 'Base 64',
 	'md5' => 'MD5',
-	'sha1' => 'SHA-1');
+	'sha1' => 'SHA-1',
+	'select' => 'Multiple formats');
 
 // create conversions
 $conversions = array();
