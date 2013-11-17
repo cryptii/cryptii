@@ -41,7 +41,7 @@ $formats = array(
 	'base64' => 'Base 64',
 	'md5' => 'MD5',
 	'sha1' => 'SHA-1',
-	'select' => 'Multiple formats');
+	'select' => 'multiple formats');
 
 // create conversions
 $conversions = array();
