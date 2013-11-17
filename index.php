@@ -41,7 +41,7 @@ $formats = array(
 	'base64' => 'Base 64',
 	'md5' => 'MD5',
 	'sha1' => 'SHA-1',
-	'select' => 'multiple formats');
+	'select' => 'multiple systems');
 
 // create conversions
 $conversions = array();
@@ -63,7 +63,7 @@ foreach ($interpret as $interpret_format)
 			$url = sprintf('/%s/%s',
 				$interpret_format,
 				$convert_format);
-			$name = sprintf('%s to %s',
+			$name = sprintf('Convert %s to %s',
 				$formats[$interpret_format],
 				$formats[$convert_format]);
 			// add to list
