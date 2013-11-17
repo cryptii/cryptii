@@ -804,7 +804,8 @@
 			// is this a new state
 			if (state != null
 				&& currentUrl != state.url
-				&& currentTitle != state.title)
+				&& currentTitle != state.title
+				&& cryptii.isInitialized)
 			{
 				// push state
 				History.pushState({},
@@ -815,8 +816,9 @@
 				_gaq.push(['_trackPageview']);
 			}
 			else if (
-				currentUrl != state.url
+				(currentUrl != state.url
 				&& currentTitle == state.title)
+				|| !cryptii.isInitialized)
 			{
 				// replace state
 				//  the user just went back to the format
