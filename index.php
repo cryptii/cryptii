@@ -101,7 +101,8 @@ else if ($url != '/')
 		&& $formats[$_convert_format])
 		// add title
 		$title =
-			$formats[$_interpret_format]
+			'Convert '
+			. $formats[$_interpret_format]
 			. ' to '
 			. $formats[$_convert_format];
 	else {
@@ -116,13 +117,30 @@ else
 	$title = 'Fast converting, encrypting and decrypting';
 }
 ?>
+<!--
+Hi there!
+Thank you for your interest in the source code of Cryptii.
+Perhaps it would be easyer to browse the code on GitHub.
+https://github.com/the2f/Cryptii
+-->
+
 <!DOCTYPE html>
 <html>
-	<head>
+	<head prefix="og: http://ogp.me/ns#">
 		<meta charset="utf-8">
 		<base href="/">
 
 		<title>Cryptii<?= $title ? ' — ' . $title : '' ?></title>
+
+		<meta property="og:title" content="Cryptii<?= $title ? ' — ' . $title : '' ?>">
+		<meta property="og:site_name" content="Cryptii">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="http://cryptii.com<?= $url ?>">
+		<meta property="og:description" content="Cryptii is an OpenSource web application under the MIT license where you can convert, encrypt and decrypt content between different format systems.">
+		<meta property="og:image" content="http://cryptii.com/images/cryptii.png">
+		<meta property="og:image:type" content="image/png">
+		<meta property="og:image:width" content="277">
+		<meta property="og:image:height" content="277">
 
 		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 		<link rel="stylesheet" href="css/default.css?v=7" media="screen">
