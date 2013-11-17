@@ -136,7 +136,7 @@ https://github.com/the2f/Cryptii
 		<meta property="og:title" content="Cryptii<?= $title ? ' — ' . $title : '' ?>">
 		<meta property="og:site_name" content="Cryptii">
 		<meta property="og:type" content="website">
-		<meta property="og:url" content="http://cryptii.com<?= $url ?>">
+		<meta property="og:url" content="http://<?= $_SERVER['SERVER_NAME'] ?><?= $url ?>">
 		<meta property="og:description" content="Cryptii is an OpenSource web application under the MIT license where you can convert, encrypt and decrypt content between different format systems.">
 		<meta property="og:image" content="http://cryptii.com/images/cryptii.png">
 		<meta property="og:image:type" content="image/png">

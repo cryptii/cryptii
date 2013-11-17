@@ -710,7 +710,7 @@
 				var interpretFormatDef = cryptii.conversion.formats[interpretFormat];
 				var convertFormatDef = cryptii.conversion.formats[convertFormat];
 
-				var url = '/';
+				var url = '';
 
 				// append interpret format or select
 				url += (cryptii.view.viewMode == 1 ? '/select' : '/' + interpretFormat);
@@ -720,7 +720,7 @@
 
 				// push state
 				return {
-					title: 'Cryptii — ' + interpretFormatDef.title + ' to ' + convertFormatDef.title,
+					title: 'Cryptii — Convert ' + interpretFormatDef.title + ' to ' + convertFormatDef.title,
 					url: url
 				};
 			}
@@ -773,36 +773,58 @@
 
 		updateUrl: function()
 		{
-			var state = cryptii.view.getHistoryState();
-
 			// don't update url during this period (prevent loops)
 			if (cryptii.view.pauseTrackingAndProvokingUrlChanges)
 				return;
 
+			var state = cryptii.view.getHistoryState();
+			var currentState = History.getState();
+
+			cryptii.view.pauseTrackingAndProvokingUrlChanges = true;
+
 			// read hash
-			var urlParts = History.getState().hash.split('?');
+			var urlParts = currentState.hash.split('?');
 			var currentUrl = urlParts[0];
+			var currentTitle = currentState.title;
 
 			// is this a new state
-			if (state != null && currentUrl != state.url) {
+			if (state != null
+				&& currentUrl != state.url
+				&& currentTitle != state.title)
+			{
 				// push state
 				History.pushState({},
 					state.title,
 					state.url);
+
 				// track pageview
 				_gaq.push(['_trackPageview']);
 			}
+			else if (
+				currentUrl != state.url
+				&& currentTitle == state.title)
+			{
+				// replace state
+				//  the user just went back to the format
+				//  nothing changed
+				History.replaceState({},
+					state.title,
+					state.url);
+			}
+
+			// finished posting url changes
+			cryptii.view.pauseTrackingAndProvokingUrlChanges = false;
 		},
 
 		urlHasChangedEvent: function()
 		{
-			var state = History.getState();
-
 			// prevent url changes to cause new url changes (prevent loops)
 			if (cryptii.view.pauseTrackingAndProvokingUrlChanges)
 				return;
 
 			cryptii.view.pauseTrackingAndProvokingUrlChanges = true;
+
+			var state = History.getState();
 
 			// read hash
 			var hashParts = state.hash.split('?');
