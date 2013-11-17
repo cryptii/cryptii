@@ -779,8 +779,9 @@
 				//  http://stackoverflow.com/questions/3235219
 				.replace(/%2F/g, '%19');
 
-			// append rel
+			// append campain and content for stats
 			url += '?utm_campaign=share_link';
+			url += '&utm_content=' + interpretFormat + '_' + convertFormat;
 
 			return url;
 		},
