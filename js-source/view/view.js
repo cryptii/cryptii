@@ -780,9 +780,7 @@
 				.replace(/%2F/g, '%19');
 
 			// append campain and content for stats
-			url += '?utm_source=share_link';
-			url += '&utm_medium=referral';
-			url += '&utm_content=' + interpretFormat + '_' + convertFormat;
+			url += '?utm_medium=share_link';
 
 			return url;
 		},
