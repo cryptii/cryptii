@@ -615,48 +615,48 @@
 						.attr('target', '_blank')
 						.attr('title', 'Read more about ' + convertFormatDef.title)
 						.text(convertFormatDef.title));
-
-				// code link
-				cryptii.view.$convertToolbox.append(
-					$(document.createElement('a'))
-						.addClass('code')
-						.attr('href', githubFormatCodeBaseUrl + convertFormat + '.js')
-						.attr('target', '_blank')
-						.attr('title', 'Show source code')
-						.text('Show source code'));
-
-				// separator
-				cryptii.view.$convertToolbox.append(
-					$(document.createElement('span'))
-						.addClass('separator'));
-
-				// share container
-				var shareLinkInput = $(document.createElement('input'))
-					.attr('type', 'text')
-					.css({ display: 'none' })
-					.addClass('share-link')
-					.focusout(function() {
-						$(this).hide();
-					});
-
-				cryptii.view.$convertToolbox.append(shareLinkInput);
-
-				// share button
-				cryptii.view.$convertToolbox.append(
-					$(document.createElement('a'))
-						.addClass('share')
-						.attr('href', 'javascript:void(0);')
-						.attr('title', 'Share')
-						.click(function() {
-							shareLinkInput.toggle();
-							if (shareLinkInput.is(":visible"))
-							{
-								shareLinkInput.val(cryptii.view.getShareUrl());
-								shareLinkInput.select();
-							}
-						})
-						.text('Share'));
 			}
+
+			// code link
+			cryptii.view.$convertToolbox.append(
+				$(document.createElement('a'))
+					.addClass('code')
+					.attr('href', githubFormatCodeBaseUrl + convertFormat + '.js')
+					.attr('target', '_blank')
+					.attr('title', 'Show source code')
+					.text('Show source code'));
+
+			// separator
+			cryptii.view.$convertToolbox.append(
+				$(document.createElement('span'))
+					.addClass('separator'));
+
+			// share container
+			var shareLinkInput = $(document.createElement('input'))
+				.attr('type', 'text')
+				.css({ display: 'none' })
+				.addClass('share-link')
+				.focusout(function() {
+					$(this).hide();
+				});
+
+			cryptii.view.$convertToolbox.append(shareLinkInput);
+
+			// share button
+			cryptii.view.$convertToolbox.append(
+				$(document.createElement('a'))
+					.addClass('share')
+					.attr('href', 'javascript:void(0);')
+					.attr('title', 'Share')
+					.click(function() {
+						shareLinkInput.toggle();
+						if (shareLinkInput.is(":visible"))
+						{
+							shareLinkInput.val(cryptii.view.getShareUrl());
+							shareLinkInput.select();
+						}
+					})
+					.text('Share'));
 		},
 
 		updateView: function()
