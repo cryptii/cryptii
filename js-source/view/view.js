@@ -20,12 +20,14 @@
 		$interpretOptions: null,
 		$interpretSelection: null,
 		$interpretToolbox: null,
+		$interpretByteSpan: null,
 
 		$outputField: null,
 		$outputFieldContainer: null,
 		$convertOptions: null,
 		$convertSelection: null,
 		$convertToolbox: null,
+		$convertByteSpan: null,
 
 		$interpretFormatSpan: null,
 		$convertFormatSpan: null,
@@ -124,6 +126,9 @@
 					cryptii.view.$inputField,
 					cryptii.view.$interpretToolbox);
 
+			cryptii.view.$interpretByteSpan = $(document.createElement('span'))
+				.addClass('bytes');
+
 			var $input = $(document.createElement('div'))
 				.attr('id', 'input')
 				.append(
@@ -149,6 +154,9 @@
 				.append(
 					cryptii.view.$outputField,
 					cryptii.view.$convertToolbox);
+
+			cryptii.view.$convertByteSpan = $(document.createElement('span'))
+				.addClass('bytes');
 
 			var $output = $(document.createElement('div'))
 				.attr('id', 'output')
@@ -229,6 +237,9 @@
 			else
 				// html result
 				cryptii.view.$outputField.html(result.resultHtml);
+
+			// update byte span
+			cryptii.view.$convertByteSpan.text(result.result.length);
 		},
 
 		elementsForViewMode: function(viewMode)
@@ -314,7 +325,7 @@
 			cryptii.view.$contentHeightMeasurement.text(content);
 			// apply minimum content height
 			var height = Math.max(
-				cryptii.view.$contentHeightMeasurement.height() + 30,
+				cryptii.view.$contentHeightMeasurement.height() + 35,
 				cryptii.options.minimumContentHeight);
 			// update height
 			cryptii.view.$inputTextarea.height(height - 4);
@@ -582,7 +593,14 @@
 			cryptii.view.$interpretToolbox.html('');
 			cryptii.view.$convertToolbox.html('');
 
+			//
 			// interpret toolbox
+			//
+
+			// bytes count
+			cryptii.view.$interpretToolbox.append(
+				cryptii.view.$interpretByteSpan);
+
 			if (interpretFormatDef.url != null) {
 
 				// help link
@@ -593,18 +611,25 @@
 						.attr('target', '_blank')
 						.attr('title', 'Read more about ' + interpretFormatDef.title)
 						.text(interpretFormatDef.title));
-
-				// code link
-				cryptii.view.$interpretToolbox.append(
-					$(document.createElement('a'))
-						.addClass('code')
-						.attr('href', githubFormatCodeBaseUrl + interpretFormat + '.js')
-						.attr('target', '_blank')
-						.attr('title', 'Show source code')
-						.text('Show source code'));
 			}
 
+			// code link
+			cryptii.view.$interpretToolbox.append(
+				$(document.createElement('a'))
+					.addClass('code')
+					.attr('href', githubFormatCodeBaseUrl + interpretFormat + '.js')
+					.attr('target', '_blank')
+					.attr('title', 'Show source code')
+					.text('Show source code'));
+
+			//
 			// convert toolbox
+			//
+
+			// bytes count
+			cryptii.view.$convertToolbox.append(
+				cryptii.view.$convertByteSpan);
+
 			if (convertFormatDef.url != null) {
 
 				// help link
@@ -662,31 +687,43 @@
 		updateView: function()
 		{
 			if (cryptii.view.hasInputContentChanged)
+			{
 				// update heights
 				cryptii.view.updateContentHeight();
 
-			if (cryptii.view.hasFormatChanged) {
+				// update byte span
+				cryptii.view.$interpretByteSpan.text(
+					cryptii.view.getInputContent().length);
+			}
+
+			if (cryptii.view.hasFormatChanged)
+			{
 				// update format titles
 				cryptii.view.$interpretFormatSpan.text(
 					cryptii.conversion.formats[cryptii.conversion.interpretFormat].title);
 				cryptii.view.$convertFormatSpan.text(
 					cryptii.conversion.formats[cryptii.conversion.convertFormat].title);
+
 				// update toolbox
 				cryptii.view.updateToolbox();
+
 				// update options
 				cryptii.view.updateOptions();
 			}
 
 			if (cryptii.view.hasInputContentChanged
-				|| cryptii.view.hasFormatChanged) {
+				|| cryptii.view.hasFormatChanged)
+			{
 
 				if (cryptii.view.viewMode != 0)
+
 					// update selections
 					cryptii.view.updateSelections();
 
 				// reset
 				cryptii.view.hasInputContentChanged = false;
 				cryptii.view.hasFormatChanged = false;
+
 				// update last input content
 				cryptii.view.lastInputContent = cryptii.view.getInputContent();
 			}
@@ -720,7 +757,7 @@
 
 				// push state
 				return {
-					title: 'Cryptii — Convert ' + interpretFormatDef.title + ' to ' + convertFormatDef.title,
+					title: interpretFormatDef.title + ' to ' + convertFormatDef.title + ' — Cryptii',
 					url: url
 				};
 			}

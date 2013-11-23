@@ -343,7 +343,7 @@ h1 a {
 
 #outputField {
 	min-height: 170px;
-	padding-bottom: 50px;
+	padding-bottom: 55px;
 }
 
 #interpretToolbox,
@@ -362,6 +362,20 @@ h1 a {
 	height: 16px;
 	border-left: 1px solid #bbbbbb;
 	margin: 2px 2px 2px 8px;
+	float: right;
+}
+
+#interpretToolbox .bytes,
+#convertToolbox .bytes {
+	display: inline-block;
+	background: #707070;
+	border-radius: 8px;
+	padding: 0 6px;
+	height: 16px;
+	margin: 2px 2px 2px 6px;
+	color: #e0e0e0;
+	font-size: 12px;
+	line-height: 16px;
 	float: right;
 }
 
