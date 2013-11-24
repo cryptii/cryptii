@@ -599,7 +599,9 @@
 
 			// bytes count
 			cryptii.view.$interpretToolbox.append(
-				cryptii.view.$interpretByteSpan);
+				cryptii.view.$interpretByteSpan,
+				$(document.createElement('span'))
+					.addClass('separator'));
 
 			if (interpretFormatDef.url != null) {
 
@@ -628,7 +630,9 @@
 
 			// bytes count
 			cryptii.view.$convertToolbox.append(
-				cryptii.view.$convertByteSpan);
+				cryptii.view.$convertByteSpan,
+				$(document.createElement('span'))
+					.addClass('separator'));
 
 			if (convertFormatDef.url != null) {
 
