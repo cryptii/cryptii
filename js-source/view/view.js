@@ -820,8 +820,8 @@
 				//  http://stackoverflow.com/questions/3235219
 				.replace(/%2F/g, '%19');
 
-			// append campain and content for stats
-			url += '?utm_medium=share_link';
+			// append ref parameter for stats
+			url += '?ref=share_link';
 
 			return url;
 		},
