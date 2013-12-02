@@ -136,6 +136,9 @@ else if ($url != '/')
 
 	$title = null;
 
+	if (!$_convert_format)
+		$_convert_format = 'select';
+
 	// interpret url
 	if ($formats[$_interpret_format]
 		&& $formats[$_convert_format])
