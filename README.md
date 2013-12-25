@@ -16,16 +16,16 @@ In case you want to edit and test the application scripts, use the `source.html`
 ## URL structure
 Cryptii supports reading content, interpret format and convert format with their options from the given URL. This makes it possible for you to generate URLs in third-party applications.
 
-The basic URL structure looks [like following](http://cryptii.com/caesar;shift:12/text/FTUE%20UE%20M%20FQEF%20RAD%20SUFTGN.):
+The basic URL structure looks like following ([example link](http://cryptii.com/caesar;shift:12/text/FTUE%20UE%20M%20FQEF%20RAD%20SUFTGN.)):
 <pre>
 http://cryptii.com/[format];[options]/[format];[options]/[content]
 </pre>
 
 | Placeholder  | Description   |
 | ------------ | ------------- |
-| `format`     | Describes the interpret (first) or convert (second) format. If you want to open the interpret or convert format selection, just replace the format by the magic word `select`. |
+| `format`     | Describes the interpret (first) or convert (second) format. If you want to open the interpret or convert format selection, just replace the format by the magic word *select*. |
 | `options`    | Options applied on the given format. Find the option definition for each format in the [format source code](https://github.com/the2f/Cryptii/tree/master/js-source/conversion/formats). Syntax: `[opt]:[val];` |
-| `content`     | Url encoded (`rawurlencode` in php) content. |
+| `content`     | Url encoded (rawurlencode in php) content. |
 
 ## License
 The MIT License (MIT)
