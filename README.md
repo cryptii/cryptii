@@ -1,3 +1,8 @@
+**This version of Cryptii is no longer in active development**.<br>
+Find the new repository here: [Cryptii/Cryptii](https://github.com/Cryptii/Cryptii).
+
+---
+
 Cryptii
 =======
 Don't leave your messages plaintext on public places.
