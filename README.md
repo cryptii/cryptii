@@ -6,7 +6,7 @@ Find the new repository here: [Cryptii/Cryptii](https://github.com/Cryptii/Crypt
 Cryptii
 =======
 Don't leave your messages plaintext on public places.
-Cryptii is an OpenSource web application under the MIT license where you can convert, encrypt and decrypt content between different format systems.
+Cryptii is an OpenSource web application under the MIT license where you can convert, encode and decode content between different format systems.
 This happens fully in your browser using JavaScript, no content will be sent to any kind of server.
 In addition, you can download and use this web app offline as described below.
 Any feedback appreciated, just leave me a tweet or contribute to this project.
