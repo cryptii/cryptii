@@ -1,0 +1,9 @@
+
+.brick {
+  padding: 20px;
+  background: $c-white;
+  box-shadow: 0 1px 3px 0 rgba($c-black, 0.10);
+  border-radius: 3px;
+  min-width: 320px;
+  min-height: 320px;
+}
