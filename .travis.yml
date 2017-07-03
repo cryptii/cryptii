@@ -1,0 +1,7 @@
+language: node_js
+rvm:
+  - 2.2
+before_script:
+  - npm install -g gulp
+  - gem install sass
+script: gulp test && gulp build
