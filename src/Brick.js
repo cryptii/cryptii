@@ -40,6 +40,11 @@ export default class Brick {
    * @return {Brick} Fluent interface
    */
   registerSetting (...settingOrSpec) {
+    // resolve single arg (preventing infinite loop)
+    if (settingOrSpec.length === 1) {
+      settingOrSpec = settingOrSpec[0]
+    }
+
     // handle multiple settings or specifications
     if (Array.isArray(settingOrSpec)) {
       settingOrSpec.forEach(settingOrSpec =>
@@ -86,6 +91,35 @@ export default class Brick {
       throw new Error(`Unknown Setting with name '${setting.getName()}'`)
     }
     return setting.getValue()
+  }
+
+  /**
+   * Convenience method for finding a Setting and setting its value.
+   * @param {string} name Setting name to search for.
+   * @param {mixed} value Setting value
+   * @throws Throws an error if Setting with given name does not exist.
+   * @return {Brick} Fluent interface
+   */
+  setSettingValue (name, value) {
+    const setting = this.findSetting(name)
+    if (setting === null) {
+      throw new Error(`Unknown Setting with name '${setting.getName()}'`)
+    }
+    setting.setValue(value)
+    return this
+  }
+
+  /**
+   * Sets multiple Setting values by Object.
+   * @param {Object} settings Object mapping Setting names to their values.
+   * @throws Throws an error if Setting with given name does not exist.
+   * @return {Brick} Fluent interface
+   */
+  setSettingValues (nameValuePairs) {
+    // set each setting value
+    Object.keys(nameValuePairs).forEach(name =>
+      this.setSettingValue(name, nameValuePairs[name]))
+    return this
   }
 
   /**

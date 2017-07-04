@@ -127,6 +127,23 @@ export default class Chain {
   }
 
   /**
+   * Returns a string describing the content of this Chain.
+   * @return {string}
+   */
+  getDescription () {
+    if (this._string !== null) {
+      return `String(${this._string})`
+    } else if (this._codePoints !== null) {
+      return `CodePoints(${this._codePoints.join(', ')})`
+    } else {
+      let string = this._bytes.reduce((string, byte) => {
+        return string + ('0' + byte.toString(16)).slice(-2)
+      })
+      return `Bytes(${string})`
+    }
+  }
+
+  /**
    * Returns wether given value is contained.
    * @param {Chain|string} value Value to search for.
    * @return {boolean}
