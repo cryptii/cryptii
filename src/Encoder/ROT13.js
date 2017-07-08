@@ -33,14 +33,15 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
   }
 
   /**
-   * Performs encode on given character, index and content.
+   * Performs encode or decode on given character, index and content.
    * @protected
    * @param {number} codePoint Unicode code point
    * @param {number} index Unicode code point index inside content.
-   * @param {Chain} content Content to be encoded.
-   * @return {number} Encoded Unicode code point
+   * @param {Chain} content Content to be translated.
+   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @return {number} Resulting Unicode code point
    */
-  encodeChar (codePoint, index, content) {
+  performCharTranslate (codePoint, index, content, isEncode) {
     let variant = this.getSettingValue('variant')
 
     if (variant === 'rot5' || variant === 'rot18') {
@@ -81,18 +82,5 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
       }
     }
     return codePoint
-  }
-
-  /**
-   * Performs decode on given character, index and content.
-   * @protected
-   * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content.
-   * @param {Chain} content Content to be decoded.
-   * @return {number} Decoded Unicode code point
-   */
-  decodeChar (codePoint, index, content) {
-    // decoding is the same as encoding
-    return this.encodeChar(codePoint, index, content)
   }
 }

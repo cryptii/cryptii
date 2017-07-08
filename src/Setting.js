@@ -10,13 +10,13 @@ export default class Setting {
    * @param {string} name
    * @param {Object} [spec]
    * @param {mixed} [spec.value] Default Setting value.
-   * @param {function(setting: Setting, rawValue: mixed): boolean}
+   * @param {function(rawValue: mixed, setting: Setting): boolean}
    * [spec.validateValue] Function to execute whenever a value
    * gets validated, returns true if valid.
-   * @param {function(setting: Setting, rawValue: mixed): mixed}
+   * @param {function(rawValue: mixed, setting: Setting): mixed}
    * [spec.filterValue] Function to execute whenever a value
    * gets filtered, returns filtered value.
-   * @param {function(setting: Setting, random: Random): mixed}
+   * @param {function(random: Random, setting: Setting): mixed}
    * [spec.randomizeValue] Function to execute whenever a random Setting value
    * gets requested, returns randomly chosen value.
    */
@@ -102,7 +102,6 @@ export default class Setting {
     // check if value changed
     if (this._value !== value) {
       this._value = value
-
       // notify delegate
       if (this.hasDelegate() && this.getDelegate() !== sender) {
         this.getDelegate().settingValueDidChange(this, value)
@@ -130,7 +129,7 @@ export default class Setting {
    */
   validateValue (rawValue) {
     if (this._validateValueCallback !== null) {
-      return this._validateValueCallback(this, rawValue)
+      return this._validateValueCallback(rawValue, this)
     }
     // generic Setting objects accept any value
     return true
@@ -145,7 +144,7 @@ export default class Setting {
    */
   filterValue (rawValue) {
     if (this._filterValueCallback !== null) {
-      return this._filterValueCallback(this, rawValue)
+      return this._filterValueCallback(rawValue, this)
     }
     // generic Setting objects don't filter
     return rawValue
@@ -170,7 +169,7 @@ export default class Setting {
    */
   randomizeValue (random) {
     if (this._randomizeValueCallback !== null) {
-      return this._randomizeValueCallback(this, random)
+      return this._randomizeValueCallback(random, this)
     }
     // generic Setting objects don't know how to choose a random value
     // leave the current value as is

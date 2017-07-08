@@ -58,7 +58,7 @@ export default class Brick {
       : SettingFactory.getInstance().create(settingOrSpec)
 
     // check if name already exists
-    if (this.findSetting(setting.getName()) !== null) {
+    if (this.getSetting(setting.getName()) !== null) {
       throw new Error(
         `Setting with name '${setting.getName()}' has already ` +
         `been registered to Brick.`)
@@ -75,7 +75,7 @@ export default class Brick {
    * @param {string} name Setting name to search for.
    * @return {?Setting} Returns Setting or null if not found.
    */
-  findSetting (name) {
+  getSetting (name) {
     return this._settings.find(setting => setting.getName() === name) || null
   }
 
@@ -86,7 +86,7 @@ export default class Brick {
    * @return {mixed} Setting value.
    */
   getSettingValue (name) {
-    const setting = this.findSetting(name)
+    const setting = this.getSetting(name)
     if (setting === null) {
       throw new Error(`Unknown Setting with name '${setting.getName()}'`)
     }
@@ -101,7 +101,7 @@ export default class Brick {
    * @return {Brick} Fluent interface
    */
   setSettingValue (name, value) {
-    const setting = this.findSetting(name)
+    const setting = this.getSetting(name)
     if (setting === null) {
       throw new Error(`Unknown Setting with name '${setting.getName()}'`)
     }
@@ -111,7 +111,7 @@ export default class Brick {
 
   /**
    * Sets multiple Setting values by Object.
-   * @param {Object} settings Object mapping Setting names to their values.
+   * @param {Object} nameValuePairs Object mapping Setting names to values.
    * @throws Throws an error if Setting with given name does not exist.
    * @return {Brick} Fluent interface
    */

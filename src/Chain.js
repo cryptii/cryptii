@@ -153,6 +153,17 @@ export default class Chain {
   }
 
   /**
+   * Returns the first index at which a given code point can be found
+   * and -1 if not found.
+   * @param {number} codePoint Unicode code point to search for.
+   * @param {number} [start] Index to start the search at.
+   * @return {number} Code point index; -1 if not found.
+   */
+  indexOfCodePoint (codePoint, start = undefined) {
+    return this._codePoints.indexOf(codePoint, start)
+  }
+
+  /**
    * Returns the first index at which a given element can be found
    * and -1 if not found.
    * @param {string|Chain} value Search element
@@ -264,6 +275,18 @@ export default class Chain {
       equal = first.isEqualTo(chains[i])
     }
     return equal
+  }
+
+  /**
+   * Wraps value inside a Chain object if it is not already a Chain.
+   * @param {?number[]|string|Uint8Array|Chain} value
+   * @return {Chain}
+   */
+  static wrap (value) {
+    if (value instanceof Chain) {
+      return value
+    }
+    return new Chain(value)
   }
 
   /**

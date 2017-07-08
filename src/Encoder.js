@@ -1,5 +1,6 @@
 
 import Brick from './Brick'
+import Chain from './Chain'
 
 /**
  * Abstract Brick for encoding and decoding content.
@@ -7,23 +8,136 @@ import Brick from './Brick'
  */
 export default class Encoder extends Brick {
   /**
-   * Performs encode on given content.
-   * @abstract
-   * @param {Chain} content
-   * @return {Chain|Promise}
+   * Prepares and performs encode on given content.
+   * @param {number[]|string|Uint8Array|Chain} content
+   * @return {Chain|Promise} Encoded content
    */
   encode (content) {
-    // abstract method
+    content = Chain.wrap(content)
+    content = this.willEncode(content)
+    let result = this.performEncode(content)
+
+    if (result instanceof Chain) {
+      return this.didEncode(result)
+    } else {
+      return Promise.resolve(result).then(this.didEncode.bind(this))
+    }
+  }
+
+  /**
+   * Triggered before performing encode on given content.
+   * Calls {@link Encoder.willTranslate} by default.
+   * @protected
+   * @param {string} content
+   * @return {string} Filtered content
+   */
+  willEncode (content) {
+    return this.willTranslate(content, true)
+  }
+
+  /**
+   * Performs encode on given content.
+   * Calls {@link Encoder.performTranslate} by default.
+   * @protected
+   * @param {string} content
+   * @return {Chain|Promise} Encoded content
+   */
+  performEncode (content) {
+    return this.performTranslate(content, true)
+  }
+
+  /**
+   * Triggered after performing encode on given content.
+   * Calls {@link Encoder.didTranslate} by default.
+   * @protected
+   * @param {string} content
+   * @return {string} Filtered content
+   */
+  didEncode (content) {
+    return this.didTranslate(content, true)
+  }
+
+  /**
+   * Prepares and performs decode on given content.
+   * @param {number[]|string|Uint8Array|Chain} content
+   * @return {Chain|Promise} Decoded content
+   */
+  decode (content) {
+    content = Chain.wrap(content)
+    content = this.willDecode(content)
+    let result = this.performDecode(content)
+
+    if (result instanceof Chain) {
+      return this.didDecode(result)
+    } else {
+      return Promise.resolve(result).then(this.didDecode.bind(this))
+    }
+  }
+
+  /**
+   * Triggered before performing decode on given content.
+   * Calls {@link Encoder.willTranslate} by default.
+   * @protected
+   * @param {string} content
+   * @return {string} Filtered content
+   */
+  willDecode (content) {
+    return this.willTranslate(content, false)
   }
 
   /**
    * Performs decode on given content.
-   * @abstract
-   * @param {Chain} content
-   * @return {Chain|Promise}
+   * Calls {@link Encoder.performTranslate} by default.
+   * @protected
+   * @param {string} content
+   * @return {Chain|Promise} Decoded content
    */
-  decode (content) {
-    // abstract method
+  performDecode (content) {
+    return this.performTranslate(content, false)
+  }
+
+  /**
+   * Triggered after performing decode on given content.
+   * Calls {@link Encoder.didTranslate} by default.
+   * @protected
+   * @param {string} content
+   * @return {string} Filtered content
+   */
+  didDecode (content) {
+    return this.didTranslate(content, false)
+  }
+
+  /**
+   * Triggered before performing encode or decode on given content.
+   * @protected
+   * @param {string} content
+   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @return {string} Filtered content
+   */
+  willTranslate (content, isEncode) {
+    return content
+  }
+
+  /**
+   * Performs encode or decode on given content.
+   * @protected
+   * @param {string} content
+   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @return {Chain|Promise} Resulting content
+   */
+  performTranslate (content, isEncode) {
+    return content
+  }
+
+  /**
+   * Triggered after performing encode or decode on given content.
+   * @protected
+   * @param {string} content
+   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @return {string} Filtered content
+   */
+  didTranslate (content, isEncode) {
+    return content
   }
 
   /**
@@ -31,9 +145,10 @@ export default class Encoder extends Brick {
    * Override is required to call super.
    * @protected
    * @param {Setting} setting
+   * @param {mixed} value Setting value
    * @return {Encoder} Fluent interface
    */
-  settingValueDidChange (setting) {
+  settingValueDidChange (setting, value) {
     // notify delegate
     this.hasPipe() && this.getPipe().encoderSettingDidChange(this)
     return this

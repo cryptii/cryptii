@@ -8,56 +8,63 @@ import Chain from '../Chain'
  */
 export default class SimpleSubstitutionEncoder extends Encoder {
   /**
-   * Performs encode on given content.
-   * @param {Chain} content
+   * Performs encode or decode on given content.
+   * @protected
+   * @param {string} content
+   * @param {boolean} isEncode True for encoding, false for decoding.
    * @return {Chain|Promise}
    */
-  encode (content) {
-    // encode each code point
-    // TODO reduce calls to encodeChar to a minimum (e.g. caching)
-    let encodedCodePoints = content.getCodePoints()
-      .map((codePoint, index) => this.encodeChar(codePoint, index, content))
-    // create new chain from encoded code points
-    return new Chain(encodedCodePoints)
+  performTranslate (content, isEncode) {
+    // encode or decode each code point
+    // TODO reduce calls to performCharEncode or performCharDecode
+    // to a minimum (e.g. caching)
+    let resultingCodePoints =
+      content.getCodePoints().map((codePoint, index) => {
+        return isEncode
+          ? this.performCharEncode(codePoint, index, content)
+          : this.performCharDecode(codePoint, index, content)
+      })
+
+    // create new chain from resulting code points
+    return new Chain(resultingCodePoints)
   }
 
   /**
    * Performs encode on given character, index and content.
-   * @abstract
+   * Calls {@link SimpleSubstitutionEncoder.performCharTranslate} by default.
    * @protected
    * @param {number} codePoint Unicode code point
    * @param {number} index Unicode code point index inside content.
    * @param {Chain} content Content to be encoded.
    * @return {number} Encoded Unicode code point
    */
-  encodeChar (codePoint, index, content) {
-    // abtract method
-  }
-
-  /**
-   * Performs decode on given content.
-   * @param {Chain} content
-   * @return {Chain|Promise}
-   */
-  decode (content) {
-    // decode each code point
-    // TODO reduce calls to decodeChar to a minimum (e.g. caching)
-    let decodedCodePoints = content.getCodePoints()
-      .map((codePoint, index) => this.decodeChar(codePoint, index, content))
-    // create new chain from decoded code points
-    return new Chain(decodedCodePoints)
+  performCharEncode (codePoint, index, content) {
+    return this.performCharTranslate(codePoint, index, content, true)
   }
 
   /**
    * Performs decode on given character, index and content.
-   * @abstract
+   * Calls {@link SimpleSubstitutionEncoder.performCharTranslate} by default.
    * @protected
    * @param {number} codePoint Unicode code point
    * @param {number} index Unicode code point index inside content.
    * @param {Chain} content Content to be decoded.
    * @return {number} Decoded Unicode code point
    */
-  decodeChar (codePoint, index, content) {
-    // abtract method
+  performCharDecode (codePoint, index, content) {
+    return this.performCharTranslate(codePoint, index, content, false)
+  }
+
+  /**
+   * Performs encode or decode on given character, index and content.
+   * @protected
+   * @param {number} codePoint Unicode code point
+   * @param {number} index Unicode code point index inside content.
+   * @param {Chain} content Content to be translated.
+   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @return {number} Resulting Unicode code point
+   */
+  performCharTranslate (codePoint, index, content, isEncode) {
+    return codePoint
   }
 }

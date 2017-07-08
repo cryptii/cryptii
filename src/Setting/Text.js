@@ -11,8 +11,8 @@ export default class TextSetting extends Setting {
    * @param {string} name
    * @param {Object} [spec]
    * @param {mixed} [spec.options] Setting options
-   * @param {?number} [spec.options.minLength=null] Minimum string length
-   * @param {?number} [spec.options.maxLength=null] Maximum string length
+   * @param {?number} [spec.options.minLength=null] Minimum amount of characters
+   * @param {?number} [spec.options.maxLength=null] Maximum amount of characters
    * @param {?number[]} [spec.options.allowedCodePoints=null]
    * Restricts text to given Unicode code points.
    * @param {boolean} [spec.options.caseSensitivity=false]
@@ -145,7 +145,7 @@ export default class TextSetting extends Setting {
     let valid = true
     if (this._allowedChars !== null) {
       let i = -1
-      while (valid && ++i < value.length) {
+      while (valid && ++i < value.getLength()) {
         valid = this._allowedChars.contains(value.getCharAt(i))
       }
     }
@@ -163,9 +163,7 @@ export default class TextSetting extends Setting {
    * @return {mixed} Filtered value
    */
   filterValue (rawValue) {
-    if (!(rawValue instanceof Chain)) {
-      rawValue = new Chain(rawValue.toString())
-    }
+    rawValue = Chain.wrap(rawValue)
     if (this._caseSensitivity === false) {
       rawValue = rawValue.toLowerCase()
     }
