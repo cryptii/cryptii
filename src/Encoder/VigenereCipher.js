@@ -5,36 +5,23 @@ import SimpleSubstitutionEncoder from './SimpleSubstitution'
 const defaultAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 /**
- * Encoder Brick for Affine Cipher encoding and decoding.
+ * Encoder Brick for Vigenère cipher encoding and decoding.
  */
-export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
+export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
   /**
    * Encoder constructor
    */
   constructor () {
     super()
 
-    // linear function
-    // f(x) = ax + b
-
     this.registerSetting([
       {
-        name: 'a',
-        type: 'number',
-        value: 5,
-        validateValue: this.validateSlopeValue.bind(this),
+        name: 'key',
+        type: 'text',
+        value: 'cryptii',
         options: {
-          integer: true,
-          min: 1
-        }
-      },
-      {
-        name: 'b',
-        type: 'number',
-        value: 8,
-        options: {
-          integer: true,
-          min: 1
+          allowedChars: defaultAlphabet,
+          minLength: 2
         }
       },
       {
@@ -45,7 +32,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       {
         name: 'caseSensitivity',
         type: 'boolean',
-        value: true
+        value: false
       },
       {
         name: 'includeForeignChars',
@@ -78,14 +65,11 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
    * @return {number} Resulting Unicode code point
    */
   performCharTranslate (codePoint, index, content, isEncode) {
-    let a = this.getSettingValue('a')
-    let b = this.getSettingValue('b')
     let alphabet = this.getSettingValue('alphabet')
-    let m = alphabet.getLength()
-    let x = alphabet.indexOfCodePoint(codePoint)
+    let charIndex = alphabet.indexOfCodePoint(codePoint)
 
-    if (x === -1) {
-      // character not in alphabet
+    if (charIndex === -1) {
+      // characters not in alphabet
       if (!this.getSettingValue('includeForeignChars')) {
         // return null character
         return 0
@@ -95,18 +79,17 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       }
     }
 
-    let y
+    // get key code point for this character index
+    let key = this.getSettingValue('key')
+    let keyIndex = MathUtil.mod(index, key.getLength())
+    let keyCodePoint = key.getCodePointAt(keyIndex)
 
-    if (isEncode) {
-      // E(x) = (ax + b) mod m
-      y = MathUtil.mod(a * x + b, m)
-    } else {
-      // D(x) = (a^-1(x - b)) mod m
-      let [c] = MathUtil.xgcd(a, m)
-      y = MathUtil.mod(c * (x - b), m)
-    }
+    // determine shift by position in alphabet and inverse it if decoding
+    let shift = alphabet.indexOfCodePoint(keyCodePoint) * (isEncode ? 1 : -1)
 
-    return alphabet.getCodePointAt(y)
+    // shift character index
+    charIndex = MathUtil.mod(charIndex + shift, alphabet.getLength())
+    return alphabet.getCodePointAt(charIndex)
   }
 
   /**
@@ -119,25 +102,15 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
       case 'alphabet':
-        // changing the alphabet setting value can invalidate the slope setting
-        this.getSetting('a').revalidateValue()
+        // update allowed chars of key setting
+        this.getSetting('key').setAllowedChars(value)
         break
       case 'caseSensitivity':
-        // also set case sensitivity on the alphabet setting
+        // also set case sensitivity on alphabet and key setting
         this.getSetting('alphabet').setCaseSensitivity(value)
+        this.getSetting('key').setCaseSensitivity(value)
         break
     }
     return super.settingValueDidChange(setting)
-  }
-
-  /**
-   * Validates slope (a) setting value.
-   * @param {number} a
-   * @return {boolean}
-   */
-  validateSlopeValue (a) {
-    // the value a must be chosen such that a and m are coprime.
-    let m = this.getSettingValue('alphabet').getLength()
-    return MathUtil.isCoprime(a, m)
   }
 }

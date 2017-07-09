@@ -4,6 +4,7 @@ import Factory from '../Factory'
 // package bricks
 import AffineCipherEncoder from '../Encoder/AffineCipher'
 import ROT13Encoder from '../Encoder/ROT13'
+import VigenereCipherEncoder from '../Encoder/VigenereCipher'
 
 // singleton instance
 let instance = null
@@ -21,6 +22,7 @@ export default class BrickFactory extends Factory {
     // register package bricks
     this.register('affine-cipher', AffineCipherEncoder)
     this.register('rot13', ROT13Encoder)
+    this.register('vigenere-cipher', VigenereCipherEncoder)
   }
 
   /**

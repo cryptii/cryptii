@@ -1,6 +1,7 @@
 
-import Setting from '../Setting'
 import Chain from '../Chain'
+import TextEncoder from '../TextEncoder'
+import Setting from '../Setting'
 
 /**
  * Text Setting.
@@ -20,6 +21,8 @@ export default class TextSetting extends Setting {
    */
   constructor (name, spec = {}) {
     super(name, spec)
+
+    this._value = Chain.wrap(spec.value || null)
 
     this._minLength = null
     this._maxLength = null
@@ -85,16 +88,21 @@ export default class TextSetting extends Setting {
 
   /**
    * Restricts text to given Unicode code points.
-   * @param {?number[]|Chain} allowedChars
+   * @param {?number[]|string|Chain} allowedChars
    * @return {TextSetting} Fluent interface
    */
   setAllowedChars (allowedChars) {
     if (this._allowedChars === allowedChars) {
       return this
     }
-    this._allowedChars = (allowedChars instanceof Chain)
-      ? allowedChars.getCodePoints()
-      : allowedChars
+
+    if (typeof allowedChars === 'string') {
+      allowedChars = TextEncoder.codePointsFromString(allowedChars)
+    } else if (allowedChars instanceof Chain) {
+      allowedChars = allowedChars.getCodePoints()
+    }
+
+    this._allowedChars = allowedChars
     return this.revalidateValue()
   }
 
@@ -112,7 +120,7 @@ export default class TextSetting extends Setting {
    * @return {TextSetting} Fluent interface
    */
   setCaseSensitivity (caseSensitivity) {
-    if (this._caseSensitivity !== caseSensitivity) {
+    if (this._caseSensitivity === caseSensitivity) {
       return this
     }
     this._caseSensitivity = caseSensitivity
@@ -146,7 +154,7 @@ export default class TextSetting extends Setting {
     if (this._allowedChars !== null) {
       let i = -1
       while (valid && ++i < value.getLength()) {
-        valid = this._allowedChars.contains(value.getCharAt(i))
+        valid = this._allowedChars.indexOf(value.getCodePointAt(i)) !== -1
       }
     }
 

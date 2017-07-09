@@ -160,7 +160,7 @@ export default class Chain {
    * @return {number} Code point index; -1 if not found.
    */
   indexOfCodePoint (codePoint, start = undefined) {
-    return this._codePoints.indexOf(codePoint, start)
+    return this.getCodePoints().indexOf(codePoint, start)
   }
 
   /**

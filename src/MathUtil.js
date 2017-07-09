@@ -10,7 +10,7 @@ export default class MathUtil {
    * @param {number} m
    * @return {number}
    */
-  static pmod (x, m) {
+  static mod (x, m) {
     m = m < 0 ? -m : m
     let r = x % m
     return (r < 0 ? r + m : r)
