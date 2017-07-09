@@ -44,11 +44,29 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
         value: defaultAlphabet
       },
       {
+        name: 'caseSensitivity',
+        type: 'boolean',
+        value: true
+      },
+      {
         name: 'includeForeignChars',
         type: 'boolean',
         value: true
       }
     ])
+  }
+
+  /**
+   * Triggered before performing encode or decode on given content.
+   * @protected
+   * @param {string} content
+   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @return {string} Filtered content
+   */
+  willTranslate (content, isEncode) {
+    return !this.getSettingValue('caseSensitivity')
+      ? content.toLowerCase()
+      : content
   }
 
   /**
@@ -100,9 +118,15 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
    * @return {Encoder} Fluent interface
    */
   settingValueDidChange (setting, value) {
-    if (setting.getName() === 'alphabet') {
-      // changing the alphabet setting value can invalidate the slope setting
-      this.getSetting('a').revalidateValue()
+    switch (setting.getName()) {
+      case 'alphabet':
+        // changing the alphabet setting value can invalidate the slope setting
+        this.getSetting('a').revalidateValue()
+        break
+      case 'caseSensitivity':
+        // also set case sensitivity on the alphabet setting
+        this.getSetting('alphabet').setCaseSensitivity(value)
+        break
     }
     return super.settingValueDidChange(setting)
   }
