@@ -16,10 +16,11 @@ export default class PipeView extends View {
   }
 
   /**
-   * Builds view.
-   * @return {PipeView} Fluent interface
+   * Renders view.
+   * @protected
+   * @return {HTMLElement}
    */
-  build () {
+  render () {
     let $track = document.createElement('div')
     $track.classList.add('pipe__track')
 
@@ -35,8 +36,7 @@ export default class PipeView extends View {
     $root.appendChild($header)
     $root.appendChild(this._$content)
 
-    this._$root = $root
-    return this
+    return $root
   }
 
   /**

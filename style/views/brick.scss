@@ -1,9 +1,19 @@
 
 .brick {
-  padding: 20px;
   background: $c-white;
   box-shadow: 0 1px 3px 0 rgba($c-black, 0.10);
   border-radius: 3px;
   min-width: 320px;
   min-height: 320px;
+
+  &__header {
+    padding: 24px;
+    height: 104px;
+    border-bottom: 1px solid $c-line;
+  }
+
+  &__title {
+    @extend %t-brick-headline;
+    color: $c-primary;
+  }
 }

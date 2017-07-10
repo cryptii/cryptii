@@ -11,6 +11,7 @@ export default class View {
     this._$root = null
     this._superview = null
     this._subviews = []
+    this._delegate = null
   }
 
   /**
@@ -19,18 +20,18 @@ export default class View {
    */
   getElement () {
     if (this._$root === null) {
-      this.build()
+      this._$root = this.render()
     }
     return this._$root
   }
 
   /**
-   * Builds view.
-   * @return {View} Fluent interface
+   * Renders view.
+   * @protected
+   * @return {HTMLElement}
    */
-  build () {
-    this._$root = document.createElement('div')
-    return this
+  render () {
+    return document.createElement('div')
   }
 
   /**
@@ -115,6 +116,32 @@ export default class View {
    */
   setSuperview (view) {
     this._superview = view
+    return this
+  }
+
+  /**
+   * Returns the delegate.
+   * @return {?Object}
+   */
+  getDelegate () {
+    return this._delegate
+  }
+
+  /**
+   * Returns true, if delegate is set.
+   * @return {boolean} True, if delegate is set.
+   */
+  hasDelegate () {
+    return this._delegate !== null
+  }
+
+  /**
+   * Sets the delegate.
+   * @param {?Object} delegate
+   * @return {View} Fluent interface
+   */
+  setDelegate (delegate) {
+    this._delegate = delegate
     return this
   }
 }

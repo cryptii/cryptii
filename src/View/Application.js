@@ -6,13 +6,12 @@ import View from '../View'
  */
 export default class ApplicationView extends View {
   /**
-   * Builds view.
-   * @return {ApplicationView} Fluent interface
+   * Renders view.
+   * @protected
+   * @return {HTMLElement}
    */
-  build () {
-    // attach to existing element
-    let $root = document.querySelector('.application')
-    this._$root = $root
-    return this
+  render () {
+    // use existing element
+    return document.querySelector('.application')
   }
 }

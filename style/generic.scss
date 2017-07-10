@@ -1,6 +1,8 @@
 
 * {
   outline: none;
+  box-sizing: border-box;
+  transition-timing-function: ease;
 }
 
 html,
@@ -12,12 +14,28 @@ body {
 }
 
 body {
+  font-family: Roboto, sans-serif;
   background: $c-background;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
 a {
   text-decoration: inherit;
   color: inherit;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
 }

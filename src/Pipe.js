@@ -1,5 +1,6 @@
 
 import Brick from './Brick'
+import BrickFactory from './Factory/Brick'
 import PipeView from './View/Pipe'
 
 /**
@@ -10,9 +11,14 @@ export default class Pipe {
    * Creates empty Pipe.
    */
   constructor () {
+    // bricks
     this._bricks = []
+
+    // pipe meta
     this._title = null
     this._description = null
+
+    // view
     this._view = null
   }
 
@@ -26,25 +32,35 @@ export default class Pipe {
 
   /**
    * Adds Bricks to the end of the Pipe.
-   * @param {...Brick} bricks Bricks to be added.
+   * @param {...Brick|string} bricksOrNames Bricks to be added.
    * @return {Pipe} Fluent interface
    */
-  addBrick (...bricks) {
-    return this.insertBrick.apply(this, [-1].concat(bricks))
+  addBrick (...bricksOrNames) {
+    return this.insertBrick.apply(this, [-1].concat(bricksOrNames))
   }
 
   /**
    * Inserts Bricks at index.
    * @param {number} index Index to insert Bricks at.
-   * @param {...Brick} bricks Bricks to be inserted.
+   * @param {...Brick|string} bricksOrNames Bricks to be inserted.
    * @return {Pipe} Fluent interface
    */
-  insertBrick (index, ...bricks) {
+  insertBrick (index, ...bricksOrNames) {
+    // map brick names to actual brick instances
+    let bricks = bricksOrNames.map(brickOrName =>
+      typeof brickOrName === 'string'
+        ? BrickFactory.getInstance().create(brickOrName)
+        : brickOrName)
+
+    // insert brick instances
     this._bricks.splice.apply(this._bricks, [index, 0].concat(bricks))
+
+    // set brick delegate and add brick subview
     bricks.forEach(brick => {
       brick.setPipe(this)
       this.getView() && this.getView().addSubview(brick.getView())
     })
+
     return this
   }
 

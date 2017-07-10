@@ -1,6 +1,5 @@
 
 import ApplicationView from './View/Application'
-import Brick from './Brick'
 import Pipe from './Pipe'
 
 /**
@@ -22,8 +21,7 @@ export default class Application {
    * @return {Application} Fluent interface
    */
   run () {
-    this._pipe.addBrick(new Brick())
-    this._pipe.addBrick(new Brick())
+    this._pipe.addBrick('text', 'affine-cipher', 'text')
     return this
   }
 

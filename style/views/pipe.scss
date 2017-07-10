@@ -16,16 +16,16 @@
     flex-grow: 1;
     order: 1;
     position: relative;
-    margin: 50px;
+    margin: 48px;
   }
 
   &__brick {
-    margin: 0 25px;
+    margin: 0 24px;
   }
 
   &__track {
     position: absolute;
-    top: 5px;
+    top: 8px;
     left: 0;
     right: 0;
     height: $pipe-height;

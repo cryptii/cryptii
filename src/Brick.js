@@ -167,6 +167,7 @@ export default class Brick {
   getView () {
     if (this._view === null) {
       this._view = this.createView()
+      this._view.setDelegate(this)
     }
     return this._view
   }
@@ -177,8 +178,7 @@ export default class Brick {
    * @return {View} Newly created view.
    */
   createView () {
-    let view = new BrickView()
-    return view
+    return new BrickView()
   }
 
   /**
