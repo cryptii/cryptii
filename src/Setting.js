@@ -1,14 +1,19 @@
 
 import Random from './Random'
+import SettingView from './View/Setting'
+import StringUtil from './StringUtil'
+import Viewable from './Viewable'
 
 /**
  * Abstract setting.
  */
-export default class Setting {
+export default class Setting extends Viewable {
   /**
    * Setting constructor. Override is required to call super.
    * @param {string} name
    * @param {Object} [spec]
+   * @param {string} [spec.label] Setting label. Defaults to Setting name.
+   * @param {number} [spec.width=12] Setting width in columns (1-12).
    * @param {mixed} [spec.value] Default Setting value.
    * @param {function(rawValue: mixed, setting: Setting): boolean}
    * [spec.validateValue] Function to execute whenever a value
@@ -21,14 +26,21 @@ export default class Setting {
    * gets requested, returns randomly chosen value.
    */
   constructor (name, spec = {}) {
+    super()
+
     this._name = name
     this._value = spec.value || null
+
     this._valid = true
     this._delegate = null
 
     this._validateValueCallback = spec.validateValue || null
     this._filterValueCallback = spec.filterValue || null
     this._randomizeValueCallback = spec.randomizeValue || null
+
+    this._label = spec.label || StringUtil.camelCaseToRegular(name, ' ')
+    this._width = spec.width || 12
+    this._viewPrototype = SettingView
   }
 
   /**
@@ -37,6 +49,22 @@ export default class Setting {
    */
   getName () {
     return this._name
+  }
+
+  /**
+   * Returns label.
+   * @return {string} Setting label
+   */
+  getLabel () {
+    return this._label
+  }
+
+  /**
+   * Returns width as number of columns (1-12).
+   * @return {number} Number of columns (1-12)
+   */
+  getWidth () {
+    return this._width
   }
 
   /**

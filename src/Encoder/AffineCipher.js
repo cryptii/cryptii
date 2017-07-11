@@ -21,6 +21,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       {
         name: 'a',
         type: 'number',
+        width: 6,
         value: 5,
         validateValue: this.validateSlopeValue.bind(this),
         options: {
@@ -31,6 +32,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       {
         name: 'b',
         type: 'number',
+        width: 6,
         value: 8,
         options: {
           integer: true,
@@ -45,11 +47,14 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       {
         name: 'caseSensitivity',
         type: 'boolean',
+        width: 6,
         value: true
       },
       {
         name: 'includeForeignChars',
         type: 'boolean',
+        label: 'Foreign Chars',
+        width: 6,
         value: true
       }
     ])

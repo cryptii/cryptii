@@ -1,10 +1,19 @@
 
 import View from '../View'
+import SettingView from './Setting'
 
 /**
  * Brick View.
  */
 export default class BrickView extends View {
+  /**
+   * Constructor
+   */
+  constructor () {
+    super()
+    this._$settings = null
+  }
+
   /**
    * Renders view.
    * @protected
@@ -17,8 +26,8 @@ export default class BrickView extends View {
     let $header = this.renderHeader()
     $header && $root.appendChild($header)
 
-    let $settings = this.renderSettings()
-    $settings && $root.appendChild($settings)
+    this._$settings = this.renderSettings()
+    this._$settings && $root.appendChild(this._$settings)
 
     let $content = this.renderContent()
     $content && $root.appendChild($content)
@@ -52,6 +61,21 @@ export default class BrickView extends View {
   }
 
   /**
+   * Injects subview's root element into own DOM structure.
+   * @protected
+   * @param {View} view
+   * @return {View} Fluent interface
+   */
+  appendSubviewElement (view) {
+    if (view instanceof SettingView) {
+      this.getElement()
+      this._$settings.appendChild(view.getElement())
+      return this
+    }
+    return super.appendSubviewElement(view)
+  }
+
+  /**
    * Renders content.
    * @protected
    * @return {BrickView} Fluent interface
@@ -60,13 +84,5 @@ export default class BrickView extends View {
     let $content = document.createElement('div')
     $content.classList.add('brick__content')
     return $content
-  }
-
-  /**
-   * Returns Brick object owning this view.
-   * @return {Brick}
-   */
-  getBrick () {
-    return this._delegate
   }
 }

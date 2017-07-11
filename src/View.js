@@ -6,12 +6,13 @@
 export default class View {
   /**
    * View constructor.
+   * @param {Object} delegate
    */
-  constructor () {
+  constructor (delegate = null) {
+    this._delegate = delegate
     this._$root = null
     this._superview = null
     this._subviews = []
-    this._delegate = null
   }
 
   /**

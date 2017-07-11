@@ -2,24 +2,24 @@
 import Brick from './Brick'
 import BrickFactory from './Factory/Brick'
 import PipeView from './View/Pipe'
+import Viewable from './Viewable'
 
 /**
  * Arrangement of Viewers and Encoders.
  */
-export default class Pipe {
+export default class Pipe extends Viewable {
   /**
    * Creates empty Pipe.
    */
   constructor () {
-    // bricks
+    super()
+
     this._bricks = []
 
-    // pipe meta
     this._title = null
     this._description = null
 
-    // view
-    this._view = null
+    this._viewPrototype = PipeView
   }
 
   /**
@@ -58,7 +58,7 @@ export default class Pipe {
     // set brick delegate and add brick subview
     bricks.forEach(brick => {
       brick.setPipe(this)
-      this.getView() && this.getView().addSubview(brick.getView())
+      this.hasView() && this.getView().addSubview(brick.getView())
     })
 
     return this
@@ -88,8 +88,7 @@ export default class Pipe {
         const brick = this._bricks[index]
         brick.setPipe(null)
         this._bricks.splice(index, 1)
-        this.getView() &&
-          this.getView().removeSubview(brick.getView())
+        this.hasView() && this.getView().removeSubview(brick.getView())
       })
 
     return this
@@ -153,24 +152,13 @@ export default class Pipe {
   }
 
   /**
-   * Returns view.
-   * @return {View}
-   */
-  getView () {
-    if (this._view === null) {
-      this._view = this.createView()
-    }
-    return this._view
-  }
-
-  /**
-   * Creates view.
+   * Triggered when view has been created.
    * @protected
-   * @return {View} Newly created view.
+   * @param {View} view
    */
-  createView () {
-    let view = new PipeView()
-    return view
+  didCreateView (view) {
+    // add each brick as subview
+    this._bricks.forEach(brick => view.addSubview(brick.getView()))
   }
 
   /**

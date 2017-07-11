@@ -2,19 +2,21 @@
 import BrickView from './View/Brick'
 import Setting from './Setting'
 import SettingFactory from './Factory/Setting'
+import Viewable from './Viewable'
 
 /**
  * Abstract element of the Pipe.
  * @abstract
  */
-export default class Brick {
+export default class Brick extends Viewable {
   /**
    * Brick constructor
    */
   constructor () {
+    super()
     this._pipe = null
     this._settings = []
-    this._view = null
+    this._viewPrototype = BrickView
   }
 
   /**
@@ -67,6 +69,10 @@ export default class Brick {
     // register setting
     this._settings.push(setting)
     setting.setDelegate(this)
+
+    // add setting as subview
+    this.hasView() && this.getView().addSubview(setting.getView())
+
     return this
   }
 
@@ -161,24 +167,13 @@ export default class Brick {
   }
 
   /**
-   * Returns view.
-   * @return {View}
-   */
-  getView () {
-    if (this._view === null) {
-      this._view = this.createView()
-      this._view.setDelegate(this)
-    }
-    return this._view
-  }
-
-  /**
-   * Creates view.
+   * Triggered when view has been created.
    * @protected
-   * @return {View} Newly created view.
+   * @param {View} view
    */
-  createView () {
-    return new BrickView()
+  didCreateView (view) {
+    // add each setting as subview
+    this._settings.forEach(setting => view.addSubview(setting.getView()))
   }
 
   /**

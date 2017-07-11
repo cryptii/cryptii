@@ -1,6 +1,6 @@
 
 /**
- * Utility class providing static methods common math operations.
+ * Utility class providing static methods for common math operations.
  */
 export default class MathUtil {
   /**

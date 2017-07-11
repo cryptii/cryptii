@@ -1,19 +1,23 @@
 
 import ApplicationView from './View/Application'
 import Pipe from './Pipe'
+import Viewable from './Viewable'
 
 /**
  * Application
  */
-export default class Application {
+export default class Application extends Viewable {
   /**
    * Application constructor.
    */
   constructor () {
+    super()
+
+    this._viewPrototype = ApplicationView
     this._pipe = new Pipe()
 
-    this._view = new ApplicationView()
-    this._view.addSubview(this._pipe.getView())
+    // trigger view creation
+    this.getView()
   }
 
   /**
@@ -26,20 +30,12 @@ export default class Application {
   }
 
   /**
-   * Returns view.
-   * @return {View}
-   */
-  getView () {
-    return this._view
-  }
-
-  /**
-   * Creates view.
+   * Triggered when view has been created.
    * @protected
-   * @return {View} Newly created view.
+   * @param {View} view
    */
-  createView () {
-    let view = new ApplicationView()
-    return view
+  didCreateView (view) {
+    // add pipe subview
+    view.addSubview(this._pipe.getView())
   }
 }

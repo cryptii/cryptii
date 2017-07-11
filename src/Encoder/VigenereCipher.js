@@ -32,11 +32,14 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
       {
         name: 'caseSensitivity',
         type: 'boolean',
+        width: 6,
         value: false
       },
       {
         name: 'includeForeignChars',
         type: 'boolean',
+        label: 'Foreign Chars',
+        width: 6,
         value: true
       }
     ])
