@@ -1,0 +1,101 @@
+
+.pipe {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - #{$header-bar-height});
+  padding: 24px 0 40px;
+
+  &__scrollable {
+    position: relative;
+    overflow: hidden;
+    overflow-x: scroll;
+    flex-grow: 1;
+    order: 1;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    padding: 16px 48px;
+    float: left;
+    min-width: 100%;
+  }
+
+  &__part-pipe {
+    position: relative;
+    margin-top: 8px;
+    min-width: 40px;
+    height: $pipe-height;
+    background: $c-pipe;
+    flex-grow: 1;
+
+    &::after {
+      border-color: $c-pipe;
+    }
+
+    &--alt {
+      background: $c-pipe-alt;
+
+      &::after {
+        border-color: $c-pipe-alt;
+      }
+    }
+
+    &:first-child::after,
+    &:last-child::after {
+      // arrow ends
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-width:
+        ($pipe-height * 0.5) 0
+        ($pipe-height * 0.5) ($pipe-height * 0.25);
+      border-style: solid;
+    }
+
+    &:first-child::after {
+      // left arrow end
+      left: $pipe-height * -0.25;
+      border-left-color: transparent;
+    }
+
+    &:last-child::after {
+      // right arrow end
+      right: $pipe-height * -0.25;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+    }
+  }
+
+  &__part-brick {
+    color: $c-pipe;
+
+    &--alt {
+      color: $c-pipe-alt;
+    }
+  }
+
+  &__header {
+    order: 2;
+    padding-top: 40px;
+  }
+
+  &__title {
+    display: block;
+    max-width: 880px;
+    padding: 0 0 8px;
+    @extend %t-pipe-headline;
+  }
+
+  &__description {
+    max-width: 880px;
+    @extend %t-text;
+  }
+
+  &__link-list {
+    padding-top: 16px;
+  }
+}

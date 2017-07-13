@@ -20,7 +20,7 @@ export default class BrickView extends View {
    * @return {HTMLElement}
    */
   render () {
-    let $root = document.createElement('article')
+    let $root = document.createElement('div')
     $root.classList.add('brick')
 
     let $header = this.renderHeader()

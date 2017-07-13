@@ -21,6 +21,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       {
         name: 'a',
         type: 'number',
+        label: 'Slope (a)',
         width: 6,
         value: 5,
         validateValue: this.validateSlopeValue.bind(this),
@@ -32,6 +33,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       {
         name: 'b',
         type: 'number',
+        label: 'Intercept (b)',
         width: 6,
         value: 8,
         options: {

@@ -1,12 +1,7 @@
 
 .header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   height: $header-bar-height;
   background: $c-white;
-  box-shadow: 0 1px 3px 0 rgba($c-black, 0.10);
 
   &__brand {
     display: none;

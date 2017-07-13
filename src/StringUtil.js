@@ -12,7 +12,6 @@ export default class StringUtil {
    * let b = StringUtil.camelCaseToRegular('ILoveYOU')
    * // returns 'I Love YOU'
    * @param {string} string
-   * @param {string} separator
    * @return {string}
    */
   static camelCaseToRegular (string) {

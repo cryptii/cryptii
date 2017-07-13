@@ -28,7 +28,8 @@ export default class Viewable {
    */
   getView () {
     if (this._view === null) {
-      this._view = new (this._viewPrototype)(this)
+      this._view = new (this._viewPrototype)()
+      this._view.setModel(this)
       this.didCreateView(this._view)
     }
     return this._view

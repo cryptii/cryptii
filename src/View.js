@@ -6,10 +6,8 @@
 export default class View {
   /**
    * View constructor.
-   * @param {Object} delegate
    */
-  constructor (delegate = null) {
-    this._delegate = delegate
+  constructor () {
     this._$root = null
     this._superview = null
     this._subviews = []
@@ -51,6 +49,14 @@ export default class View {
   }
 
   /**
+   * Returns subviews.
+   * @return {View[]} Subviews
+   */
+  getSubviews () {
+    return this._subviews
+  }
+
+  /**
    * Injects subview's root element into own DOM structure.
    * Override this method to choose how to inject which kind of views.
    * @protected
@@ -60,7 +66,9 @@ export default class View {
    */
   appendSubviewElement (view) {
     // default behaviour: append subview element to own root element
-    this.getElement().appendChild(view.getElement())
+    if (view.getElement().parentNode !== this.getElement()) {
+      this.getElement().appendChild(view.getElement())
+    }
     return this
   }
 
@@ -121,28 +129,28 @@ export default class View {
   }
 
   /**
-   * Returns the delegate.
+   * Returns the model object that manages this view.
    * @return {?Object}
    */
-  getDelegate () {
-    return this._delegate
+  getModel () {
+    return this._model
   }
 
   /**
-   * Returns true, if delegate is set.
-   * @return {boolean} True, if delegate is set.
+   * Returns true, if model is set.
+   * @return {boolean} True, if model is set.
    */
-  hasDelegate () {
-    return this._delegate !== null
+  hasModel () {
+    return this._model !== null
   }
 
   /**
-   * Sets the delegate.
-   * @param {?Object} delegate
+   * Sets the model.
+   * @param {?Object} model
    * @return {View} Fluent interface
    */
-  setDelegate (delegate) {
-    this._delegate = delegate
+  setModel (model) {
+    this._model = model
     return this
   }
 }

@@ -1,23 +1,19 @@
 
-import ApplicationView from './View/Application'
+import AppView from './View/App'
 import Pipe from './Pipe'
 import Viewable from './Viewable'
 
 /**
  * Application
  */
-export default class Application extends Viewable {
+export default class App extends Viewable {
   /**
    * Application constructor.
    */
   constructor () {
     super()
 
-    this._viewPrototype = ApplicationView
-    this._pipe = new Pipe()
-
-    // trigger view creation
-    this.getView()
+    this._viewPrototype = AppView
   }
 
   /**
@@ -25,7 +21,13 @@ export default class Application extends Viewable {
    * @return {Application} Fluent interface
    */
   run () {
+    this._pipe = new Pipe()
+    this._pipe.setTitle('Affine Cipher – Encode and Decode')
     this._pipe.addBrick('text', 'affine-cipher', 'text')
+
+    // trigger view creation
+    this.getView()
+
     return this
   }
 

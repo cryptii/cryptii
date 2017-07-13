@@ -1,6 +1,7 @@
 
-import View from '../View'
 import BrickView from './Brick'
+import Encoder from '../Encoder'
+import View from '../View'
 
 /**
  * Pipe View.
@@ -21,22 +22,61 @@ export default class PipeView extends View {
    * @return {HTMLElement}
    */
   render () {
-    let $track = document.createElement('div')
-    $track.classList.add('pipe__track')
-
-    let $header = document.createElement('header')
-    $header.classList.add('pipe__header')
-
     this._$content = document.createElement('div')
     this._$content.classList.add('pipe__content')
-    this._$content.appendChild($track)
 
-    let $root = document.createElement('div')
-    $root.classList.add('pipe')
-    $root.appendChild($header)
-    $root.appendChild(this._$content)
+    let $scrollable = document.createElement('div')
+    $scrollable.classList.add('pipe__scrollable')
+    $scrollable.appendChild(this._$content)
 
+    // bind to existing pipe element if any
+    let $root = document.querySelector('.pipe')
+
+    if ($root === null) {
+      $root.classList.add('pipe')
+    }
+
+    $root.appendChild($scrollable)
     return $root
+  }
+
+  integrateBrickViews () {
+    let brickViews = this.getSubviews()
+      .filter(view => view instanceof BrickView)
+
+    this.getElement()
+    let $content = this._$content
+
+    // empty content element
+    $content.innerHTML = ''
+
+    let contentIndex = 1
+
+    // add each brick and pipe parts
+    brickViews.forEach(brickView => {
+      let $pipePart = document.createElement('div')
+      $pipePart.classList.add('pipe__part-pipe')
+      contentIndex % 2 === 0 && $pipePart.classList.add('pipe__part-pipe--alt')
+      $content.appendChild($pipePart)
+
+      let $brickPart = document.createElement('div')
+      $brickPart.classList.add('pipe__part-brick')
+      contentIndex % 2 === 0 && $brickPart.classList.add('pipe__part-brick--alt')
+      $brickPart.appendChild(brickView.getElement())
+      $content.appendChild($brickPart)
+
+      if (brickView.getModel() instanceof Encoder) {
+        contentIndex++
+      }
+    })
+
+    // add end part
+    let $endPipePart = document.createElement('div')
+    $endPipePart.classList.add('pipe__part-pipe')
+    contentIndex % 2 === 0 && $endPipePart.classList.add('pipe__part-pipe--alt')
+    $content.appendChild($endPipePart)
+
+    return this
   }
 
   /**
@@ -47,10 +87,7 @@ export default class PipeView extends View {
    */
   appendSubviewElement (view) {
     if (view instanceof BrickView) {
-      let $brickWrapper = document.createElement('div')
-      $brickWrapper.classList.add('pipe__brick')
-      $brickWrapper.appendChild(view.getElement())
-      this._$content.appendChild($brickWrapper)
+      this.integrateBrickViews()
       return this
     }
     return super.appendSubviewElement(view)
@@ -63,11 +100,10 @@ export default class PipeView extends View {
    * @return {PipeView} Fluent interface
    */
   removeSubviewElement (view) {
+    super.removeSubviewElement(view)
     if (view instanceof BrickView) {
-      // remove element with its wrapper
-      this._$content.removeChild(view.getElement().parentNode)
-      return this
+      this.integrateBrickViews()
     }
-    return super.removeSubviewElement(view)
+    return this
   }
 }

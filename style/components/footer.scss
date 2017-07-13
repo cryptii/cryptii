@@ -1,0 +1,38 @@
+
+.footer {
+  padding: 48px 0;
+  background: $c-white;
+
+  &__inner {
+    padding: 0 48px;
+    max-width: 880px;
+  }
+
+  &__brand {
+    display: inline;
+    @extend %t-text-link;
+  }
+
+  &__description {
+    display: inline;
+    @extend %t-text;
+
+    > a {
+      @extend %t-text-link;
+      transition-property: color;
+      transition-duration: 0.2s;
+
+      &:hover {
+        color: $c-text-primary;
+      }
+    }
+
+    &::before {
+      content: '– ';
+    }
+  }
+
+  &__link-list {
+    padding-top: 16px;
+  }
+}

@@ -4,7 +4,7 @@ import View from '../View'
 /**
  * Pipe View.
  */
-export default class ApplicationView extends View {
+export default class AppView extends View {
   /**
    * Renders view.
    * @protected
@@ -12,6 +12,6 @@ export default class ApplicationView extends View {
    */
   render () {
     // use existing element
-    return document.querySelector('.application')
+    return document.querySelector('.app')
   }
 }

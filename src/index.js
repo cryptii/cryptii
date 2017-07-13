@@ -1,6 +1,5 @@
 
-// import 'babel-core/external-helpers';
-import Application from './Application'
+import App from './App'
 
-const application = new Application()
-application.run()
+const app = new App()
+app.run()

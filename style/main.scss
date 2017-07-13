@@ -10,9 +10,12 @@
 @import 'normalize-scss/sass/normalize/import-now';
 @import 'generic';
 
-// base
-
-// views
-@import 'views/header';
-@import 'views/brick';
-@import 'views/pipe';
+// components
+@import 'components/container';
+@import 'components/link-list';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/brick';
+@import 'components/setting';
+@import 'components/pipe';
+@import 'components/app';

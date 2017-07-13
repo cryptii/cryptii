@@ -1,0 +1,24 @@
+
+.setting {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid $c-line;
+  border-left: 1px solid $c-line;
+  min-height: 56px;
+  width: 100%;
+
+  &__label {
+    display: table;
+    padding: 8px 16px 0 16px;
+    border-right: 1px solid $c-line;
+    @extend %t-setting-label;
+    line-height: 1;
+    color: $c-setting-label;
+  }
+
+  @for $cols from 1 through 11 {
+    &--width-#{$cols} {
+      width: 100% * ($cols / 12);
+    }
+  }
+}
