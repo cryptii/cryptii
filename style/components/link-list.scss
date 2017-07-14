@@ -3,27 +3,21 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0 -8px;
+  margin: 0 -16px;
   @extend %t-text-link;
   list-style-type: none;
 
-  &__item + &__item {
-    &::before {
-      content: '·';
-    }
+  @include breakpoint(xs, s) {
+    justify-content: center;
   }
 
   &__link {
-    padding: 0 8px;
+    padding: 0 16px;
     transition-property: color;
     transition-duration: 0.2s;
 
     &:hover {
       color: $c-text-primary;
     }
-  }
-
-  &--align-center {
-    justify-content: center;
   }
 }

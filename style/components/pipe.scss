@@ -132,17 +132,32 @@
   &__header {
     order: 2;
     padding-top: 40px;
+
+    @include breakpoint(xs, s) {
+      text-align: center;
+    }
+  }
+
+  &__title,
+  &__description {
+    max-width: 600px;
+
+    @include breakpoint(xs, s) {
+      margin: 0 auto;
+    }
+
+    @include breakpoint(m, l) {
+      max-width: 848px;
+    }
   }
 
   &__title {
     display: block;
-    max-width: 880px;
-    padding: 0 0 8px;
+    padding: 0 0 14px;
     @extend %t-pipe-headline;
   }
 
   &__description {
-    max-width: 880px;
     @extend %t-text;
   }
 

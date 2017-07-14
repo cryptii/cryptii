@@ -3,13 +3,25 @@
   padding: 48px 0;
   background: $c-white;
 
+  @include breakpoint(xs, s) {
+    text-align: center;
+  }
+
   &__inner {
-    max-width: 880px;
+    max-width: 600px;
+
+    @include breakpoint(xs, s) {
+      margin: 0 auto;
+    }
+
+    @include breakpoint(m, l) {
+      max-width: 848px;
+    }
   }
 
   &__brand {
     display: inline;
-    @extend %t-text-link;
+    @extend %t-text;
   }
 
   &__description {
