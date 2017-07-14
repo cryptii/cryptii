@@ -2,44 +2,56 @@
 .pipe {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - #{$header-bar-height});
   padding: 24px 0 40px;
+
+  @include breakpoint(m, l) {
+    height: calc(100vh - #{$header-bar-height});
+  }
 
   &__scrollable {
     position: relative;
-    overflow: hidden;
-    overflow-x: scroll;
-    flex-grow: 1;
-    order: 1;
+
+    @include breakpoint(m, l) {
+      overflow: hidden;
+      overflow-x: scroll;
+      flex-grow: 1;
+      order: 1;
+    }
   }
 
   &__content {
     display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    padding: 16px 48px;
-    float: left;
-    min-width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 0;
+
+    @include breakpoint(m, l) {
+      flex-direction: row;
+      align-items: stretch;
+      float: left;
+      padding: 16px 48px;
+      min-width: 100%;
+    }
   }
 
   &__part-pipe {
     position: relative;
-    margin-top: 8px;
-    min-width: 40px;
-    height: $pipe-height;
+    width: $pipe-size;
+    height: 48px;
     background: $c-pipe;
-    flex-grow: 1;
+    border-color: $c-pipe;
 
-    &::after {
-      border-color: $c-pipe;
+    @include breakpoint(m, l) {
+      width: auto;
+      min-width: 48px;
+      height: $pipe-size;
+      margin-top: 8px;
     }
 
     &--alt {
       background: $c-pipe-alt;
-
-      &::after {
-        border-color: $c-pipe-alt;
-      }
+      border-color: $c-pipe-alt;
     }
 
     &:first-child::after,
@@ -48,30 +60,69 @@
       content: '';
       display: block;
       position: absolute;
-      top: 0;
-      bottom: 0;
+      left: 0;
+      right: 0;
       border-width:
-        ($pipe-height * 0.5) 0
-        ($pipe-height * 0.5) ($pipe-height * 0.25);
+        ($pipe-size * 0.25) ($pipe-size * 0.5)
+        0 ($pipe-size * 0.5);
       border-style: solid;
+      border-color: inherit;
+
+      @include breakpoint(m, l) {
+        top: 0;
+        bottom: 0;
+        border-width:
+          ($pipe-size * 0.5) 0
+          ($pipe-size * 0.5) ($pipe-size * 0.25);
+      }
     }
 
     &:first-child::after {
-      // left arrow end
-      left: $pipe-height * -0.25;
-      border-left-color: transparent;
+      // left / upper arrow end
+      top: $pipe-size * -0.25;
+      border-top-color: transparent;
+
+      @include breakpoint(m, l) {
+        top: auto;
+        border-top-color: inherit;
+        left: $pipe-size * -0.25;
+        border-left-color: transparent;
+      }
     }
 
     &:last-child::after {
-      // right arrow end
-      right: $pipe-height * -0.25;
-      border-top-color: transparent;
-      border-bottom-color: transparent;
+      // right / bottom arrow end
+      bottom: $pipe-size * -0.25;
+      border-left-color: transparent;
+      border-right-color: transparent;
+
+      @include breakpoint(m, l) {
+        bottom: 0;
+        left: auto;
+        right: $pipe-size * -0.25;
+        border-top-color: transparent;
+        border-right-color: inherit;
+        border-bottom-color: transparent;
+        border-left-color: inherit;
+      }
     }
   }
 
   &__part-brick {
+    width: 100%;
+    min-width: 320px;
+    max-width: 448px;
     color: $c-pipe;
+    flex-basis: 0;
+    flex-grow: 1;
+
+    @include breakpoint(s) {
+      width: 448px;
+    }
+
+    @include breakpoint(m, l) {
+      width: auto;
+    }
 
     &--alt {
       color: $c-pipe-alt;

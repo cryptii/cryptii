@@ -1,0 +1,31 @@
+
+$breakpoint-names: map-keys($breakpoints);
+
+@mixin breakpoint($from, $to: false) {
+  $query: '';
+  $min: false;
+  $max: false;
+  $start: index($breakpoint-names, $from);
+  $end: length($breakpoint-names);
+
+  @if $from and not $to {
+    $min: map-get(map-get($breakpoints, $from), min);
+    $max: map-get(map-get($breakpoints, $from), max);
+  } @else {
+    $min: map-get(map-get($breakpoints, $from), min);
+    $max: map-get(map-get($breakpoints, $to), max);
+    $end: index($breakpoint-names, $to);
+  }
+
+  @if $min and not $max {
+    $query: 'screen and (min-width: #{$min})';
+  } @else if $max and not $min {
+    $query: 'screen and (max-width: #{$max})';
+  } @else {
+    $query: 'screen and (min-width: #{$min}) and (max-width: #{$max})';
+  }
+
+  @media #{$query} {
+    @content;
+  }
+}

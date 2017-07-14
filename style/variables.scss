@@ -1,7 +1,31 @@
 
 // sizes
 $header-bar-height: 96px;
-$pipe-height: 96px;
+$pipe-size: 96px;
+
+// breakpoints
+$breakpoints: (
+  xs: (
+    min: 0,
+    max: 447px,
+    gutter: 16px
+  ),
+  s: (
+    min: 448px,
+    max: 999px,
+    gutter: 32px
+  ),
+  m: (
+    min: 1000px,
+    max: 1399px,
+    gutter: 48px
+  ),
+  l: (
+    min: 1400px,
+    max: null,
+    gutter: 48px
+  )
+);
 
 // colors
 $c-white: #ffffff;
