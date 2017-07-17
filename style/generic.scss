@@ -13,9 +13,16 @@ body {
 }
 
 body {
-  font-family: Roboto, sans-serif;
-  color: $c-text;
   background: $c-background;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  @extend %t-text;
+  color: $c-text;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

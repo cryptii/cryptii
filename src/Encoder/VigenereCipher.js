@@ -14,6 +14,8 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
   constructor () {
     super()
 
+    this._title = 'Vigenère cipher'
+
     this.registerSetting([
       {
         name: 'key',

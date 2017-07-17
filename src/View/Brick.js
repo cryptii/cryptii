@@ -11,6 +11,7 @@ export default class BrickView extends View {
    */
   constructor () {
     super()
+    this._title = null
     this._$settings = null
   }
 
@@ -32,6 +33,9 @@ export default class BrickView extends View {
     let $content = this.renderContent()
     $content && $root.appendChild($content)
 
+    let $footer = this.renderFooter()
+    $footer && $root.appendChild($footer)
+
     return $root
   }
 
@@ -41,10 +45,12 @@ export default class BrickView extends View {
    * @return {BrickView} Fluent interface
    */
   renderHeader () {
+    let title = this.getModel().getTitle()
+
     let $header = document.createElement('header')
     $header.classList.add('brick__header')
     $header.innerHTML = `
-      <h3 class="brick__title">Brick</h3>
+      <h3 class="brick__title">${title}</h3>
     `
     return $header
   }
@@ -61,6 +67,28 @@ export default class BrickView extends View {
   }
 
   /**
+   * Renders content.
+   * @protected
+   * @return {BrickView} Fluent interface
+   */
+  renderContent () {
+    let $content = document.createElement('div')
+    $content.classList.add('brick__content')
+    return $content
+  }
+
+  /**
+   * Renders footer.
+   * @protected
+   * @return {BrickView} Fluent interface
+   */
+  renderFooter () {
+    let $footer = document.createElement('footer')
+    $footer.classList.add('brick__footer')
+    return $footer
+  }
+
+  /**
    * Injects subview's root element into own DOM structure.
    * @protected
    * @param {View} view
@@ -73,16 +101,5 @@ export default class BrickView extends View {
       return this
     }
     return super.appendSubviewElement(view)
-  }
-
-  /**
-   * Renders content.
-   * @protected
-   * @return {BrickView} Fluent interface
-   */
-  renderContent () {
-    let $content = document.createElement('div')
-    $content.classList.add('brick__content')
-    return $content
   }
 }

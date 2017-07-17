@@ -14,9 +14,42 @@ export default class Brick extends Viewable {
    */
   constructor () {
     super()
-    this._pipe = null
+
+    this._title = null
     this._settings = []
     this._viewPrototype = BrickView
+    this._pipe = null
+  }
+
+  /**
+   * Returns title.
+   * @return {string}
+   */
+  getTitle () {
+    return this._title
+  }
+
+  /**
+   * Finds Setting with given name.
+   * @param {string} name Setting name to search for.
+   * @return {?Setting} Returns Setting or null if not found.
+   */
+  getSetting (name) {
+    return this._settings.find(setting => setting.getName() === name) || null
+  }
+
+  /**
+   * Convenience method for finding a Setting and returning its value.
+   * @param {string} name Setting name to search for.
+   * @throws Throws an error if Setting with given name does not exist.
+   * @return {mixed} Setting value.
+   */
+  getSettingValue (name) {
+    const setting = this.getSetting(name)
+    if (setting === null) {
+      throw new Error(`Unknown Setting with name '${setting.getName()}'`)
+    }
+    return setting.getValue()
   }
 
   /**
@@ -74,29 +107,6 @@ export default class Brick extends Viewable {
     this.hasView() && this.getView().addSubview(setting.getView())
 
     return this
-  }
-
-  /**
-   * Finds Setting with given name.
-   * @param {string} name Setting name to search for.
-   * @return {?Setting} Returns Setting or null if not found.
-   */
-  getSetting (name) {
-    return this._settings.find(setting => setting.getName() === name) || null
-  }
-
-  /**
-   * Convenience method for finding a Setting and returning its value.
-   * @param {string} name Setting name to search for.
-   * @throws Throws an error if Setting with given name does not exist.
-   * @return {mixed} Setting value.
-   */
-  getSettingValue (name) {
-    const setting = this.getSetting(name)
-    if (setting === null) {
-      throw new Error(`Unknown Setting with name '${setting.getName()}'`)
-    }
-    return setting.getValue()
   }
 
   /**

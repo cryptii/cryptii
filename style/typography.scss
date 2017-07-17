@@ -14,9 +14,17 @@
 
 %t-pipe-headline {
   font-family: Roboto, sans-serif;
-  font-weight: 400;
-  font-size: 24px;
+  font-weight: 500;
+  font-size: 21px;
   line-height: 1.4;
+}
+
+%t-brick-action {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 %t-brick-headline {
@@ -33,4 +41,11 @@
   line-height: 13px;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+%t-monospace {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
 }

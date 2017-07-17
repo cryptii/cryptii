@@ -2,7 +2,6 @@
 .brick {
   background: $c-white;
   box-shadow: 0 1px 3px 0 rgba($c-black, 0.10);
-  min-height: 320px;
   overflow: hidden;
 
   @include breakpoint(s, l) {
@@ -10,8 +9,18 @@
   }
 
   &__header {
-    padding: 24px 16px;
+    padding: 16px;
     height: 104px - 1px;
+  }
+
+  &__action {
+    display: block;
+    @extend %t-brick-action;
+  }
+
+  &__title {
+    margin-top: 24px;
+    @extend %t-brick-headline;
   }
 
   &__settings {
@@ -25,7 +34,7 @@
     border-top: 1px solid $c-line;
   }
 
-  &__title {
-    @extend %t-brick-headline;
+  &__footer {
+    height: 32px;
   }
 }

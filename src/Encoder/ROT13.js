@@ -11,6 +11,8 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
   constructor () {
     super()
 
+    this._title = 'ROT13'
+
     this.registerSetting({
       name: 'variant',
       type: 'enum',

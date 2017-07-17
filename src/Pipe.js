@@ -1,6 +1,8 @@
 
 import Brick from './Brick'
 import BrickFactory from './Factory/Brick'
+import Chain from './Chain'
+import Encoder from './Encoder'
 import PipeView from './View/Pipe'
 import Viewable from './Viewable'
 
@@ -15,6 +17,7 @@ export default class Pipe extends Viewable {
     super()
 
     this._bricks = []
+    this._stores = []
 
     this._title = null
     this._description = null
@@ -56,10 +59,17 @@ export default class Pipe extends Viewable {
     this._bricks.splice.apply(this._bricks, [index, 0].concat(bricks))
 
     // set brick delegate and add brick subview
+    let insertedEncoder = false
     bricks.forEach(brick => {
       brick.setPipe(this)
       this.hasView() && this.getView().addSubview(brick.getView())
+      insertedEncoder = insertedEncoder || brick instanceof Encoder
     })
+
+    if (insertedEncoder) {
+      // only encoder bricks influence stores
+      this.createStores()
+    }
 
     return this
   }
@@ -70,6 +80,7 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Fluent interface
    */
   removeBrick (...elements) {
+    let removedEncoder = false
     elements
       // map bricks to indexes
       .map(brickOrIndex => {
@@ -89,7 +100,13 @@ export default class Pipe extends Viewable {
         brick.setPipe(null)
         this._bricks.splice(index, 1)
         this.hasView() && this.getView().removeSubview(brick.getView())
+        removedEncoder = removedEncoder || brick instanceof Encoder
       })
+
+    if (removedEncoder) {
+      // only encoder bricks influence stores
+      this.createStores()
+    }
 
     return this
   }
@@ -102,7 +119,9 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Fluent interface
    */
   viewerContentDidChange (viewer, content) {
-    // TODO propagate content
+    let storeIndex = this.getStoreIndexForBrick(viewer)
+    this.setContent(storeIndex, content, viewer)
+    return this
   }
 
   /**
@@ -113,6 +132,120 @@ export default class Pipe extends Viewable {
    */
   encoderSettingDidChange (encoder) {
     // TODO repeat last encoding or decoding and propagate content
+  }
+
+  /**
+   * Creates empty stores for current bricks.
+   * @return {Pipe} Fluent interface
+   */
+  createStores () {
+    // TODO integrate previous stores
+    // count how many stores are needed
+    let encoderCount = this._bricks.reduce((count, brick) =>
+      (count || 1) + (brick instanceof Encoder ? 1 : 0))
+
+    // create empty stores
+    this._stores = new Array(encoderCount).map(() => new Chain())
+    return this
+  }
+
+  /**
+   * Returns store index for given brick.
+   * @param {Brick} brick
+   * @throws {Error} Throws an error if brick is not part of Pipe.
+   * @return {number}
+   */
+  getStoreIndexForBrick (brick) {
+    // the store index is equal to the amount of
+    // encoder bricks placed before given brick
+    let foundBrick = false
+    let encoderCount = 0
+    let i = -1
+
+    while (!foundBrick && ++i < this._bricks.length) {
+      if (this._bricks[i] === brick) {
+        foundBrick = true
+      } else if (this._bricks[i] instanceof Encoder) {
+        encoderCount++
+      }
+    }
+
+    if (!foundBrick) {
+      throw new Error(`Can't find store for brick. Brick is not part of Pipe.`)
+    }
+
+    return encoderCount
+  }
+
+  /**
+   * Sets content of store.
+   * @param {number} [index] Store index
+   * @param {number[]|string|Uint8Array|Chain} content
+   * @param {Brick} [sender] Sender brick
+   * @return Fluent interface
+   */
+  setContent (index, content, sender = null) {
+    if (isNaN(index)) {
+      // handle optional first arg
+      return this.setContent(0, index, content)
+    }
+
+    content = Chain.wrap(content)
+    if (Chain.isEqual(this._stores[index], content)) {
+      // nothing to do
+      return this
+    }
+
+    // set content
+    this._stores[index] = content
+
+    // collect bricks that are attached to this store
+    let lowerEncoder = null
+    let upperEncoder = null
+    let viewers = []
+
+    let encoderCount = 0
+    let i = -1
+    while (++i < this._bricks.length && encoderCount <= index) {
+      let brick = this._bricks[i]
+      if (brick instanceof Encoder) {
+        if (encoderCount === index - 1) {
+          lowerEncoder = brick
+        } else if (encoderCount === index) {
+          upperEncoder = brick
+        }
+        encoderCount++
+      } else {
+        if (encoderCount === index) {
+          viewers.push(brick)
+        }
+      }
+    }
+
+    if (lowerEncoder !== null && lowerEncoder !== sender) {
+      // propagate content through lower encoder
+      // TODO handle result promise
+      this.setContent(
+        index - 1,
+        lowerEncoder.decode(content),
+        lowerEncoder)
+    }
+
+    if (upperEncoder !== null && upperEncoder !== sender) {
+      // propagate content through upper encoder
+      // TODO handle result promise
+      this.setContent(
+        index + 1,
+        upperEncoder.encode(content),
+        upperEncoder)
+    }
+
+    // propagate content to each viewer
+    viewers
+      .filter(viewer => viewer !== sender)
+      .forEach(viewer => viewer.view(content))
+
+    return this
   }
 
   /**

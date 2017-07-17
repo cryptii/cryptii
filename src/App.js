@@ -24,6 +24,7 @@ export default class App extends Viewable {
     this._pipe = new Pipe()
     this._pipe.setTitle('Affine Cipher – Encode and Decode')
     this._pipe.addBrick('text', 'affine-cipher', 'text')
+    this._pipe.setContent('The quick brown fox jumps over 13 lazy dogs.')
 
     // trigger view creation
     this.getView()

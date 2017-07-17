@@ -2,9 +2,9 @@
 import BrickView from './Brick'
 
 /**
- * Viewer Brick View.
+ * Encoder Brick View.
  */
-export default class ViewerView extends BrickView {
+export default class EncoderView extends BrickView {
   /**
    * Renders view.
    * @protected
@@ -12,7 +12,7 @@ export default class ViewerView extends BrickView {
    */
   render () {
     let $root = super.render()
-    $root.classList.add('viewer')
+    $root.classList.add('encoder')
     return $root
   }
 
@@ -26,7 +26,7 @@ export default class ViewerView extends BrickView {
 
     let $action = document.createElement('span')
     $action.classList.add('brick__action')
-    $action.innerText = 'View'
+    $action.innerText = 'Encode'
     $header.prepend($action)
 
     return $header

@@ -14,6 +14,8 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   constructor () {
     super()
 
+    this._title = 'Affine Cipher'
+
     // linear function
     // f(x) = ax + b
 

@@ -1,12 +1,21 @@
 
 import Brick from './Brick'
 import Chain from './Chain'
+import EncoderView from './View/Encoder'
 
 /**
  * Abstract Brick for encoding and decoding content.
  * @abstract
  */
 export default class Encoder extends Brick {
+  /**
+   * Brick constructor
+   */
+  constructor () {
+    super()
+    this._viewPrototype = EncoderView
+  }
+
   /**
    * Prepares and performs encode on given content.
    * @param {number[]|string|Uint8Array|Chain} content

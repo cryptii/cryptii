@@ -40,7 +40,39 @@ export default class PipeView extends View {
     return $root
   }
 
-  integrateBrickViews () {
+  /**
+   * Injects subview's root element into own DOM structure.
+   * @protected
+   * @param {View} view
+   * @return {PipeView} Fluent interface
+   */
+  appendSubviewElement (view) {
+    if (view instanceof BrickView) {
+      this._integrateBrickViews()
+      return this
+    }
+    return super.appendSubviewElement(view)
+  }
+
+  /**
+   * Removes previously added subview element from own DOM structure.
+   * @protected
+   * @param {View} view
+   * @return {PipeView} Fluent interface
+   */
+  removeSubviewElement (view) {
+    super.removeSubviewElement(view)
+    if (view instanceof BrickView) {
+      this._integrateBrickViews()
+    }
+    return this
+  }
+
+  /**
+   * Integrates brick view elements inside pipe structure.
+   * @return {PipeView} Fluent interface
+   */
+  _integrateBrickViews () {
     let brickViews = this.getSubviews()
       .filter(view => view instanceof BrickView)
 
@@ -76,34 +108,6 @@ export default class PipeView extends View {
     contentIndex % 2 === 0 && $endPipePart.classList.add('pipe__part-pipe--alt')
     $content.appendChild($endPipePart)
 
-    return this
-  }
-
-  /**
-   * Injects subview's root element into own DOM structure.
-   * @protected
-   * @param {View} view
-   * @return {PipeView} Fluent interface
-   */
-  appendSubviewElement (view) {
-    if (view instanceof BrickView) {
-      this.integrateBrickViews()
-      return this
-    }
-    return super.appendSubviewElement(view)
-  }
-
-  /**
-   * Removes previously added subview element from own DOM structure.
-   * @protected
-   * @param {View} view
-   * @return {PipeView} Fluent interface
-   */
-  removeSubviewElement (view) {
-    super.removeSubviewElement(view)
-    if (view instanceof BrickView) {
-      this.integrateBrickViews()
-    }
     return this
   }
 }
