@@ -1,9 +1,32 @@
 
 .header {
-  height: $header-bar-height;
+  position: relative;
   background: $c-white;
 
+  &__inner {
+    display: flex;
+    flex-direction: row;
+    height: $header-bar-height;
+
+    @include breakpoint(xs) {
+      justify-content: center;
+    }
+  }
+
   &__brand {
-    display: none;
+    padding: 24px 0;
+    @extend %t-brand;
+  }
+
+  &__brand-version {
+    display: inline-block;
+    padding: 2px 6px;
+    margin-left: 10px;
+    border: 1px solid $c-line;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 400;
+    transform: translate(0, -4px);
+    color: #666666;
   }
 }
