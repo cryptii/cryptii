@@ -1,10 +1,12 @@
 
 // settings
 @import 'variables';
-@import 'typography';
 
 // tools
 @import 'tools/breakpoint';
+
+// typography styles
+@import 'typography';
 
 // generic
 @import 'normalize-scss/sass/normalize/import-now';
