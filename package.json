@@ -20,7 +20,10 @@
   "standard": {
     "parser": "babel-eslint"
   },
-  "dependencies": {},
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "detect-browser": "^1.7.1"
+  },
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.25.0",
@@ -41,6 +44,8 @@
     "jsdoc": "^3.4.3",
     "normalize-scss": "^7.0.0",
     "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-stream": "^1.20.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"

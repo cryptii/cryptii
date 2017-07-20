@@ -73,18 +73,25 @@ export default class PipeView extends View {
    * @return {PipeView} Fluent interface
    */
   _integrateBrickViews () {
+    // only consider brick subviews
     let brickViews = this.getSubviews()
       .filter(view => view instanceof BrickView)
 
     this.getElement()
     let $content = this._$content
 
+    // detach each brick subview element without breaking it
+    // (emptying parent via innerHTML does not work in IE11)
+    brickViews.forEach(brickView => {
+      let $element = brickView.getElement()
+      $element.parentNode && $element.parentNode.removeChild($element)
+    })
+
     // empty content element
     $content.innerHTML = ''
 
-    let contentIndex = 1
-
     // add each brick and pipe parts
+    let contentIndex = 1
     brickViews.forEach(brickView => {
       let $pipePart = document.createElement('div')
       $pipePart.classList.add('pipe__part-pipe')

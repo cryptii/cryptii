@@ -1,0 +1,8 @@
+
+@mixin browser($browsers...) {
+  @each $browser in $browsers {
+    html[class^="browser--#{$browser}"] & {
+      @content;
+    }
+  }
+}

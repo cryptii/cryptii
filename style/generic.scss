@@ -3,6 +3,9 @@
   outline: none;
   box-sizing: border-box;
   transition-timing-function: ease;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
 }
 
 html,
@@ -14,6 +17,8 @@ body {
 
 body {
   background: $c-background;
+  font-size: $default-font-size;
+  line-height: $default-line-height;
 }
 
 body,
@@ -21,10 +26,16 @@ button,
 input,
 select,
 textarea {
-  @extend %t-text;
   color: $c-text;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+  @extend %t-text;
 }
 
 input[type='text'],

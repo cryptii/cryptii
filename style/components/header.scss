@@ -24,8 +24,7 @@
     margin-left: 10px;
     border: 1px solid $c-line;
     border-radius: 3px;
-    font-size: 16px;
-    font-weight: 400;
+    @extend %t-text;
     transform: translate(0, -4px);
     color: #666666;
   }

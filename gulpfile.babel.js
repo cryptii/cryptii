@@ -1,18 +1,20 @@
 
-import gulp from 'gulp'
-import sourcemaps from 'gulp-sourcemaps'
-import rollup from 'rollup-stream'
-import babel from 'rollup-plugin-babel'
-import source from 'vinyl-source-stream'
-import buffer from 'vinyl-buffer'
-import rename from 'gulp-rename'
-import uglify from 'gulp-uglify'
-import standard from 'gulp-standard'
-import mocha from 'gulp-mocha'
-import esdoc from 'gulp-esdoc-stream'
-import sass from 'gulp-ruby-sass'
 import autoprefixer from 'gulp-autoprefixer'
+import babel from 'rollup-plugin-babel'
+import buffer from 'vinyl-buffer'
 import cleanCSS from 'gulp-clean-css'
+import commonJs from 'rollup-plugin-commonjs'
+import esdoc from 'gulp-esdoc-stream'
+import gulp from 'gulp'
+import mocha from 'gulp-mocha'
+import nodeResolve from 'rollup-plugin-node-resolve'
+import rename from 'gulp-rename'
+import rollup from 'rollup-stream'
+import sass from 'gulp-ruby-sass'
+import source from 'vinyl-source-stream'
+import sourcemaps from 'gulp-sourcemaps'
+import standard from 'gulp-standard'
+import uglify from 'gulp-uglify'
 
 let meta = require('./package.json')
 
@@ -78,9 +80,20 @@ gulp.task('script', ['lint-script'], () => {
       babel({
         babelrc: false,
         presets: [
-          ['es2015', { modules: false }]
+          ['es2015', {
+            loose: true,
+            modules: false
+          }]
         ],
-        plugins: ['external-helpers']
+        plugins: ['external-helpers'],
+        exclude: ['node_modules/**']
+      }),
+      nodeResolve({
+        jsnext: true,
+        main: true
+      }),
+      commonJs({
+        include: ['node_modules/**']
       })
     ],
     format: 'umd',
@@ -156,4 +169,4 @@ gulp.task('watch', () => {
 })
 
 gulp.task('build', ['script', 'style', 'doc'])
-gulp.task('default', ['test', 'build', 'watch'])
+gulp.task('default', ['test', 'script', 'style', 'watch'])

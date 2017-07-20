@@ -113,8 +113,16 @@
     min-width: 320px;
     max-width: 448px;
     color: $c-pipe;
-    flex-basis: 0;
     flex-grow: 1;
+
+    @include breakpoint(xs, s) {
+      
+      @include browser(ie-11) {
+        position: relative;
+        z-index: 1;
+        margin: -3px 0;
+      }
+    }
 
     @include breakpoint(s) {
       width: 448px;
@@ -122,6 +130,12 @@
 
     @include breakpoint(m, l) {
       width: auto;
+      flex-basis: 0;
+
+      @include browser(ie-11) {
+        flex-basis: 360px;
+        flex-grow: 0;
+      }
     }
 
     &--alt {

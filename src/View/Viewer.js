@@ -27,7 +27,7 @@ export default class ViewerView extends BrickView {
     let $action = document.createElement('span')
     $action.classList.add('brick__action')
     $action.innerText = 'View'
-    $header.prepend($action)
+    $header.insertBefore($action, $header.firstChild)
 
     return $header
   }
