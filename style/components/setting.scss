@@ -4,16 +4,22 @@
   flex-direction: column;
   border-top: 1px solid $c-line;
   border-left: 1px solid $c-line;
-  min-height: 56px;
+  min-height: 57px;
   width: 100%;
 
   &__label {
     display: table;
-    padding: 8px 16px 0 16px;
+    padding: 10px 16px 0 16px;
     border-right: 1px solid $c-line;
     @extend %t-setting-label;
-    line-height: 1;
+    line-height: 8px;
     color: $c-setting-label;
+  }
+
+  &__field {
+    position: relative;
+    margin: 8px 16px;
+    min-height: 24px;
   }
 
   @for $cols from 1 through 11 {

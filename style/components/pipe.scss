@@ -5,7 +5,7 @@
   padding: 24px 0 40px;
 
   @include breakpoint(m, l) {
-    height: calc(100vh - #{$header-bar-height});
+    min-height: calc(100vh - #{$header-bar-height});
   }
 
   &__scrollable {

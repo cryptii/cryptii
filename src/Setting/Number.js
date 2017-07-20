@@ -16,9 +16,11 @@ export default class NumberSetting extends Setting {
    */
   constructor (name, spec) {
     super(name, spec)
-    this._integer = spec.options.integer || false
-    this._min = spec.options.min || null
-    this._max = spec.options.max || null
+
+    const options = spec.options || {}
+    this._integer = options.integer || false
+    this._min = options.min || null
+    this._max = options.max || null
   }
 
   /**

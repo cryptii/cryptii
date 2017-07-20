@@ -17,4 +17,15 @@ describe('StringUtil', () => {
       assert.strictEqual('I Love YOU', string)
     })
   })
+  /** @test {StringUtil.uniqueId} */
+  describe('uniqueId()', () => {
+    it('should return 10 unique ids', () => {
+      let uids = [StringUtil.uniqueId()]
+      for (let i = 0; i < 9; i++) {
+        let uid = StringUtil.uniqueId()
+        assert.strictEqual(uids.indexOf(uid), -1)
+        uids.push(uid)
+      }
+    })
+  })
 })

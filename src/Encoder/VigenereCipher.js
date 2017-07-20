@@ -42,7 +42,11 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
         type: 'boolean',
         label: 'Foreign Chars',
         width: 6,
-        value: true
+        value: true,
+        options: {
+          trueLabel: 'Include',
+          falseLabel: 'Ignore'
+        }
       }
     ])
   }
@@ -116,6 +120,6 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
         this.getSetting('key').setCaseSensitivity(value)
         break
     }
-    return super.settingValueDidChange(setting)
+    return super.settingValueDidChange(setting, value)
   }
 }

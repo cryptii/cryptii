@@ -1,4 +1,6 @@
 
+let iterator = 0
+
 /**
  * Utility class providing static methods for common string operations.
  */
@@ -22,5 +24,14 @@ export default class StringUtil {
       .replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
       // uppercase the first character
       .replace(/^./, first => first.toUpperCase())
+  }
+
+  /**
+   * Returns unique identifier for current session.
+   * @return {string}
+   */
+  static uniqueId () {
+    let uid = new Date().getTime() + (++iterator)
+    return uid.toString(16)
   }
 }

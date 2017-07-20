@@ -44,7 +44,7 @@ export default class TextViewer extends Viewer {
    * @param {TextViewerView} view
    * @param {string} text
    */
-  textViewerViewTextDidChange (view, text) {
+  viewTextDidChange (view, text) {
     let content = new Chain(text)
     this.contentDidChange(content)
   }

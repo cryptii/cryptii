@@ -24,7 +24,7 @@ export default class TextViewerView extends ViewerView {
 
   /**
    * Sets text.
-   * @param {string} string
+   * @param {string} text
    * @return {ViewerView} Fluent interface
    */
   setText (text) {
@@ -81,7 +81,7 @@ export default class TextViewerView extends ViewerView {
       this._text = text
 
       // notify model about text change
-      this.getModel().textViewerViewTextDidChange(this, this._text)
+      this.getModel().viewTextDidChange(this, this._text)
 
       this.layoutTextarea()
     }

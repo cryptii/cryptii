@@ -1,0 +1,39 @@
+
+.setting-boolean {
+
+  &__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    visibility: hidden;
+  }
+
+  &__toggle {
+    display: block;
+    user-select: none;
+    cursor: pointer;
+    @extend %t-setting-value;
+    line-height: 24px;
+    color: $c-text-detail;
+  }
+
+  &__choice {
+    display: inline-block;
+    margin-right: 10px;
+
+    &:last-child {
+      color: $c-text;
+    }
+  }
+
+  &__input:checked + &__toggle &__choice {
+    &:first-child {
+      color: $c-text;
+    }
+
+    &:last-child {
+      color: inherit;
+    }
+  }
+}

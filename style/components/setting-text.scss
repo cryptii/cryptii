@@ -1,0 +1,9 @@
+
+.setting-text {
+
+  &__input {
+    border: none;
+    height: 24px;
+    @extend %t-setting-value;
+  }
+}

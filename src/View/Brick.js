@@ -42,7 +42,7 @@ export default class BrickView extends View {
   /**
    * Renders header.
    * @protected
-   * @return {BrickView} Fluent interface
+   * @return {?HTMLElement}
    */
   renderHeader () {
     let title = this.getModel().getTitle()
@@ -58,7 +58,7 @@ export default class BrickView extends View {
   /**
    * Renders settings.
    * @protected
-   * @return {BrickView} Fluent interface
+   * @return {?HTMLElement}
    */
   renderSettings () {
     let $settings = document.createElement('div')
@@ -69,7 +69,7 @@ export default class BrickView extends View {
   /**
    * Renders content.
    * @protected
-   * @return {BrickView} Fluent interface
+   * @return {?HTMLElement}
    */
   renderContent () {
     let $content = document.createElement('div')
@@ -80,7 +80,7 @@ export default class BrickView extends View {
   /**
    * Renders footer.
    * @protected
-   * @return {BrickView} Fluent interface
+   * @return {?HTMLElement}
    */
   renderFooter () {
     let $footer = document.createElement('footer')

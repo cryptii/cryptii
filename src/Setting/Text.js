@@ -1,7 +1,8 @@
 
 import Chain from '../Chain'
-import TextEncoder from '../TextEncoder'
 import Setting from '../Setting'
+import TextEncoder from '../TextEncoder'
+import TextSettingView from '../View/Setting/Text'
 
 /**
  * Text Setting.
@@ -21,6 +22,7 @@ export default class TextSetting extends Setting {
    */
   constructor (name, spec = {}) {
     super(name, spec)
+    this._viewPrototype = TextSettingView
 
     this._value = Chain.wrap(spec.value || null)
 
@@ -29,7 +31,7 @@ export default class TextSetting extends Setting {
     this._allowedChars = null
     this._caseSensitivity = null
 
-    let options = spec.options || {}
+    const options = spec.options || {}
     this.setMinLength(options.minLength || null)
     this.setMaxLength(options.maxLength || null)
     this.setAllowedChars(options.allowedChars || null)
@@ -176,5 +178,16 @@ export default class TextSetting extends Setting {
       rawValue = rawValue.toLowerCase()
     }
     return super.filterValue(rawValue)
+  }
+
+  /**
+   * Triggered when value has been changed inside the view.
+   * @protected
+   * @param {TextSettingView} view
+   * @param {mixed} value
+   * @return {TextSetting} Fluent interface
+   */
+  viewValueDidChange (view, value) {
+    return this.setValue(value, this)
   }
 }
