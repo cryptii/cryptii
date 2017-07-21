@@ -34,6 +34,15 @@ export default class View {
   }
 
   /**
+   * Layouts view and its subviews.
+   * @return {View}
+   */
+  layout () {
+    this._subviews.forEach(subview => subview.layout())
+    return this
+  }
+
+  /**
    * Adds subview.
    * @param {View} view View to add as subview.
    * @return {View} Fluent interface

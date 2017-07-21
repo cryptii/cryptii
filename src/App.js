@@ -12,7 +12,6 @@ export default class App extends Viewable {
    */
   constructor () {
     super()
-
     this._viewPrototype = AppView
   }
 
@@ -21,13 +20,15 @@ export default class App extends Viewable {
    * @return {Application} Fluent interface
    */
   run () {
+    // populate pipe
     this._pipe = new Pipe()
     this._pipe.setTitle('Affine Cipher – Encode and Decode')
     this._pipe.addBrick('text', 'vigenere-cipher', 'text')
     this._pipe.setContent('The quick brown fox jumps over 13 lazy dogs.')
 
-    // trigger view creation
-    this.getView()
+    // trigger view creation and initial layout
+    let view = this.getView()
+    view.layout()
 
     return this
   }

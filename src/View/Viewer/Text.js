@@ -88,6 +88,15 @@ export default class TextViewerView extends ViewerView {
   }
 
   /**
+   * Layouts view and its subviews.
+   * @return {View}
+   */
+  layout () {
+    this.layoutTextarea()
+    return super.layout()
+  }
+
+  /**
    * Calculates height nessesary to view the text without scrollbars.
    * @protected
    * @return {TextViewerView} Fluent interface

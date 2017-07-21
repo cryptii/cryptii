@@ -12,6 +12,20 @@ export default class AppView extends View {
    */
   render () {
     // use existing element
-    return document.querySelector('.app')
+    let $root = document.querySelector('.app')
+
+    // bind events
+    window.addEventListener('resize', this.windowDidResize.bind(this), false)
+
+    return $root
+  }
+
+  /**
+   * Triggered when the window has been resized.
+   * @protected
+   * @param {?Event} evt
+   */
+  windowDidResize (evt) {
+    this.layout()
   }
 }
