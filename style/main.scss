@@ -1,27 +1,37 @@
 
-// settings
-@import 'variables';
+// global variables, config switches
+@import 'variables/variables';
+@import 'variables/breakpoints';
+@import 'variables/colors';
 
-// tools
-@import 'tools/breakpoint';
-@import 'tools/browser';
+// global mixins and functions
+@import 'mixins/breakpoint';
+@import 'mixins/browser';
+
+// ground-zero styles
+@import 'normalize-scss/sass/normalize/import-now';
+
+// unclassed HTML elements
+@import 'generic';
 
 // typography styles
 @import 'typography';
 
-// generic
-@import 'normalize-scss/sass/normalize/import-now';
-@import 'generic';
+// views
+@import 'views/container';
+@import 'views/link-list';
 
-// components
-@import 'components/container';
-@import 'components/link-list';
-@import 'components/header';
-@import 'components/footer';
-@import 'components/brick';
-@import 'components/setting';
-@import 'components/setting-boolean';
-@import 'components/setting-text';
-@import 'components/pipe';
-@import 'components/app';
-@import 'components/viewer-text';
+// app views
+@import 'views/app';
+@import 'views/header';
+@import 'views/footer';
+@import 'views/pipe';
+
+// brick views
+@import 'views/brick';
+@import 'views/viewer/text';
+
+// setting views
+@import 'views/setting';
+@import 'views/setting/boolean';
+@import 'views/setting/text';

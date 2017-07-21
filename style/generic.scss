@@ -3,6 +3,8 @@
   outline: none;
   box-sizing: border-box;
   transition-timing-function: ease;
+
+  // flex defaults
   flex-shrink: 0;
   flex-grow: 0;
   flex-basis: auto;
@@ -46,6 +48,11 @@ textarea {
   width: 100%;
 }
 
+textarea {
+  resize: none;
+  width: 100%;
+}
+
 h1,
 h2,
 h3,
@@ -62,9 +69,4 @@ ol {
 a {
   text-decoration: inherit;
   color: inherit;
-}
-
-textarea {
-  resize: none;
-  width: 100%;
 }
