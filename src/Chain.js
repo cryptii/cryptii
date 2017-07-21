@@ -70,6 +70,15 @@ export default class Chain {
   }
 
   /**
+   * Returns an array of strings for each Unicode character.
+   * @return {String[]}
+   */
+  getChars () {
+    return this.getCodePoints().map(codePoint =>
+      TextEncoder.stringFromCodePoints([codePoint]))
+  }
+
+  /**
    * Returns a new array iterator that contains the Unicode code points for each
    * index. Makes Chains iterable (e.g. using the for...of statement).
    * @return {iterator}

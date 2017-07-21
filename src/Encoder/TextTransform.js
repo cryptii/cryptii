@@ -1,0 +1,183 @@
+
+import Chain from '../Chain'
+import Encoder from '../Encoder'
+
+/**
+ * Encoder Brick for general text transformations.
+ */
+export default class TextTransformEncoder extends Encoder {
+  /**
+   * Brick constructor
+   */
+  constructor () {
+    super()
+
+    this._title = 'Text Transform'
+
+    this.registerSetting([
+      {
+        name: 'case',
+        type: 'enum',
+        value: 'none',
+        options: {
+          elements: [
+            'none',
+            'lower',
+            'upper',
+            'capitalize',
+            'alternating',
+            'inverse'
+          ],
+          labels: [
+            'No transform',
+            'Lower case',
+            'Upper case',
+            'Capitalize',
+            'Alternating case',
+            'Inverse case'
+          ]
+        }
+      },
+      {
+        name: 'arrangement',
+        type: 'enum',
+        value: 'none',
+        options: {
+          elements: [
+            'none',
+            'reverse'
+          ],
+          labels: [
+            'No transform',
+            'Reverse'
+          ]
+        }
+      }
+    ])
+  }
+
+  /**
+   * Performs encode on given content.
+   * @protected
+   * @param {string} content
+   * @return {Chain} Encoded content
+   */
+  performEncode (content) {
+    // transform case
+    let caseTransform = this.getSettingValue('case')
+    content = this._encodeCase(content, caseTransform)
+
+    // transform arrangement
+    let arrangementTransform = this.getSettingValue('arrangement')
+    content = this._encodeArrangement(content, arrangementTransform)
+
+    return content
+  }
+
+  /**
+   * Performs decode on given content.
+   * @protected
+   * @param {string} content
+   * @return {Chain} Decoded content
+   */
+  performDecode (content) {
+    // transform arrangement
+    let arrangementTransform = this.getSettingValue('arrangement')
+    content = this._decodeArrangement(content, arrangementTransform)
+
+    // transform case
+    let caseTransform = this.getSettingValue('case')
+    if (caseTransform === 'inverse') {
+      content = this._decodeCase(content, caseTransform)
+    }
+
+    return content
+  }
+
+  /**
+   * Transforms letter case.
+   * @param {Chain} content
+   * @param {string} transform
+   * @return {Chain}
+   */
+  _encodeCase (content, transform) {
+    switch (transform) {
+      case 'lower':
+        return content.toLowerCase()
+
+      case 'upper':
+        return content.toUpperCase()
+
+      case 'capitalize':
+        return new Chain(
+          content.getString()
+          .replace(/\w\S*/ug, word =>
+            word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
+        )
+
+      case 'alternating':
+        return new Chain(
+          content.getChars()
+          .map((char, index) =>
+            index % 2 === 0
+            ? char.toLowerCase()
+            : char.toUpperCase())
+          .join('')
+        )
+
+      case 'inverse':
+        return new Chain(
+          content.getChars()
+          .map(char => {
+            let lowerChar = char.toLowerCase()
+            return char !== lowerChar ? lowerChar : char.toUpperCase()
+          })
+          .join('')
+        )
+    }
+    return content
+  }
+
+  /**
+   * Transforms letter case back.
+   * @param {Chain} content
+   * @param {string} transform
+   * @return {Chain}
+   */
+  _decodeCase (content, transform) {
+    // not all case transformations can be undone
+    switch (transform) {
+      case 'inverse':
+        return this._encodeCase(content, transform)
+    }
+    return content
+  }
+
+  /**
+   * Transforms letter arrangement.
+   * @param {Chain} content
+   * @param {string} transform
+   * @return {Chain}
+   */
+  _encodeArrangement (content, transform) {
+    switch (transform) {
+      case 'reverse':
+        return new Chain(content.getCodePoints().reverse())
+    }
+    return content
+  }
+
+  /**
+   * Transforms letter arrangement back.
+   * @param {Chain} content
+   * @param {string} transform
+   * @return {Chain}
+   */
+  _decodeArrangement (content, transform) {
+    switch (transform) {
+      case 'reverse':
+        return this._encodeArrangement(content, transform)
+    }
+    return content
+  }
+}
