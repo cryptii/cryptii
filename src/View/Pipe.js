@@ -91,30 +91,60 @@ export default class PipeView extends View {
     $content.innerHTML = ''
 
     // add each brick and pipe parts
-    let contentIndex = 1
+    let storeIndex = 1
     brickViews.forEach(brickView => {
-      let $pipePart = document.createElement('div')
-      $pipePart.classList.add('pipe__part-pipe')
-      contentIndex % 2 === 0 && $pipePart.classList.add('pipe__part-pipe--alt')
-      $content.appendChild($pipePart)
-
-      let $brickPart = document.createElement('div')
-      $brickPart.classList.add('pipe__part-brick')
-      contentIndex % 2 === 0 && $brickPart.classList.add('pipe__part-brick--alt')
-      $brickPart.appendChild(brickView.getElement())
-      $content.appendChild($brickPart)
+      $content.appendChild(this._createPipePart(storeIndex))
+      $content.appendChild(this._createBrickPart(brickView, storeIndex))
 
       if (brickView.getModel() instanceof Encoder) {
-        contentIndex++
+        storeIndex++
       }
     })
 
     // add end part
-    let $endPipePart = document.createElement('div')
-    $endPipePart.classList.add('pipe__part-pipe')
-    contentIndex % 2 === 0 && $endPipePart.classList.add('pipe__part-pipe--alt')
-    $content.appendChild($endPipePart)
+    $content.appendChild(this._createPipePart(storeIndex))
 
     return this
+  }
+
+  /**
+   * Creates pipe part.
+   * @return {HTMLElement}
+   */
+  _createPipePart (storeIndex) {
+    let $addButton = document.createElement('div')
+    $addButton.classList.add('pipe__btn-add')
+    $addButton.innerText = 'Add Encoder or Viewer'
+
+    let $pipePart = document.createElement('a')
+    $pipePart.classList.add('pipe__part-pipe')
+    $pipePart.setAttribute('href', '#')
+    $pipePart.addEventListener('click', this.addButtonDidClick.bind(this))
+    storeIndex % 2 === 0 && $pipePart.classList.add('pipe__part-pipe--alt')
+    $pipePart.appendChild($addButton)
+
+    return $pipePart
+  }
+
+  /**
+   * Creates brick part.
+   * @return {HTMLElement}
+   */
+  _createBrickPart (brickView, storeIndex) {
+    let $brickPart = document.createElement('div')
+    $brickPart.classList.add('pipe__part-brick')
+    $brickPart.appendChild(brickView.getElement())
+    storeIndex % 2 === 0 && $brickPart.classList.add('pipe__part-brick--alt')
+    return $brickPart
+  }
+
+  /**
+   * Triggered when user clicked on the button.
+   * @param {Event} evt
+   */
+  addButtonDidClick (evt) {
+    // needs implementation
+    evt.preventDefault()
+    return false
   }
 }

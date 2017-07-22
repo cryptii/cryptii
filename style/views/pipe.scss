@@ -1,5 +1,6 @@
 
 .pipe {
+  $block: &;
   display: flex;
   flex-direction: column;
   padding: 24px 0 40px;
@@ -38,13 +39,13 @@
   &__part-pipe {
     position: relative;
     width: $pipe-size;
-    height: 48px;
+    height: 56px;
     background: $c-pipe;
     border-color: $c-pipe;
 
     @include breakpoint(m, l) {
       width: auto;
-      min-width: 48px;
+      min-width: 56px;
       height: $pipe-size;
       margin-top: 8px;
     }
@@ -116,7 +117,7 @@
     flex-grow: 1;
 
     @include breakpoint(xs, s) {
-      
+
       @include browser(ie-11) {
         position: relative;
         z-index: 1;
@@ -177,5 +178,42 @@
 
   &__link-list {
     padding-top: 16px;
+  }
+
+  &__btn-add {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 2px solid $c-white;
+    border-radius: 12px;
+    font-size: 0;
+    z-index: 1;
+    opacity: .5;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 2px;
+      background: $c-white;
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    #{$block}__part-pipe:hover & {
+      opacity: 1;
+    }
   }
 }
