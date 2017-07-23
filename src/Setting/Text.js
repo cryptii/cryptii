@@ -188,6 +188,6 @@ export default class TextSetting extends Setting {
    * @return {TextSetting} Fluent interface
    */
   viewValueDidChange (view, value) {
-    return this.setValue(value, this)
+    return this.setValue(value, view)
   }
 }

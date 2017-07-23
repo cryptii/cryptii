@@ -1,4 +1,5 @@
 
+import EnumSettingView from '../View/Setting/Enum'
 import Setting from '../Setting'
 
 /**
@@ -15,6 +16,8 @@ export default class EnumSetting extends Setting {
    */
   constructor (name, spec) {
     super(name, spec)
+    this._viewPrototype = EnumSettingView
+
     this.setElements(spec.options.elements, spec.options.labels || null)
   }
 
@@ -30,7 +33,7 @@ export default class EnumSetting extends Setting {
    * Returns value labels.
    * @return {string[]} Value labels
    */
-  getLabels () {
+  getElementLabels () {
     return this._labels
   }
 
@@ -57,6 +60,35 @@ export default class EnumSetting extends Setting {
   }
 
   /**
+   * Returns element at given index.
+   * @param {number} index
+   * @return {?EnumSetting}
+   */
+  getElementAt (index) {
+    return index < this._elements.length
+      ? this._elements[index]
+      : null
+  }
+
+  /**
+   * Returns selected element index.
+   * @return {number}
+   */
+  getSelectedIndex () {
+    return this._elements.indexOf(this.getValue())
+  }
+
+  /**
+   * Sets selected element index. Triggers {@link Setting.setValue} internally.
+   * @param {number} index
+   * @return {EnumSetting} Fluent interface
+   */
+  setSelectedIndex (index) {
+    let value = this._elements[index]
+    return this.setValue(value)
+  }
+
+  /**
    * Validates given raw value.
    * @param {mixed} rawValue Value to be validated.
    * @return {boolean} True, if valid.
@@ -73,5 +105,16 @@ export default class EnumSetting extends Setting {
    */
   randomizeValue (random) {
     return random.nextChoice(this._elements)
+  }
+
+  /**
+   * Triggered when value has been changed inside the view.
+   * @protected
+   * @param {EnumSettingView} view
+   * @param {mixed} value
+   * @return {EnumSetting} Fluent interface
+   */
+  viewValueDidChange (view, value) {
+    return this.setValue(value, view)
   }
 }

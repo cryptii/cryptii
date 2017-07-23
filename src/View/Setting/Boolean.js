@@ -15,6 +15,15 @@ export default class BooleanSettingView extends SettingView {
   }
 
   /**
+   * Retrieves value from model and updates it in view.
+   * @return {SettingView} Fluent interface
+   */
+  updateValue () {
+    this._$input.checked = this.getModel().getValue()
+    return this
+  }
+
+  /**
    * Renders view.
    * @protected
    * @return {HTMLElement}

@@ -6,6 +6,16 @@ import View from '../View'
  */
 export default class SettingView extends View {
   /**
+   * Retrieves value from model and updates it in view.
+   * @override
+   * @return {SettingView} Fluent interface
+   */
+  updateValue () {
+    // nothing to do
+    return this
+  }
+
+  /**
    * Renders view.
    * @protected
    * @return {HTMLElement}
@@ -47,5 +57,13 @@ export default class SettingView extends View {
     let $field = document.createElement('div')
     $field.classList.add('setting__field')
     return $field
+  }
+
+  /**
+   * Triggered after rendering root element.
+   */
+  didRender () {
+    // update value initially
+    this.updateValue()
   }
 }

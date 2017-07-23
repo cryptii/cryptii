@@ -19,7 +19,9 @@ export default class View {
    */
   getElement () {
     if (this._$root === null) {
+      this.willRender()
       this._$root = this.render()
+      this.didRender()
     }
     return this._$root
   }
@@ -31,6 +33,20 @@ export default class View {
    */
   render () {
     return document.createElement('div')
+  }
+
+  /**
+   * Triggered before rendering root element.
+   * @override
+   */
+  willRender () {
+  }
+
+  /**
+   * Triggered after rendering root element.
+   * @override
+   */
+  didRender () {
   }
 
   /**

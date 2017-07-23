@@ -130,6 +130,12 @@ export default class Setting extends Viewable {
     // check if value changed
     if (this._value !== value) {
       this._value = value
+
+      // update value in view
+      if (this.hasView() && this.getView() !== sender) {
+        this.getView().updateValue()
+      }
+
       // notify delegate
       if (this.hasDelegate() && this.getDelegate() !== sender) {
         this.getDelegate().settingValueDidChange(this, value)

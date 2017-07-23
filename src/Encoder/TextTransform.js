@@ -18,6 +18,7 @@ export default class TextTransformEncoder extends Encoder {
       {
         name: 'case',
         type: 'enum',
+        label: 'Case Transform',
         value: 'none',
         options: {
           elements: [
@@ -29,7 +30,7 @@ export default class TextTransformEncoder extends Encoder {
             'inverse'
           ],
           labels: [
-            'No transform',
+            'None',
             'Lower case',
             'Upper case',
             'Capitalize',
@@ -41,6 +42,7 @@ export default class TextTransformEncoder extends Encoder {
       {
         name: 'arrangement',
         type: 'enum',
+        label: 'Arrangement Transform',
         value: 'none',
         options: {
           elements: [
@@ -48,7 +50,7 @@ export default class TextTransformEncoder extends Encoder {
             'reverse'
           ],
           labels: [
-            'No transform',
+            'None',
             'Reverse'
           ]
         }

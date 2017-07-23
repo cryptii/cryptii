@@ -1,4 +1,5 @@
 
+import NumberSettingView from '../View/Setting/Number'
 import Setting from '../Setting'
 
 /**
@@ -11,14 +12,17 @@ export default class NumberSetting extends Setting {
    * @param {Object} spec
    * @param {mixed} [spec.options] Setting options
    * @param {boolean} [spec.options.integer=false] Wether to use integer values.
+   * @param {?number} [spec.options.step=1] Step size.
    * @param {?number} [spec.options.min=null] Minimum value (inclusive)
    * @param {?number} [spec.options.max=null] Maximum value (exclusive)
    */
   constructor (name, spec) {
     super(name, spec)
+    this._viewPrototype = NumberSettingView
 
     const options = spec.options || {}
     this._integer = options.integer || false
+    this._step = options.step || 1
     this._min = options.min || null
     this._max = options.max || null
   }
@@ -39,6 +43,76 @@ export default class NumberSetting extends Setting {
   setInteger (integer) {
     this._integer = integer
     return this.revalidateValue()
+  }
+
+  /**
+   * Returns how much to add or remove when stepping value up or down.
+   * @return {?number}
+   */
+  getStep () {
+    return this._step
+  }
+
+  /**
+   * Sets step size.
+   * @param {?number} step
+   * @return {NumberSetting} Fluent interface
+   */
+  setStep (step) {
+    this._step = step
+    return this
+  }
+
+  /**
+   * Step up or down value until finding the next valid one.
+   * @param {number} step Relative step size.
+   * @param {number} [maxTries=100] Max number of tries to find a valid value.
+   * @return {?number} Resulting value or null if unable to find.
+   */
+  stepValue (step, maxTries = 100) {
+    let value = this.getValue()
+    let tries = 0
+    let valueFound = false
+
+    // step until a valid value is found
+    while (
+      !valueFound &&
+      tries++ < maxTries &&
+      // eslint-disable-next-line no-unmodified-loop-condition
+      (step > 0 || value !== this._min) &&
+      // eslint-disable-next-line no-unmodified-loop-condition
+      (step < 0 || value !== this._max)
+    ) {
+      // add step to value
+      value += step
+
+      // check bounds
+      value = this._max !== null ? Math.min(value, this._max) : value
+      value = this._min !== null ? Math.max(value, this._min) : value
+
+      // validate value
+      valueFound = this.validateValue(value)
+    }
+
+    return valueFound ? value : null
+  }
+
+  /**
+   * Step up value.
+   * @return {NumberSetting} Fluent interface
+   */
+  stepUp () {
+    let value = this.stepValue(this._step)
+    return value !== null ? this.setValue(value) : this
+  }
+
+  /**
+   * Step down value.
+   * @return {NumberSetting} Fluent interface
+   */
+  stepDown () {
+    let value = this.stepValue(-this._step)
+    return value !== null ? this.setValue(value) : this
   }
 
   /**
@@ -132,5 +206,15 @@ export default class NumberSetting extends Setting {
     } else {
       return random.nextFloat(this.getMin(), this.getMax())
     }
+  }
+
+  /**
+   * Triggered when value has been changed inside the view.
+   * @protected
+   * @param {NumberSettingView} view
+   * @param {number} value
+   */
+  viewValueDidChange (view, value) {
+    this.setValue(value, view)
   }
 }

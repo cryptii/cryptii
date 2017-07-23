@@ -14,6 +14,15 @@ export default class TextSettingView extends SettingView {
   }
 
   /**
+   * Retrieves value from model and updates it in view.
+   * @return {SettingView} Fluent interface
+   */
+  updateValue () {
+    this._$input.value = this.getModel().getValue().getString()
+    return this
+  }
+
+  /**
    * Renders view.
    * @protected
    * @return {HTMLElement}
@@ -36,7 +45,6 @@ export default class TextSettingView extends SettingView {
     this._$input.setAttribute('type', 'text')
     this._$input.addEventListener('input',
       this.inputValueDidChange.bind(this), false)
-    this._$input.value = this.getModel().getValue().getString()
 
     let $field = super.renderField()
     $field.appendChild(this._$input)

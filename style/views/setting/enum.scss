@@ -1,0 +1,36 @@
+
+.setting-enum {
+
+  &__field {
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      height: 2px;
+      width: 9px;
+      transform: translate(0, 4px) rotate(-45deg);
+      transform-origin: left center;
+      background: $c-text;
+    }
+
+    &::after {
+      transform: translate(0, 4px) rotate(-135deg);
+    }
+  }
+
+  &__select {
+    border: none;
+    padding: 8px 16px;
+    line-height: 24px;
+    @extend %t-setting-value;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+}

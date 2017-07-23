@@ -80,6 +80,6 @@ export default class BooleanSetting extends Setting {
    * @return {BooleanSetting} Fluent interface
    */
   viewValueDidChange (view, value) {
-    return this.setValue(value, this)
+    return this.setValue(value, view)
   }
 }
