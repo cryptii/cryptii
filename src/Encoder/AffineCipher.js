@@ -52,7 +52,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
         name: 'caseSensitivity',
         type: 'boolean',
         width: 6,
-        value: true
+        value: false
       },
       {
         name: 'includeForeignChars',

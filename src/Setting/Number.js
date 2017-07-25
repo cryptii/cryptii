@@ -117,7 +117,7 @@ export default class NumberSetting extends Setting {
 
   /**
    * Returns minimum value (inclusive).
-   * @return Minimum value
+   * @return {?number} Minimum value
    */
   getMin () {
     return this._min
@@ -125,7 +125,7 @@ export default class NumberSetting extends Setting {
 
   /**
    * Sets minimum value (inclusive).
-   * @param {number} min Minimum value
+   * @param {?number} min Minimum value
    * @return {NumberSetting} Fluent interface
    */
   setMin (min) {
@@ -135,7 +135,7 @@ export default class NumberSetting extends Setting {
 
   /**
    * Returns maximum value (exclusive).
-   * @return Maximum value
+   * @return {?number} Maximum value
    */
   getMax () {
     return this._max
@@ -143,7 +143,7 @@ export default class NumberSetting extends Setting {
 
   /**
    * Sets maximum value (exclusive).
-   * @param {number} max Maximum value
+   * @param {?number} max Maximum value
    * @return {NumberSetting} Fluent interface
    */
   setMax (max) {

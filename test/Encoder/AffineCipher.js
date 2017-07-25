@@ -19,13 +19,13 @@ describe('AffineCipherEncoder', () => EncoderTester.test(AffineCipherEncoder, [
     expectedResult: 'ihhwvcswfrcp'
   },
   {
-    settings: { caseSensitivity: false, a: 5, b: 8 },
+    settings: { a: 5, b: 8 },
     direction: 'encode',
     content: 'AffineCipher',
     expectedResult: 'ihhwvcswfrcp'
   },
   {
-    settings: { a: 5, b: 8 },
+    settings: { caseSensitivity: true, a: 5, b: 8 },
     direction: 'encode',
     content: 'AffineCipher',
     expectedResult: 'AhhwvcCwfrcp'

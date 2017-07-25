@@ -14,7 +14,7 @@
 
     @include breakpoint(m, l) {
       overflow: hidden;
-      overflow-x: scroll;
+      overflow-x: auto;
       flex-grow: 1;
       order: 1;
     }
