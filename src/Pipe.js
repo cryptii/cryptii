@@ -17,7 +17,9 @@ export default class Pipe extends Viewable {
     super()
 
     this._bricks = []
-    this._stores = []
+    this._busyEncoders = []
+
+    this._stores = [new Chain()]
 
     this._title = null
     this._description = null
@@ -31,6 +33,15 @@ export default class Pipe extends Viewable {
    */
   getBricks () {
     return this._bricks
+  }
+
+  /**
+   * Returns wether given brick is part of this pipe.
+   * @param {Brick} brick
+   * @return {boolean} True, if brick is part of pipe.
+   */
+  containsBrick (brick) {
+    return this._bricks.indexOf(brick) !== -1
   }
 
   /**
@@ -142,10 +153,10 @@ export default class Pipe extends Viewable {
     // TODO integrate previous stores
     // count how many stores are needed
     let encoderCount = this._bricks.reduce((count, brick) =>
-      (count || 1) + (brick instanceof Encoder ? 1 : 0))
+      count + (brick instanceof Encoder ? 1 : 0), 0)
 
     // create empty stores
-    this._stores = new Array(encoderCount).map(() => new Chain())
+    this._stores = new Array(encoderCount + 1).fill().map(() => new Chain())
     return this
   }
 
@@ -185,13 +196,16 @@ export default class Pipe extends Viewable {
    * @return Fluent interface
    */
   setContent (index, content, sender = null) {
+    // handle optional first argument
     if (isNaN(index)) {
-      // handle optional first arg
       return this.setContent(0, index, content)
     }
 
+    // wrap content inside Chain
     content = Chain.wrap(content)
-    if (Chain.isEqual(this._stores[index], content)) {
+
+    // verify changes
+    if (this._stores[index].isEqualTo(content)) {
       // nothing to do
       return this
     }
@@ -222,30 +236,109 @@ export default class Pipe extends Viewable {
       }
     }
 
-    if (lowerEncoder !== null && lowerEncoder !== sender) {
-      // propagate content through lower encoder
-      // TODO handle result promise
-      this.setContent(
-        index - 1,
-        lowerEncoder.decode(content),
-        lowerEncoder)
-    }
-
-    if (upperEncoder !== null && upperEncoder !== sender) {
-      // propagate content through upper encoder
-      // TODO handle result promise
-      this.setContent(
-        index + 1,
-        upperEncoder.encode(content),
-        upperEncoder)
-    }
-
     // propagate content to each viewer
     viewers
       .filter(viewer => viewer !== sender)
       .forEach(viewer => viewer.view(content))
 
+    if (lowerEncoder !== null && lowerEncoder !== sender) {
+      // trigger decode at lower end
+      this.triggerEncoderTranslation(lowerEncoder, false)
+    }
+
+    if (upperEncoder !== null && upperEncoder !== sender) {
+      // trigger encode at upper end
+      this.triggerEncoderTranslation(upperEncoder, true)
+    }
+
     return this
+  }
+
+  /**
+   * Triggers encoder translation. Keeps track of busy encoders and skips
+   * translations accordingly.
+   * @protected
+   * @param {Encoder} encoder
+   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @return {Pipe} Fluent interface
+   */
+  triggerEncoderTranslation (encoder, isEncode) {
+    let encoderIndex = this.getStoreIndexForBrick(encoder)
+    let sourceStore = isEncode ? encoderIndex : encoderIndex + 1
+
+    // check if encoder is currently busy
+    if (this._busyEncoders.indexOf(encoder) !== -1) {
+      // skip this translation
+      return this
+    }
+
+    // translate source to result asynchronously
+    let source = this._stores[sourceStore]
+    let resultPromise =
+      new Promise(resolve =>
+        setTimeout(() => {
+          let result = isEncode
+            ? encoder.encode(source)
+            : encoder.decode(source)
+          resolve(result)
+        }, 0))
+
+    // mark this encoder as busy
+    this._busyEncoders.push(encoder)
+
+    // add promise resolve handler
+    resultPromise
+      .then(result => {
+        // mark encoder as no longer busy
+        this._busyEncoders.splice(this._busyEncoders.indexOf(encoder), 1)
+
+        // there are no store indexes handed over because they may have changed
+        //  due to new brick arrangement during translation
+        this.encoderTranslationDidFinish(encoder, isEncode, result, source)
+        return result
+      })
+      .catch(() => {
+        // TODO Handle Encoder Promise rejects somehow
+        // mark encoder as no longer busy
+        this._busyEncoders.splice(this._busyEncoders.indexOf(encoder), 1)
+      })
+
+    return this
+  }
+
+  /**
+   * Triggered when a result comes back from the encoder. Checks wether the
+   * encoder brick is still contained in this pipe. Triggers new translation
+   * when the source content has changed during previous translation.
+   * @protected
+   * @param {Encoder} encoder
+   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {Chain} result
+   * @param {Chain} source
+   */
+  encoderTranslationDidFinish (encoder, isEncode, result, source) {
+    // check if encoder is still part of the pipe
+    if (!this.containsBrick(encoder)) {
+      // result is no longer relevant
+      // do nothing
+      return
+    }
+
+    let encoderIndex = this.getStoreIndexForBrick(encoder)
+    let sourceStore = isEncode ? encoderIndex : encoderIndex + 1
+    let resultStore = isEncode ? encoderIndex + 1 : encoderIndex
+
+    // propagate result
+    this.setContent(resultStore, result, encoder)
+
+    // there were translations skipped when the current source content is
+    //  different from the source content of last translation
+    // comparing the pointer instead of calling isEqualTo should lead faster
+    //  to the same result in this case
+    if (this._stores[sourceStore] !== source) {
+      // repeat translation
+      this.triggerEncoderTranslation(encoder, isEncode)
+    }
   }
 
   /**
