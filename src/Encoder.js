@@ -148,18 +148,4 @@ export default class Encoder extends Brick {
   didTranslate (content, isEncode) {
     return content
   }
-
-  /**
-   * Triggered when a setting value has changed.
-   * Override is required to call super.
-   * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
-   */
-  settingValueDidChange (setting, value) {
-    // notify delegate
-    this.hasPipe() && this.getPipe().encoderSettingDidChange(this)
-    return this
-  }
 }

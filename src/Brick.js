@@ -140,14 +140,16 @@ export default class Brick extends Viewable {
 
   /**
    * Triggered when a setting value has changed.
-   * @abstract
+   * Override is required to call super.
    * @protected
    * @param {Setting} setting
    * @param {mixed} value Setting value
-   * @return {Brick} Fluent interface
+   * @return {Encoder} Fluent interface
    */
   settingValueDidChange (setting, value) {
-    // abstract method
+    // notify delegate
+    this.hasPipe() && this.getPipe().brickSettingDidChange(this)
+    return this
   }
 
   /**

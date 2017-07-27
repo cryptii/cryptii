@@ -15,16 +15,20 @@ export default class Pipe extends Viewable {
    */
   constructor () {
     super()
+    this._viewPrototype = PipeView
 
+    // brick arrangement
     this._bricks = []
-    this._busyEncoders = []
 
+    // meta objects for each brick
+    this._brickMeta = []
+
+    // content stores
     this._stores = [new Chain()]
 
+    // pipe meta
     this._title = null
     this._description = null
-
-    this._viewPrototype = PipeView
   }
 
   /**
@@ -67,7 +71,14 @@ export default class Pipe extends Viewable {
         : brickOrName)
 
     // insert brick instances
-    this._bricks.splice.apply(this._bricks, [index, 0].concat(bricks))
+    this._bricks.splice.apply(this._bricks,
+      [index, 0].concat(bricks))
+
+    // insert brick meta objects
+    this._brickMeta.splice.apply(this._brickMeta,
+      [index, 0].concat(bricks.map(() => ({
+        settingsVersion: 1
+      }))))
 
     // set brick delegate and add brick subview
     let insertedEncoder = false
@@ -110,6 +121,7 @@ export default class Pipe extends Viewable {
         const brick = this._bricks[index]
         brick.setPipe(null)
         this._bricks.splice(index, 1)
+        this._brickMeta.splice(index, 1)
         this.hasView() && this.getView().removeSubview(brick.getView())
         removedEncoder = removedEncoder || brick instanceof Encoder
       })
@@ -127,22 +139,44 @@ export default class Pipe extends Viewable {
    * @protected
    * @param {Viewer} viewer Sender
    * @param {Chain} content
-   * @return {Pipe} Fluent interface
    */
   viewerContentDidChange (viewer, content) {
-    let storeIndex = this.getStoreIndexForBrick(viewer)
-    this.setContent(storeIndex, content, viewer)
-    return this
+    let brickIndex = this._bricks.indexOf(viewer)
+    if (brickIndex === -1) {
+      // viewer is not part of pipe
+      // ignore this event
+      return
+    }
+
+    let store = this.getStoreIndexForBrick(viewer)
+    this.setContent(store, content, viewer)
   }
 
   /**
-   * Delegate method triggered by child Encoders if their settings changed.
+   * Delegate method triggered by child Bricks if their settings changed.
    * @protected
-   * @param {Encoder} encoder Sender
-   * @return {Pipe} Fluent interface
+   * @param {Encoder} brick Sender
    */
-  encoderSettingDidChange (encoder) {
-    // TODO repeat last encoding or decoding and propagate content
+  brickSettingDidChange (brick) {
+    let brickIndex = this._bricks.indexOf(brick)
+    if (brickIndex === -1) {
+      // encoder is not part of pipe
+      // ignore this event
+      return
+    }
+
+    let brickMeta = this._brickMeta[brickIndex]
+
+    // increment brick settings version
+    brickMeta.settingsVersion++
+
+    if (brick instanceof Encoder) {
+      // trigger encode or decode depending on last translation direction
+      let isEncode = brickMeta.direction !== false
+      this.triggerEncoderTranslation(brick, isEncode)
+    } else {
+      // TODO Handle viewer settings change event
+    }
   }
 
   /**
@@ -263,17 +297,23 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Fluent interface
    */
   triggerEncoderTranslation (encoder, isEncode) {
-    let encoderIndex = this.getStoreIndexForBrick(encoder)
-    let sourceStore = isEncode ? encoderIndex : encoderIndex + 1
+    let leftStore = this.getStoreIndexForBrick(encoder)
+    let sourceStore = isEncode ? leftStore : leftStore + 1
 
     // check if encoder is currently busy
-    if (this._busyEncoders.indexOf(encoder) !== -1) {
+    let encoderMeta = this._brickMeta[this._bricks.indexOf(encoder)]
+    if (encoderMeta.translating === true) {
       // skip this translation
       return this
     }
 
-    // translate source to result asynchronously
+    // update last encoder direction
+    encoderMeta.direction = isEncode
+
     let source = this._stores[sourceStore]
+    let settingsVersion = encoderMeta.settingsVersion
+
+    // translate source to result asynchronously
     let resultPromise =
       new Promise(resolve =>
         setTimeout(() => {
@@ -284,23 +324,25 @@ export default class Pipe extends Viewable {
         }, 0))
 
     // mark this encoder as busy
-    this._busyEncoders.push(encoder)
+    encoderMeta.translating = true
 
     // add promise resolve handler
     resultPromise
       .then(result => {
         // mark encoder as no longer busy
-        this._busyEncoders.splice(this._busyEncoders.indexOf(encoder), 1)
+        encoderMeta.translating = false
 
         // there are no store indexes handed over because they may have changed
         //  due to new brick arrangement during translation
-        this.encoderTranslationDidFinish(encoder, isEncode, result, source)
+        this.encoderTranslationDidFinish(
+          encoder, isEncode, result, source, settingsVersion)
+
         return result
       })
       .catch(() => {
         // TODO Handle Encoder Promise rejects somehow
         // mark encoder as no longer busy
-        this._busyEncoders.splice(this._busyEncoders.indexOf(encoder), 1)
+        encoderMeta.translating = false
       })
 
     return this
@@ -314,9 +356,12 @@ export default class Pipe extends Viewable {
    * @param {Encoder} encoder
    * @param {boolean} isEncode True for encoding, false for decoding.
    * @param {Chain} result
-   * @param {Chain} source
+   * @param {Chain} usedSource Source used during translation
+   * @param {number} usedSettingsVersion
+   * Settings version used during translation
    */
-  encoderTranslationDidFinish (encoder, isEncode, result, source) {
+  encoderTranslationDidFinish (
+    encoder, isEncode, result, usedSource, usedSettingsVersion) {
     // check if encoder is still part of the pipe
     if (!this.containsBrick(encoder)) {
       // result is no longer relevant
@@ -324,18 +369,20 @@ export default class Pipe extends Viewable {
       return
     }
 
-    let encoderIndex = this.getStoreIndexForBrick(encoder)
-    let sourceStore = isEncode ? encoderIndex : encoderIndex + 1
-    let resultStore = isEncode ? encoderIndex + 1 : encoderIndex
+    let encoderMeta = this._brickMeta[this._bricks.indexOf(encoder)]
+    let leftStore = this.getStoreIndexForBrick(encoder)
+    let sourceStore = isEncode ? leftStore : leftStore + 1
+    let resultStore = isEncode ? leftStore + 1 : leftStore
 
     // propagate result
     this.setContent(resultStore, result, encoder)
 
-    // there were translations skipped when the current source content is
-    //  different from the source content of last translation
+    // there were translations skipped when the current source content or brick
+    //  settings changed during last translation
     // comparing the pointer instead of calling isEqualTo should lead faster
     //  to the same result in this case
-    if (this._stores[sourceStore] !== source) {
+    if (this._stores[sourceStore] !== usedSource ||
+        encoderMeta.settingsVersion !== usedSettingsVersion) {
       // repeat translation
       this.triggerEncoderTranslation(encoder, isEncode)
     }
