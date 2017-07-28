@@ -51,6 +51,10 @@ export default class EnumSettingView extends SettingView {
       this._$select.appendChild($option)
     })
 
+    // bind change event
+    this._$select.addEventListener('change',
+      this.selectValueDidChange.bind(this), false)
+
     let $field = super.renderField()
     $field.classList.remove('setting__field')
     $field.classList.add('setting-enum__field')

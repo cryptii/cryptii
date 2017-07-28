@@ -18,7 +18,7 @@ export default class TextTransformEncoder extends Encoder {
       {
         name: 'case',
         type: 'enum',
-        label: 'Case Transform',
+        label: 'Case',
         value: 'none',
         options: {
           elements: [
@@ -42,7 +42,7 @@ export default class TextTransformEncoder extends Encoder {
       {
         name: 'arrangement',
         type: 'enum',
-        label: 'Arrangement Transform',
+        label: 'Arrangement',
         value: 'none',
         options: {
           elements: [
@@ -164,7 +164,7 @@ export default class TextTransformEncoder extends Encoder {
   _encodeArrangement (content, transform) {
     switch (transform) {
       case 'reverse':
-        return new Chain(content.getCodePoints().reverse())
+        return new Chain(content.getCodePoints().slice(0).reverse())
     }
     return content
   }
