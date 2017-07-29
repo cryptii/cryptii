@@ -246,10 +246,16 @@ export default class Chain {
    * @return {boolean} True, if content is equal.
    */
   isEqualTo (chain) {
+    // check pointer
+    if (chain === this) {
+      return true
+    }
+
     // check instance class
     if (!(chain instanceof Chain)) {
       return false
     }
+
     // compare content
     return (
       (this._string !== null && this._string === chain._string) ||

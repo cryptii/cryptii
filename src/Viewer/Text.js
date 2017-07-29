@@ -12,30 +12,19 @@ export default class TextViewer extends Viewer {
    */
   constructor () {
     super()
-
     this._title = 'Text'
     this._viewPrototype = TextViewerView
   }
 
   /**
-   * Views content.
-   * @param {Chain} content
-   * @return {Viewer} Fluent interface
-   */
-  view (content) {
-    super.view(content)
-    this.hasView() && this.getView().setText(content.getString())
-    return this
-  }
-
-  /**
-   * Triggered when view has been created.
+   * Performs view of given content.
    * @protected
-   * @param {View} view
+   * @param {string} content
+   * @param {function} done Called when performing view has finished.
    */
-  didCreateView (view) {
-    super.didCreateView(view)
-    this.hasView() && this.getView().setText(this.getContent().getString())
+  performView (content, done) {
+    this.getView().setText(content.getString())
+    done()
   }
 
   /**

@@ -11,6 +11,7 @@ export default class TextViewerView extends ViewerView {
   constructor () {
     super()
     this._text = ''
+    this._disabled = false
     this._$textarea = null
   }
 
@@ -40,6 +41,31 @@ export default class TextViewerView extends ViewerView {
   }
 
   /**
+   * Returns wether input is disabled.
+   * @return {boolean}
+   */
+  isDisabled () {
+    return this._disabled
+  }
+
+  /**
+   * Sets wether input is disabled.
+   * @param {boolean} disabled
+   * @return {TextViewerView} Fluent interface
+   */
+  setDisabled (disabled) {
+    this._disabled = disabled
+    if (this._$textarea !== null) {
+      if (disabled) {
+        this._$textarea.setAttribute('disabled', 'disabled')
+      } else {
+        this._$textarea.removeAttribute('disabled')
+      }
+    }
+    return this
+  }
+
+  /**
    * Renders view.
    * @protected
    * @return {HTMLElement}
@@ -61,6 +87,10 @@ export default class TextViewerView extends ViewerView {
     this._$textarea.setAttribute('spellcheck', 'false')
     this._$textarea.value = this._text
 
+    if (this.isDisabled()) {
+      this._$textarea.setAttribute('disabled', 'disabled')
+    }
+
     this._$textarea.addEventListener(
       'input', this.textareaValueDidChange.bind(this), false)
 
@@ -75,6 +105,11 @@ export default class TextViewerView extends ViewerView {
    * @param {Event} evt
    */
   textareaValueDidChange (evt) {
+    if (this.isDisabled()) {
+      evt.preventDefault()
+      return false
+    }
+
     let text = this._$textarea.value
 
     if (this._text !== text) {

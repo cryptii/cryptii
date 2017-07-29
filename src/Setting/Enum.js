@@ -50,7 +50,7 @@ export default class EnumSetting extends Setting {
       throw new Error(`Array of elements can't be empty.`)
     }
 
-    if (labels === null || elements.length !== labels.length) {
+    if (labels !== null && elements.length !== labels.length) {
       throw new Error(`Element and label arrays need to have the same length.`)
     }
 
