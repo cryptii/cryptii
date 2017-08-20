@@ -12,6 +12,14 @@ export default class Factory {
   }
 
   /**
+   * Returns available identifiers.
+   * @return {string[]}
+   */
+  getIdentifiers () {
+    return this._identifiers
+  }
+
+  /**
    * Registers invokable to specified identifier.
    * @param {string} identifier
    * @param {class} invokable

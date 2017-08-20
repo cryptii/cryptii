@@ -1,6 +1,5 @@
 
 import BrickView from './Brick'
-import Encoder from '../Encoder'
 import View from '../View'
 
 /**
@@ -73,9 +72,8 @@ export default class PipeView extends View {
    * @return {PipeView} Fluent interface
    */
   _integrateBrickViews () {
-    // only consider brick subviews
-    let brickViews = this.getSubviews()
-      .filter(view => view instanceof BrickView)
+    // gather brick views in order
+    let brickViews = this.getModel().getBricks().map(brick => brick.getView())
 
     this.getElement()
     let $content = this._$content
@@ -91,27 +89,23 @@ export default class PipeView extends View {
     $content.innerHTML = ''
 
     // add each brick and pipe parts
-    let storeIndex = 1
-    brickViews.forEach(brickView => {
-      $content.appendChild(this._createPipePart(storeIndex))
-      $content.appendChild(this._createBrickPart(brickView, storeIndex))
-
-      if (brickView.getModel() instanceof Encoder) {
-        storeIndex++
-      }
+    brickViews.forEach((brickView, index) => {
+      $content.appendChild(this._createPipePart(index))
+      $content.appendChild(this._createBrickPart(brickView))
     })
 
     // add end part
-    $content.appendChild(this._createPipePart(storeIndex))
+    $content.appendChild(this._createPipePart(brickViews.length))
 
     return this
   }
 
   /**
    * Creates pipe part.
+   * @param {number} index
    * @return {HTMLElement}
    */
-  _createPipePart (storeIndex) {
+  _createPipePart (index) {
     let $addButton = document.createElement('div')
     $addButton.classList.add('pipe__btn-add')
     $addButton.innerText = 'Add Encoder or Viewer'
@@ -119,8 +113,8 @@ export default class PipeView extends View {
     let $pipePart = document.createElement('a')
     $pipePart.classList.add('pipe__part-pipe')
     $pipePart.setAttribute('href', '#')
-    $pipePart.addEventListener('click', this.addButtonDidClick.bind(this))
-    storeIndex % 2 === 0 && $pipePart.classList.add('pipe__part-pipe--alt')
+    $pipePart.addEventListener('click', evt =>
+      this.addButtonDidClick(evt, index))
     $pipePart.appendChild($addButton)
 
     return $pipePart
@@ -128,23 +122,24 @@ export default class PipeView extends View {
 
   /**
    * Creates brick part.
+   * @param {BrickView} brickView
    * @return {HTMLElement}
    */
-  _createBrickPart (brickView, storeIndex) {
+  _createBrickPart (brickView) {
     let $brickPart = document.createElement('div')
     $brickPart.classList.add('pipe__part-brick')
     $brickPart.appendChild(brickView.getElement())
-    storeIndex % 2 === 0 && $brickPart.classList.add('pipe__part-brick--alt')
     return $brickPart
   }
 
   /**
    * Triggered when user clicked on the button.
+   * @protected
    * @param {Event} evt
+   * @param {number} index
    */
-  addButtonDidClick (evt) {
-    // needs implementation
+  addButtonDidClick (evt, index) {
+    this.getModel().viewAddButtonDidClick(this, index)
     evt.preventDefault()
-    return false
   }
 }

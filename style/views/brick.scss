@@ -9,8 +9,47 @@
   }
 
   &__header {
+    position: relative;
     padding: 16px;
     height: 104px - 1px;
+  }
+
+  &__btn-remove {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 48px;
+    font-size: 0;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      width: 16px;
+      height: 2px;
+      transform: translate(-50%, -50%) rotate(45deg);
+      transform-origin: center center;
+      background-color: #dddddd;
+      transition-property: background-color;
+      transition-duration: 0.3s;
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    &:hover {
+
+      &::before,
+      &::after {
+        background-color: $c-primary;
+      }
+    }
   }
 
   &__action {

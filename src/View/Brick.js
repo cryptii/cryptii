@@ -47,11 +47,17 @@ export default class BrickView extends View {
   renderHeader () {
     let title = this.getModel().getTitle()
 
+    let $removeBtn = document.createElement('a')
+    $removeBtn.classList.add('brick__btn-remove')
+    $removeBtn.innerText = 'Remove'
+    $removeBtn.setAttribute('href', '#')
+    $removeBtn.addEventListener('click', this.removeButtonDidClick.bind(this))
+
     let $header = document.createElement('header')
     $header.classList.add('brick__header')
-    $header.innerHTML = `
-      <h3 class="brick__title">${title}</h3>
-    `
+    $header.innerHTML = `<h3 class="brick__title">${title}</h3>`
+    $header.appendChild($removeBtn)
+
     return $header
   }
 
@@ -101,5 +107,14 @@ export default class BrickView extends View {
       return this
     }
     return super.appendSubviewElement(view)
+  }
+
+  /**
+   * Triggered when the remove btn has been clicked.
+   * @param {Event} evt
+   */
+  removeButtonDidClick (evt) {
+    this.getModel().viewRemoveButtonDidClick(this)
+    evt.preventDefault()
   }
 }

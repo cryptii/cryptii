@@ -16,6 +16,7 @@
   &__brand {
     padding: 24px 0;
     @extend %t-brand;
+    line-height: 1.4;
   }
 
   &__brand-version {

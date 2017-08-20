@@ -1,4 +1,5 @@
 
+import ArrayUtil from './ArrayUtil'
 import TextEncoder from './TextEncoder'
 
 /**
@@ -242,6 +243,7 @@ export default class Chain {
 
   /**
    * Returns true if this Chain's content is equal to given Chain's content.
+   * Only encodes or decodes between text and bytes if necessary.
    * @param {?Chain} chain Chain to compare to.
    * @return {boolean} True, if content is equal.
    */
@@ -256,14 +258,23 @@ export default class Chain {
       return false
     }
 
-    // compare content
-    return (
-      (this._string !== null && this._string === chain._string) ||
-      (this._codePoints !== null && JSON.stringify(this._codePoints) ===
-        JSON.stringify(chain.getCodePoints())) ||
-      (this._bytes !== null && JSON.stringify(this._bytes) ===
-        JSON.stringify(chain.getBytes()))
-    )
+    // compare string instance (fast)
+    if (this._string !== null && this._string === chain._string) {
+      return true
+    }
+
+    // try to compare code points
+    if (this._codePoints !== null || chain._codePoints !== null) {
+      return ArrayUtil.isEqual(this.getCodePoints(), chain.getCodePoints())
+    }
+
+    // try to compare strings
+    if (this._string !== null || chain._string !== null) {
+      return this.getString() === chain.getString()
+    }
+
+    // compare bytes
+    return ArrayUtil.isEqual(this.getBytes(), chain.getBytes())
   }
 
   /**

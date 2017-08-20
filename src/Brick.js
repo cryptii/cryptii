@@ -189,6 +189,18 @@ export default class Brick extends Viewable {
   }
 
   /**
+   * Triggered when remove button has been clicked.
+   * @protected
+   * @param {View} view
+   */
+  viewRemoveButtonDidClick (view) {
+    if (this.hasPipe()) {
+      // remove self from pipe
+      this.getPipe().removeBrick(this)
+    }
+  }
+
+  /**
    * Serializes Brick to make it JSON serializable
    * @return {mixed} Serialized data.
    */
@@ -198,12 +210,34 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Extracts Brick from structured data.
-   * @param {mixed} data Structured data.
+   * Extracts Brick from serialized data.
+   * @param {mixed} data Serialized data
+   * @param {BrickFactory} brickFactory Brick factory instance.
+   * @throws {Error} Throws an error if data is malformed.
    * @return {Brick} Extracted Brick.
    */
-  static extract (data) {
-    // TODO needs implementation
-    return new Brick()
+  static extract (data, brickFactory) {
+    // retrieve brick name
+    if (typeof data.name !== 'string') {
+      throw new Error(
+        'Brick data malformed. Name attribute needs to be a string.')
+    }
+
+    let name = data.name
+
+    // check if brick name exists
+    if (!brickFactory.exists(name)) {
+      throw new Error(`Brick data malformed. Unknown brick named '${name}'.`)
+    }
+
+    // create brick instance
+    let brick = brickFactory.create(name)
+
+    // check for settings
+    if (data.settings !== undefined) {
+      brick.setSettingValues(data.settings)
+    }
+
+    return brick
   }
 }

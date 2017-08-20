@@ -20,11 +20,14 @@ export default class App extends Viewable {
    * @return {Application} Fluent interface
    */
   run () {
-    // populate pipe
-    this._pipe = new Pipe()
-    this._pipe.setTitle('Affine Cipher – Encode and Decode')
-    this._pipe.addBrick('text', 'affine-cipher', 'text')
-    this._pipe.setContent('The quick brown fox jumps over 13 lazy dogs.')
+    // retrieve pipe element
+    let $pipeData = document.querySelector('.app .app__pipe .pipe__data')
+
+    // TODO this may fail, handle parse errors
+    let pipeData = JSON.parse($pipeData.innerHTML)
+
+    // extract pipe from data
+    this._pipe = Pipe.extract(pipeData)
 
     // trigger view creation and initial layout
     let view = this.getView()

@@ -423,7 +423,7 @@ export default class Pipe extends Viewable {
     this.setBrickMeta(encoder, 'busy', true)
 
     // collect translation data
-    let sourceBucket = this.getBucketIndexForBrick(encoder) + isEncode ? 0 : 1
+    let sourceBucket = this.getBucketIndexForBrick(encoder) + (isEncode ? 0 : 1)
     let source = this.getContent(sourceBucket)
     let settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
 
@@ -539,6 +539,24 @@ export default class Pipe extends Viewable {
   }
 
   /**
+   * Triggered when view add button has been clicked.
+   * @protected
+   * @param {View} view
+   * @param {number} index
+   */
+  viewAddButtonDidClick (view, index) {
+    // TODO present modal view to choose brick
+    let brickFactory = BrickFactory.getInstance()
+    let names = brickFactory.getIdentifiers()
+    let name = window.prompt(`Choose brick (${names.join(', ')}):`, names[0])
+
+    if (name !== null) {
+      let brick = brickFactory.create(name)
+      this.insertBrick(index, brick)
+    }
+  }
+
+  /**
    * Serializes Pipe to make it JSON serializable
    * @return {mixed} Structured data.
    */
@@ -563,13 +581,22 @@ export default class Pipe extends Viewable {
     }
 
     // extract bricks
-    let bricks = data.bricks.map(brickData => Brick.extract(brickData))
+    let brickFactory = BrickFactory.getInstance()
+    let bricks = data.bricks.map(brickData =>
+      Brick.extract(brickData, brickFactory))
 
     // compose pipe
     let pipe = new Pipe()
-    pipe.add.apply(pipe, bricks)
+    pipe.addBrick.apply(pipe, bricks)
     pipe.setTitle(data.title)
     pipe.setDescription(data.description)
+
+    // TODO add support for other content representations
+    if (data.content && typeof data.content.string === 'string') {
+      let store = data.content.store || 0
+      pipe.setContent(store, data.content.string)
+    }
+
     return pipe
   }
 }
