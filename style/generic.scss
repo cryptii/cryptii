@@ -18,6 +18,8 @@ body {
 }
 
 body {
+  overflow-x: hidden;
+  overflow-y: auto;
   background: $c-background;
   font-size: $default-font-size;
   line-height: $default-line-height;

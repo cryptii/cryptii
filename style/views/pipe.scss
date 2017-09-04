@@ -13,8 +13,6 @@
     position: relative;
 
     @include breakpoint(m, l) {
-      overflow: hidden;
-      overflow-x: auto;
       flex-grow: 1;
       order: 1;
     }
@@ -29,7 +27,7 @@
 
     @include breakpoint(m, l) {
       flex-direction: row;
-      align-items: stretch;
+      align-items: flex-start;
       float: left;
       padding: 16px 48px;
       min-width: 100%;
@@ -44,10 +42,13 @@
     border-color: $c-pipe;
 
     @include breakpoint(m, l) {
+      position: sticky;
+      top: 48px;
       width: auto;
       min-width: 56px;
       height: $pipe-size;
       margin-top: 8px;
+      margin-bottom: 8px;
     }
 
     &:first-child::after,
@@ -124,6 +125,8 @@
     }
 
     @include breakpoint(m, l) {
+      position: sticky;
+      top: 40px;
       width: auto;
       flex-basis: 0;
 

@@ -15,7 +15,8 @@ export default class HashViewer extends Viewer {
     this._title = 'Hash'
     this._viewPrototype = TextViewerView
 
-    this._cryptoSubtle = (window.crypto || window.msCrypto).subtle
+    let crypto = window.crypto || window.msCrypto
+    this._cryptoSubtle = crypto.subtle || crypto.webkitSubtle
 
     this.registerSetting([
       {

@@ -12,7 +12,11 @@ export default class PipeView extends View {
   constructor () {
     super()
 
+    this._$scrollable = null
     this._$content = null
+
+    this._scrollMax = 0
+    this._scrollPosition = 0
   }
 
   /**
@@ -24,9 +28,9 @@ export default class PipeView extends View {
     this._$content = document.createElement('div')
     this._$content.classList.add('pipe__content')
 
-    let $scrollable = document.createElement('div')
-    $scrollable.classList.add('pipe__scrollable')
-    $scrollable.appendChild(this._$content)
+    this._$scrollable = document.createElement('div')
+    this._$scrollable.classList.add('pipe__scrollable')
+    this._$scrollable.appendChild(this._$content)
 
     // bind to existing pipe element if any
     let $root = document.querySelector('.pipe')
@@ -35,8 +39,16 @@ export default class PipeView extends View {
       $root.classList.add('pipe')
     }
 
-    $root.appendChild($scrollable)
+    $root.appendChild(this._$scrollable)
     return $root
+  }
+
+  /**
+   * Triggered after rendering root element.
+   */
+  didRender () {
+    // bind events
+    this._$root.addEventListener('wheel', this.mouseDidWheel.bind(this))
   }
 
   /**
@@ -141,5 +153,57 @@ export default class PipeView extends View {
   addButtonDidClick (evt, index) {
     this.getModel().viewAddButtonDidClick(this, index)
     evt.preventDefault()
+  }
+
+  /**
+   * Triggered when using the mouse wheel on the view.
+   * @param {WheelEvent} evt
+   */
+  mouseDidWheel (evt) {
+    let deltaX = evt.deltaX
+    let deltaY = evt.deltaY
+
+    if (Math.abs(deltaX) <= Math.abs(deltaY)) {
+      // ignore vertical scrolling
+      return
+    }
+
+    evt.preventDefault()
+    this.scrollTo(this._scrollPosition + deltaX)
+  }
+
+  /**
+   * Layouts view and its subviews.
+   * @return {View}
+   */
+  layout () {
+    super.layout()
+
+    // measure scroll max
+    this._scrollMax = this._$content.offsetWidth - this._$scrollable.offsetWidth
+
+    // reset scroll position to respect new bounds
+    this.scrollTo(this._scrollPosition)
+  }
+
+  /**
+   * Scrolls to given position. Respects scroll bounds.
+   * @param {Number} [x=0] Scroll position.
+   * @return {PipeView} Fluent interface
+   */
+  scrollTo (x = 0) {
+    // respect bounds
+    x = Math.max(Math.min(x, this._scrollMax), 0)
+
+    // only proceed when something has changed
+    if (this._scrollPosition !== x) {
+      this._scrollPosition = x
+
+      // apply change to DOM
+      let transform = x > 0 ? `translate(${-x}px, 0)` : ''
+      this._$content.style.webkitTransform = transform
+      this._$content.style.transform = transform
+    }
+    return this
   }
 }
