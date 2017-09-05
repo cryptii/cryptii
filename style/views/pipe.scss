@@ -1,4 +1,6 @@
 
+$pipe-sticky-headers: false;
+
 .pipe {
   $block: &;
   display: flex;
@@ -15,6 +17,28 @@
     @include breakpoint(m, l) {
       flex-grow: 1;
       order: 1;
+    }
+  }
+
+  &__scroll-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 20%;
+    z-index: 100;
+
+    @include breakpoint(xs, s) {
+      display: none;
+    }
+
+    &--right {
+      left: auto;
+      right: 0;
+    }
+
+    &--disabled {
+      display: none;
     }
   }
 
@@ -42,13 +66,16 @@
     border-color: $c-pipe;
 
     @include breakpoint(m, l) {
-      position: sticky;
-      top: 48px;
       width: auto;
       min-width: 56px;
       height: $pipe-size;
       margin-top: 8px;
       margin-bottom: 8px;
+
+      @if $pipe-sticky-headers {
+        position: sticky;
+        top: 48px;
+      }
     }
 
     &:first-child::after,
@@ -125,10 +152,13 @@
     }
 
     @include breakpoint(m, l) {
-      position: sticky;
-      top: 40px;
       width: auto;
       flex-basis: 0;
+
+      @if $pipe-sticky-headers {
+        position: sticky;
+        top: 40px;
+      }
 
       @include browser(ie-11) {
         flex-basis: 360px;

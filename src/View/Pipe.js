@@ -2,6 +2,11 @@
 import BrickView from './Brick'
 import View from '../View'
 
+// scroll handle speed (px / second)
+const scrollHandleSpeed = 1000
+
+const scrollHandleDisabledClass = 'pipe__scroll-handle--disabled'
+
 /**
  * Pipe View.
  */
@@ -17,6 +22,11 @@ export default class PipeView extends View {
 
     this._scrollMax = 0
     this._scrollPosition = 0
+
+    // scroll handle
+    this._scrollHandleIndex = null
+    this._scrollHandleStartPosition = null
+    this._scrollHandleStartTime = null
   }
 
   /**
@@ -28,9 +38,28 @@ export default class PipeView extends View {
     this._$content = document.createElement('div')
     this._$content.classList.add('pipe__content')
 
+    this._$scrollHandleLeft = document.createElement('div')
+    this._$scrollHandleLeft.classList.add('pipe__scroll-handle')
+    this._$scrollHandleLeft.classList.add('pipe__scroll-handle--left')
+    this._$scrollHandleLeft.classList.add('pipe__scroll-handle--disabled')
+    this._$scrollHandleLeft.addEventListener('mouseenter',
+      this.scrollHandleDidStart.bind(this, 0))
+    this._$scrollHandleLeft.addEventListener('mouseleave',
+      this.scrollHandleDidStop.bind(this))
+
+    this._$scrollHandleRight = document.createElement('div')
+    this._$scrollHandleRight.classList.add('pipe__scroll-handle')
+    this._$scrollHandleRight.classList.add('pipe__scroll-handle--right')
+    this._$scrollHandleRight.addEventListener('mouseenter',
+      this.scrollHandleDidStart.bind(this, 1))
+    this._$scrollHandleRight.addEventListener('mouseleave',
+      this.scrollHandleDidStop.bind(this))
+
     this._$scrollable = document.createElement('div')
     this._$scrollable.classList.add('pipe__scrollable')
     this._$scrollable.appendChild(this._$content)
+    this._$scrollable.appendChild(this._$scrollHandleLeft)
+    this._$scrollable.appendChild(this._$scrollHandleRight)
 
     // bind to existing pipe element if any
     let $root = document.querySelector('.pipe')
@@ -40,15 +69,8 @@ export default class PipeView extends View {
     }
 
     $root.appendChild(this._$scrollable)
+    $root.addEventListener('wheel', this.mouseDidWheel.bind(this))
     return $root
-  }
-
-  /**
-   * Triggered after rendering root element.
-   */
-  didRender () {
-    // bind events
-    this._$root.addEventListener('wheel', this.mouseDidWheel.bind(this))
   }
 
   /**
@@ -173,6 +195,45 @@ export default class PipeView extends View {
   }
 
   /**
+   * Triggered when scroll handle scroll starts.
+   * @param {Number} index
+   */
+  scrollHandleDidStart (index) {
+    this._scrollHandleIndex = index
+    this._scrollHandleStartPosition = this._scrollPosition
+    this._scrollHandleStartTime = new Date().getTime()
+
+    window.requestAnimationFrame(this.scrollHandleDidScroll.bind(this))
+  }
+
+  /**
+   * Triggered at each scroll handle scroll tick.
+   */
+  scrollHandleDidScroll () {
+    if (this._scrollHandleIndex === null) {
+      // stop when scroll handle is no longer active
+      return
+    }
+
+    // calculate intermediate scroll position
+    let direction = this._scrollHandleIndex === 0 ? -1 : 1
+    let duration = (new Date().getTime() - this._scrollHandleStartTime) / 1000
+    let delta = direction * Math.pow(duration, 2) * scrollHandleSpeed
+    this.scrollTo(this._scrollHandleStartPosition + delta)
+
+    window.requestAnimationFrame(this.scrollHandleDidScroll.bind(this))
+  }
+
+  /**
+   * Triggered when scroll handle stops scrolling.
+   */
+  scrollHandleDidStop () {
+    this._scrollHandleIndex = null
+    this._scrollHandleStartPosition = null
+    this._scrollHandleStartTime = null
+  }
+
+  /**
    * Layouts view and its subviews.
    * @return {View}
    */
@@ -184,6 +245,15 @@ export default class PipeView extends View {
 
     // reset scroll position to respect new bounds
     this.scrollTo(this._scrollPosition)
+
+    // update scroll handles
+    this._$scrollHandleLeft.classList.toggle(
+      scrollHandleDisabledClass,
+      this._scrollPosition === 0)
+
+    this._$scrollHandleRight.classList.toggle(
+      scrollHandleDisabledClass,
+      this._scrollPosition === this._scrollMax)
   }
 
   /**
@@ -192,17 +262,36 @@ export default class PipeView extends View {
    * @return {PipeView} Fluent interface
    */
   scrollTo (x = 0) {
+    // remove decimal digits
+    x = parseInt(x)
+
     // respect bounds
     x = Math.max(Math.min(x, this._scrollMax), 0)
 
     // only proceed when something has changed
     if (this._scrollPosition !== x) {
-      this._scrollPosition = x
+      // left scroll handle
+      if (x === 0) {
+        this._$scrollHandleLeft.classList.add(scrollHandleDisabledClass)
+        this.scrollHandleDidStop()
+      } else if (this._scrollPosition === 0) {
+        this._$scrollHandleLeft.classList.remove(scrollHandleDisabledClass)
+      }
+
+      // right scroll handle
+      if (x === this._scrollMax) {
+        this._$scrollHandleRight.classList.add(scrollHandleDisabledClass)
+        this.scrollHandleDidStop()
+      } else if (this._scrollPosition === this._scrollMax) {
+        this._$scrollHandleRight.classList.remove(scrollHandleDisabledClass)
+      }
 
       // apply change to DOM
       let transform = x > 0 ? `translate(${-x}px, 0)` : ''
       this._$content.style.webkitTransform = transform
       this._$content.style.transform = transform
+
+      this._scrollPosition = x
     }
     return this
   }

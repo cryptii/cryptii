@@ -94,6 +94,7 @@ export default class Pipe extends Viewable {
       this.createBuckets()
     }
 
+    this.hasView() && this.getView().layout()
     return this
   }
 
@@ -132,6 +133,7 @@ export default class Pipe extends Viewable {
       this.createBuckets()
     }
 
+    this.hasView() && this.getView().layout()
     return this
   }
 
