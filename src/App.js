@@ -33,6 +33,8 @@ export default class App extends Viewable {
     let view = this.getView()
     view.layout()
 
+    setTimeout(() => view.layout(), 100)
+
     return this
   }
 

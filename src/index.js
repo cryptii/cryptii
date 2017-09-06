@@ -1,13 +1,12 @@
 
 import 'babel-polyfill'
-import browser from 'detect-browser/browser'
 
 import App from './App'
+import Browser from './Browser'
 
-if (browser) {
-  // add browser class to html tag, makes browser sass mixin work
-  const $html = document.querySelector('html')
-  $html.classList.add(`browser--${browser.name}-${browser.version}`)
+// apply browser class name
+if (window) {
+  Browser.applyClassName()
 }
 
 // run app

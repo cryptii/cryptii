@@ -1,4 +1,5 @@
 
+import Browser from '../Browser'
 import Viewer from '../Viewer'
 import TextViewerView from '../View/Viewer/Text'
 
@@ -24,12 +25,7 @@ export default class HashViewer extends Viewer {
         type: 'enum',
         value: 'SHA-256',
         options: {
-          elements: [
-            'SHA-1',
-            'SHA-256',
-            'SHA-384',
-            'SHA-512'
-          ]
+          elements: this._getAvailableAlgorithms()
         }
       }
     ])
@@ -45,7 +41,17 @@ export default class HashViewer extends Viewer {
     let algorithm = this.getSettingValue('algorithm')
 
     // create hash digest from content
-    this._cryptoSubtle.digest(algorithm, content.getBytes())
+    let result = this._cryptoSubtle.digest(algorithm, content.getBytes())
+
+    if (result.oncomplete !== undefined) {
+      // wrap IE11 CryptoOperation object in a promise
+      result = new Promise((resolve, reject) => {
+        result.oncomplete = resolve.bind(this, result.result)
+        result.onerror = reject
+      })
+    }
+
+    result
 
       // create hex string from buffer
       .then(buffer => {
@@ -64,10 +70,35 @@ export default class HashViewer extends Viewer {
       })
 
       // catch errors
-      .catch(() => {
+      .catch(reason => {
         // TODO handle error
         done()
       })
+  }
+
+  /**
+   * Returns digest algorithms available for the current browser.
+   * @return {string[]}
+   */
+  _getAvailableAlgorithms () {
+    let algorithms = [
+      'SHA-1',
+      'SHA-256',
+      'SHA-384',
+      'SHA-512'
+    ]
+
+    if (Browser.match('ie', 11)) {
+      // only IE11 does not support SHA-512
+      algorithms.splice(3, 1)
+    }
+
+    if (Browser.match('ie', 11) || Browser.match('edge')) {
+      // SHA-1 does not work in ie and edge despite being documented differently
+      algorithms.splice(0, 1)
+    }
+
+    return algorithms
   }
 
   /**

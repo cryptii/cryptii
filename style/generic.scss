@@ -42,6 +42,13 @@ textarea {
   @extend %t-text;
 }
 
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  -webkit-text-fill-color: $c-text;
+}
+
 input[type='text'],
 select,
 textarea {
