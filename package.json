@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
-    "detect-browser": "^1.7.1"
+    "detect-browser": "^1.7.1",
+    "dom4": "^1.8.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

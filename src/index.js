@@ -1,5 +1,6 @@
 
 import 'babel-polyfill'
+import 'dom4'
 
 import App from './App'
 import Browser from './Browser'

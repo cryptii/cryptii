@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
     <title>Affine Cipher – Encode and Decode · Cryptii</title>
+
+    <link rel="manifest" href="manifest.json">
 
     <!-- style -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500|Source+Code+Pro:400&amp;subset=latin-ext">
@@ -20,7 +22,8 @@
         <div class="container">
           <div class="header__inner">
             <a class="header__brand" href="/">
-              Cryptii<span class="header__brand-version">v4-alpha</span>
+              Cryptii
+              <span class="header__brand-version">v4-alpha</span>
             </a>
             <div class="header__ad"></div>
           </div>
@@ -52,13 +55,12 @@
           "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
           "bricks": [
             { "name": "text" },
-            { "name": "hash" },
             { "name": "vigenere-cipher" },
             { "name": "text" }
           ],
           "content": {
             "store": 0,
-            "string": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+            "string": "The quick brown fox jumps over 13 lazy dogs."
           }
         }
         </script>
@@ -76,22 +78,22 @@
             </p>
             <ul class="footer__link-list link-list">
               <li class="link-list__item">
-                <a class="link-list__link" href="https://github.com/cryptii/cryptii" target="_blank">
+                <a class="link-list__link" href="https://github.com/cryptii/cryptii" target="_blank" rel="noopener">
                   GitHub
                 </a>
               </li>
               <li class="link-list__item">
-                <a class="link-list__link" href="docs/" target="_blank">
-                  Developer
+                <a class="link-list__link" href="docs/" target="_blank" rel="noopener">
+                  Documentation
                 </a>
               </li>
               <li class="link-list__item">
-                <a class="link-list__link" href="#" target="_blank">
+                <a class="link-list__link" href="#" target="_blank" rel="noopener">
                   About
                 </a>
               </li>
               <li class="link-list__item">
-                <a class="link-list__link" href="#" target="_blank">
+                <a class="link-list__link" href="#" target="_blank" rel="noopener">
                   Legal
                 </a>
               </li>
@@ -103,7 +105,7 @@
     </div>
 
     <!-- script -->
-    <script src="dist/script/cryptii.js?v=1"></script>
+    <script async src="dist/script/cryptii.js?v=1"></script>
 
   </body>
 </html>

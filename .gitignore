@@ -1,5 +1,5 @@
-/docs
-/dist
+/public/docs
+/public/dist
 /.tmp*
 node_modules
 .sass-cache

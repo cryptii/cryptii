@@ -21,11 +21,11 @@ let meta = require('./package.json')
 
 let paths = {
   script: './src',
-  scriptDist: './dist/script',
+  scriptDist: './public/dist/script',
   style: './style',
-  styleDist: './dist/style',
+  styleDist: './public/dist/style',
   test: './test',
-  doc: './docs',
+  doc: './public/docs',
 }
 
 gulp.task('lint-test', () => {
