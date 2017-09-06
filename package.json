@@ -6,12 +6,12 @@
   "description": "Framework and web app for encoding and decoding text.",
   "repository": {
     "type": "git",
-    "url": "http://github.com/cryptii/cryptii.git"
+    "url": "https://github.com/cryptii/cryptii.git"
   },
   "bugs": {
     "url": "https://github.com/cryptii/cryptii/issues"
   },
-  "homepage": "http://cryptii.com/",
+  "homepage": "https://v4.cryptii.com/",
   "license": "MIT",
   "scripts": {
     "build": "gulp build",
@@ -25,7 +25,7 @@
     "detect-browser": "^1.7.1"
   },
   "devDependencies": {
-    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -37,16 +37,17 @@
     "gulp-esdoc-stream": "^0.1.0",
     "gulp-mocha": "^4.3.1",
     "gulp-rename": "^1.2.2",
-    "gulp-ruby-sass": "^2.1.1",
+    "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-standard": "^10.0.0",
     "gulp-uglify": "^3.0.0",
     "jsdoc": "^3.4.3",
     "normalize-scss": "^7.0.0",
-    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-stream": "^1.20.0",
+    "sass-inline-svg": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }

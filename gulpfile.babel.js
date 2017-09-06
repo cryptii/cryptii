@@ -10,7 +10,8 @@ import mocha from 'gulp-mocha'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import rename from 'gulp-rename'
 import rollup from 'rollup-stream'
-import sass from 'gulp-ruby-sass'
+import sass from 'gulp-sass'
+import sassSVGInliner from 'sass-inline-svg'
 import source from 'vinyl-source-stream'
 import sourcemaps from 'gulp-sourcemaps'
 import standard from 'gulp-standard'
@@ -138,13 +139,22 @@ gulp.task('script', ['lint-script'], () => {
 })
 
 gulp.task('style', () => {
-  // compile sass code to css
-  return sass(paths.style + '/main.scss', {
-    style: 'expanded',
-    loadPath: ['node_modules']
-  })
-    // display errors
-    .on('error', err => console.error(err.message))
+  return gulp.src(paths.style + '/main.scss')
+
+    // init sourcemaps
+    .pipe(sourcemaps.init())
+
+    // compile sass to css
+    .pipe(
+      sass({
+        includePaths: ['node_modules'],
+        outputStyle: 'expanded',
+        functions: {
+          'inline-svg': sassSVGInliner(paths.assetsSVG)
+        }
+      })
+        .on('error', sass.logError)
+    )
 
     // autoprefix css
     .pipe(autoprefixer('last 2 version', 'ie 11', '> 1%'))
@@ -154,6 +164,7 @@ gulp.task('style', () => {
 
     // save result
     .pipe(rename(meta.name + '.css'))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.styleDist))
 })
 
