@@ -22,13 +22,39 @@ export default class BrickFactory extends Factory {
   constructor () {
     super()
 
-    // register package bricks
-    this.register('affine-cipher', AffineCipherEncoder)
-    this.register('hash', HashViewer)
-    this.register('rot13', ROT13Encoder)
-    this.register('text-transform', TextTransformEncoder)
-    this.register('text', TextViewer)
-    this.register('vigenere-cipher', VigenereCipherEncoder)
+    // gather package brick classes
+    let invokables = [
+      TextViewer,
+      TextTransformEncoder,
+      AffineCipherEncoder,
+      ROT13Encoder,
+      VigenereCipherEncoder,
+      HashViewer
+    ]
+
+    // register each brick
+    invokables.forEach(this.register.bind(this))
+  }
+
+  /**
+   * Registers brick invokable.
+   * @param {class} invokable
+   * @throws Throws an error if identifier already exists.
+   * @return {BrickFactory} Fluent interface
+   */
+  register (invokable) {
+    let identifier = invokable.getMeta().name
+    return super.register(identifier, invokable)
+  }
+
+  /**
+   * Returns brick meta for given identifier.
+   * @throws Throws an error if identifier does not exist.
+   * @param {string} identifier
+   * @return {object} Brick meta
+   */
+  getMeta (identifier) {
+    return this.getInvokable(identifier).getMeta()
   }
 
   /**

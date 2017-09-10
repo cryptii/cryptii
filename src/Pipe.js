@@ -138,6 +138,27 @@ export default class Pipe extends Viewable {
   }
 
   /**
+   * Replaces brick.
+   * @param {Brick} needle
+   * @param {Brick|string} brickOrName
+   * @return {Pipe} Fluent interface
+   */
+  replaceBrick (needle, brickOrName) {
+    let index = this._bricks.indexOf(needle)
+    if (index === -1) {
+      return
+    }
+
+    let brick = typeof brickOrName === 'string'
+      ? BrickFactory.getInstance().create(brickOrName)
+      : brickOrName
+
+    this.removeBrick(index)
+    this.insertBrick(index, brick)
+    return this
+  }
+
+  /**
    * Returns meta entry for given Brick and key.
    * @protected
    * @param {Brick} brick
@@ -495,6 +516,14 @@ export default class Pipe extends Viewable {
   }
 
   /**
+   * Returns Brick Factory instance.
+   * @return {BrickFactory}
+   */
+  getBrickFactory () {
+    return BrickFactory.getInstance()
+  }
+
+  /**
    * Returns Pipe title.
    * @return {?string} Pipe title
    */
@@ -547,15 +576,22 @@ export default class Pipe extends Viewable {
    * @param {number} index
    */
   viewAddButtonDidClick (view, index) {
-    // TODO present modal view to choose brick
-    let brickFactory = BrickFactory.getInstance()
-    let names = brickFactory.getIdentifiers()
-    let name = window.prompt(`Choose brick (${names.join(', ')}):`, names[0])
-
-    if (name !== null) {
-      let brick = brickFactory.create(name)
-      this.insertBrick(index, brick)
+    let content = null
+    if (index === this._bricks.length) {
+      content = this.getContent(this._bucketContent.length - 1)
+    } else {
+      let bucket = this.getBucketIndexForBrick(this._bricks[index])
+      content = this.getContent(bucket)
     }
+
+    let name = 'text'
+    if (content._string === null && content._codePoints === null) {
+      name = 'bytes'
+    }
+
+    let brick = this.getBrickFactory().create(name)
+    this.insertBrick(index, brick)
+    brick.getView().toggleSelection(true)
   }
 
   /**

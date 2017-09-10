@@ -3,16 +3,30 @@ import Chain from '../Chain'
 import TextViewerView from '../View/Viewer/Text'
 import Viewer from '../Viewer'
 
+const meta = {
+  name: 'text',
+  title: 'Text',
+  category: 'Alphabet',
+  type: 'viewer'
+}
+
 /**
  * Viewer Brick for viewing and editing content as plain text.
  */
 export default class TextViewer extends Viewer {
   /**
+   * Returns brick meta.
+   * @return {object}
+   */
+  static getMeta () {
+    return meta
+  }
+
+  /**
    * Brick constructor
    */
   constructor () {
     super()
-    this._title = 'Text'
     this._viewPrototype = TextViewerView
   }
 

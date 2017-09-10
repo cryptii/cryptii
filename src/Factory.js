@@ -20,6 +20,20 @@ export default class Factory {
   }
 
   /**
+   * Returns invokable by identifier.
+   * @param {string} identifier
+   * @return {class}
+   */
+  getInvokable (identifier) {
+    let index = this._identifiers.indexOf(identifier)
+    if (index === -1) {
+      throw new Error(
+        `Invokable for '${identifier}' has not been registered yet.`)
+    }
+    return this._invokables[index]
+  }
+
+  /**
    * Registers invokable to specified identifier.
    * @param {string} identifier
    * @param {class} invokable

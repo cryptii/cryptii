@@ -10,23 +10,30 @@ import Viewable from './Viewable'
  */
 export default class Brick extends Viewable {
   /**
+   * Returns brick meta.
+   * @abstract
+   * @return {object}
+   */
+  static getMeta () {
+    throw new Error(`Brick static method 'getMeta' has not been overridden.`)
+  }
+
+  /**
    * Brick constructor
    */
   constructor () {
     super()
-
-    this._title = null
     this._settings = []
     this._viewPrototype = BrickView
     this._pipe = null
   }
 
   /**
-   * Returns title.
-   * @return {string}
+   * Returns brick meta.
+   * @return {object}
    */
-  getTitle () {
-    return this._title
+  getMeta () {
+    return this.constructor.getMeta()
   }
 
   /**
@@ -197,6 +204,22 @@ export default class Brick extends Viewable {
     if (this.hasPipe()) {
       // remove self from pipe
       this.getPipe().removeBrick(this)
+    }
+  }
+
+  /**
+   * Triggered when a brick has been selected inside selection view.
+   * @param {View} view
+   * @param {string} name
+   */
+  selectionViewDidSelect (view, name) {
+    if (this.getMeta().name === name) {
+      return this.getView().toggleSelection(false)
+    }
+
+    if (this.hasPipe()) {
+      // replace self by new brick
+      this.getPipe().replaceBrick(this, name)
     }
   }
 

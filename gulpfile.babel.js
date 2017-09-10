@@ -20,6 +20,7 @@ import uglify from 'gulp-uglify'
 let meta = require('./package.json')
 
 let paths = {
+  assetsSVG: './assets/svg',
   script: './src',
   scriptDist: './public/dist/script',
   style: './style',

@@ -11,6 +11,7 @@ export default class View {
     this._$root = null
     this._superview = null
     this._subviews = []
+    this._model = null
   }
 
   /**

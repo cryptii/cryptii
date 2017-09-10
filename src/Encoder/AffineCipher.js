@@ -2,6 +2,13 @@
 import MathUtil from '../MathUtil'
 import SimpleSubstitutionEncoder from './SimpleSubstitution'
 
+const meta = {
+  name: 'affine-cipher',
+  title: 'Affine Cipher',
+  category: 'Simple Substitution',
+  type: 'encoder'
+}
+
 const defaultAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 /**
@@ -9,12 +16,18 @@ const defaultAlphabet = 'abcdefghijklmnopqrstuvwxyz'
  */
 export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   /**
+   * Returns brick meta.
+   * @return {object}
+   */
+  static getMeta () {
+    return meta
+  }
+
+  /**
    * Encoder constructor
    */
   constructor () {
     super()
-
-    this._title = 'Affine Cipher'
 
     // linear function
     // f(x) = ax + b

@@ -2,17 +2,30 @@
 import Chain from '../Chain'
 import Encoder from '../Encoder'
 
+const meta = {
+  name: 'text-transform',
+  title: 'Text Transform',
+  category: 'Transform',
+  type: 'encoder'
+}
+
 /**
  * Encoder Brick for general text transformations.
  */
 export default class TextTransformEncoder extends Encoder {
   /**
+   * Returns brick meta.
+   * @return {object}
+   */
+  static getMeta () {
+    return meta
+  }
+
+  /**
    * Brick constructor
    */
   constructor () {
     super()
-
-    this._title = 'Text Transform'
 
     this.registerSetting([
       {

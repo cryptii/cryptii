@@ -1,5 +1,8 @@
 
 .brick {
+  $block: &;
+  display: flex;
+  flex-direction: column;
   background: $c-white;
   box-shadow: 0 1px 3px 0 rgba($c-black, 0.10);
   overflow: hidden;
@@ -11,7 +14,8 @@
   &__header {
     position: relative;
     padding: 16px;
-    height: 104px - 1px;
+    height: 104px;
+    border-bottom: 1px solid $c-line;
   }
 
   &__btn-remove {
@@ -62,6 +66,70 @@
     @extend %t-brick-headline;
   }
 
+  &__btn-toggle {
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      transform: translate(0, 3px);
+      margin-left: 2px;
+      line-height: 0;
+      background-image: inline-svg('arrow-drop-down.svg', (path: (fill: $c-primary)));
+      background-repeat: no-repeat;
+      background-size: 150% 150%;
+      background-position: center;
+
+      #{$block}.encoder & {
+        background-image: inline-svg('arrow-drop-down.svg', (path: (fill: $c-encoder)));
+      }
+
+      #{$block}--selection & {
+        transform: translate(0, 3px) rotate(180deg);
+      }
+    }
+  }
+
+  &__inner {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__page {
+    display: block;
+    border-top: 1px solid $c-line;
+    margin-top: -1px;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    // transition-property: opacity, visibility, transform;
+    // transition-duration: 0.3s;
+
+    &--hidden {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(0, 20px);
+    }
+
+    & + & {
+
+      &--hidden {
+        transform: translate(0, -20px);
+      }
+    }
+  }
+
+  &__selection {
+
+  }
+
   &__settings {
     display: flex;
     flex-direction: row;
@@ -70,7 +138,7 @@
   }
 
   &__content {
-    border-top: 1px solid $c-line;
+
   }
 
   &__footer {

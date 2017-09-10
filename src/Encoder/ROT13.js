@@ -1,17 +1,30 @@
 
 import SimpleSubstitutionEncoder from './SimpleSubstitution'
 
+const meta = {
+  name: 'rot13',
+  title: 'ROT13',
+  category: 'Simple Substitution',
+  type: 'encoder'
+}
+
 /**
  * Encoder Brick for ROT13 encoding and decoding.
  */
 export default class ROT13Encoder extends SimpleSubstitutionEncoder {
   /**
+   * Returns brick meta.
+   * @return {object}
+   */
+  static getMeta () {
+    return meta
+  }
+
+  /**
    * Brick constructor
    */
   constructor () {
     super()
-
-    this._title = 'ROT13'
 
     this.registerSetting({
       name: 'variant',

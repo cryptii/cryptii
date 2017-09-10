@@ -3,17 +3,30 @@ import Browser from '../Browser'
 import Viewer from '../Viewer'
 import TextViewerView from '../View/Viewer/Text'
 
+const meta = {
+  name: 'hash',
+  title: 'Hash function',
+  category: 'Modern cryptography',
+  type: 'viewer'
+}
+
 /**
  * Viewer Brick for creating a digest from given hash function and content.
  */
 export default class HashViewer extends Viewer {
   /**
+   * Returns brick meta.
+   * @return {object}
+   */
+  static getMeta () {
+    return meta
+  }
+
+  /**
    * Brick constructor
    */
   constructor () {
     super()
-
-    this._title = 'Hash'
     this._viewPrototype = TextViewerView
 
     let crypto = window.crypto || window.msCrypto

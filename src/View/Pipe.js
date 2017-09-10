@@ -69,8 +69,7 @@ export default class PipeView extends View {
     }
 
     $root.appendChild(this._$scrollable)
-    $root.addEventListener(
-      'wheel', this.mouseDidWheel.bind(this), { passive: true })
+    $root.addEventListener('wheel', this.mouseDidWheel.bind(this))
 
     return $root
   }
