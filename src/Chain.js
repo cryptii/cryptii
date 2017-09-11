@@ -1,5 +1,6 @@
 
 import ArrayUtil from './ArrayUtil'
+import ByteEncoder from './ByteEncoder'
 import TextEncoder from './TextEncoder'
 
 /**
@@ -162,10 +163,7 @@ export default class Chain {
     } else if (this._codePoints !== null) {
       return `CodePoints(${this._codePoints.join(', ')})`
     } else {
-      let string = this._bytes.reduce((string, byte) => {
-        return string + ('0' + byte.toString(16)).slice(-2)
-      })
-      return `Bytes(${string})`
+      return `Bytes(${ByteEncoder.hexStringFromBytes(this._bytes)})`
     }
   }
 

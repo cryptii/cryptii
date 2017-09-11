@@ -1,6 +1,7 @@
 
 import Brick from './Brick'
 import BrickFactory from './Factory/Brick'
+import ByteEncoder from './ByteEncoder'
 import Chain from './Chain'
 import Encoder from './Encoder'
 import PipeView from './View/Pipe'
@@ -615,10 +616,15 @@ export default class Pipe extends Viewable {
     pipe.setTitle(data.title)
     pipe.setDescription(data.description)
 
-    // TODO add support for other content representations
-    if (data.content && typeof data.content.string === 'string') {
+    // set content
+    if (data.content) {
       let bucket = data.content.bucket || 0
-      pipe.setContent(data.content.string, bucket)
+      if (typeof data.content.string === 'string') {
+        pipe.setContent(data.content.string, bucket)
+      } else if (typeof data.content.bytes === 'string') {
+        let bytes = ByteEncoder.bytesFromBase64String(data.content.bytes)
+        pipe.setContent(bytes, bucket)
+      }
     }
 
     return pipe
