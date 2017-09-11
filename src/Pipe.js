@@ -571,7 +571,7 @@ export default class Pipe extends Viewable {
     }
 
     let name = 'text'
-    if (content._string === null && content._codePoints === null) {
+    if (content.needsTextEncoding()) {
       name = 'bytes'
     }
 

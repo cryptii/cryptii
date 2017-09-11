@@ -137,6 +137,22 @@ export default class Chain {
   }
 
   /**
+   * Returns lower case representation of this Chain.
+   * @return {Chain} Lower case Chain
+   */
+  toLowerCase () {
+    return new Chain(this.getString().toLowerCase(), this._encoding)
+  }
+
+  /**
+   * Returns upper case representation of this Chain.
+   * @return {Chain} Upper case Chain
+   */
+  toUpperCase () {
+    return new Chain(this.getString().toUpperCase(), this._encoding)
+  }
+
+  /**
    * Returns a string describing the content of this Chain.
    * @return {string}
    */
@@ -154,12 +170,12 @@ export default class Chain {
   }
 
   /**
-   * Returns wether given value is contained.
-   * @param {Chain|string} value Value to search for.
+   * Returns wether given text is contained in this Chain.
+   * @param {Chain|string} needle String or Chain to search for.
    * @return {boolean}
    */
-  contains (value) {
-    return this.toString().indexOf(value.toString()) !== -1
+  contains (needle) {
+    return this.getString().indexOf(needle.toString()) !== -1
   }
 
   /**
@@ -226,6 +242,26 @@ export default class Chain {
    */
   getSize () {
     return this.getBytes().length
+  }
+
+  /**
+   * Returns true, if text encoding is needed before returning the string or
+   * byte representation. Translation between text and bytes may throw an error
+   * if encountering malformed content.
+   * @return {boolean}
+   */
+  needsTextEncoding () {
+    return this._codePoints === null && this._string === null
+  }
+
+  /**
+   * Returns true, if byte encoding is needed before returning the byte
+   * representation. Translation between text and bytes may throw an error
+   * if encountering malformed content.
+   * @return {boolean}
+   */
+  needsByteEncoding () {
+    return this._bytes === null
   }
 
   /**
@@ -313,21 +349,5 @@ export default class Chain {
       return value
     }
     return new Chain(value)
-  }
-
-  /**
-   * Returns lower case representation of this Chain.
-   * @return {Chain} Lower case Chain
-   */
-  toLowerCase () {
-    return new Chain(this.getString().toLowerCase(), this._encoding)
-  }
-
-  /**
-   * Returns upper case representation of this Chain.
-   * @return {Chain} Upper case Chain
-   */
-  toUpperCase () {
-    return new Chain(this.getString().toUpperCase(), this._encoding)
   }
 }
