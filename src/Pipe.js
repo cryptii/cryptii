@@ -54,86 +54,28 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Fluent interface
    */
   addBrick (...bricksOrNames) {
-    return this.insertBrick.apply(this, [-1].concat(bricksOrNames))
-  }
-
-  /**
-   * Inserts Bricks at index.
-   * @param {number} index Index to insert Bricks at.
-   * @param {...Brick|string} bricksOrNames Bricks to be inserted.
-   * @return {Pipe} Fluent interface
-   */
-  insertBrick (index, ...bricksOrNames) {
-    // map brick names to actual brick instances
-    let bricks = bricksOrNames.map(brickOrName =>
-      typeof brickOrName === 'string'
-        ? BrickFactory.getInstance().create(brickOrName)
-        : brickOrName)
-
-    // insert brick instances
-    this._bricks.splice.apply(this._bricks,
-      [index, 0].concat(bricks))
-
-    // insert brick meta objects
-    this._brickMeta.splice.apply(this._brickMeta,
-      [index, 0].concat(bricks.map(() => ({
-        settingsVersion: 1,
-        busy: false
-      }))))
-
-    // set brick delegate and add brick subview
-    let insertedEncoder = false
-    bricks.forEach(brick => {
-      brick.setPipe(this)
-      this.hasView() && this.getView().addSubview(brick.getView())
-      insertedEncoder = insertedEncoder || brick instanceof Encoder
-    })
-
-    if (insertedEncoder) {
-      // only encoder bricks influence buckets
-      this.createBuckets()
-    }
-
-    this.hasView() && this.getView().layout()
+    this.spliceBricks.apply(this, [-1, 0].concat(bricksOrNames))
     return this
   }
 
   /**
-   * Removes Bricks.
-   * @param {...Brick|number} elements Brick objects or indexes to be removed.
+   * Removes Bricks from the Pipe.
+   * @param {...Brick|number} bricksOrIndexes Bricks to be removed.
    * @return {Pipe} Fluent interface
    */
-  removeBrick (...elements) {
-    let removedEncoder = false
-    elements
-      // map bricks to indexes
-      .map(brickOrIndex => {
-        if (brickOrIndex instanceof Brick) {
-          return this._bricks.indexOf(brickOrIndex)
-        } else {
-          return brickOrIndex
-        }
-      })
-      // filter 'not found' indexes
-      .filter(index => index !== -1)
-      // sort index descending
+  removeBrick (...bricksOrIndexes) {
+    bricksOrIndexes
+      // map brick instances to indexes
+      .map(brickOrIndex =>
+        brickOrIndex instanceof Brick
+          ? this._bricks.indexOf(brickOrIndex)
+          : brickOrIndex
+      )
+      // sort indexes descending
       .sort((a, b) => b - a)
       // remove each
-      .forEach(index => {
-        const brick = this._bricks[index]
-        brick.setPipe(null)
-        this._bricks.splice(index, 1)
-        this._brickMeta.splice(index, 1)
-        this.hasView() && this.getView().removeSubview(brick.getView())
-        removedEncoder = removedEncoder || brick instanceof Encoder
-      })
+      .forEach(index => this.spliceBricks(index, 1))
 
-    if (removedEncoder) {
-      // only encoder bricks influence buckets
-      this.createBuckets()
-    }
-
-    this.hasView() && this.getView().layout()
     return this
   }
 
@@ -146,16 +88,65 @@ export default class Pipe extends Viewable {
   replaceBrick (needle, brickOrName) {
     let index = this._bricks.indexOf(needle)
     if (index === -1) {
-      return
+      throw new Error(`Brick is not part of the Pipe. Can't replace it.`)
+    }
+    this.spliceBricks(index, 1, brickOrName)
+    return this
+  }
+
+  /**
+   * Removes and inserts bricks at given index.
+   * @param {number} index Index at which bricks should be removed or inserted.
+   * @param {number} removeCount How many bricks should be removed at position.
+   * @param {...Brick|string} bricksOrNames Bricks to be added.
+   * @return {Brick[]} Array of bricks that have been removed.
+   */
+  spliceBricks (index, removeCount, ...bricksOrNames) {
+    // map brick names to actual brick instances
+    let bricks = bricksOrNames.map(brickOrName =>
+      typeof brickOrName === 'string'
+        ? BrickFactory.getInstance().create(brickOrName)
+        : brickOrName)
+
+    // splice internal brick array
+    let removedBricks = this._bricks.splice.apply(this._bricks,
+      [index, removeCount].concat(bricks))
+
+    // splice internal meta array
+    this._brickMeta.splice.apply(this._brickMeta,
+      [index, removeCount].concat(bricks.map(() => ({
+        settingsVersion: 1,
+        busy: false
+      }))))
+
+    // prepare added bricks, reset removed bricks
+    let needsEncode = false
+
+    bricks.forEach(brick => {
+      brick.setPipe(this)
+      this.hasView() && this.getView().addSubview(brick.getView())
+      needsEncode = needsEncode || brick instanceof Encoder
+    })
+
+    removedBricks.forEach(brick => {
+      this.hasView() && this.getView().removeSubview(brick.getView())
+      brick.setPipe(null)
+      needsEncode = needsEncode || brick instanceof Encoder
+    })
+
+    // update buckets if needed
+    if (needsEncode) {
+      // only encoder bricks change buckets and need an encode
+      this.createBuckets()
+    } else {
+      // buckets stay as is, no encoder brick involved
+      // trigger views on new viewers
+      bricks.forEach(viewer => this.triggerViewerView(viewer))
     }
 
-    let brick = typeof brickOrName === 'string'
-      ? BrickFactory.getInstance().create(brickOrName)
-      : brickOrName
-
-    this.removeBrick(index)
-    this.insertBrick(index, brick)
-    return this
+    // layout
+    this.hasView() && this.getView().layout()
+    return removedBricks
   }
 
   /**
@@ -208,7 +199,7 @@ export default class Pipe extends Viewable {
     }
 
     let bucket = this.getBucketIndexForBrick(viewer)
-    this.setContent(bucket, content, viewer)
+    this.setContent(content, bucket, viewer)
   }
 
   /**
@@ -299,17 +290,12 @@ export default class Pipe extends Viewable {
 
   /**
    * Sets content of given bucket and propagates it through brick chain.
-   * @param {number} [bucket=0] Bucket index
    * @param {number[]|string|Uint8Array|Chain} content
+   * @param {number} [bucket=0] Bucket index
    * @param {Brick} [sender] Sender brick
    * @return Fluent interface
    */
-  setContent (bucket, content, sender = null) {
-    // handle optional first argument
-    if (isNaN(bucket)) {
-      return this.setContent(0, bucket, content)
-    }
-
+  setContent (content, bucket = 0, sender = null) {
     // wrap content inside Chain
     content = Chain.wrap(content)
 
@@ -504,7 +490,7 @@ export default class Pipe extends Viewable {
     let resultBucket = isEncode ? lowerBucket + 1 : lowerBucket
 
     // propagate result
-    this.setContent(resultBucket, result, encoder)
+    this.setContent(result, resultBucket, encoder)
 
     // there were translations skipped when the current source content or brick
     //  settings changed during last translation
@@ -590,7 +576,7 @@ export default class Pipe extends Viewable {
     }
 
     let brick = this.getBrickFactory().create(name)
-    this.insertBrick(index, brick)
+    this.spliceBricks(index, 0, brick)
     brick.getView().toggleSelection(true)
   }
 
@@ -631,8 +617,8 @@ export default class Pipe extends Viewable {
 
     // TODO add support for other content representations
     if (data.content && typeof data.content.string === 'string') {
-      let store = data.content.store || 0
-      pipe.setContent(store, data.content.string)
+      let bucket = data.content.bucket || 0
+      pipe.setContent(data.content.string, bucket)
     }
 
     return pipe
