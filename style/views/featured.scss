@@ -1,0 +1,96 @@
+
+$featured-width-max: 375px !default;
+$featured-height: 100px !default;
+$featured-image-width: 130px !default;
+
+.featured {
+  $block: &;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  max-width: $featured-width-max;
+  margin-bottom: -$default-border-radius;
+  @extend %s-sheet;
+
+  @include breakpoint(xs) {
+    margin: 0 auto (-$default-border-radius);
+  }
+
+  @media screen and (max-width: $featured-width-max) {
+    // styles applied when box reaches screen size
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+
+  @include breakpoint(s, l) {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__visual {
+    display: block;
+    position: relative;
+    width: $featured-image-width;
+    height: $featured-height;
+
+    #{$block}--feedback & {
+      background: #35b084;
+      color: $c-white;
+    }
+  }
+
+  &__visual-text {
+    display: block;
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    @extend %t-brick-action;
+  }
+
+  &__copy {
+    display: block;
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 10px 14px 0;
+    margin-bottom: 28px;
+    @extend %t-featured-text;
+  }
+
+  &__disclamer {
+    display: block;
+    position: absolute;
+    left: $featured-image-width;
+    bottom: 0;
+    right: 0;
+    padding: 0 14px 10px;
+    @extend %t-featured-text;
+    color: $c-text-detail;
+  }
+}
+
+#carbonads {
+  @extend .featured !optional;
+
+  .carbon-wrap {
+    @extend .featured__content !optional;
+  }
+
+  .carbon-img {
+    @extend .featured__visual !optional;
+  }
+
+  .carbon-text {
+    @extend .featured__copy !optional;
+  }
+
+  .carbon-poweredby {
+    @extend .featured__disclamer !optional;
+  }
+}

@@ -1,5 +1,8 @@
 
-$pipe-sticky-headers: false;
+$pipe-size: 96px !default;
+$pipe-sticky-headers: false !default;
+
+$header-height: 96px !default;
 
 .pipe {
   $block: &;
@@ -8,7 +11,7 @@ $pipe-sticky-headers: false;
   padding: 24px 0 40px;
 
   @include breakpoint(m, l) {
-    min-height: calc(100vh - #{$header-bar-height});
+    min-height: calc(100vh - #{$header-height});
   }
 
   &__scrollable {
@@ -17,6 +20,10 @@ $pipe-sticky-headers: false;
     @include breakpoint(m, l) {
       flex-grow: 1;
       order: 1;
+
+      @if not $pipe-sticky-headers {
+        overflow: hidden;
+      }
     }
   }
 

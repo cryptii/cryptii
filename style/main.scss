@@ -3,6 +3,7 @@
 @import 'variables/variables';
 @import 'variables/breakpoints';
 @import 'variables/colors';
+@import 'variables/styles';
 
 // global mixins and functions
 @import 'mixins/breakpoint';
@@ -24,6 +25,7 @@
 // app views
 @import 'views/app';
 @import 'views/header';
+@import 'views/featured';
 @import 'views/footer';
 @import 'views/pipe';
 @import 'views/selection';

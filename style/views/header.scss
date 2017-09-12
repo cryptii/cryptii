@@ -1,22 +1,40 @@
 
+$header-height: 96px !default;
+
 .header {
   position: relative;
   background: $c-white;
+  @extend .container;
+
+  @include breakpoint(xs) {
+    padding: 0;
+  }
 
   &__inner {
     display: flex;
     flex-direction: row;
-    height: $header-bar-height;
 
     @include breakpoint(xs) {
       justify-content: center;
+      flex-direction: column;
     }
   }
 
   &__brand {
+    display: block;
+    height: $header-height;
     padding: 24px 0;
-    @extend %t-brand;
     line-height: 1.4;
+    @extend %t-brand;
+
+    @include breakpoint(xs) {
+      text-align: center;
+    }
+
+    @include breakpoint(s, l) {
+      flex-basis: 0;
+      flex-grow: 1;
+    }
   }
 
   &__brand-version {
@@ -24,9 +42,8 @@
     padding: 2px 6px;
     margin-left: 2px;
     border: 1px solid $c-line;
-    border-radius: 3px;
+    border-radius: $default-border-radius;
     @extend %t-text;
     transform: translate(0, -4px);
-    color: #666666;
   }
 }

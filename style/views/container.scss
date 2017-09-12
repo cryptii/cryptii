@@ -1,16 +1,16 @@
 
 .container {
-  margin: 0 map-get(map-get($breakpoints, xs), gutter);
+  padding: 0 map-get(map-get($breakpoints, xs), gutter);
 
   @include breakpoint(s) {
-    margin: 0 map-get(map-get($breakpoints, s), gutter);
+    padding: 0 map-get(map-get($breakpoints, s), gutter);
   }
 
   @include breakpoint(m) {
-    margin: 0 map-get(map-get($breakpoints, m), gutter);
+    padding: 0 map-get(map-get($breakpoints, m), gutter);
   }
 
   @include breakpoint(l) {
-    margin: 0 map-get(map-get($breakpoints, l), gutter);
+    padding: 0 map-get(map-get($breakpoints, l), gutter);
   }
 }
