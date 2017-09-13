@@ -75,7 +75,7 @@ let rollupCache
 gulp.task('script', ['lint-script'], () => {
   // run module builder and return a stream
   const stream = rollup({
-    entry: paths.script + '/index.js',
+    input: paths.script + '/index.js',
     external: [
     ],
     plugins: [
@@ -99,8 +99,7 @@ gulp.task('script', ['lint-script'], () => {
       })
     ],
     format: 'umd',
-    moduleName: meta.moduleName,
-    sourceMap: true,
+    sourcemap: true,
     cache: rollupCache,
     amd: { id: meta.name }
   })

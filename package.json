@@ -1,6 +1,5 @@
 {
   "name": "cryptii",
-  "moduleName": "Cryptii",
   "version": "4.0.0-alpha",
   "author": "Fränz Friederes <fraenz@frieder.es>",
   "description": "Framework and web app for encoding and decoding text.",

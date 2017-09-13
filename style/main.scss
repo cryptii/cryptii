@@ -3,20 +3,20 @@
 @import 'variables/variables';
 @import 'variables/breakpoints';
 @import 'variables/colors';
-@import 'variables/styles';
 
 // global mixins and functions
 @import 'mixins/breakpoint';
 @import 'mixins/browser';
+
+// symbols
+@import 'symbols/shapes';
+@import 'symbols/typography';
 
 // ground-zero styles
 @import 'normalize-scss/sass/normalize/import-now';
 
 // unclassed HTML elements
 @import 'generic';
-
-// typography styles
-@import 'typography';
 
 // views
 @import 'views/container';
