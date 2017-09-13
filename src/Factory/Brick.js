@@ -8,6 +8,7 @@ import ROT13Encoder from '../Encoder/ROT13'
 import TextTransformEncoder from '../Encoder/TextTransform'
 import TextViewer from '../Viewer/Text'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
+import Base64Encoder from '../Encoder/Base64'
 
 // singleton instance
 let instance = null
@@ -29,6 +30,7 @@ export default class BrickFactory extends Factory {
       AffineCipherEncoder,
       ROT13Encoder,
       VigenereCipherEncoder,
+      Base64Encoder,
       HashViewer
     ]
 

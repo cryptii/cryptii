@@ -44,10 +44,17 @@ export default class EnumSettingView extends SettingView {
 
     // create option for each element
     let elementLabels = this.getModel().getElementLabels()
+    let elementDescriptions = this.getModel().getElementDescriptions()
+
     elementLabels.forEach((label, index) => {
       let $option = document.createElement('option')
       $option.innerText = label
       $option.value = index
+
+      if (elementDescriptions[index] !== null) {
+        $option.setAttribute('title', elementDescriptions[index])
+      }
+
       this._$select.appendChild($option)
     })
 

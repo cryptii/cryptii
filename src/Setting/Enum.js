@@ -13,12 +13,21 @@ export default class EnumSetting extends Setting {
    * @param {mixed} spec.options Setting options
    * @param {mixed[]} spec.options.elements Possible enum values
    * @param {string[]} [spec.options.labels] Value labels
+   * @param {string[]} [spec.options.descriptions] Value descriptions
    */
   constructor (name, spec) {
     super(name, spec)
     this._viewPrototype = EnumSettingView
 
-    this.setElements(spec.options.elements, spec.options.labels || null)
+    this._elements = []
+    this._labels = []
+    this._descriptions = []
+
+    this.setElements(
+      spec.options.elements,
+      spec.options.labels || null,
+      spec.options.descriptions || null
+    )
   }
 
   /**
@@ -38,24 +47,41 @@ export default class EnumSetting extends Setting {
   }
 
   /**
+   * Returns value descriptions.
+   * @return {string[]} Value descriptions
+   */
+  getElementDescriptions () {
+    return this._descriptions
+  }
+
+  /**
    * Sets possible values and labels.
    * @param {string[]} elements
-   * @param {string[]} [labels]
+   * @param {string[]} [labels=elements]
+   * @param {string[]} [descriptions]
    * @throws Throws an error if array of elements is empty.
    * @throws Throws an error if element and label arrays have different lengths.
    * @return {EnumSetting} Fluent interface
    */
-  setElements (elements, labels = null) {
+  setElements (elements, labels = null, descriptions = null) {
     if (elements.length === 0) {
       throw new Error(`Array of elements can't be empty.`)
     }
 
     if (labels !== null && elements.length !== labels.length) {
-      throw new Error(`Element and label arrays need to have the same length.`)
+      throw new Error(`Element and label arrays require the same length.`)
+    }
+
+    if (descriptions !== null && elements.length !== descriptions.length) {
+      throw new Error(`Element and description arrays require the same length.`)
     }
 
     this._elements = elements
     this._labels = labels !== null ? labels : elements
+    this._descriptions = descriptions !== null
+      ? descriptions
+      : elements.map(() => null)
+
     return this.revalidateValue()
   }
 

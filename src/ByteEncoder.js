@@ -1,17 +1,43 @@
 
-const base64BaseAlphabet =
+const base64Alphabet =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-const base64VariantOptions = {
+const base64Variants = {
   base64: {
-    alphabet: base64BaseAlphabet + '+/',
+    label: 'Standard \'base64\' (RFC 3548, RFC 4648)',
+    description: null,
+    alphabet: base64Alphabet + '+/',
     padCharacter: '=',
-    padCharacterOptional: false
+    padCharacterOptional: false,
+    foreignCharactersForbidden: true
   },
   base64url: {
-    alphabet: base64BaseAlphabet + '-_',
+    label: 'Standard \'base64url\' (RFC 4648 §5)',
+    description: 'URL and Filename Safe Alphabet',
+    alphabet: base64Alphabet + '-_',
     padCharacter: '=',
-    padCharacterOptional: true
+    padCharacterOptional: true,
+    foreignCharactersForbidden: true
+  },
+  rfc2045: {
+    label: 'Transfer encoding for MIME (RFC 2045)',
+    description: null,
+    alphabet: base64Alphabet + '+/',
+    padCharacter: '=',
+    padCharacterOptional: false,
+    foreignCharactersForbidden: false,
+    maxLineLength: 76,
+    lineSeparator: '\r\n'
+  },
+  rfc1421: {
+    label: 'Original Base64 (RFC 1421)',
+    description: 'Privacy-Enhanced Mail (PEM)',
+    alphabet: base64Alphabet + '+/',
+    padCharacter: '=',
+    padCharacterOptional: false,
+    foreignCharactersForbidden: true,
+    maxLineLength: 64,
+    lineSeparator: '\r\n'
   }
 }
 
@@ -66,7 +92,7 @@ export default class ByteEncoder {
    * @return {string} Base64 string
    */
   static base64StringFromBytes (bytes, variant = 'base64') {
-    let options = base64VariantOptions[variant]
+    let options = base64Variants[variant]
     let alphabet = options.alphabet
     let padCharacter = !options.padCharacterOptional && options.padCharacter
       ? options.padCharacter : ''
@@ -102,6 +128,17 @@ export default class ByteEncoder {
         (!isNaN(byte3) ? alphabet[octet4] : padCharacter)
     }
 
+    if (options.maxLineLength) {
+      // limit text line length, insert line separators
+      let limitedString = ''
+      for (let i = 0; i < string.length; i += options.maxLineLength) {
+        limitedString +=
+          (limitedString !== '' ? options.lineSeparator : '') +
+          string.substr(i, options.maxLineLength)
+      }
+      string = limitedString
+    }
+
     return string
   }
 
@@ -112,7 +149,7 @@ export default class ByteEncoder {
    * @return {Uint8Array} Bytes
    */
   static bytesFromBase64String (string, variant = 'base64') {
-    let options = base64VariantOptions[variant]
+    let options = base64Variants[variant]
     let alphabet = options.alphabet
 
     // translate each character into an octet
@@ -121,15 +158,26 @@ export default class ByteEncoder {
     let character, octet
     let i = -1
 
+    // go through each character
     while (++i < length) {
       character = string[i]
-      octet = alphabet.indexOf(character)
-      if (octet === -1) {
-        if (character !== options.padCharacter) {
+
+      if (options.lineSeparator &&
+          character === options.lineSeparator[0] &&
+          string.substr(i, options.lineSeparator.length) ===
+            options.lineSeparator) {
+        // this is a line separator, skip it
+        i = i + options.lineSeparator.length - 1
+      } else if (character === options.padCharacter) {
+        // this is a pad character, ignore it
+      } else {
+        // this is an octet or a foreign character
+        octet = alphabet.indexOf(character)
+        if (octet !== -1) {
+          octets.push(octet)
+        } else if (options.foreignCharactersForbidden) {
           throw new Error(`Invalid character "${character}" at index ${i}`)
         }
-      } else {
-        octets.push(octet)
       }
     }
 
@@ -163,5 +211,20 @@ export default class ByteEncoder {
     }
 
     return new Uint8Array(bytes)
+  }
+
+  /**
+   * Returns available base64 variants.
+   * @return {object[]} Variant objects (containing name, label, description)
+   */
+  static getBase64Variants () {
+    return Object.keys(base64Variants).map(name => {
+      let options = base64Variants[name]
+      return {
+        name,
+        label: options.label,
+        description: options.description
+      }
+    })
   }
 }
