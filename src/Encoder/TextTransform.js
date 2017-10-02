@@ -10,7 +10,7 @@ const meta = {
 }
 
 /**
- * Encoder Brick for general text transformations.
+ * Encoder Brick for text transformations.
  */
 export default class TextTransformEncoder extends Encoder {
   /**

@@ -3,12 +3,14 @@ import Factory from '../Factory'
 
 // package bricks
 import AffineCipherEncoder from '../Encoder/AffineCipher'
+import AtbashEncoder from '../Encoder/Atbash'
+import Base64Encoder from '../Encoder/Base64'
+import CaesarCipherEncoder from '../Encoder/CaesarCipher'
 import HashViewer from '../Viewer/Hash'
 import ROT13Encoder from '../Encoder/ROT13'
 import TextTransformEncoder from '../Encoder/TextTransform'
 import TextViewer from '../Viewer/Text'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
-import Base64Encoder from '../Encoder/Base64'
 
 // singleton instance
 let instance = null
@@ -27,6 +29,8 @@ export default class BrickFactory extends Factory {
     let invokables = [
       TextViewer,
       TextTransformEncoder,
+      CaesarCipherEncoder,
+      AtbashEncoder,
       AffineCipherEncoder,
       ROT13Encoder,
       VigenereCipherEncoder,

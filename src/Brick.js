@@ -54,7 +54,7 @@ export default class Brick extends Viewable {
   getSettingValue (name) {
     const setting = this.getSetting(name)
     if (setting === null) {
-      throw new Error(`Unknown Setting with name '${setting.getName()}'`)
+      throw new Error(`Unknown Setting with name '${name}'`)
     }
     return setting.getValue()
   }
@@ -111,7 +111,9 @@ export default class Brick extends Viewable {
     setting.setDelegate(this)
 
     // add setting as subview
-    this.hasView() && this.getView().addSubview(setting.getView())
+    if (setting.isVisible()) {
+      this.hasView() && this.getView().addSubview(setting.getView())
+    }
 
     return this
   }
@@ -151,12 +153,31 @@ export default class Brick extends Viewable {
    * @protected
    * @param {Setting} setting
    * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
    */
   settingValueDidChange (setting, value) {
     // notify delegate
     this.hasPipe() && this.getPipe().brickSettingDidChange(this)
-    return this
+  }
+
+  /**
+   * Triggered when a setting layout property has changed.
+   * @protected
+   * @param {Setting} setting
+   * @return {Encoder} Fluent interface
+   */
+  settingNeedsLayout (setting) {
+    if (!this.hasView()) {
+      // nothing to do
+      return
+    }
+
+    // remove setting from superview
+    setting.getView() && setting.getView().removeFromSuperview()
+
+    if (setting.isVisible()) {
+      // add setting back to view
+      this.getView().addSubview(setting.getView())
+    }
   }
 
   /**
@@ -192,7 +213,9 @@ export default class Brick extends Viewable {
    */
   didCreateView (view) {
     // add each setting as subview
-    this._settings.forEach(setting => view.addSubview(setting.getView()))
+    this._settings
+      .filter(setting => setting.isVisible())
+      .forEach(setting => view.addSubview(setting.getView()))
   }
 
   /**

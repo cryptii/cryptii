@@ -157,7 +157,23 @@ export default class BrickView extends View {
   appendSubviewElement (view) {
     if (view instanceof SettingView) {
       this.getElement()
-      this._$settings.appendChild(view.getElement())
+
+      // get setting subviews
+      let settingViews = this.getSubviews()
+        .filter(view => view instanceof SettingView)
+
+      // integrate new setting view
+      settingViews.push(view)
+      settingViews.sort((a, b) =>
+        b.getModel().getPriority() - a.getModel().getPriority())
+
+      // retrieve position of setting view we are integrating
+      let index = settingViews.indexOf(view)
+      let $referenceNode = index < settingViews.length - 1
+        ? settingViews[index + 1].getElement()
+        : null
+
+      this._$settings.insertBefore(view.getElement(), $referenceNode)
       return this
     }
     return super.appendSubviewElement(view)

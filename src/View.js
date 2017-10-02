@@ -69,9 +69,9 @@ export default class View {
     view.removeFromSuperview()
 
     // add view to subviews
-    this._subviews.push(view)
-    view.setSuperview(this)
     this.appendSubviewElement(view)
+    view.setSuperview(this)
+    this._subviews.push(view)
   }
 
   /**

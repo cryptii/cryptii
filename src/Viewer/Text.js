@@ -6,7 +6,7 @@ import Viewer from '../Viewer'
 const meta = {
   name: 'text',
   title: 'Text',
-  category: 'Alphabet',
+  category: 'Representation',
   type: 'viewer'
 }
 

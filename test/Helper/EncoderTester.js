@@ -1,8 +1,8 @@
 
+import assert from 'assert'
 import { it } from 'mocha'
 
 import Chain from '../../src/Chain'
-import ChainUtil from '../Helper/ChainUtil'
 
 /**
  * Utility class for testing Encoder objects.
@@ -39,7 +39,7 @@ export default class EncoderTester {
           ? new Chain(test.expectedResult)
           : test.expectedResult
 
-        // create instance
+        // create encoder brick instance
         const encoder = new EncoderInvokable()
 
         // apply settings, if any
@@ -47,23 +47,21 @@ export default class EncoderTester {
           encoder.setSettingValues(test.settings)
         }
 
-        // create result
+        // trigger encoder encode or decode
         const result = isEncoding
           ? encoder.encode(content)
           : encoder.decode(content)
 
-        if (result instanceof Promise) {
-          // resolve promise
-          result.then(result => {
-            // verify result
-            ChainUtil.assertEqual(result, expectedResult)
-            done()
-          })
-        } else {
+        // resolve result promise if needed
+        Promise.resolve(result).then(result => {
           // verify result
-          ChainUtil.assertEqual(result, expectedResult)
+          assert.strictEqual(Chain.isEqual(result, expectedResult), true)
+          // no view should have been created during this process
+          assert.strictEqual(encoder.hasView(), false)
+          // finish test
           done()
-        }
-      })
+        })
+      }
+    )
   }
 }

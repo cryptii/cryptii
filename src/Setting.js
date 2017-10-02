@@ -13,6 +13,9 @@ export default class Setting extends Viewable {
    * @param {string} name
    * @param {Object} [spec]
    * @param {string} [spec.label] Setting label. Defaults to Setting name.
+   * @param {boolean} [spec.visible=true] Wether setting is visible.
+   * @param {number} [spec.priority=1] Settings will be ordered by
+   * priority (descending).
    * @param {number} [spec.width=12] Setting width in columns (1-12).
    * @param {mixed} [spec.value] Default Setting value.
    * @param {function(rawValue: mixed, setting: Setting): boolean}
@@ -38,7 +41,10 @@ export default class Setting extends Viewable {
     this._filterValueCallback = spec.filterValue || null
     this._randomizeValueCallback = spec.randomizeValue || null
 
+    // view related properties
     this._label = spec.label || StringUtil.camelCaseToRegular(name, ' ')
+    this._visible = spec.visible || true
+    this._priority = spec.priority || 1
     this._width = spec.width || 12
     this._viewPrototype = SettingView
   }
@@ -60,11 +66,59 @@ export default class Setting extends Viewable {
   }
 
   /**
+   * Returns wether Setting is visible.
+   * @return {boolean} True, if visible.
+   */
+  isVisible () {
+    return this._visible
+  }
+
+  /**
+   * Sets wether Setting is visible.
+   * @param {boolean} visible
+   * @return {Setting} Fluent interface
+   */
+  setVisible (visible) {
+    this._visible = visible
+    this.hasDelegate() && this.getDelegate().settingNeedsLayout(this)
+    return this
+  }
+
+  /**
+   * Returns priority of Setting.
+   * @return {number} Setting priority
+   */
+  getPriority () {
+    return this._priority
+  }
+
+  /**
+   * Sets the priority of Setting.
+   * @param {number} priority Setting priority
+   * @return {Setting} Fluent interface
+   */
+  setPriority (priority) {
+    this._priority = priority
+    this.hasDelegate() && this.getDelegate().settingNeedsLayout(this)
+    return this
+  }
+
+  /**
    * Returns width as number of columns (1-12).
    * @return {number} Number of columns (1-12)
    */
   getWidth () {
     return this._width
+  }
+
+  /**
+   * Sets width as number of columns (1-12).
+   * @param {number} width Number of columns (1-12)
+   * @return {Setting} Fluent interface
+   */
+  setWidth (width) {
+    this._width = width
+    return this
   }
 
   /**

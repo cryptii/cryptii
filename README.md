@@ -4,7 +4,28 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
-Framework and web app for encoding and decoding text.
+Framework and web app for encoding and decoding content.
+
+## Bricks
+
+### Encoders
+
+| Name | Category | Description |
+| ---- | -------- | ----------- |
+| `text-transform` | Transform | Transforming character case and arrangement |
+| `affine-cipher` | Simple Substitution | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
+| ↳ `caesar-cipher` | Simple Substitution | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
+| ↳ `atbash` | Simple Substitution | [Atbash](https://en.wikipedia.org/wiki/Atbash) using latin or hebrew alphabet |
+| `rot13` | Simple Substitution | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
+| `vigenere-cipher` | Simple Substitution | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) |
+| `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
+
+### Viewers
+
+| Name | Category | Description |
+| ---- | -------- | ----------- |
+| `text` | Representation | Viewing and editing in plain text |
+| `hash` | Modern cryptography | Showing [message digest](https://en.wikipedia.org/wiki/Cryptographic_hash_function) of current content |
 
 ## Quick start
 

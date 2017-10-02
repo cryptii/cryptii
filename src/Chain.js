@@ -72,7 +72,7 @@ export default class Chain {
   }
 
   /**
-   * Returns an array of strings for each Unicode character.
+   * Returns a string for each Unicode character.
    * @return {String[]}
    */
   getChars () {
@@ -188,7 +188,7 @@ export default class Chain {
   }
 
   /**
-   * Returns the first index at which a given element can be found
+   * Returns the first index at which a given string can be found
    * and -1 if not found.
    * @param {string|Chain} value Search element
    * @param {number} [start] Index to start the search at.
@@ -244,8 +244,8 @@ export default class Chain {
 
   /**
    * Returns true, if text encoding is needed before returning the string or
-   * byte representation. Translation between text and bytes may throw an error
-   * if encountering malformed content.
+   * code point representation. Translation between text and bytes may throw an
+   * error if encountering malformed content.
    * @return {boolean}
    */
   needsTextEncoding () {
@@ -263,8 +263,8 @@ export default class Chain {
   }
 
   /**
-   * Returns true if Chain contains no string
-   * characters, Unicode code points or bytes.
+   * Returns true if Chain contains an empty string, zero Unicode
+   * characters or bytes.
    * @return {boolean}
    */
   isEmpty () {
@@ -285,6 +285,11 @@ export default class Chain {
     // check pointer
     if (chain === this) {
       return true
+    }
+
+    // check encoding
+    if (chain.getEncoding() !== this._encoding) {
+      return false
     }
 
     // check instance class
@@ -309,6 +314,14 @@ export default class Chain {
 
     // compare bytes
     return ArrayUtil.isEqual(this.getBytes(), chain.getBytes())
+  }
+
+  /**
+   * Returns byte encoding this Chain has been created with.
+   * @return {string} Byte encoding
+   */
+  getEncoding () {
+    return this._encoding
   }
 
   /**
