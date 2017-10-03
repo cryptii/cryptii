@@ -6,6 +6,7 @@ import Chain from './Chain'
 import Encoder from './Encoder'
 import PipeView from './View/Pipe'
 import Viewable from './Viewable'
+import Viewer from './Viewer'
 
 /**
  * Arrangement of Viewers and Encoders.
@@ -26,6 +27,7 @@ export default class Pipe extends Viewable {
 
     // content buckets
     this._bucketContent = [new Chain()]
+    this._lastChangedBucket = 0
 
     // pipe meta
     this._title = null
@@ -137,8 +139,26 @@ export default class Pipe extends Viewable {
 
     // update buckets if needed
     if (needsEncode) {
-      // only encoder bricks change buckets and need an encode
-      this.createBuckets()
+      // determine number of buckets needed
+      let bucketCount = this._bricks.reduce(
+        (count, brick) => count + (brick instanceof Encoder ? 1 : 0), 1)
+
+      // check if number of buckets has changed
+      if (this._bucketContent.length !== bucketCount) {
+        // TODO find out which bucket is selected and where it moves to
+        //  the current implementation may leed to unexpected behaviour
+
+        // buckets may have been removed, update last changed bucket index
+        this._lastChangedBucket = Math.min(this._lastChangedBucket, bucketCount - 1)
+
+        // create empty buckets, apply last changed bucket
+        let bucketContent = this._bucketContent[this._lastChangedBucket]
+        this._bucketContent = new Array(bucketCount).fill().map((_, bucket) =>
+          bucket === this._lastChangedBucket ? bucketContent : new Chain())
+      }
+
+      // propagate from last changed bucket
+      this.propagateContent(this._lastChangedBucket)
     } else {
       // buckets stay as is, no encoder brick involved
       // trigger views on new viewers
@@ -192,9 +212,7 @@ export default class Pipe extends Viewable {
    * @param {Chain} content
    */
   viewerContentDidChange (viewer, content) {
-    let brickIndex = this._bricks.indexOf(viewer)
-    if (brickIndex === -1) {
-      // viewer is not part of pipe
+    if (!this.containsBrick(viewer)) {
       // ignore this event
       return
     }
@@ -228,24 +246,6 @@ export default class Pipe extends Viewable {
     } else {
       this.triggerViewerView(brick)
     }
-  }
-
-  /**
-   * Creates empty buckets for current bricks.
-   * @protected
-   * @return {Pipe} Fluent interface
-   */
-  createBuckets () {
-    // TODO integrate previous buckets
-    // count how many buckets are needed
-    let encoderCount = this._bricks.reduce((count, brick) =>
-      count + (brick instanceof Encoder ? 1 : 0), 0)
-
-    // create empty buckets
-    this._bucketContent =
-      new Array(encoderCount + 1).fill().map(() => new Chain())
-
-    return this
   }
 
   /**
@@ -293,14 +293,14 @@ export default class Pipe extends Viewable {
    * Sets content of given bucket and propagates it through brick chain.
    * @param {number[]|string|Uint8Array|Chain} content
    * @param {number} [bucket=0] Bucket index
-   * @param {Brick} [sender] Sender brick
+   * @param {Brick} [sender=null] Sender brick or null
    * @return Fluent interface
    */
   setContent (content, bucket = 0, sender = null) {
     // wrap content inside Chain
     content = Chain.wrap(content)
 
-    // verify changes
+    // check for changes
     if (this.getContent(bucket).isEqualTo(content)) {
       // nothing to do
       return this
@@ -309,6 +309,24 @@ export default class Pipe extends Viewable {
     // set bucket content
     this._bucketContent[bucket] = content
 
+    if (sender === null || sender instanceof Viewer) {
+      // track last changed bucket to propagate from here when changing pipe
+      this._lastChangedBucket = bucket
+    }
+
+    // propagate changes through pipe
+    this.propagateContent(bucket, sender)
+    return this
+  }
+
+  /**
+   * Propagate content through pipe from given bucket.
+   * @param {number} bucket
+   * @param {Brick} sender Sender brick to which content should
+   * not be propagated to.
+   * @return {Pipe} Fluent interface
+   */
+  propagateContent (bucket, sender = null) {
     // collect bricks that are attached to this bucket
     let lowerEncoder = null
     let upperEncoder = null
