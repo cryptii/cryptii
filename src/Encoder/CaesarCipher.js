@@ -1,5 +1,6 @@
 
 import AffineCipherEncoder from './AffineCipher'
+import MathUtil from '../MathUtil'
 
 const meta = {
   name: 'caesar-cipher',
@@ -46,8 +47,7 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
       priority: 10,
       value: defaultShift,
       options: {
-        integer: true,
-        min: 1
+        integer: true
       }
     })
   }
@@ -62,8 +62,15 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
       case 'caesarCipherShift':
+      case 'alphabet':
+        let shift = this.getSettingValue('caesarCipherShift')
+
+        // handle negative shift values
+        let m = this.getSettingValue('alphabet').getLength()
+        shift = MathUtil.mod(shift, m)
+
         // changing the shift setting changes the hidden b setting
-        this.setSettingValue('b', value)
+        this.setSettingValue('b', shift)
         break
     }
     return super.settingValueDidChange(setting, value)

@@ -128,7 +128,7 @@ export default class Brick extends Viewable {
   setSettingValue (name, value) {
     const setting = this.getSetting(name)
     if (setting === null) {
-      throw new Error(`Unknown Setting with name '${setting.getName()}'`)
+      throw new Error(`Unknown Setting with name '${name}'`)
     }
     setting.setValue(value)
     return this
