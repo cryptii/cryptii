@@ -67,6 +67,7 @@ export default class BrickFactory extends Factory {
 
   /**
    * Get brick factory singleton instance.
+   * @return {BrickFactory}
    */
   static getInstance () {
     if (instance === null) {

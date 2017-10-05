@@ -63,6 +63,7 @@ export default class SettingFactory extends Factory {
 
   /**
    * Get setting factory singleton instance.
+   * @return {SettingFactory}
    */
   static getInstance () {
     if (instance === null) {
