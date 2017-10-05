@@ -32,6 +32,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and wit
 | ↳ `atbash` | Simple Substitution | [Atbash](https://en.wikipedia.org/wiki/Atbash) using latin or hebrew alphabet |
 | `rot13` | Simple Substitution | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
 | `vigenere-cipher` | Simple Substitution | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) |
+| `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
 
 Example usage in code:

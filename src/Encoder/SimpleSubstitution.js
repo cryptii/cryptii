@@ -11,7 +11,7 @@ export default class SimpleSubstitutionEncoder extends Encoder {
    * Performs encode or decode on given content.
    * @protected
    * @param {string} content
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {Chain|Promise}
    */
   performTranslate (content, isEncode) {
@@ -19,11 +19,10 @@ export default class SimpleSubstitutionEncoder extends Encoder {
     // TODO reduce calls to performCharEncode or performCharDecode
     // to a minimum (e.g. caching)
     let resultingCodePoints =
-      content.getCodePoints().map((codePoint, index) => {
-        return isEncode
+      content.getCodePoints().map((codePoint, index) =>
+        isEncode
           ? this.performCharEncode(codePoint, index, content)
-          : this.performCharDecode(codePoint, index, content)
-      })
+          : this.performCharDecode(codePoint, index, content))
 
     // create new chain from resulting code points
     return new Chain(resultingCodePoints)
@@ -34,8 +33,8 @@ export default class SimpleSubstitutionEncoder extends Encoder {
    * Calls {@link SimpleSubstitutionEncoder.performCharTranslate} by default.
    * @protected
    * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content.
-   * @param {Chain} content Content to be encoded.
+   * @param {number} index Unicode code point index
+   * @param {Chain} content Content to be encoded
    * @return {number} Encoded Unicode code point
    */
   performCharEncode (codePoint, index, content) {
@@ -47,8 +46,8 @@ export default class SimpleSubstitutionEncoder extends Encoder {
    * Calls {@link SimpleSubstitutionEncoder.performCharTranslate} by default.
    * @protected
    * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content.
-   * @param {Chain} content Content to be decoded.
+   * @param {number} index Unicode code point index
+   * @param {Chain} content Content to be decoded
    * @return {number} Decoded Unicode code point
    */
   performCharDecode (codePoint, index, content) {
@@ -59,9 +58,9 @@ export default class SimpleSubstitutionEncoder extends Encoder {
    * Performs encode or decode on given character, index and content.
    * @protected
    * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content.
-   * @param {Chain} content Content to be translated.
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {number} index Unicode code point index
+   * @param {Chain} content Content to be translated
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {number} Resulting Unicode code point
    */
   performCharTranslate (codePoint, index, content, isEncode) {

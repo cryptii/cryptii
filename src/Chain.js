@@ -154,6 +154,30 @@ export default class Chain {
   }
 
   /**
+   * Splits a Chain object into an array of Chains by separating it, using a
+   * specified separator string or Chain to determine where to make each split.
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
+   * @param {string|Chain} [separator]
+   * @param {number} [limit]
+   * @return {Chain[]}
+   */
+  split (separator = undefined, limit = undefined) {
+    return this.getString()
+      .split(separator ? separator.toString() : undefined, limit)
+      .map(stringPart => new Chain(stringPart))
+  }
+
+  /**
+   * Retrieves the matches when matching a string against a regular expression.
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match
+   * @param {RegExp|string} regexp A regular expression object.
+   * @return {array|null}
+   */
+  match (regexp) {
+    return this.getString().match(regexp)
+  }
+
+  /**
    * Returns a string describing the content of this Chain.
    * @return {string}
    */
@@ -360,5 +384,19 @@ export default class Chain {
       return value
     }
     return new Chain(value)
+  }
+
+  /**
+   * Joins all elements of an array (or an array-like object) into a Chain.
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
+   * @param {array} elements
+   * @param {string|Chain} [separator]
+   * @return {Chain}
+   */
+  static join (elements, separator = undefined) {
+    return new Chain(
+      elements
+        .map(element => element.toString())
+        .join(separator))
   }
 }

@@ -4,7 +4,7 @@ import Encoder from '../Encoder'
 
 const meta = {
   name: 'text-transform',
-  title: 'Text Transform',
+  title: 'Text transform',
   category: 'Transform',
   type: 'encoder'
 }

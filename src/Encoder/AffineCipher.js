@@ -4,7 +4,7 @@ import SimpleSubstitutionEncoder from './SimpleSubstitution'
 
 const meta = {
   name: 'affine-cipher',
-  title: 'Affine Cipher',
+  title: 'Affine cipher',
   category: 'Simple Substitution',
   type: 'encoder'
 }

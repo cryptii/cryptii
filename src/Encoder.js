@@ -120,7 +120,7 @@ export default class Encoder extends Brick {
    * Triggered before performing encode or decode on given content.
    * @protected
    * @param {string} content
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {string} Filtered content
    */
   willTranslate (content, isEncode) {
@@ -131,7 +131,7 @@ export default class Encoder extends Brick {
    * Performs encode or decode on given content.
    * @protected
    * @param {string} content
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
@@ -142,7 +142,7 @@ export default class Encoder extends Brick {
    * Triggered after performing encode or decode on given content.
    * @protected
    * @param {string} content
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {string} Filtered content
    */
   didTranslate (content, isEncode) {
