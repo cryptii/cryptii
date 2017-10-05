@@ -74,11 +74,21 @@ export default class ArrayUtil {
   }
 
   /**
+   * Checks if an array only contains unique values (no duplicates).
+   * @param {array} array
+   * @return {boolean} True, if array only contains unique values.
+   */
+  static isUnique (array) {
+    return array.findIndex((element, index) =>
+      array.indexOf(element) !== index) === -1
+  }
+
+  /**
    * Removes duplicate values from an array.
    * @param {array} array
    * @return {mixed} New array with unique items.
    */
   static unique (array) {
-    return array.filter((item, index) => array.indexOf(item) === index)
+    return array.filter((element, index) => array.indexOf(element) === index)
   }
 }

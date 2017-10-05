@@ -2,6 +2,7 @@
 import Factory from '../Factory'
 
 // package settings
+import AlphabetSetting from '../Setting/Alphabet'
 import BooleanSetting from '../Setting/Boolean'
 import EnumSetting from '../Setting/Enum'
 import NumberSetting from '../Setting/Number'
@@ -21,6 +22,7 @@ export default class SettingFactory extends Factory {
     super()
 
     // register package settings
+    this.register('alphabet', AlphabetSetting)
     this.register('boolean', BooleanSetting)
     this.register('enum', EnumSetting)
     this.register('number', NumberSetting)

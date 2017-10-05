@@ -6,16 +6,6 @@ import View from '../View'
  */
 export default class SettingView extends View {
   /**
-   * Retrieves value from model and updates it in view.
-   * @override
-   * @return {SettingView} Fluent interface
-   */
-  updateValue () {
-    // nothing to do
-    return this
-  }
-
-  /**
    * Renders view.
    * @protected
    * @return {HTMLElement}
@@ -23,9 +13,6 @@ export default class SettingView extends View {
   render () {
     let $root = document.createElement('div')
     $root.classList.add('setting')
-
-    let width = this.getModel().getWidth()
-    width < 12 && $root.classList.add('setting--width-' + width)
 
     let $label = this.renderLabel()
     $label && $root.appendChild($label)
@@ -63,7 +50,43 @@ export default class SettingView extends View {
    * Triggered after rendering root element.
    */
   didRender () {
+    // update view
+    this.updateView()
     // update value initially
     this.updateValue()
+  }
+
+  /**
+   * Updates view from model.
+   * @return {SettingView} Fluent interface
+   */
+  updateView () {
+    let className = 'setting'
+
+    // add width modifier
+    let width = this.getModel().getWidth()
+    if (width < 12) {
+      className += ` setting--width-${width}`
+    }
+
+    // add invalid modifier
+    let valid = this.getModel().isValid()
+    if (!valid) {
+      className += ' setting--invalid'
+    }
+
+    // apply updated element class name
+    this.getElement().className = className
+    return this
+  }
+
+  /**
+   * Retrieves value from model and updates it in view.
+   * @override
+   * @return {SettingView} Fluent interface
+   */
+  updateValue () {
+    // nothing to do
+    return this
   }
 }

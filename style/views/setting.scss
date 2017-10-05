@@ -1,6 +1,8 @@
 
 .setting {
+  $block: &;
   display: flex;
+  position: relative;
   flex-direction: column;
   border-bottom: 1px solid $c-line;
   border-left: 1px solid $c-line;
@@ -25,6 +27,25 @@
   @for $cols from 1 through 11 {
     &--width-#{$cols} {
       width: 100% * ($cols / 12);
+    }
+  }
+
+  &--invalid {
+
+    &::before {
+      content: '';
+      display: block;
+      width: 3px;
+      border-radius: 1.5px;
+      background: $c-line-error;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      bottom: 4px;
+    }
+
+    #{$block}__label {
+      color: $c-text-error;
     }
   }
 }

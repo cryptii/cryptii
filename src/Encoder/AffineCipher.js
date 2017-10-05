@@ -58,7 +58,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       },
       {
         name: 'alphabet',
-        type: 'text',
+        type: 'alphabet',
         value: defaultAlphabet
       },
       {

@@ -172,8 +172,14 @@ export default class Setting extends Viewable {
    */
   setValue (rawValue, sender = null) {
     // validate value
-    this._valid = this.validateValue(rawValue)
-    if (!this._valid) {
+    // TODO handle some kind of validation message to give better feedback
+    let valid = this.validateValue(rawValue)
+    if (this._valid !== valid) {
+      this._valid = valid
+      this.hasView() && this.getView().updateView()
+    }
+
+    if (!valid) {
       this._value = rawValue
       return this
     }

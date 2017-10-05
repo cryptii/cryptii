@@ -41,7 +41,7 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
       },
       {
         name: 'alphabet',
-        type: 'text',
+        type: 'alphabet',
         value: defaultAlphabet
       },
       {
