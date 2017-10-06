@@ -19,26 +19,27 @@ export default class EncoderTester {
       return test.forEach(test => EncoderTester.test(EncoderInvokable, test))
     }
 
+    // read direction from test entry
     const isEncoding =
       test.direction === undefined ||
       test.direction.toLowerCase() === 'encode'
 
+    // wrap content in Chain
+    const content = !(test.content instanceof Chain)
+      ? new Chain(test.content)
+      : test.content
+
+    // wrap expected result in Chain
+    const expectedResult = !(test.expectedResult instanceof Chain)
+      ? new Chain(test.expectedResult)
+      : test.expectedResult
+
     it(
       `should ${isEncoding ? 'encode' : 'decode'} ` +
-      `"${isEncoding ? test.content : test.expectedResult}" ` +
+      `"${isEncoding ? content.truncate(28) : expectedResult.truncate(28)}" ` +
       `${isEncoding ? '=>' : '<='} ` +
-      `"${isEncoding ? test.expectedResult : test.content}"`,
+      `"${isEncoding ? expectedResult.truncate(28) : content.truncate(28)}"`,
       done => {
-        // wrap content in Chain
-        const content = !(test.content instanceof Chain)
-          ? new Chain(test.content)
-          : test.content
-
-        // wrap expected result in Chain
-        const expectedResult = !(test.expectedResult instanceof Chain)
-          ? new Chain(test.expectedResult)
-          : test.expectedResult
-
         // create encoder brick instance
         const encoder = new EncoderInvokable()
 

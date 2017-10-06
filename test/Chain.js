@@ -101,4 +101,45 @@ describe('Chain', () => {
       assert.strictEqual(chain.needsByteEncoding(), false)
     })
   })
+  /** @test {Chain.empty} */
+  describe('empty()', () => {
+    it('should be empty', () => {
+      const chain = Chain.empty()
+      assert.strictEqual(chain.isEmpty(), true)
+    })
+  })
+  /**
+   * It's pretty crazy, but most of the tests below fail using the native
+   * String.substr method. Just because of a rocket.
+   * @test {Chain.substr}
+   */
+  describe('substr()', () => {
+    it('should begin the extraction at position 2 and extract the rest of the string', () => {
+      const chain = new Chain('🚀 Hello world!')
+      assert.strictEqual(chain.substr(2).getString(), 'Hello world!')
+    })
+    it('should extract only the first character', () => {
+      const chain = new Chain('🚀 Hello world!')
+      assert.strictEqual(chain.substr(0, 1).getString(), '🚀')
+    })
+    it('should extract only the last character', () => {
+      const chain = new Chain('🚀 Hello world!')
+      assert.strictEqual(chain.substr(13, 1).getString(), '!')
+    })
+    it('should extract only one character from the end', () => {
+      const chain = new Chain('🚀 Hello world!')
+      assert.strictEqual(chain.substr(-1).getString(), '!')
+    })
+  })
+  /** @test {Chain.truncate} */
+  describe('truncate()', () => {
+    it('should not truncate a Chain smaller than given length', () => {
+      const chain = new Chain('🚀 Hello world!')
+      assert.strictEqual(chain.truncate(28).getString(), '🚀 Hello world!')
+    })
+    it('should truncate a Chain to given length', () => {
+      const chain = new Chain('🚀 Hello world!')
+      assert.strictEqual(chain.truncate(7).getString(), '🚀 Hello…')
+    })
+  })
 })

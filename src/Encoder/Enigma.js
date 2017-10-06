@@ -1,4 +1,5 @@
 
+import ArrayUtil from '../ArrayUtil'
 import Chain from '../Chain'
 import Encoder from '../Encoder'
 import MathUtil from '../MathUtil'
@@ -171,7 +172,7 @@ export default class EnigmaEncoder extends Encoder {
         label: 'Rotor 1',
         type: 'enum',
         width: 4,
-        value: 'I',
+        value: 'VI',
         options: {
           elements: rotorNames,
           labels: rotorLabels
@@ -182,7 +183,7 @@ export default class EnigmaEncoder extends Encoder {
         label: 'Rotor 2',
         type: 'enum',
         width: 4,
-        value: 'II',
+        value: 'I',
         options: {
           elements: rotorNames,
           labels: rotorLabels
@@ -204,7 +205,7 @@ export default class EnigmaEncoder extends Encoder {
         label: 'Position 1',
         type: 'number',
         width: 4,
-        value: 13,
+        value: 1,
         options: {
           integer: true,
           min: 1,
@@ -216,7 +217,7 @@ export default class EnigmaEncoder extends Encoder {
         label: 'Position 2',
         type: 'number',
         width: 4,
-        value: 3,
+        value: 17,
         options: {
           integer: true,
           min: 1,
@@ -228,7 +229,7 @@ export default class EnigmaEncoder extends Encoder {
         label: 'Position 3',
         type: 'number',
         width: 4,
-        value: 11,
+        value: 12,
         options: {
           integer: true,
           min: 1,
@@ -243,6 +244,13 @@ export default class EnigmaEncoder extends Encoder {
           elements: reflectorNames,
           labels: reflectorLabels
         }
+      },
+      {
+        name: 'plugboard',
+        type: 'text',
+        value: 'bq cr di ej kw mt os px uz gh',
+        validateValue: this.validatePlugboardValue.bind(this),
+        filterValue: value => new Chain(value.getString().trim().toLowerCase())
       },
       {
         name: 'includeForeignChars',
@@ -284,6 +292,11 @@ export default class EnigmaEncoder extends Encoder {
     // retrieve reflector
     let reflector = EnigmaEncoder.findRotor(this.getSettingValue('reflector'))
 
+    // compose plugboard wiring
+    let plugboard = this.getSettingValue('plugboard')
+    let plugboardWiring = this.composePlugboardWiring(plugboard.toString())
+
+    // go through each content code point
     let encodedCodePoints = content.getCodePoints().map((codePoint, index) => {
       let charIndex = null
 
@@ -316,6 +329,7 @@ export default class EnigmaEncoder extends Encoder {
       positions[2]++
 
       // wire character through rotors
+      charIndex = this.rotorMapChar(plugboardWiring, 0, charIndex, false)
       charIndex = this.rotorMapChar(rotors[2], positions[2], charIndex, false)
       charIndex = this.rotorMapChar(rotors[1], positions[1], charIndex, false)
       charIndex = this.rotorMapChar(rotors[0], positions[0], charIndex, false)
@@ -323,6 +337,7 @@ export default class EnigmaEncoder extends Encoder {
       charIndex = this.rotorMapChar(rotors[0], positions[0], charIndex, true)
       charIndex = this.rotorMapChar(rotors[1], positions[1], charIndex, true)
       charIndex = this.rotorMapChar(rotors[2], positions[2], charIndex, true)
+      charIndex = this.rotorMapChar(plugboardWiring, 0, charIndex, true)
 
       // translate char index back to code point and return it
       return charIndex + 97
@@ -367,19 +382,60 @@ export default class EnigmaEncoder extends Encoder {
   /**
    * Wires character index (0-25) through given rotor at given position.
    * @protected
-   * @param {object} rotor Rotor entry
+   * @param {object|string} rotorOrWiring Rotor entry or wiring
    * @param {number} position Rotor position
    * @param {number} charIndex Character index (0-25)
    * @param {boolean} isReverse Wether to wire backwards.
    * @return {number} Mapped character index (0-25)
    */
-  rotorMapChar (rotor, position, charIndex, isReverse) {
+  rotorMapChar (rotorOrWiring, position, charIndex, isReverse) {
+    let wiring = typeof rotorOrWiring === 'string'
+      ? rotorOrWiring
+      : rotorOrWiring.wiring
+
     charIndex = MathUtil.mod(charIndex + position, 26)
     charIndex = !isReverse
-      ? rotor.wiring.charCodeAt(charIndex) - 97
-      : rotor.wiring.indexOf(String.fromCharCode(97 + charIndex))
+      ? wiring.charCodeAt(charIndex) - 97
+      : wiring.indexOf(String.fromCharCode(97 + charIndex))
     charIndex = MathUtil.mod(charIndex - position, 26)
     return charIndex
+  }
+
+  /**
+   * Validates plugboard setting value.
+   * @param {mixed} rawValue
+   * @param {Setting} setting
+   * @return {boolean} Returns true, if value is valid.
+   */
+  validatePlugboardValue (rawValue, setting) {
+    // filter raw value
+    let plugboard = setting.filterValue(rawValue).getString()
+
+    // check format (ab cd ef)
+    if (plugboard.match(/^([a-z]{2}\s)*([a-z]{2})$/) === null) {
+      return false
+    }
+
+    // check if character pairs are unique
+    if (!ArrayUtil.isUnique(plugboard.replace(/\s/g, '').split(''))) {
+      return false
+    }
+
+    return true
+  }
+
+  /**
+   * Creates plugboard wiring from plugboard setting value.
+   * @param {string} plugboard
+   * @return {object} Rotor entry
+   */
+  composePlugboardWiring (plugboard) {
+    let wiring = 'abcdefghijklmnopqrstuvwxyz'.split('')
+    plugboard.split(' ').forEach(pair => {
+      wiring[pair.charCodeAt(0) - 97] = pair[1]
+      wiring[pair.charCodeAt(1) - 97] = pair[0]
+    })
+    return wiring.join('')
   }
 
   /**

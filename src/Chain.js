@@ -3,6 +3,9 @@ import ArrayUtil from './ArrayUtil'
 import ByteEncoder from './ByteEncoder'
 import TextEncoder from './TextEncoder'
 
+// empty chain constant, instantiated lazily by Chain.empty
+let emptyChain = null
+
 /**
  * Container for storing String, Unicode code point and byte content.
  * When requested, it lazily translates between these representations.
@@ -142,7 +145,7 @@ export default class Chain {
    * @return {Chain} Lower case Chain
    */
   toLowerCase () {
-    return new Chain(this.getString().toLowerCase(), this._encoding)
+    return Chain.wrap(this.getString().toLowerCase(), this._encoding)
   }
 
   /**
@@ -150,7 +153,7 @@ export default class Chain {
    * @return {Chain} Upper case Chain
    */
   toUpperCase () {
-    return new Chain(this.getString().toUpperCase(), this._encoding)
+    return Chain.wrap(this.getString().toUpperCase(), this._encoding)
   }
 
   /**
@@ -164,7 +167,43 @@ export default class Chain {
   split (separator = undefined, limit = undefined) {
     return this.getString()
       .split(separator ? separator.toString() : undefined, limit)
-      .map(stringPart => new Chain(stringPart))
+      .map(stringPart => Chain.wrap(stringPart, this._encoding))
+  }
+
+  /**
+   * Returns the characters in a string beginning at the specified location
+   * through the specified number of characters.
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr
+   * @param {number} start
+   * @param {number} [length]
+   * @return {Chain}
+   */
+  substr (start, length = undefined) {
+    if (length <= 0 || start >= this.getLength()) {
+      // return empty chain
+      return Chain.empty()
+    }
+
+    if (start < 0) {
+      start = Math.max(this.getLength() + start, 0)
+    }
+
+    // slice code points
+    let codePoints = this.getCodePoints()
+      .slice(start, length ? start + length : undefined)
+
+    return Chain.wrap(codePoints, this._encoding)
+  }
+
+  /**
+   * Truncates Chain to given length and adds ellipsis if truncated.
+   * @param {number} length Length the string should be truncated to.
+   * @return {Chain} Truncated Chain
+   */
+  truncate (length) {
+    return this.getLength() > length
+      ? Chain.wrap(this.substr(0, length).getString() + '…', this._encoding)
+      : this
   }
 
   /**
@@ -311,13 +350,18 @@ export default class Chain {
       return true
     }
 
-    // check encoding
-    if (chain.getEncoding() !== this._encoding) {
+    // check instance class
+    if (!(chain instanceof Chain)) {
       return false
     }
 
-    // check instance class
-    if (!(chain instanceof Chain)) {
+    // check if empty
+    if (this.isEmpty() && chain.isEmpty()) {
+      return true
+    }
+
+    // check encoding
+    if (chain.getEncoding() !== this._encoding) {
       return false
     }
 
@@ -377,13 +421,20 @@ export default class Chain {
   /**
    * Wraps value inside a Chain object if it is not already a Chain.
    * @param {?number[]|string|Uint8Array|Chain} value
+   * @param {string} [encoding='utf8'] Byte encoding
    * @return {Chain}
    */
-  static wrap (value) {
+  static wrap (value, encoding = 'utf8') {
     if (value instanceof Chain) {
+      // nothing to do, value already is a chain object
       return value
     }
-    return new Chain(value)
+    if (value === null || value.length === 0) {
+      // use empty chain constant when possible
+      return Chain.empty()
+    }
+    // create new chain object
+    return new Chain(value, encoding)
   }
 
   /**
@@ -394,9 +445,20 @@ export default class Chain {
    * @return {Chain}
    */
   static join (elements, separator = undefined) {
-    return new Chain(
+    return Chain.wrap(
       elements
         .map(element => element.toString())
         .join(separator))
+  }
+
+  /**
+   * Returns the empty Chain constant.
+   * @return {Chain} Empty Chain
+   */
+  static empty () {
+    if (emptyChain === null) {
+      emptyChain = new Chain()
+    }
+    return emptyChain
   }
 }
