@@ -82,6 +82,11 @@ export default class EnumSetting extends Setting {
       ? descriptions
       : elements.map(() => null)
 
+    // if no value is selected, select first element
+    if (this._value === null) {
+      this._value = this._elements[0]
+    }
+
     return this.revalidateValue()
   }
 

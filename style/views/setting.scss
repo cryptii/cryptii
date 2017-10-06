@@ -27,6 +27,13 @@
   @for $cols from 1 through 11 {
     &--width-#{$cols} {
       width: 100% * ($cols / 12);
+
+      @if $cols < 6 {
+        // remove label border for small setting cells
+        #{$block}__label {
+          border: none;
+        }
+      }
     }
   }
 
