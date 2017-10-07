@@ -34,4 +34,14 @@ export default class StringUtil {
     let uid = new Date().getTime() + (++iterator)
     return uid.toString(16)
   }
+
+  /**
+   * Separates string into chunks of given length.
+   * @param {string} string
+   * @param {number} length
+   * @return {string[]}
+   */
+  static chunk (string, length) {
+    return string !== '' ? string.match(new RegExp(`.{1,${length}}`, 'g')) : []
+  }
 }

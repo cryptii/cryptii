@@ -87,7 +87,12 @@ gulp.task('script', ['lint-script'], () => {
             modules: false
           }]
         ],
-        plugins: ['external-helpers'],
+        plugins: [
+          'external-helpers',
+          ['babel-plugin-transform-builtin-extend', {
+            globals: ['Error']
+          }]
+        ],
         exclude: ['node_modules/**']
       }),
       nodeResolve({

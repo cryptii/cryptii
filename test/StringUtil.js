@@ -28,4 +28,15 @@ describe('StringUtil', () => {
       }
     })
   })
+  /** @test {StringUtil.chunkString} */
+  describe('chunkString()', () => {
+    it('should return an empty array if an empty string is given', () => {
+      let chunks = StringUtil.chunk('', 2)
+      assert.deepStrictEqual(chunks, [])
+    })
+    it('should separate a string into chunks of given length', () => {
+      let chunks = StringUtil.chunk('abcde', 2)
+      assert.deepStrictEqual(chunks, ['ab', 'cd', 'e'])
+    })
+  })
 })

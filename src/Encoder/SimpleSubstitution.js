@@ -10,7 +10,7 @@ export default class SimpleSubstitutionEncoder extends Encoder {
   /**
    * Performs encode or decode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
    * @return {Chain|Promise}
    */

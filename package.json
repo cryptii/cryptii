@@ -20,6 +20,7 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-polyfill": "^6.23.0",
     "detect-browser": "^1.7.1",
     "dom4": "^1.8.5"

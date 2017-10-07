@@ -1,4 +1,6 @@
 
+import TextEncodingError from './Error/TextEncodingError'
+
 /**
  * Utility class providing static methods for string, Unicode code point
  * and byte translation.
@@ -31,8 +33,7 @@ export default class TextEncoder {
 
     codePoints.forEach((codePoint, index) => {
       if (TextEncoder.validateCodePoint(codePoint)) {
-        throw new RangeError(
-          `Invalid code point "${codePoint}" at index ${index}`)
+        throw new Error(`Invalid code point "${codePoint}" at index ${index}`)
       }
 
       if (codePoint < 0x10000) {
@@ -114,7 +115,7 @@ export default class TextEncoder {
    * @param {Uint8Array} bytes
    * @param {String} [encoding='utf8']
    * @throws {Error} Throws an error if given encoding is not supported.
-   * @throws {Error} Throws an error if given bytes are malformed.
+   * @throws {TextEncodingError} Throws an error if given bytes are malformed.
    * @return {number[]} Array of Unicode code points
    */
   static codePointsFromBytes (bytes, encoding = 'utf8') {
@@ -123,7 +124,7 @@ export default class TextEncoder {
         return TextEncoder._decodeCodePointsFromUTF8Bytes(bytes)
       default:
         throw new Error(
-          `Decoding from "${encoding}" is currently not supported.`)
+          `Decoding from '${encoding}' is currently not supported.`)
     }
   }
 
@@ -132,8 +133,7 @@ export default class TextEncoder {
 
     codePoints.forEach((codePoint, index) => {
       if (TextEncoder.validateCodePoint(codePoint)) {
-        throw new RangeError(
-          `Invalid code point "${codePoint}" at index ${index}`)
+        throw new Error(`Invalid code point '${codePoint}' at index ${index}`)
       }
       // append code point bytes
       if (codePoint <= 0x7F) {
@@ -174,7 +174,8 @@ export default class TextEncoder {
       if (byte > 0b01111111 && byte <= 0b10111111) {
         // this is a continuation byte
         if (--remainingBytes < 0) {
-          throw new Error(`Unexpected continuation byte at index ${i}`)
+          throw new TextEncodingError(
+            `Unexpected continuation byte at index ${i}`, i)
         }
 
         // append bits to current code point
@@ -186,7 +187,8 @@ export default class TextEncoder {
         }
       } else if (remainingBytes > 0) {
         // this must be a continuation byte
-        throw new Error(`Continuation byte expected at index ${i}`)
+        throw new TextEncodingError(
+          `Continuation byte expected at index ${i}`, i)
       } else if (byte <= 0b01111111) {
         // 1 byte code point
         // this already is a complete code point
@@ -204,12 +206,12 @@ export default class TextEncoder {
         codePoint = byte % 8
         remainingBytes = 3
       } else {
-        throw new Error(`Invalid byte ${byte} at index ${i}`)
+        throw new TextEncodingError(`Invalid byte ${byte} at index ${i}`, i)
       }
     }
 
     if (remainingBytes !== 0) {
-      throw new Error(`Unexpected end of bytes`)
+      throw new TextEncodingError(`Unexpected end of bytes`)
     }
 
     return codePoints

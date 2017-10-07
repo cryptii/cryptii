@@ -25,20 +25,27 @@ export default class EncoderTester {
       test.direction.toLowerCase() === 'encode'
 
     // wrap content in Chain
-    const content = !(test.content instanceof Chain)
-      ? new Chain(test.content)
-      : test.content
+    const content =
+      test.content instanceof Chain
+      ? test.content
+      : Chain.wrap(test.content)
 
     // wrap expected result in Chain
-    const expectedResult = !(test.expectedResult instanceof Chain)
-      ? new Chain(test.expectedResult)
-      : test.expectedResult
+    const expectedResult =
+      (test.expectedResult === null || test.expectedResult instanceof Chain)
+      ? test.expectedResult
+      : Chain.wrap(test.expectedResult)
+
+    // create content and result preview that will be logged
+    const contentPreview = content.truncate(28)
+    const expectedResultPreview =
+      expectedResult ? expectedResult.truncate(28) : null
 
     it(
       `should ${isEncoding ? 'encode' : 'decode'} ` +
-      `"${isEncoding ? content.truncate(28) : expectedResult.truncate(28)}" ` +
+      `"${isEncoding ? contentPreview : expectedResultPreview}" ` +
       `${isEncoding ? '=>' : '<='} ` +
-      `"${isEncoding ? expectedResult.truncate(28) : content.truncate(28)}"`,
+      `"${isEncoding ? expectedResultPreview : contentPreview}"`,
       done => {
         // create encoder brick instance
         const encoder = new EncoderInvokable()
@@ -53,15 +60,19 @@ export default class EncoderTester {
           ? encoder.encode(content)
           : encoder.decode(content)
 
-        // resolve result promise if needed
-        Promise.resolve(result).then(result => {
-          // verify result
-          assert.strictEqual(Chain.isEqual(result, expectedResult), true)
-          // no view should have been created during this process
-          assert.strictEqual(encoder.hasView(), false)
-          // finish test
-          done()
-        })
+        // resolve promise
+        result
+          .then(result => {
+            // verify result
+            assert.strictEqual(Chain.isEqual(result, expectedResult), true)
+            // no view should have been created during this process
+            assert.strictEqual(encoder.hasView(), false)
+          })
+          .catch(reason => {
+            // verify if translation should fail
+            assert.strictEqual(expectedResult, null)
+          })
+          .then(done, done)
       }
     )
   }

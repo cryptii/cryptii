@@ -370,18 +370,14 @@ export default class Chain {
       return true
     }
 
-    // try to compare code points
-    if (this._codePoints !== null || chain._codePoints !== null) {
-      return ArrayUtil.isEqual(this.getCodePoints(), chain.getCodePoints())
+    // check if both chains use byte representation
+    if (this._bytes !== null && chain._bytes !== null) {
+      return ArrayUtil.isEqual(this._bytes, chain._bytes)
     }
 
-    // try to compare strings
-    if (this._string !== null || chain._string !== null) {
-      return this.getString() === chain.getString()
-    }
-
-    // compare bytes
-    return ArrayUtil.isEqual(this.getBytes(), chain.getBytes())
+    // compare code points
+    // translation between text and bytes may throw an error
+    return ArrayUtil.isEqual(this.getCodePoints(), chain.getCodePoints())
   }
 
   /**

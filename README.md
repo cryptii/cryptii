@@ -52,6 +52,7 @@ Viewers allow users to view and edit content in a specific way or format.
 | Name | Category | Description |
 | ---- | -------- | ----------- |
 | `text` | Representation | Viewing and editing in plain text |
+| `bytes` | Representation | Viewing and editing bytes |
 | `hash` | Modern cryptography | Showing [message digest](https://en.wikipedia.org/wiki/Cryptographic_hash_function) of current content |
 
 ### Chains

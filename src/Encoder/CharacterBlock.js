@@ -71,7 +71,7 @@ export default class CharacterBlockEncoder extends Encoder {
 
   /**
    * Performs encode on given content.
-   * @param {string} content
+   * @param {Chain} content
    * @return {Chain|Promise} Encoded content
    */
   performEncode (content) {
@@ -86,13 +86,13 @@ export default class CharacterBlockEncoder extends Encoder {
         let codePoints = content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockEncodeToChar(block, index, blocks, content))
-        return new Chain(codePoints)
+        return Chain.wrap(codePoints)
     }
   }
 
   /**
    * Performs decode on given content.
-   * @param {string} content
+   * @param {Chain} content
    * @return {Chain|Promise} Decoded content
    */
   performDecode (content) {
@@ -101,7 +101,7 @@ export default class CharacterBlockEncoder extends Encoder {
         let codePoints = content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockDecodeToChar(block, index, blocks, content))
-        return new Chain(codePoints)
+        return Chain.wrap(codePoints)
 
       case BlockToCharacterMode:
         let blocks = content.getCodePoints()

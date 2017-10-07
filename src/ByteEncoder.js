@@ -1,4 +1,6 @@
 
+import StringUtil from './StringUtil'
+
 const base64Alphabet =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
@@ -52,9 +54,9 @@ export default class ByteEncoder {
    * @return {string} Hex string
    */
   static hexStringFromBytes (bytes) {
-    return bytes.reduce((string, byte) => {
-      return string + ('0' + byte.toString(16)).slice(-2)
-    }, '')
+    return Array.from(bytes)
+      .map(byte => ('0' + byte.toString(16)).slice(-2))
+      .join('')
   }
 
   /**
@@ -69,18 +71,47 @@ export default class ByteEncoder {
     }
 
     // decode each byte
-    let bytes = []
-    let byteString = ''
-    let byte = 0
-
-    for (let i = 0; i < string.length; i += 2) {
-      byteString = string[i] + string[i + 1]
-      byte = parseInt(byteString, 16)
+    let bytes = StringUtil.chunk(string, 2).map((byteString, index) => {
+      let byte = parseInt(byteString, 16)
       if (isNaN(byte)) {
-        throw new Error(`Invalid byte "${byteString}" at index ${i}`)
+        throw new Error(`Invalid byte "${byteString}" at index ${index}`)
       }
-      bytes.push(byte)
+      return byte
+    })
+
+    return new Uint8Array(bytes)
+  }
+
+  /**
+   * Returns binary string representing given bytes.
+   * @param {Uint8Array} bytes Bytes
+   * @return {string} Binary string
+   */
+  static binaryStringFromBytes (bytes) {
+    return Array.from(bytes)
+      .map(byte => ('0000000' + byte.toString(2)).slice(-8))
+      .join('')
+  }
+
+  /**
+   * Returns bytes from given binary string.
+   * @param {string} string Binary string
+   * @return {Uint8Array} Bytes
+   */
+  static bytesFromBinaryString (string) {
+    // fill up leading zero digits
+    if (string.length % 8 > 0) {
+      string = ('0000000' + string).substr(string.length % 8 - 1)
     }
+
+    // decode each byte
+    let bytes = StringUtil.chunk(string, 8).map((byteString, index) => {
+      let byte = parseInt(byteString, 2)
+      if (isNaN(byte)) {
+        throw new Error(`Invalid byte "${byteString}" at index ${index}`)
+      }
+      return byte
+    })
 
     return new Uint8Array(bytes)
   }

@@ -5,6 +5,7 @@ import Factory from '../Factory'
 import AffineCipherEncoder from '../Encoder/AffineCipher'
 import AtbashEncoder from '../Encoder/Atbash'
 import Base64Encoder from '../Encoder/Base64'
+import BytesViewer from '../Viewer/Bytes'
 import CaesarCipherEncoder from '../Encoder/CaesarCipher'
 import EnigmaEncoder from '../Encoder/Enigma'
 import HashViewer from '../Viewer/Hash'
@@ -30,6 +31,7 @@ export default class BrickFactory extends Factory {
     // gather package brick classes
     let invokables = [
       TextViewer,
+      BytesViewer,
       TextTransformEncoder,
       CaesarCipherEncoder,
       AtbashEncoder,

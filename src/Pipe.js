@@ -5,6 +5,7 @@ import ByteEncoder from './ByteEncoder'
 import Chain from './Chain'
 import Encoder from './Encoder'
 import PipeView from './View/Pipe'
+import TextEncodingError from './Error/TextEncodingError'
 import Viewable from './Viewable'
 import Viewer from './Viewer'
 
@@ -393,8 +394,12 @@ export default class Pipe extends Viewable {
 
     // trigger view asynchronously
     setTimeout(() => {
-      viewer.view(content, () =>
-        this.viewerViewDidFinish(viewer, content, settingsVersion))
+      try {
+        viewer.view(content, () =>
+          this.viewerViewDidFinish(viewer, null, content, settingsVersion))
+      } catch (error) {
+        this.viewerViewDidFinish(viewer, error, content, settingsVersion)
+      }
     }, 0)
 
     return this
@@ -405,10 +410,11 @@ export default class Pipe extends Viewable {
    * the content has changed during previous view.
    * @protected
    * @param {Viewer} viewer
+   * @param {Error|null} error
    * @param {Chain} usedContent
    * @param {number} usedSettingsVersion
    */
-  viewerViewDidFinish (viewer, usedContent, usedSettingsVersion) {
+  viewerViewDidFinish (viewer, error, usedContent, usedSettingsVersion) {
     // check if viewer is still part of the pipe
     if (!this.containsBrick(viewer)) {
       // do nothing
@@ -417,6 +423,18 @@ export default class Pipe extends Viewable {
 
     // mark brick as no longer busy
     this.setBrickMeta(viewer, 'busy', false)
+
+    if (error) {
+      if (error instanceof TextEncodingError) {
+        // text encoding errors may happen due to malformed user input
+        // TODO display text encoding error in UI
+        console.log(
+          'View interrupted due to a text encoding error: ' +
+          error.message)
+      } else {
+        throw error
+      }
+    }
 
     let settingsVersion = this.getBrickMeta(viewer, 'settingsVersion')
     let bucket = this.getBucketIndexForBrick(viewer)
@@ -463,21 +481,21 @@ export default class Pipe extends Viewable {
     let settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
 
     // trigger translation asynchronously
-    new Promise(resolve =>
-      setTimeout(() => {
-        let result = isEncode
-          ? encoder.encode(source)
-          : encoder.decode(source)
-        resolve(result)
-      }, 0))
+    setTimeout(() => {
+      // trigger translation
+      let result = isEncode
+        ? encoder.encode(source)
+        : encoder.decode(source)
 
-      .then(result =>
-        this.encoderTranslationDidFinish(
-          encoder, isEncode, result, source, settingsVersion))
-
-      .catch(() =>
-        this.encoderTranslationDidFinish(
-          encoder, isEncode, false, source, settingsVersion))
+      // handle result
+      result
+        .then(result =>
+          this.encoderTranslationDidFinish(
+            encoder, null, isEncode, result, source, settingsVersion))
+        .catch(error =>
+          this.encoderTranslationDidFinish(
+            encoder, error, isEncode, false, source, settingsVersion))
+    }, 0)
 
     return this
   }
@@ -488,13 +506,14 @@ export default class Pipe extends Viewable {
    * previous translation.
    * @protected
    * @param {Encoder} encoder
+   * @param {Error|null} error
    * @param {boolean} isEncode True for encoding, false for decoding.
    * @param {Chain|boolean} result Result chain or false, if failed
    * @param {Chain} usedSource
    * @param {number} usedSettingsVersion
    */
   encoderTranslationDidFinish (
-    encoder, isEncode, result, usedSource, usedSettingsVersion) {
+    encoder, error, isEncode, result, usedSource, usedSettingsVersion) {
     // check if encoder is still part of the pipe
     if (!this.containsBrick(encoder)) {
       // result is no longer relevant
@@ -505,9 +524,16 @@ export default class Pipe extends Viewable {
     // mark brick as no longer busy
     this.setBrickMeta(encoder, 'busy', false)
 
-    if (result === false) {
-      // TODO handle translation error
-      return
+    if (error) {
+      if (error instanceof TextEncodingError) {
+        // text encoding errors may happen due to malformed user input
+        // TODO display text encoding error in UI
+        console.log(
+          'Translation interrupted due to a text encoding error: ' +
+          error.message)
+      } else {
+        throw error
+      }
     }
 
     let settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
@@ -515,8 +541,10 @@ export default class Pipe extends Viewable {
     let sourceBucket = isEncode ? lowerBucket : lowerBucket + 1
     let resultBucket = isEncode ? lowerBucket + 1 : lowerBucket
 
-    // propagate result
-    this.setContent(result, resultBucket, encoder)
+    if (!error) {
+      // propagate result
+      this.setContent(result, resultBucket, encoder)
+    }
 
     // there were translations skipped when the current source content or brick
     //  settings changed during last translation

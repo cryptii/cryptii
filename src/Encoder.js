@@ -19,30 +19,24 @@ export default class Encoder extends Brick {
   /**
    * Prepares and performs encode on given content.
    * @param {number[]|string|Uint8Array|Chain} content
-   * @return {Chain|Promise} Encoded content
+   * @return {Promise} Encoded content
    */
   encode (content) {
     if (!this.areSettingsValid()) {
       throw new Error(`Can't encode. At least one setting is invalid.`)
     }
-
     content = Chain.wrap(content)
-    content = this.willEncode(content)
-    let result = this.performEncode(content)
-
-    if (result instanceof Chain) {
-      return this.didEncode(result)
-    } else {
-      return Promise.resolve(result).then(this.didEncode.bind(this))
-    }
+    return Promise.resolve(this.willEncode(content))
+      .then(this.performEncode.bind(this))
+      .then(this.didEncode.bind(this))
   }
 
   /**
    * Triggered before performing encode on given content.
    * Calls {@link Encoder.willTranslate} by default.
    * @protected
-   * @param {string} content
-   * @return {string} Filtered content
+   * @param {Chain} content
+   * @return {Chain|Promise} Filtered content
    */
   willEncode (content) {
     return this.willTranslate(content, true)
@@ -52,7 +46,7 @@ export default class Encoder extends Brick {
    * Performs encode on given content.
    * Calls {@link Encoder.performTranslate} by default.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @return {Chain|Promise} Encoded content
    */
   performEncode (content) {
@@ -63,8 +57,8 @@ export default class Encoder extends Brick {
    * Triggered after performing encode on given content.
    * Calls {@link Encoder.didTranslate} by default.
    * @protected
-   * @param {string} content
-   * @return {string} Filtered content
+   * @param {Chain} content
+   * @return {Chain|Promise} Filtered content
    */
   didEncode (content) {
     return this.didTranslate(content, true)
@@ -73,30 +67,24 @@ export default class Encoder extends Brick {
   /**
    * Prepares and performs decode on given content.
    * @param {number[]|string|Uint8Array|Chain} content
-   * @return {Chain|Promise} Decoded content
+   * @return {Promise} Decoded content
    */
   decode (content) {
     if (!this.areSettingsValid()) {
       throw new Error(`Can't decode. At least one setting is invalid.`)
     }
-
     content = Chain.wrap(content)
-    content = this.willDecode(content)
-    let result = this.performDecode(content)
-
-    if (result instanceof Chain) {
-      return this.didDecode(result)
-    } else {
-      return Promise.resolve(result).then(this.didDecode.bind(this))
-    }
+    return Promise.resolve(this.willDecode(content))
+      .then(this.performDecode.bind(this))
+      .then(this.didDecode.bind(this))
   }
 
   /**
    * Triggered before performing decode on given content.
    * Calls {@link Encoder.willTranslate} by default.
    * @protected
-   * @param {string} content
-   * @return {string} Filtered content
+   * @param {Chain} content
+   * @return {Chain|Promise} Filtered content
    */
   willDecode (content) {
     return this.willTranslate(content, false)
@@ -106,7 +94,7 @@ export default class Encoder extends Brick {
    * Performs decode on given content.
    * Calls {@link Encoder.performTranslate} by default.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @return {Chain|Promise} Decoded content
    */
   performDecode (content) {
@@ -117,8 +105,8 @@ export default class Encoder extends Brick {
    * Triggered after performing decode on given content.
    * Calls {@link Encoder.didTranslate} by default.
    * @protected
-   * @param {string} content
-   * @return {string} Filtered content
+   * @param {Chain} content
+   * @return {Chain|Promise} Filtered content
    */
   didDecode (content) {
     return this.didTranslate(content, false)
@@ -127,9 +115,9 @@ export default class Encoder extends Brick {
   /**
    * Triggered before performing encode or decode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {string} Filtered content
+   * @return {Chain|Promise} Filtered content
    */
   willTranslate (content, isEncode) {
     return content
@@ -138,7 +126,7 @@ export default class Encoder extends Brick {
   /**
    * Performs encode or decode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
    * @return {Chain|Promise} Resulting content
    */
@@ -149,9 +137,9 @@ export default class Encoder extends Brick {
   /**
    * Triggered after performing encode or decode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {string} Filtered content
+   * @return {Chain|Promise} Filtered content
    */
   didTranslate (content, isEncode) {
     return content

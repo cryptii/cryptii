@@ -268,9 +268,9 @@ export default class EnigmaEncoder extends Encoder {
   /**
    * Performs encode or decode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain|Promise}
+   * @return {Chain}
    */
   performTranslate (content, isEncode) {
     let includeForeignChars = this.getSettingValue('includeForeignChars')
@@ -364,7 +364,7 @@ export default class EnigmaEncoder extends Encoder {
       encodedCodePoints = codePoints
     }
 
-    return new Chain(encodedCodePoints)
+    return Chain.wrap(encodedCodePoints)
   }
 
   /**

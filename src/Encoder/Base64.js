@@ -46,24 +46,24 @@ export default class Base64Encoder extends Encoder {
   /**
    * Performs encode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @return {Chain} Encoded content
    */
   performEncode (content) {
     let variant = this.getSettingValue('variant')
     let string = ByteEncoder.base64StringFromBytes(content.getBytes(), variant)
-    return new Chain(string)
+    return Chain.wrap(string)
   }
 
   /**
    * Performs decode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @return {Chain} Decoded content
    */
   performDecode (content) {
     let variant = this.getSettingValue('variant')
     let bytes = ByteEncoder.bytesFromBase64String(content.getString(), variant)
-    return new Chain(bytes)
+    return Chain.wrap(bytes)
   }
 }

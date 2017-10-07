@@ -84,9 +84,9 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   /**
    * Triggered before performing encode or decode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding.
-   * @return {string} Filtered content
+   * @return {Chain} Filtered content
    */
   willTranslate (content, isEncode) {
     return !this.getSettingValue('caseSensitivity')

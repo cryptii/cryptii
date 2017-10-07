@@ -74,7 +74,7 @@ export default class TextTransformEncoder extends Encoder {
   /**
    * Performs encode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @return {Chain} Encoded content
    */
   performEncode (content) {
@@ -92,7 +92,7 @@ export default class TextTransformEncoder extends Encoder {
   /**
    * Performs decode on given content.
    * @protected
-   * @param {string} content
+   * @param {Chain} content
    * @return {Chain} Decoded content
    */
   performDecode (content) {
