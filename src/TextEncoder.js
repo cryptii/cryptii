@@ -46,7 +46,9 @@ export default class TextEncoder {
       }
     })
 
-    return String.fromCharCode.apply(undefined, chars)
+    // create string from char codes
+    // doing this in a way that does not cause a RangeError due to too many args
+    return chars.map(charCode => String.fromCharCode(charCode)).join('')
   }
 
   /**
