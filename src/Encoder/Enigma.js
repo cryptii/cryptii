@@ -411,6 +411,11 @@ export default class EnigmaEncoder extends Encoder {
     // filter raw value
     let plugboard = setting.filterValue(rawValue).getString()
 
+    // empty plugboard is valid
+    if (plugboard === '') {
+      return true
+    }
+
     // check format (ab cd ef)
     if (plugboard.match(/^([a-z]{2}\s)*([a-z]{2})$/) === null) {
       return false

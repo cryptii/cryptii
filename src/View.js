@@ -120,8 +120,11 @@ export default class View {
    * @return {View} Fluent interface
    */
   removeSubviewElement (view) {
-    // default behaviour: remove subview element from its parent node
-    view.getElement().parentNode.removeChild(view.getElement())
+    // remove subview element from its parent node
+    let $element = view.getElement()
+    if ($element.parentNode !== null) {
+      $element.parentNode.removeChild(view.getElement())
+    }
     return this
   }
 

@@ -22,6 +22,10 @@ export default class Viewer extends Brick {
    * @return {Viewer} Fluent interface
    */
   view (content, done = null) {
+    if (!this.areSettingsValid()) {
+      throw new Error(`Can't view. At least one setting is invalid.`)
+    }
+
     if (!this.hasView()) {
       // queue view request until view has been created
       this._queuedContent = content

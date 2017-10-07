@@ -22,6 +22,10 @@ export default class Encoder extends Brick {
    * @return {Chain|Promise} Encoded content
    */
   encode (content) {
+    if (!this.areSettingsValid()) {
+      throw new Error(`Can't encode. At least one setting is invalid.`)
+    }
+
     content = Chain.wrap(content)
     content = this.willEncode(content)
     let result = this.performEncode(content)
@@ -72,6 +76,10 @@ export default class Encoder extends Brick {
    * @return {Chain|Promise} Decoded content
    */
   decode (content) {
+    if (!this.areSettingsValid()) {
+      throw new Error(`Can't decode. At least one setting is invalid.`)
+    }
+
     content = Chain.wrap(content)
     content = this.willDecode(content)
     let result = this.performDecode(content)

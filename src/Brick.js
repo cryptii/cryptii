@@ -37,6 +37,14 @@ export default class Brick extends Viewable {
   }
 
   /**
+   * Returns Setting objects registered to this Brick.
+   * @return {Setting[]}
+   */
+  getSettings () {
+    return this._settings
+  }
+
+  /**
    * Finds Setting with given name.
    * @param {string} name Setting name to search for.
    * @return {?Setting} Returns Setting or null if not found.
@@ -57,6 +65,14 @@ export default class Brick extends Viewable {
       throw new Error(`Unknown Setting with name '${name}'`)
     }
     return setting.getValue()
+  }
+
+  /**
+   * Returns true, if all settings are valid.
+   * @return {boolean}
+   */
+  areSettingsValid () {
+    return this._settings.find(setting => !setting.isValid()) === undefined
   }
 
   /**

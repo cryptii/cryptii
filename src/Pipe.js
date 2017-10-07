@@ -149,7 +149,8 @@ export default class Pipe extends Viewable {
         //  the current implementation may leed to unexpected behaviour
 
         // buckets may have been removed, update last changed bucket index
-        this._lastChangedBucket = Math.min(this._lastChangedBucket, bucketCount - 1)
+        this._lastChangedBucket =
+          Math.min(this._lastChangedBucket, bucketCount - 1)
 
         // create empty buckets, apply last changed bucket
         let bucketContent = this._bucketContent[this._lastChangedBucket]
@@ -376,8 +377,8 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Fluent interface
    */
   triggerViewerView (viewer) {
-    // check if brick is currently busy
-    if (this.getBrickMeta(viewer, 'busy')) {
+    // check if viewer settings are valid and if viewer is not busy
+    if (!viewer.areSettingsValid() || this.getBrickMeta(viewer, 'busy')) {
       // skip view
       return this
     }
@@ -438,7 +439,7 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Fluent interface
    */
   triggerEncoderTranslation (encoder, isEncode) {
-    // check if encoder is currently busy
+    // check if encoder is not busy
     if (this.getBrickMeta(encoder, 'busy')) {
       // skip translation
       return this
@@ -446,6 +447,12 @@ export default class Pipe extends Viewable {
 
     // update encoder direction
     this.setBrickMeta(encoder, 'direction', isEncode)
+
+    // check if encoder settings are valid
+    if (!encoder.areSettingsValid()) {
+      // skip translation
+      return this
+    }
 
     // mark encoder as busy
     this.setBrickMeta(encoder, 'busy', true)
