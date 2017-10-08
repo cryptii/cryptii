@@ -480,22 +480,19 @@ export default class Pipe extends Viewable {
     let source = this.getContent(sourceBucket)
     let settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
 
-    // trigger translation asynchronously
-    setTimeout(() => {
-      // trigger translation
-      let result = isEncode
-        ? encoder.encode(source)
-        : encoder.decode(source)
+    // trigger translation, create a promise to catch all errors
+    new Promise(resolve =>
+      resolve(isEncode ? encoder.encode(source) : encoder.decode(source)))
 
       // handle result
-      result
-        .then(result =>
-          this.encoderTranslationDidFinish(
-            encoder, null, isEncode, result, source, settingsVersion))
-        .catch(error =>
-          this.encoderTranslationDidFinish(
-            encoder, error, isEncode, false, source, settingsVersion))
-    }, 0)
+      .then(result =>
+        this.encoderTranslationDidFinish(
+          encoder, null, isEncode, result, source, settingsVersion))
+
+      // catch errors
+      .catch(error =>
+        this.encoderTranslationDidFinish(
+          encoder, error, isEncode, false, source, settingsVersion))
 
     return this
   }
