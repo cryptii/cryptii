@@ -9,6 +9,7 @@ import BytesViewer from '../Viewer/Bytes'
 import CaesarCipherEncoder from '../Encoder/CaesarCipher'
 import EnigmaEncoder from '../Encoder/Enigma'
 import HashViewer from '../Viewer/Hash'
+import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import ROT13Encoder from '../Encoder/ROT13'
 import TextTransformEncoder from '../Encoder/TextTransform'
 import TextViewer from '../Viewer/Text'
@@ -33,6 +34,7 @@ export default class BrickFactory extends Factory {
       TextViewer,
       BytesViewer,
       TextTransformEncoder,
+      NumeralSystemEncoder,
       CaesarCipherEncoder,
       AtbashEncoder,
       AffineCipherEncoder,

@@ -27,6 +27,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and wit
 | Name | Category | Description |
 | ---- | -------- | ----------- |
 | `text-transform` | Transform | Transforming character case and arrangement |
+| `numeral-system` | Transform | Translates numerals between systems |
 | `affine-cipher` | Simple Substitution | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
 | ↳ `caesar-cipher` | Simple Substitution | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
 | ↳ `atbash` | Simple Substitution | [Atbash](https://en.wikipedia.org/wiki/Atbash) using latin or hebrew alphabet |

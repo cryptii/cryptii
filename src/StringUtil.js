@@ -44,4 +44,15 @@ export default class StringUtil {
   static chunk (string, length) {
     return string !== '' ? string.match(new RegExp(`.{1,${length}}`, 'g')) : []
   }
+
+  /**
+   * Returns true, if given string contains a whitespace at given index.
+   * @param {string} string
+   * @param {number} [index=0]
+   * @return {boolean}
+   */
+  static isWhitespace (string, index = 0) {
+    let character = string[index]
+    return character ? character.match(/\s/) !== null : false
+  }
 }
