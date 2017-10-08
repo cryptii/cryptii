@@ -1,5 +1,5 @@
 
-$featured-width-max: 375px !default;
+$featured-width: 375px !default;
 $featured-height: 100px !default;
 $featured-image-width: 130px !default;
 
@@ -8,7 +8,7 @@ $featured-image-width: 130px !default;
   display: block;
   position: relative;
   overflow: hidden;
-  max-width: $featured-width-max;
+  width: $featured-width;
   margin-bottom: -$default-border-radius;
   @extend %s-sheet;
 
@@ -16,8 +16,9 @@ $featured-image-width: 130px !default;
     margin: 0 auto (-$default-border-radius);
   }
 
-  @media screen and (max-width: $featured-width-max) {
+  @media screen and (max-width: $featured-width) {
     // styles applied when box reaches screen size
+    width: 100%;
     border-radius: 0;
     margin-bottom: 0;
   }
