@@ -112,6 +112,7 @@ export default class BytesViewer extends Viewer {
     let format = this.getSettingValue('format')
 
     // decode string to bytes
+    // TODO handle errors thrown due to malformed user input
     let bytes
     switch (format) {
       case 'hexadecimal':

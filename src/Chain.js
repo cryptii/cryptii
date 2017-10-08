@@ -2,6 +2,7 @@
 import ArrayUtil from './ArrayUtil'
 import ByteEncoder from './ByteEncoder'
 import TextEncoder from './TextEncoder'
+import TextEncodingError from './Error/TextEncoding'
 
 // empty chain constant, instantiated lazily by Chain.empty
 let emptyChain = null
@@ -375,9 +376,19 @@ export default class Chain {
       return ArrayUtil.isEqual(this._bytes, chain._bytes)
     }
 
-    // compare code points
-    // translation between text and bytes may throw an error
-    return ArrayUtil.isEqual(this.getCodePoints(), chain.getCodePoints())
+    try {
+      // compare code points of chains
+      // translation between text and bytes may throw a text encoding error
+      return ArrayUtil.isEqual(this.getCodePoints(), chain.getCodePoints())
+    } catch (error) {
+      if (error instanceof TextEncodingError) {
+        // translation to the *lowest common denominator* failed
+        // chains are not comparable, consider them not equal
+        return false
+      } else {
+        throw error
+      }
+    }
   }
 
   /**

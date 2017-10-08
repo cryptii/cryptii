@@ -74,7 +74,7 @@ export default class ByteEncoder {
     let bytes = StringUtil.chunk(string, 2).map((byteString, index) => {
       let byte = parseInt(byteString, 16)
       if (isNaN(byte)) {
-        throw new Error(`Invalid byte "${byteString}" at index ${index}`)
+        throw new Error(`Invalid byte '${byteString}' at index ${index}`)
       }
       return byte
     })
@@ -108,7 +108,7 @@ export default class ByteEncoder {
     let bytes = StringUtil.chunk(string, 8).map((byteString, index) => {
       let byte = parseInt(byteString, 2)
       if (isNaN(byte)) {
-        throw new Error(`Invalid byte "${byteString}" at index ${index}`)
+        throw new Error(`Invalid byte '${byteString}' at index ${index}`)
       }
       return byte
     })
@@ -207,7 +207,7 @@ export default class ByteEncoder {
         if (octet !== -1) {
           octets.push(octet)
         } else if (options.foreignCharactersForbidden) {
-          throw new Error(`Invalid character "${character}" at index ${i}`)
+          throw new Error(`Invalid character '${character}' at index ${i}`)
         }
       }
     }

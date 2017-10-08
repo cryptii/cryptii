@@ -1,5 +1,5 @@
 
-import TextEncodingError from './Error/TextEncodingError'
+import TextEncodingError from './Error/TextEncoding'
 
 /**
  * Utility class providing static methods for string, Unicode code point
@@ -33,7 +33,7 @@ export default class TextEncoder {
 
     codePoints.forEach((codePoint, index) => {
       if (TextEncoder.validateCodePoint(codePoint)) {
-        throw new Error(`Invalid code point "${codePoint}" at index ${index}`)
+        throw new Error(`Invalid code point '${codePoint}' at index ${index}`)
       }
 
       if (codePoint < 0x10000) {
@@ -106,7 +106,7 @@ export default class TextEncoder {
         return TextEncoder._encodeCodePointsToUTF8Bytes(codePoints)
       default:
         throw new Error(
-          `Encoding to "${encoding}" is currently not supported.`)
+          `Encoding to '${encoding}' is currently not supported.`)
     }
   }
 

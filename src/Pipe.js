@@ -5,7 +5,7 @@ import ByteEncoder from './ByteEncoder'
 import Chain from './Chain'
 import Encoder from './Encoder'
 import PipeView from './View/Pipe'
-import TextEncodingError from './Error/TextEncodingError'
+import TextEncodingError from './Error/TextEncoding'
 import Viewable from './Viewable'
 import Viewer from './Viewer'
 
