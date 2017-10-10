@@ -1,4 +1,5 @@
 
+import Analytics from './Analytics'
 import Brick from './Brick'
 import BrickFactory from './Factory/Brick'
 import ByteEncoder from './ByteEncoder'
@@ -130,6 +131,13 @@ export default class Pipe extends Viewable {
       brick.setPipe(this)
       this.hasView() && this.getView().addSubview(brick.getView())
       needsEncode = needsEncode || brick instanceof Encoder
+
+      Analytics.trackEvent('brick_view', {
+        'event_category': 'bricks',
+        'event_action': 'view',
+        'event_label': brick.getMeta().name,
+        'non_interaction': true
+      })
     })
 
     removedBricks.forEach(brick => {
@@ -166,6 +174,13 @@ export default class Pipe extends Viewable {
       // trigger views on new viewers
       bricks.forEach(viewer => this.triggerViewerView(viewer))
     }
+
+    Analytics.trackEvent('pipe_view', {
+      'event_category': 'pipe',
+      'event_action': 'view',
+      'event_label': this._bricks.map(brick => brick.getMeta().name).join(', '),
+      'non_interaction': true
+    })
 
     // layout
     this.hasView() && this.getView().layout()

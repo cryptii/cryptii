@@ -1,4 +1,5 @@
 
+import Analytics from '../Analytics'
 import View from '../View'
 
 /**
@@ -96,13 +97,28 @@ export default class SelectionView extends View {
     $link.setAttribute('href', '#')
     $link.addEventListener('click', evt => {
       evt.preventDefault()
-      this.hasModel() &&
-        this.getModel().selectionViewDidSelect(this, choice.name)
+      this.choiceDidClick(choice)
     })
 
     let $choice = document.createElement('li')
     $choice.classList.add('selection__item')
     $choice.appendChild($link)
     return $choice
+  }
+
+  /**
+   * Triggered when the user chose a brick.
+   * @param {object} choice Brick meta of chosen brick.
+   */
+  choiceDidClick (choice) {
+    if (this.hasModel()) {
+      this.getModel().selectionViewDidSelect(this, choice.name)
+
+      Analytics.trackEvent('brick_add', {
+        'event_category': 'bricks',
+        'event_action': 'add',
+        'event_label': choice.name
+      })
+    }
   }
 }

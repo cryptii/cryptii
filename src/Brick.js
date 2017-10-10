@@ -1,4 +1,5 @@
 
+import Analytics from './Analytics'
 import BrickView from './View/Brick'
 import Setting from './Setting'
 import SettingFactory from './Factory/Setting'
@@ -243,6 +244,12 @@ export default class Brick extends Viewable {
     if (this.hasPipe()) {
       // remove self from pipe
       this.getPipe().removeBrick(this)
+
+      Analytics.trackEvent('brick_remove', {
+        'event_category': 'bricks',
+        'event_action': 'remove',
+        'event_label': this.getMeta().name
+      })
     }
   }
 
