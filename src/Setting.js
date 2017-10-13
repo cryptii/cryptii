@@ -196,8 +196,8 @@ export default class Setting extends Viewable {
         this.getView().updateValue()
       }
 
-      // notify delegate
-      if (this.hasDelegate() && this.getDelegate() !== sender) {
+      // notify delegate only if setting value is valid
+      if (valid && this.hasDelegate() && this.getDelegate() !== sender) {
         this.getDelegate().settingValueDidChange(this, value)
       }
     }

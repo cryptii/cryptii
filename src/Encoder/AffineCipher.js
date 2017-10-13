@@ -162,8 +162,13 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
    * @return {boolean}
    */
   validateSlopeValue (a) {
+    let alphabetSetting = this.getSetting('alphabet')
+    if (!alphabetSetting.isValid()) {
+      // can't validate slope without valid alphabet setting
+      return false
+    }
     // the value a must be chosen such that a and m are coprime.
-    let m = this.getSettingValue('alphabet').getLength()
+    let m = alphabetSetting.getValue().getLength()
     return MathUtil.isCoprime(a, m)
   }
 }

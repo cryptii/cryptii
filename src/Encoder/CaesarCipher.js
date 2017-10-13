@@ -63,14 +63,21 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
     switch (setting.getName()) {
       case 'caesarCipherShift':
       case 'alphabet':
-        let shift = this.getSettingValue('caesarCipherShift')
+        let shiftSetting = this.getSetting('caesarCipherShift')
+        let alphabetSetting = this.getSetting('alphabet')
 
-        // handle negative shift values
-        let m = this.getSettingValue('alphabet').getLength()
-        shift = MathUtil.mod(shift, m)
+        // needs valid alphabet and shift setting to set
+        // affine cipher's b setting
+        if (alphabetSetting.isValid() && shiftSetting.isValid()) {
+          let shift = shiftSetting.getValue()
 
-        // changing the shift setting changes the hidden b setting
-        this.setSettingValue('b', shift)
+          // handle negative shift values
+          let m = alphabetSetting.getValue().getLength()
+          shift = MathUtil.mod(shift, m)
+
+          // changing the shift setting changes the hidden b setting
+          this.setSettingValue('b', shift)
+        }
         break
     }
     return super.settingValueDidChange(setting, value)
