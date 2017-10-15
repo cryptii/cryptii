@@ -3,9 +3,13 @@ import autoprefixer from 'gulp-autoprefixer'
 import babel from 'rollup-plugin-babel'
 import buffer from 'vinyl-buffer'
 import cleanCSS from 'gulp-clean-css'
+import clone from 'gulp-clone'
 import commonJs from 'rollup-plugin-commonjs'
+import concat from 'gulp-concat'
+import del from 'del'
 import esdoc from 'gulp-esdoc-stream'
 import gulp from 'gulp'
+import mergeStream from 'merge-stream'
 import mocha from 'gulp-mocha'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import rename from 'gulp-rename'
@@ -57,7 +61,7 @@ gulp.task('test', ['lint-test', 'lint-script'], () => {
     }))
 })
 
-gulp.task('doc', () => {
+gulp.task('doc', ['clean-doc'], () => {
   return gulp.src(paths.script + '/**/*.js')
     .pipe(esdoc({
       destination: paths.doc,
@@ -72,9 +76,8 @@ gulp.task('doc', () => {
 
 let rollupCache
 
-gulp.task('script', ['lint-script'], () => {
-  // run module builder and return a stream
-  const stream = rollup({
+gulp.task('script', ['lint-script', 'clean-script'], () => {
+  let appStream = rollup({
     input: paths.script + '/index.js',
     external: [
     ],
@@ -82,7 +85,7 @@ gulp.task('script', ['lint-script'], () => {
       babel({
         babelrc: false,
         presets: [
-          ['es2015', {
+          ['env', {
             loose: true,
             modules: false
           }]
@@ -109,7 +112,7 @@ gulp.task('script', ['lint-script'], () => {
     amd: { id: meta.name }
   })
 
-  return stream
+  appStream = appStream
     // enable rollup cache
     .on('bundle', (bundle) => {
       rollupCache = bundle
@@ -125,9 +128,9 @@ gulp.task('script', ['lint-script'], () => {
     })
 
     // set output filename
-    .pipe(source(meta.name + '.js', paths.src))
+    .pipe(source(`${meta.name}.js`, paths.src))
 
-    // buffer the output, most gulp plugins do not support streams
+    // buffer the output
     .pipe(buffer())
 
     // init sourcemaps with inline sourcemap produced by rollup-stream
@@ -138,12 +141,28 @@ gulp.task('script', ['lint-script'], () => {
     // minify code
     .pipe(uglify())
 
-    // save result
+  // create polyfill stream from existing files
+  let polyfillStream = gulp.src([
+    './node_modules/dom4/build/dom4.js',
+    './node_modules/babel-polyfill/dist/polyfill.min.js'
+  ], { base: '.' })
+    .pipe(sourcemaps.init())
+
+  // compose library bundle
+  let libraryBundleStream = appStream.pipe(clone())
     .pipe(sourcemaps.write('.'))
+
+  // compose browser bundle
+  let browserBundleStream = mergeStream(polyfillStream, appStream)
+    .pipe(concat(`${meta.name}-browser.js`))
+    .pipe(sourcemaps.write('.'))
+
+  // save bundles and sourcemaps
+  return mergeStream(libraryBundleStream, browserBundleStream)
     .pipe(gulp.dest(paths.scriptDist))
 })
 
-gulp.task('style', () => {
+gulp.task('style', ['clean-style'], () => {
   return gulp.src(paths.style + '/main.scss')
 
     // init sourcemaps
@@ -171,6 +190,18 @@ gulp.task('style', () => {
     .pipe(rename(meta.name + '.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.styleDist))
+})
+
+gulp.task('clean-style', () => {
+  return del([paths.styleDist])
+})
+
+gulp.task('clean-script', () => {
+  return del([paths.scriptDist])
+})
+
+gulp.task('clean-doc', () => {
+  return del([paths.doc])
 })
 
 gulp.task('watch', () => {
