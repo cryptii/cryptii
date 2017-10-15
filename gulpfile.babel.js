@@ -9,10 +9,12 @@ import concat from 'gulp-concat'
 import del from 'del'
 import esdoc from 'gulp-esdoc-stream'
 import gulp from 'gulp'
+import header from 'gulp-header'
 import mergeStream from 'merge-stream'
 import mocha from 'gulp-mocha'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import rename from 'gulp-rename'
+import revision from 'git-rev-sync'
 import rollup from 'rollup-stream'
 import sass from 'gulp-sass'
 import sassSVGInliner from 'sass-inline-svg'
@@ -22,6 +24,9 @@ import standard from 'gulp-standard'
 import uglify from 'gulp-uglify'
 
 let meta = require('./package.json')
+let distHeader =
+  `/*! ${meta.name} v${meta.version} (commit ${revision.long()})` +
+  ` - (c) ${meta.author} */\n`
 
 let paths = {
   assetsSVG: './assets/svg',
@@ -141,6 +146,9 @@ gulp.task('script', ['lint-script', 'clean-script'], () => {
     // minify code
     .pipe(uglify())
 
+    // append header
+    .pipe(header(distHeader))
+
   // create polyfill stream from existing files
   let polyfillStream = gulp.src([
     './node_modules/dom4/build/dom4.js',
@@ -150,11 +158,14 @@ gulp.task('script', ['lint-script', 'clean-script'], () => {
 
   // compose library bundle
   let libraryBundleStream = appStream.pipe(clone())
+    // render sourcemaps
     .pipe(sourcemaps.write('.'))
 
   // compose browser bundle
   let browserBundleStream = mergeStream(polyfillStream, appStream)
+    // concat polyfill and library
     .pipe(concat(`${meta.name}-browser.js`))
+    // render sourcemaps
     .pipe(sourcemaps.write('.'))
 
   // save bundles and sourcemaps
@@ -185,6 +196,9 @@ gulp.task('style', ['clean-style'], () => {
 
     // minify
     .pipe(cleanCSS({ processImport: false }))
+
+    // append header
+    .pipe(header(distHeader))
 
     // save result
     .pipe(rename(meta.name + '.css'))

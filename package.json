@@ -1,8 +1,8 @@
 {
   "name": "cryptii",
   "version": "4.0.0-alpha",
-  "author": "Fränz Friederes <fraenz@frieder.es>",
-  "description": "Framework and web app for encoding and decoding text.",
+  "author": "Fränz Friederes (fraenz.frieder.es)",
+  "description": "Framework and web app for encoding and decoding content.",
   "repository": {
     "type": "git",
     "url": "https://github.com/cryptii/cryptii.git"
@@ -32,12 +32,14 @@
     "babel-register": "^6.24.1",
     "del": "^3.0.0",
     "dom4": "^1.8.5",
+    "git-rev-sync": "^1.9.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-clean-css": "^3.9.0",
     "gulp-clone": "^1.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-esdoc-stream": "^0.1.0",
+    "gulp-header": "^1.8.9",
     "gulp-mocha": "^4.3.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
