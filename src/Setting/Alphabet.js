@@ -16,7 +16,7 @@ export default class AlphabetSetting extends TextSetting {
     super(name, spec)
 
     // an alphabet with less than 2 characters makes no sense
-    this.setMinLength(2)
+    this.setMinLength(2, false)
   }
 
   /**

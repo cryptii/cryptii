@@ -32,10 +32,10 @@ export default class TextSetting extends Setting {
     this._caseSensitivity = null
 
     const options = spec.options || {}
-    this.setMinLength(options.minLength || null)
-    this.setMaxLength(options.maxLength || null)
-    this.setAllowedChars(options.allowedChars || null)
-    this.setCaseSensitivity(options.caseSensitivity || false)
+    this.setMinLength(options.minLength || null, false)
+    this.setMaxLength(options.maxLength || null, false)
+    this.setAllowedChars(options.allowedChars || null, false)
+    this.setCaseSensitivity(options.caseSensitivity || false, false)
   }
 
   /**
@@ -49,14 +49,15 @@ export default class TextSetting extends Setting {
   /**
    * Sets min text length.
    * @param {?number} minLength Min text length
+   * @param {boolean} [revalidate=true] Wether to revalidate current value.
    * @return {TextSetting} Fluent interface
    */
-  setMinLength (minLength) {
+  setMinLength (minLength, revalidate = true) {
     if (this._minLength === minLength) {
       return this
     }
     this._minLength = minLength !== null ? parseInt(minLength) : null
-    return this.revalidateValue()
+    return revalidate ? this.revalidateValue() : this
   }
 
   /**
@@ -70,14 +71,15 @@ export default class TextSetting extends Setting {
   /**
    * Sets max text length.
    * @param {?number} maxLength Max text length
+   * @param {boolean} [revalidate=true] Wether to revalidate current value.
    * @return {TextSetting} Fluent interface
    */
-  setMaxLength (maxLength) {
+  setMaxLength (maxLength, revalidate = true) {
     if (this._maxLength === maxLength) {
       return this
     }
     this._maxLength = maxLength !== null ? parseInt(maxLength) : null
-    return this.revalidateValue()
+    return revalidate ? this.revalidateValue() : this
   }
 
   /**
@@ -91,9 +93,10 @@ export default class TextSetting extends Setting {
   /**
    * Restricts text to given Unicode code points.
    * @param {?number[]|string|Chain} allowedChars
+   * @param {boolean} [revalidate=true] Wether to revalidate current value.
    * @return {TextSetting} Fluent interface
    */
-  setAllowedChars (allowedChars) {
+  setAllowedChars (allowedChars, revalidate = true) {
     if (this._allowedChars === allowedChars) {
       return this
     }
@@ -105,7 +108,7 @@ export default class TextSetting extends Setting {
     }
 
     this._allowedChars = allowedChars
-    return this.revalidateValue()
+    return revalidate ? this.revalidateValue() : this
   }
 
   /**
@@ -119,14 +122,15 @@ export default class TextSetting extends Setting {
   /**
    * Sets wether to respect case sensitivity.
    * @param {boolean} caseSensitivity
+   * @param {boolean} [revalidate=true] Wether to revalidate current value.
    * @return {TextSetting} Fluent interface
    */
-  setCaseSensitivity (caseSensitivity) {
+  setCaseSensitivity (caseSensitivity, revalidate = true) {
     if (this._caseSensitivity === caseSensitivity) {
       return this
     }
     this._caseSensitivity = caseSensitivity
-    return this.revalidateValue()
+    return revalidate ? this.revalidateValue() : this
   }
 
   /**

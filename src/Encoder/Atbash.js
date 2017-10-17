@@ -1,5 +1,6 @@
 
 import AffineCipherEncoder from './AffineCipher'
+import Chain from '../Chain'
 
 const meta = {
   name: 'atbash',
@@ -8,8 +9,8 @@ const meta = {
   type: 'encoder'
 }
 
-const latinAlphabet = 'abcdefghijklmnopqrstuvwxyz'
-const hebrewAlphabet = 'תשרקצפעסנמלכיטחזוהדגבא'
+const latinAlphabet = Chain.wrap('abcdefghijklmnopqrstuvwxyz')
+const hebrewAlphabet = Chain.wrap('תשרקצפעסנמלכיטחזוהדגבא')
 
 /**
  * Encoder Brick for Atbash encoding and decoding.
@@ -57,6 +58,9 @@ export default class AtbashEncoder extends AffineCipherEncoder {
 
     // apply default alphabet
     this.getSetting('alphabet').setValue(latinAlphabet)
+
+    // apply inital encryption function
+    this.applyEncryptionFunctionByAlphabet(latinAlphabet)
   }
 
   /**

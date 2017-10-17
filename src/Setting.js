@@ -1,4 +1,5 @@
 
+import Chain from './Chain'
 import Random from './Random'
 import SettingView from './View/Setting'
 import StringUtil from './StringUtil'
@@ -43,7 +44,7 @@ export default class Setting extends Viewable {
 
     // view related properties
     this._label = spec.label || StringUtil.camelCaseToRegular(name, ' ')
-    this._visible = spec.visible || true
+    this._visible = spec.visible !== false
     this._priority = spec.priority || 1
     this._width = spec.width || 12
     this._viewPrototype = SettingView
@@ -188,7 +189,11 @@ export default class Setting extends Viewable {
     const value = this.filterValue(rawValue)
 
     // check if value changed
-    if (this._value !== value) {
+    let equal = value instanceof Chain
+      ? value.isEqualTo(this._value)
+      : this._value === value
+
+    if (!equal) {
       this._value = value
 
       // update value in view
@@ -197,7 +202,7 @@ export default class Setting extends Viewable {
       }
 
       // notify delegate only if setting value is valid
-      if (valid && this.hasDelegate() && this.getDelegate() !== sender) {
+      if (this.hasDelegate() && this.getDelegate() !== sender) {
         this.getDelegate().settingValueDidChange(this, value)
       }
     }

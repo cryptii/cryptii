@@ -3,6 +3,7 @@ import assert from 'assert'
 import { it } from 'mocha'
 
 import Chain from '../../src/Chain'
+import ChainAssert from './ChainAssert'
 
 /**
  * Utility class for testing Encoder objects.
@@ -19,10 +20,25 @@ export default class EncoderTester {
       return test.forEach(test => EncoderTester.test(EncoderInvokable, test))
     }
 
+    if (!test.direction || test.direction === 'both') {
+      // handle test in both directions
+      EncoderTester.test(EncoderInvokable, {
+        settings: test.settings,
+        direction: 'encode',
+        content: test.content,
+        expectedResult: test.expectedResult
+      })
+      EncoderTester.test(EncoderInvokable, {
+        settings: test.settings,
+        direction: 'decode',
+        content: test.expectedResult,
+        expectedResult: test.content
+      })
+      return
+    }
+
     // read direction from test entry
-    const isEncoding =
-      test.direction === undefined ||
-      test.direction.toLowerCase() === 'encode'
+    const isEncoding = test.direction.toLowerCase() === 'encode'
 
     // wrap content in Chain
     const content =
@@ -61,16 +77,12 @@ export default class EncoderTester {
           : encoder.decode(content)
 
         // resolve promise
-        result
+        Promise.resolve(result)
           .then(result => {
             // verify result
-            assert.strictEqual(Chain.isEqual(result, expectedResult), true)
+            ChainAssert.equal(result, expectedResult)
             // no view should have been created during this process
             assert.strictEqual(encoder.hasView(), false)
-          })
-          .catch(reason => {
-            // verify if translation should fail
-            assert.strictEqual(expectedResult, null)
           })
           .then(done, done)
       }

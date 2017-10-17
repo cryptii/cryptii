@@ -26,8 +26,8 @@ export default class EnumSetting extends Setting {
     this.setElements(
       spec.options.elements,
       spec.options.labels || null,
-      spec.options.descriptions || null
-    )
+      spec.options.descriptions || null,
+      false)
   }
 
   /**
@@ -59,11 +59,13 @@ export default class EnumSetting extends Setting {
    * @param {string[]} elements
    * @param {string[]} [labels=elements]
    * @param {string[]} [descriptions]
+   * @param {boolean} [revalidate=true] Wether to revalidate current value.
    * @throws Throws an error if array of elements is empty.
    * @throws Throws an error if element and label arrays have different lengths.
    * @return {EnumSetting} Fluent interface
    */
-  setElements (elements, labels = null, descriptions = null) {
+  setElements (
+    elements, labels = null, descriptions = null, revalidate = true) {
     if (elements.length === 0) {
       throw new Error(`Array of elements can't be empty.`)
     }
@@ -87,7 +89,7 @@ export default class EnumSetting extends Setting {
       this._value = this._elements[0]
     }
 
-    return this.revalidateValue()
+    return revalidate ? this.revalidateValue() : this
   }
 
   /**

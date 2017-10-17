@@ -19,7 +19,7 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       includeForeignChars: false
     },
     direction: 'encode',
-    content: 'The quick brown fox jumps over 13 lazy dogs.',
+    content: 'the quick brown fox jumps over 13 lazy dogs.',
     expectedResult: 'apzmt ckvko hohmv inhkw rnalk jktsh dem'
   },
   {
