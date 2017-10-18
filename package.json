@@ -1,6 +1,6 @@
 {
   "name": "cryptii",
-  "version": "4.0.0-alpha",
+  "version": "4.0.0-beta",
   "author": "Fränz Friederes (fraenz.frieder.es)",
   "description": "Framework and web app for encoding and decoding content.",
   "repository": {
