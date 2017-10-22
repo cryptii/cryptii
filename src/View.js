@@ -1,9 +1,55 @@
 
+const attachableEvents = {
+  onClick: 'click',
+  onInput: 'input',
+  onChange: 'change',
+  onMouseEnter: 'mouseenter',
+  onMouseLeave: 'mouseleave'
+}
+
 /**
  * Represents a rectangular area on the screen
  * and manages the content in that area.
  */
 export default class View {
+  /**
+   * Creates element with given tag, attributes and children.
+   * @param {string} type
+   * @param {object} attributes
+   * @param {string|HTMLElement|HTMLElement[]} children
+   * @return {HTMLElement}
+   */
+  static createElement (type, attributes = {}, children = null) {
+    // create element
+    let $element = document.createElement(type)
+
+    // set element attributes
+    Object.keys(attributes).forEach(name => {
+      let value = attributes[name]
+      if (attachableEvents[name] !== undefined) {
+        $element.addEventListener(attachableEvents[name], value)
+      } else {
+        $element[name] = value
+      }
+    })
+
+    // append children
+    switch (Object.prototype.toString.call(children)) {
+      case '[object String]':
+        $element.innerText = children
+        break
+      case '[object Array]':
+        children.forEach($child => $child && $element.appendChild($child))
+        break
+      case '[object Null]':
+        // no child to add
+        break
+      default:
+        $element.appendChild(children)
+    }
+    return $element
+  }
+
   /**
    * View constructor.
    */
@@ -33,7 +79,15 @@ export default class View {
    * @return {HTMLElement}
    */
   render () {
-    return document.createElement('div')
+    return View.createElement('div')
+  }
+
+  /**
+   * Updates view on model change.
+   * @override
+   * @return {View} Fluent interface
+   */
+  update () {
   }
 
   /**
@@ -48,6 +102,7 @@ export default class View {
    * @override
    */
   didRender () {
+    this.update()
   }
 
   /**

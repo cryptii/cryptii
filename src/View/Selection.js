@@ -37,20 +37,15 @@ export default class SelectionView extends View {
       }
     })
 
-    // render each category
-    let $categories = document.createElement('ul')
-    $categories.classList.add('selection__categories')
-
-    categories.forEach((category, index) => {
-      let choices = categoryChoices[index]
-      let $category = this.renderCategory(category, choices)
-      $categories.appendChild($category)
-    })
-
-    let $root = document.createElement('div')
-    $root.classList.add('selection')
-    $root.appendChild($categories)
-    return $root
+    return View.createElement('div', {
+      className: 'selection'
+    }, [
+      View.createElement('ul', {
+        className: 'selection__categories'
+      }, categories.map((category, index) =>
+        this.renderCategory(category, categoryChoices[index])
+      ))
+    ])
   }
 
   /**
@@ -61,23 +56,16 @@ export default class SelectionView extends View {
    * @return {HTMLElement}
    */
   renderCategory (category, choices) {
-    let $title = document.createElement('h4')
-    $title.classList.add('selection__category-title')
-    $title.innerText = category
-
-    let $choices = document.createElement('ul')
-    $choices.classList.add('selection__choices')
-
-    // render each choice
-    choices
-      .map(this.renderChoice.bind(this))
-      .forEach($choice => $choices.appendChild($choice))
-
-    let $category = document.createElement('li')
-    $category.classList.add('selection__category')
-    $category.appendChild($title)
-    $category.appendChild($choices)
-    return $category
+    return View.createElement('li', {
+      className: 'selection__category'
+    }, [
+      View.createElement('h4', {
+        className: 'selection__category-title'
+      }, category),
+      View.createElement('ul', {
+        className: 'selection__choices'
+      }, choices.map(this.renderChoice.bind(this)))
+    ])
   }
 
   /**
@@ -87,23 +75,22 @@ export default class SelectionView extends View {
    * @return {HTMLElement}
    */
   renderChoice (choice) {
-    let $title = document.createElement('span')
-    $title.classList.add('selection__title')
-    $title.innerText = choice.title
-
-    let $link = document.createElement('a')
-    $link.classList.add('selection__choice')
-    $link.appendChild($title)
-    $link.setAttribute('href', '#')
-    $link.addEventListener('click', evt => {
-      evt.preventDefault()
-      this.choiceDidClick(choice)
-    })
-
-    let $choice = document.createElement('li')
-    $choice.classList.add('selection__item')
-    $choice.appendChild($link)
-    return $choice
+    return View.createElement('li', {
+      className: 'selection__item'
+    }, [
+      View.createElement('a', {
+        className: 'selection__choice',
+        href: '#',
+        onClick: evt => {
+          evt.preventDefault()
+          this.choiceDidClick(choice)
+        }
+      }, [
+        View.createElement('span', {
+          className: 'selection__title'
+        }, choice.title)
+      ])
+    ])
   }
 
   /**

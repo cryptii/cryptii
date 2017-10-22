@@ -14,6 +14,7 @@ export default class Encoder extends Brick {
   constructor () {
     super()
     this._viewPrototype = EncoderView
+    this._reverse = false
   }
 
   /**
@@ -26,9 +27,15 @@ export default class Encoder extends Brick {
       throw new Error(`Can't encode. At least one setting is invalid.`)
     }
     content = Chain.wrap(content)
-    return Promise.resolve(this.willEncode(content))
-      .then(this.performEncode.bind(this))
-      .then(this.didEncode.bind(this))
+    if (!this._reverse) {
+      return Promise.resolve(this.willEncode(content))
+        .then(this.performEncode.bind(this))
+        .then(this.didEncode.bind(this))
+    } else {
+      return Promise.resolve(this.willDecode(content))
+        .then(this.performDecode.bind(this))
+        .then(this.didDecode.bind(this))
+    }
   }
 
   /**
@@ -74,9 +81,15 @@ export default class Encoder extends Brick {
       throw new Error(`Can't decode. At least one setting is invalid.`)
     }
     content = Chain.wrap(content)
-    return Promise.resolve(this.willDecode(content))
-      .then(this.performDecode.bind(this))
-      .then(this.didDecode.bind(this))
+    if (!this._reverse) {
+      return Promise.resolve(this.willDecode(content))
+        .then(this.performDecode.bind(this))
+        .then(this.didDecode.bind(this))
+    } else {
+      return Promise.resolve(this.willEncode(content))
+        .then(this.performEncode.bind(this))
+        .then(this.didEncode.bind(this))
+    }
   }
 
   /**
@@ -143,5 +156,27 @@ export default class Encoder extends Brick {
    */
   didTranslate (content, isEncode) {
     return content
+  }
+
+  /**
+   * Wether to reverse translation.
+   * @return {boolean}
+   */
+  isReverse () {
+    return this._reverse
+  }
+
+  /**
+   * Sets wether to reverse translation.
+   * @param {boolean} reverse
+   * @return {Encoder} Fluent interface
+   */
+  setReverse (reverse) {
+    if (this._reverse !== reverse) {
+      this._reverse = reverse
+      this.hasView() && this.getView().update()
+      this.hasPipe() && this.getPipe().encoderDidReverse(this, reverse)
+    }
+    return this
   }
 }

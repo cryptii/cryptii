@@ -1,7 +1,7 @@
 
 .footer {
-  padding: 48px 0;
-  background: $c-white;
+  padding: 48px 0 40px;
+  color: $c-footer-text;
 
   @include breakpoint(xs, s) {
     text-align: center;

@@ -3,7 +3,6 @@ $header-height: 96px !default;
 
 .header {
   position: relative;
-  background: $c-white;
   @extend .container;
 
   @include breakpoint(xs) {

@@ -1,5 +1,6 @@
 
 import SettingView from '../Setting'
+import View from '../../View'
 
 /**
  * Enum Setting View.
@@ -39,29 +40,22 @@ export default class EnumSettingView extends SettingView {
    * @return {?HTMLElement}
    */
   renderField () {
-    this._$select = document.createElement('select')
-    this._$select.classList.add('setting-enum__select')
-
     // create option for each element
     let elementLabels = this.getModel().getElementLabels()
     let elementDescriptions = this.getModel().getElementDescriptions()
+    let $options = elementLabels.map((label, index) =>
+      View.createElement('option', {
+        value: index,
+        title: elementDescriptions[index]
+      }, label))
 
-    elementLabels.forEach((label, index) => {
-      let $option = document.createElement('option')
-      $option.innerText = label
-      $option.value = index
+    // create select element
+    this._$select = View.createElement('select', {
+      className: 'setting-enum__select',
+      onChange: this.selectValueDidChange.bind(this)
+    }, $options)
 
-      if (elementDescriptions[index] !== null) {
-        $option.setAttribute('title', elementDescriptions[index])
-      }
-
-      this._$select.appendChild($option)
-    })
-
-    // bind change event
-    this._$select.addEventListener('change',
-      this.selectValueDidChange.bind(this), false)
-
+    // append to field
     let $field = super.renderField()
     $field.classList.remove('setting__field')
     $field.classList.add('setting-enum__field')

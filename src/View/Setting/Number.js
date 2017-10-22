@@ -1,5 +1,6 @@
 
 import SettingView from '../Setting'
+import View from '../../View'
 
 /**
  * Number Setting View.
@@ -39,27 +40,27 @@ export default class NumberSettingView extends SettingView {
    * @return {?HTMLElement}
    */
   renderField () {
-    this._$input = document.createElement('input')
-    this._$input.classList.add('setting-number__input')
-    this._$input.setAttribute('type', 'number')
-    this._$input.addEventListener('input',
-      this.inputValueDidChange.bind(this), false)
+    this._$input = View.createElement('input', {
+      className: 'setting-number__input',
+      type: 'number',
+      onInput: this.inputValueDidChange.bind(this)
+    })
 
-    let $stepDown = document.createElement('a')
-    $stepDown.classList.add('setting-number__btn-step-down')
-    $stepDown.setAttribute('href', '#')
-    $stepDown.innerText = 'Step Down'
-    $stepDown.addEventListener('click', this.stepDownButtonDidClick.bind(this))
+    let $stepDown = View.createElement('a', {
+      className: 'setting-number__btn-step-down',
+      href: '#',
+      onClick: this.stepDownButtonDidClick.bind(this)
+    }, 'Step Down')
 
-    let $value = document.createElement('div')
-    $value.classList.add('setting-number__value')
-    $value.appendChild(this._$input)
+    let $value = View.createElement('div', {
+      className: 'setting-number__value'
+    }, this._$input)
 
-    let $stepUp = document.createElement('a')
-    $stepUp.classList.add('setting-number__btn-step-up')
-    $stepUp.setAttribute('href', '#')
-    $stepUp.innerText = 'Step Up'
-    $stepUp.addEventListener('click', this.stepUpButtonDidClick.bind(this))
+    let $stepUp = View.createElement('a', {
+      className: 'setting-number__btn-step-up',
+      href: '#',
+      onClick: this.stepUpButtonDidClick.bind(this)
+    }, 'Step Up')
 
     let $field = super.renderField()
     $field.classList.remove('setting__field')

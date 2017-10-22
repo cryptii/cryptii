@@ -24,21 +24,17 @@ export default class BrickView extends View {
    * @return {HTMLElement}
    */
   render () {
-    let $root = document.createElement('div')
-    $root.classList.add('brick')
-
-    let $header = this.renderHeader()
-    $header && $root.appendChild($header)
-
     this._$body = this.renderBody()
+    this._$inner = View.createElement('div', {
+      className: 'brick__inner'
+    }, this._$body)
 
-    this._$inner = document.createElement('div')
-    this._$inner.classList.add('brick__inner')
-    this._$inner.appendChild(this._$body)
-
-    $root.appendChild(this._$inner)
-
-    return $root
+    return View.createElement('div', {
+      className: 'brick'
+    }, [
+      this.renderHeader(),
+      this._$inner
+    ])
   }
 
   /**
@@ -48,32 +44,27 @@ export default class BrickView extends View {
    */
   renderHeader () {
     let title = this.getModel().getMeta().title
-
-    let $removeBtn = document.createElement('a')
-    $removeBtn.classList.add('brick__btn-remove')
-    $removeBtn.innerText = 'Remove'
-    $removeBtn.setAttribute('href', '#')
-    $removeBtn.addEventListener('click', this.removeButtonDidClick.bind(this))
-
-    let $toggleButton = document.createElement('a')
-    $toggleButton.classList.add('brick__btn-toggle')
-    $toggleButton.setAttribute('href', '#')
-    $toggleButton.innerText = title
-    $toggleButton.addEventListener('click', evt => {
-      evt.preventDefault()
-      this.toggleSelection()
-    })
-
-    let $title = document.createElement('h3')
-    $title.classList.add('brick__title')
-    $title.appendChild($toggleButton)
-
-    let $header = document.createElement('header')
-    $header.classList.add('brick__header')
-    $header.appendChild($title)
-    $header.appendChild($removeBtn)
-
-    return $header
+    return View.createElement('header', {
+      className: 'brick__header'
+    }, [
+      View.createElement('h3', {
+        className: 'brick__title'
+      }, [
+        View.createElement('a', {
+          className: 'brick__btn-toggle',
+          href: '#',
+          onClick: evt => {
+            evt.preventDefault()
+            this.toggleSelection()
+          }
+        }, title)
+      ]),
+      View.createElement('a', {
+        className: 'brick__btn-remove',
+        href: '#',
+        onClick: this.removeButtonDidClick.bind(this)
+      }, 'Remove')
+    ])
   }
 
   /**
@@ -82,20 +73,15 @@ export default class BrickView extends View {
    * @return {HTMLElement}
    */
   renderBody () {
-    let $body = document.createElement('div')
-    $body.classList.add('brick__page')
-    $body.classList.add('brick__body')
-
     this._$settings = this.renderSettings()
-    this._$settings && $body.appendChild(this._$settings)
 
-    let $content = this.renderContent()
-    $content && $body.appendChild($content)
-
-    let $footer = this.renderFooter()
-    $footer && $body.appendChild($footer)
-
-    return $body
+    return View.createElement('div', {
+      className: 'brick__page brick__body'
+    }, [
+      this._$settings,
+      this.renderContent(),
+      this.renderFooter()
+    ])
   }
 
   /**
@@ -104,9 +90,9 @@ export default class BrickView extends View {
    * @return {?HTMLElement}
    */
   renderSettings () {
-    let $settings = document.createElement('div')
-    $settings.classList.add('brick__settings')
-    return $settings
+    return View.createElement('div', {
+      className: 'brick__settings'
+    })
   }
 
   /**
@@ -115,9 +101,9 @@ export default class BrickView extends View {
    * @return {?HTMLElement}
    */
   renderContent () {
-    let $content = document.createElement('div')
-    $content.classList.add('brick__content')
-    return $content
+    return View.createElement('div', {
+      className: 'brick__content'
+    })
   }
 
   /**
@@ -126,9 +112,9 @@ export default class BrickView extends View {
    * @return {?HTMLElement}
    */
   renderFooter () {
-    let $footer = document.createElement('footer')
-    $footer.classList.add('brick__footer')
-    return $footer
+    return View.createElement('footer', {
+      className: 'brick__footer'
+    })
   }
 
   /**
@@ -141,11 +127,9 @@ export default class BrickView extends View {
     let selectionView = new SelectionView(brickFactory)
     selectionView.setModel(this.getModel())
 
-    let $selectionPage = document.createElement('div')
-    $selectionPage.classList.add('brick__page')
-    $selectionPage.classList.add('brick__selection')
-    $selectionPage.appendChild(selectionView.getElement())
-    return $selectionPage
+    return View.createElement('div', {
+      className: 'brick__page brick__selection'
+    }, selectionView.getElement())
   }
 
   /**

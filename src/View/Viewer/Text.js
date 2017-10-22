@@ -1,5 +1,6 @@
 
 import ViewerView from '../Viewer'
+import View from '../../View'
 
 /**
  * TextViewer Brick View.
@@ -57,7 +58,7 @@ export default class TextViewerView extends ViewerView {
     this._disabled = disabled
     if (this._$textarea !== null) {
       if (disabled) {
-        this._$textarea.setAttribute('disabled', 'disabled')
+        this._$textarea.disabled = 'disabled'
       } else {
         this._$textarea.removeAttribute('disabled')
       }
@@ -82,17 +83,16 @@ export default class TextViewerView extends ViewerView {
    * @return {BrickView} Fluent interface
    */
   renderContent () {
-    this._$textarea = document.createElement('textarea')
-    this._$textarea.classList.add('viewer-text__textarea')
-    this._$textarea.setAttribute('spellcheck', 'false')
-    this._$textarea.value = this._text
+    this._$textarea = View.createElement('textarea', {
+      className: 'viewer-text__textarea',
+      spellcheck: 'false',
+      value: this._text,
+      onInput: this.textareaValueDidChange.bind(this)
+    })
 
     if (this.isDisabled()) {
-      this._$textarea.setAttribute('disabled', 'disabled')
+      this._$textarea.disabled = 'disabled'
     }
-
-    this._$textarea.addEventListener(
-      'input', this.textareaValueDidChange.bind(this), false)
 
     let $content = super.renderContent()
     $content.appendChild(this._$textarea)
@@ -138,7 +138,7 @@ export default class TextViewerView extends ViewerView {
    */
   layoutTextarea () {
     this._$textarea.style.height = ''
-    this._$textarea.style.height = this._$textarea.scrollHeight + 'px'
+    this._$textarea.style.height = `${this._$textarea.scrollHeight}px`
     return this
   }
 }

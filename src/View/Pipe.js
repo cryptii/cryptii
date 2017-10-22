@@ -35,31 +35,31 @@ export default class PipeView extends View {
    * @return {HTMLElement}
    */
   render () {
-    this._$content = document.createElement('div')
-    this._$content.classList.add('pipe__content')
+    this._$content = View.createElement('div', {
+      className: 'pipe__content'
+    })
 
-    this._$scrollHandleLeft = document.createElement('div')
-    this._$scrollHandleLeft.classList.add('pipe__scroll-handle')
-    this._$scrollHandleLeft.classList.add('pipe__scroll-handle--left')
-    this._$scrollHandleLeft.classList.add('pipe__scroll-handle--disabled')
-    this._$scrollHandleLeft.addEventListener('mouseenter',
-      this.scrollHandleDidStart.bind(this, 0))
-    this._$scrollHandleLeft.addEventListener('mouseleave',
-      this.scrollHandleDidStop.bind(this))
+    this._$scrollHandleLeft = View.createElement('div', {
+      className:
+        'pipe__scroll-handle pipe__scroll-handle--left ' +
+        'pipe__scroll-handle--disabled',
+      onMouseEnter: this.scrollHandleDidStart.bind(this, 0),
+      onMouseLeave: this.scrollHandleDidStop.bind(this)
+    })
 
-    this._$scrollHandleRight = document.createElement('div')
-    this._$scrollHandleRight.classList.add('pipe__scroll-handle')
-    this._$scrollHandleRight.classList.add('pipe__scroll-handle--right')
-    this._$scrollHandleRight.addEventListener('mouseenter',
-      this.scrollHandleDidStart.bind(this, 1))
-    this._$scrollHandleRight.addEventListener('mouseleave',
-      this.scrollHandleDidStop.bind(this))
+    this._$scrollHandleRight = View.createElement('div', {
+      className: 'pipe__scroll-handle pipe__scroll-handle--right',
+      onMouseEnter: this.scrollHandleDidStart.bind(this, 1),
+      onMouseLeave: this.scrollHandleDidStop.bind(this)
+    })
 
-    this._$scrollable = document.createElement('div')
-    this._$scrollable.classList.add('pipe__scrollable')
-    this._$scrollable.appendChild(this._$content)
-    this._$scrollable.appendChild(this._$scrollHandleLeft)
-    this._$scrollable.appendChild(this._$scrollHandleRight)
+    this._$scrollable = View.createElement('div', {
+      className: 'pipe__scrollable'
+    }, [
+      this._$content,
+      this._$scrollHandleLeft,
+      this._$scrollHandleRight
+    ])
 
     // bind to existing pipe element if any
     let $root = document.querySelector('.pipe')
@@ -141,18 +141,15 @@ export default class PipeView extends View {
    * @return {HTMLElement}
    */
   _createPipePart (index) {
-    let $addButton = document.createElement('div')
-    $addButton.classList.add('pipe__btn-add')
-    $addButton.innerText = 'Add Encoder or Viewer'
-
-    let $pipePart = document.createElement('a')
-    $pipePart.classList.add('pipe__part-pipe')
-    $pipePart.setAttribute('href', '#')
-    $pipePart.addEventListener('click', evt =>
-      this.addButtonDidClick(evt, index))
-    $pipePart.appendChild($addButton)
-
-    return $pipePart
+    return View.createElement('a', {
+      className: 'pipe__part-pipe',
+      href: '#',
+      onClick: evt => this.addButtonDidClick(evt, index)
+    }, [
+      View.createElement('div', {
+        className: 'pipe__btn-add'
+      }, 'Add Encoder or Viewer')
+    ])
   }
 
   /**
@@ -161,10 +158,9 @@ export default class PipeView extends View {
    * @return {HTMLElement}
    */
   _createBrickPart (brickView) {
-    let $brickPart = document.createElement('div')
-    $brickPart.classList.add('pipe__part-brick')
-    $brickPart.appendChild(brickView.getElement())
-    return $brickPart
+    return View.createElement('div', {
+      className: 'pipe__part-brick'
+    }, brickView.getElement())
   }
 
   /**

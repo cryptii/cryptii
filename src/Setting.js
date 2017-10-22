@@ -177,7 +177,7 @@ export default class Setting extends Viewable {
     let valid = this.validateValue(rawValue)
     if (this._valid !== valid) {
       this._valid = valid
-      this.hasView() && this.getView().updateView()
+      this.hasView() && this.getView().update()
     }
 
     if (!valid) {

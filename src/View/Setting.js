@@ -11,16 +11,12 @@ export default class SettingView extends View {
    * @return {HTMLElement}
    */
   render () {
-    let $root = document.createElement('div')
-    $root.classList.add('setting')
-
-    let $label = this.renderLabel()
-    $label && $root.appendChild($label)
-
-    let $field = this.renderField()
-    $field && $root.appendChild($field)
-
-    return $root
+    return View.createElement('div', {
+      className: 'setting'
+    }, [
+      this.renderLabel(),
+      this.renderField()
+    ])
   }
 
   /**
@@ -29,10 +25,9 @@ export default class SettingView extends View {
    * @return {?HTMLElement}
    */
   renderLabel () {
-    let $label = document.createElement('label')
-    $label.classList.add('setting__label')
-    $label.innerText = this.getModel().getLabel()
-    return $label
+    return View.createElement('label', {
+      className: 'setting__label'
+    }, this.getModel().getLabel())
   }
 
   /**
@@ -41,26 +36,25 @@ export default class SettingView extends View {
    * @return {?HTMLElement}
    */
   renderField () {
-    let $field = document.createElement('div')
-    $field.classList.add('setting__field')
-    return $field
+    return View.createElement('div', {
+      className: 'setting__field'
+    })
   }
 
   /**
    * Triggered after rendering root element.
    */
   didRender () {
-    // update view
-    this.updateView()
+    super.didRender()
     // update value initially
     this.updateValue()
   }
 
   /**
-   * Updates view from model.
+   * Updates view on model change.
    * @return {SettingView} Fluent interface
    */
-  updateView () {
+  update () {
     let className = 'setting'
 
     // add width modifier

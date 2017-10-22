@@ -5,7 +5,7 @@ $c-red: #d14700;
 
 $c-primary: #00b1d1;
 
-$c-background: #f2f2f2;
+$c-background: $c-white;
 
 $c-line: #E9E9E9;
 $c-line-shaded: #dddddd;
@@ -15,10 +15,15 @@ $c-text: #333333;
 $c-text-detail: #8C8C8C;
 $c-text-primary: #00a3cc;
 $c-text-error: $c-red;
+$c-text-light: #aaaaaa;
+
+$c-footer-text: #666666;
 
 $c-setting-control-background: #e6e6e6;
-$c-setting-label: #aaaaaa;
+$c-setting-label: $c-text-light;
 
 $c-pipe: $c-primary;
+$c-pipe-background: #f2f2f2;
+
 $c-viewer: $c-primary;
 $c-encoder: #ff9900;

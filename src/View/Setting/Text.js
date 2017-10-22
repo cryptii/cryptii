@@ -1,5 +1,6 @@
 
 import SettingView from '../Setting'
+import View from '../../View'
 
 /**
  * Text Setting View.
@@ -39,12 +40,12 @@ export default class TextSettingView extends SettingView {
    * @return {?HTMLElement}
    */
   renderField () {
-    this._$input = document.createElement('input')
-    this._$input.classList.add('setting-text__input')
-    this._$input.setAttribute('spellcheck', 'false')
-    this._$input.setAttribute('type', 'text')
-    this._$input.addEventListener('input',
-      this.inputValueDidChange.bind(this), false)
+    this._$input = View.createElement('input', {
+      className: 'setting-text__input',
+      type: 'text',
+      spellcheck: 'false',
+      onInput: this.inputValueDidChange.bind(this)
+    })
 
     let $field = super.renderField()
     $field.appendChild(this._$input)

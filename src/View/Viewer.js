@@ -1,5 +1,6 @@
 
 import BrickView from './Brick'
+import View from '../View'
 
 /**
  * Viewer Brick View.
@@ -22,13 +23,20 @@ export default class ViewerView extends BrickView {
    * @return {BrickView} Fluent interface
    */
   renderHeader () {
+    let $actions = View.createElement('ul', {
+      className: 'brick__actions'
+    }, [
+      View.createElement('li', {
+        className: 'brick__action-item'
+      }, [
+        View.createElement('span', {
+          className: 'brick__action brick__action--active'
+        }, 'View')
+      ])
+    ])
+
     let $header = super.renderHeader()
-
-    let $action = document.createElement('span')
-    $action.classList.add('brick__action')
-    $action.innerText = 'View'
-    $header.insertBefore($action, $header.firstChild)
-
+    $header.insertBefore($actions, $header.firstChild)
     return $header
   }
 }

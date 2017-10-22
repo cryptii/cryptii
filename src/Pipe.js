@@ -239,7 +239,7 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Delegate method triggered by child Bricks if their settings changed.
+   * Delegate method triggered by child Bricks when their settings changed.
    * @protected
    * @param {Encoder} brick Sender
    */
@@ -263,6 +263,23 @@ export default class Pipe extends Viewable {
     } else {
       this.triggerViewerView(brick)
     }
+  }
+
+  /**
+   * Delegate method triggered by child Bricks when they got reversed.
+   * @protected
+   * @param {Encoder} brick Sender
+   * @param {boolean} reverse Wether to reverse translation.
+   */
+  encoderDidReverse (brick, reverse) {
+    let sourceBucket = this.getBucketIndexForBrick(brick)
+    let resultBucket = sourceBucket + 1
+
+    // swap source and result content
+    let sourceContent = this.getContent(sourceBucket)
+    let resultContent = this.getContent(resultBucket)
+    this.setContent(sourceContent, resultBucket, brick)
+    this.setContent(resultContent, sourceBucket, brick)
   }
 
   /**

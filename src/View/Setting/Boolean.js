@@ -1,6 +1,7 @@
 
 import SettingView from '../Setting'
 import StringUtil from '../../StringUtil'
+import View from '../../View'
 
 /**
  * Boolean Setting View.
@@ -42,27 +43,25 @@ export default class BooleanSettingView extends SettingView {
   renderField () {
     let id = StringUtil.uniqueId()
 
-    this._$input = document.createElement('input')
-    this._$input.classList.add('setting-boolean__input')
-    this._$input.setAttribute('type', 'checkbox')
-    this._$input.setAttribute('id', id)
-    this._$input.addEventListener('change',
-      this.inputValueDidChange.bind(this), false)
-    this._$input.checked = this.getModel().getValue()
+    this._$input = View.createElement('input', {
+      className: 'setting-boolean__input',
+      type: 'checkbox',
+      id: id,
+      onChange: this.inputValueDidChange.bind(this),
+      checked: this.getModel().getValue()
+    })
 
-    let $trueChoice = document.createElement('span')
-    $trueChoice.classList.add('setting-boolean__choice')
-    $trueChoice.innerText = this.getModel().getTrueLabel()
-
-    let $falseChoice = document.createElement('span')
-    $falseChoice.classList.add('setting-boolean__choice')
-    $falseChoice.innerText = this.getModel().getFalseLabel()
-
-    let $toggle = document.createElement('label')
-    $toggle.classList.add('setting-boolean__toggle')
-    $toggle.setAttribute('for', id)
-    $toggle.appendChild($trueChoice)
-    $toggle.appendChild($falseChoice)
+    let $toggle = View.createElement('label', {
+      className: 'setting-boolean__toggle',
+      for: id
+    }, [
+      View.createElement('span', {
+        className: 'setting-boolean__choice'
+      }, this.getModel().getTrueLabel()),
+      View.createElement('span', {
+        className: 'setting-boolean__choice'
+      }, this.getModel().getFalseLabel())
+    ])
 
     let $field = super.renderField()
     $field.appendChild(this._$input)

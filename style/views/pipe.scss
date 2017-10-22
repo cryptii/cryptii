@@ -3,21 +3,24 @@ $pipe-size: 96px !default;
 $pipe-sticky-headers: false !default;
 
 $header-height: 96px !default;
+$footer-height: 179px !default;
 
 .pipe {
   $block: &;
   display: flex;
   flex-direction: column;
-  padding: 24px 0 40px;
+  padding: 24px 0 48px;
+  background: $c-pipe-background;
 
   @include breakpoint(m, l) {
-    min-height: calc(100vh - #{$header-height});
+    min-height: calc(100vh - #{$header-height} - #{$footer-height});
   }
 
   &__scrollable {
     position: relative;
 
     @include breakpoint(m, l) {
+      margin-bottom: 96px;
       flex-grow: 1;
       order: 1;
 

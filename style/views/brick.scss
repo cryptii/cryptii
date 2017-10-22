@@ -56,9 +56,22 @@
     }
   }
 
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin: 0 -6px;
+  }
+
   &__action {
     display: block;
+    padding: 0 6px;
     @extend %t-brick-action;
+    color: $c-text-light;
+
+    &--active {
+      color: inherit;
+    }
   }
 
   &__title {
