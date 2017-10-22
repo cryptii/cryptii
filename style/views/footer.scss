@@ -1,6 +1,7 @@
 
 .footer {
-  padding: 48px 0 40px;
+  padding: 40px 0;
+  border-top: 1px solid $c-line;
   color: $c-footer-text;
 
   @include breakpoint(xs, s) {

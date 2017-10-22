@@ -53,24 +53,27 @@ export default class PipeView extends View {
       onMouseLeave: this.scrollHandleDidStop.bind(this)
     })
 
-    this._$scrollable = View.createElement('div', {
-      className: 'pipe__scrollable'
-    }, [
-      this._$content,
-      this._$scrollHandleLeft,
-      this._$scrollHandleRight
-    ])
-
     // bind to existing pipe element if any
     let $root = document.querySelector('.pipe')
-
     if ($root === null) {
+      $root = View.createElement('div')
       $root.classList.add('pipe')
     }
 
+    // bind to existing scrollable if any
+    this._$scrollable = $root.querySelector('.pipe__scrollable')
+    if (this._$scrollable === null) {
+      this._$scrollable = View.createElement('div', {
+        className: 'pipe__scrollable'
+      })
+    }
+
+    this._$scrollable.appendChild(this._$content)
+    this._$scrollable.appendChild(this._$scrollHandleLeft)
+    this._$scrollable.appendChild(this._$scrollHandleRight)
+
     $root.appendChild(this._$scrollable)
     $root.addEventListener('wheel', this.mouseDidWheel.bind(this))
-
     return $root
   }
 

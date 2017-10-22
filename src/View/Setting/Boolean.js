@@ -53,7 +53,7 @@ export default class BooleanSettingView extends SettingView {
 
     let $toggle = View.createElement('label', {
       className: 'setting-boolean__toggle',
-      for: id
+      htmlFor: id
     }, [
       View.createElement('span', {
         className: 'setting-boolean__choice'

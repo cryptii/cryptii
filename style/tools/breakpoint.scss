@@ -8,7 +8,7 @@ $breakpoint-names: map-keys($breakpoints);
   $start: index($breakpoint-names, $from);
   $end: length($breakpoint-names);
 
-  @if $from and not $to {
+  @if not $to {
     $min: map-get(map-get($breakpoints, $from), min);
     $max: map-get(map-get($breakpoints, $from), max);
   } @else {

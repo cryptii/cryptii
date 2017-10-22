@@ -4,9 +4,10 @@
 @import 'variables/breakpoints';
 @import 'variables/colors';
 
-// global mixins and functions
-@import 'mixins/breakpoint';
-@import 'mixins/browser';
+// tools
+@import 'tools/breakpoint';
+@import 'tools/each-breakpoint';
+@import 'tools/browser';
 
 // symbols
 @import 'symbols/shapes';

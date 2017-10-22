@@ -3,6 +3,7 @@ $header-height: 96px !default;
 
 .header {
   position: relative;
+  z-index: 10;
   @extend .container;
 
   @include breakpoint(xs) {

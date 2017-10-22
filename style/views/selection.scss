@@ -60,7 +60,9 @@ $selection-pipe-size: 24px;
   }
 
   &__category {
-    padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
     border-top: 1px solid $c-line;
 
     &:first-child {
@@ -69,10 +71,9 @@ $selection-pipe-size: 24px;
   }
 
   &__category-title {
-    display: block;
-    padding: 8px 16px 4px;
+    display: table;
+    padding: 10px 16px 8px;
     @extend %t-setting-label;
-    line-height: 8px;
     color: $c-setting-label;
   }
 }

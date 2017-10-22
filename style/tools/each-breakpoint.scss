@@ -1,0 +1,42 @@
+
+@mixin each-breakpoint($key: null) {
+  @each $_name, $_breakpoint in $breakpoints {
+    // cache global vars to restore them later
+    @if variable-exists(name) {
+      $_old-name: $name;
+    }
+    @if variable-exists(breakpoint) {
+      $_old-breakpoint: $breakpoint;
+    }
+    @if variable-exists(value) {
+      $_old-value: $value;
+    }
+
+    // set name & breakpoint vars
+    $name: $_name !global;
+    $breakpoint: $_breakpoint !global;
+
+    // set value var if requested
+    @if $key != null {
+      $value: map-get($_breakpoint, $key) !global;
+    } @else {
+      $value: null !global;
+    }
+
+    // run content inside breakpoint
+    @include breakpoint($name) {
+      @content;
+    }
+
+    // restore global vars
+    @if variable-exists(_old-name) {
+      $name: $_old-name !global;
+    }
+    @if variable-exists(_old-breakpoint) {
+      $breakpoint: $_old-breakpoint !global;
+    }
+    @if variable-exists(_old-value) {
+      $value: $_old-value !global;
+    }
+  }
+}
