@@ -1,6 +1,6 @@
 
 $pipe-size: 96px !default;
-$pipe-sticky-headers: true !default;
+$pipe-sticky-headers: false !default;
 $pipe-vertical-padding-xs: 96px !default;
 $pipe-vertical-padding-m: 64px !default;
 
@@ -21,8 +21,6 @@ $header-height: 96px !default;
     background: $c-pipe-background;
 
     @include breakpoint(m, l) {
-      display: flex;
-      flex-direction: column;
       flex-grow: 1;
       order: 1;
 
@@ -59,7 +57,6 @@ $header-height: 96px !default;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-grow: 1;
     padding: $pipe-vertical-padding-xs 0;
 
     @include breakpoint(m, l) {
@@ -67,7 +64,6 @@ $header-height: 96px !default;
       align-items: flex-start;
       float: left;
       padding: $pipe-vertical-padding-m 48px;
-      height: 100%;
       min-width: 100%;
 
       @include each-breakpoint(gutter) {
