@@ -46,13 +46,15 @@ export default class EnumSettingView extends SettingView {
     let $options = elementLabels.map((label, index) =>
       View.createElement('option', {
         value: index,
-        title: elementDescriptions[index]
+        title: elementDescriptions[index] || ''
       }, label))
 
     // create select element
     this._$select = View.createElement('select', {
       className: 'setting-enum__select',
-      onChange: this.selectValueDidChange.bind(this)
+      onChange: this.selectValueDidChange.bind(this),
+      onFocus: evt => this.focus(),
+      onBlur: evt => this.blur()
     }, $options)
 
     // append to field

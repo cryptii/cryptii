@@ -261,17 +261,28 @@ export default class MorseCodeEncoder extends Encoder {
   validateCodeMarkSettingValue (rawValue, setting) {
     let mark = setting.filterValue(rawValue)
 
-    // because morse code letters are separated by spaces, space characters
-    // are not allowed in morse code marks
+    // because morse code letters are separated by whitespaces they
+    // are not allowed inside morse code marks
     if (mark.match(/\s/) !== null) {
-      return false
+      return {
+        key: 'morseCodeMarkWhitespaceNotAllowed',
+        message: `Whitespaces are not allowed inside morse code marks`
+      }
     }
 
     let equalSettingName =
       ['shortMark', 'longerMark', 'spaceMark']
         .filter(name => name !== setting.getName())
         .find(name => mark.isEqualTo(this.getSettingValue(name)))
-    return equalSettingName === undefined
+
+    if (equalSettingName !== undefined) {
+      return {
+        key: 'morseCodeMarkNotUnique',
+        message: `Morse code marks need to be different from each other`
+      }
+    }
+
+    return true
   }
 
   /**
@@ -288,7 +299,15 @@ export default class MorseCodeEncoder extends Encoder {
       ['signalOnMark', 'signalOffMark']
         .filter(name => name !== setting.getName())
         .find(name => mark.indexOf(this.getSettingValue(name)) === 0)
-    return equalSettingName === undefined
+
+    if (equalSettingName !== undefined) {
+      return {
+        key: 'morseCodeMarkNotUnique',
+        message: `Timing marks need to be different from each other`
+      }
+    }
+
+    return true
   }
 
   /**

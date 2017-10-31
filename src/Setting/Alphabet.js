@@ -22,12 +22,12 @@ export default class AlphabetSetting extends TextSetting {
   /**
    * Validates given raw value.
    * @param {mixed} rawValue Value to be validated.
-   * @return {boolean} True, if valid.
+   * @return {boolean|object} True if valid, message object or false if invalid.
    */
   validateValue (rawValue) {
-    let valid = super.validateValue(rawValue)
-    if (!valid) {
-      return false
+    let result = super.validateValue(rawValue)
+    if (result !== true) {
+      return result
     }
 
     // filter value
@@ -36,6 +36,13 @@ export default class AlphabetSetting extends TextSetting {
     // check if alphabet only contains unique characters
     // while respecting case sensitivity
     let alphabet = this.isCaseSensitive() ? value : value.toLowerCase()
-    return ArrayUtil.isUnique(alphabet.getCodePoints())
+    if (!ArrayUtil.isUnique(alphabet.getCodePoints())) {
+      return {
+        key: 'alphabetCharactersNotUnique',
+        message: `The value contains duplicate characters`
+      }
+    }
+
+    return true
   }
 }

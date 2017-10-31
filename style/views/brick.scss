@@ -3,7 +3,6 @@
   $block: &;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   @extend %s-sheet;
 
   @media screen and (max-width: 448px) {
@@ -59,7 +58,6 @@
   &__actions {
     display: flex;
     flex-direction: row;
-    list-style-type: none;
     margin: 0 -6px;
   }
 
@@ -106,7 +104,6 @@
 
   &__inner {
     position: relative;
-    overflow: hidden;
   }
 
   &__page {

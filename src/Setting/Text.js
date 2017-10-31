@@ -1,4 +1,5 @@
 
+import ArrayUtil from '../ArrayUtil'
 import Chain from '../Chain'
 import Setting from '../Setting'
 import TextEncoder from '../TextEncoder'
@@ -136,36 +137,56 @@ export default class TextSetting extends Setting {
   /**
    * Validates given raw value.
    * @param {mixed} rawValue Value to be validated.
-   * @return {boolean} True, if valid.
+   * @return {boolean|object} True if valid, message object or false if invalid.
    */
   validateValue (rawValue) {
     if (typeof rawValue.toString !== 'function') {
-      return false
+      return {
+        key: 'textInvalidString',
+        message: `The value can't be casted to a string`
+      }
     }
 
     let value = this.filterValue(rawValue)
 
     // validate min text length
     if (this._minLength !== null && value.getLength() < this._minLength) {
-      return false
+      return {
+        key: 'textLengthTooShort',
+        message:
+          `The value is less than ${this._minLength} ` +
+          `${this._minLength === 1 ? 'character' : 'characters'} long`
+      }
     }
 
     // validate max text length
     if (this._maxLength !== null && value.getLength() > this._maxLength) {
-      return false
-    }
-
-    // validate allowed chars
-    let valid = true
-    if (this._allowedChars !== null) {
-      let i = -1
-      while (valid && ++i < value.getLength()) {
-        valid = this._allowedChars.indexOf(value.getCodePointAt(i)) !== -1
+      return {
+        key: 'textLengthTooLong',
+        message:
+          `The value is more than ${this._maxLength} ` +
+          `${this._maxLength === 1 ? 'character' : 'characters'} long`
       }
     }
 
-    if (!valid) {
-      return false
+    // validate allowed chars
+    if (this._allowedChars !== null) {
+      let invalidCharacters = []
+      for (let i = 0; i < value.getLength(); i++) {
+        if (this._allowedChars.indexOf(value.getCodePointAt(i)) === -1) {
+          invalidCharacters.push(value.getCharAt(i))
+        }
+      }
+
+      if (invalidCharacters.length > 0) {
+        invalidCharacters = ArrayUtil.unique(invalidCharacters)
+        return {
+          key: 'textNotAllowedCharacter',
+          message:
+            `The value contains not allowed characters ` +
+            `'${invalidCharacters.join('')}'`
+        }
+      }
     }
 
     return super.validateValue(rawValue)

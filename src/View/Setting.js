@@ -6,6 +6,14 @@ import View from '../View'
  */
 export default class SettingView extends View {
   /**
+   * Constructor
+   */
+  constructor (factory) {
+    super(factory)
+    this._$message = null
+  }
+
+  /**
    * Renders view.
    * @protected
    * @return {HTMLElement}
@@ -42,6 +50,20 @@ export default class SettingView extends View {
   }
 
   /**
+   * Renders message.
+   * @protected
+   * @return {?HTMLElement}
+   */
+  renderMessage () {
+    if (this.getModel().getMessage() === null) {
+      return null
+    }
+    return View.createElement('div', {
+      className: 'setting__message'
+    }, this.getModel().getMessage())
+  }
+
+  /**
    * Triggered after rendering root element.
    */
   didRender () {
@@ -57,6 +79,10 @@ export default class SettingView extends View {
   update () {
     let className = 'setting'
 
+    if (this.hasFocus()) {
+      className += ' setting--focus'
+    }
+
     // add width modifier
     let width = this.getModel().getWidth()
     if (width < 12) {
@@ -69,9 +95,35 @@ export default class SettingView extends View {
       className += ' setting--invalid'
     }
 
+    // remove old message, if any
+    if (this._$message !== null) {
+      this._$message.remove()
+      this._$message = null
+    }
+
+    // create new message, if any
+    this._$message = this.renderMessage()
+    if (this._$message !== null) {
+      this.getElement().appendChild(this._$message)
+    }
+
     // apply updated element class name
     this.getElement().className = className
     return this
+  }
+
+  /**
+   * Triggered when view receives focus.
+   */
+  didFocus () {
+    this.getElement().classList.add('setting--focus')
+  }
+
+  /**
+   * Triggered when view loses focus.
+   */
+  didBlur () {
+    this.getElement().classList.remove('setting--focus')
   }
 
   /**

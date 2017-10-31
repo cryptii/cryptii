@@ -159,7 +159,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   /**
    * Validates slope (a) setting value.
    * @param {number} a
-   * @return {boolean}
+   * @return {boolean|object}
    */
   validateSlopeValue (a) {
     let alphabetSetting = this.getSetting('alphabet')
@@ -167,8 +167,18 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       // can't validate slope without valid alphabet setting
       return false
     }
-    // the value a must be chosen such that a and m are coprime.
+
+    // the value a must be chosen such that a and m are coprime
     let m = alphabetSetting.getValue().getLength()
-    return MathUtil.isCoprime(a, m)
+    if (!MathUtil.isCoprime(a, m)) {
+      return {
+        key: 'affineCipherFunctionInvalid',
+        message:
+          `The value must be chosen such that it is coprime to the size ` +
+          `of the alphabet (${m})`
+      }
+    }
+
+    return true
   }
 }

@@ -23,8 +23,11 @@ export default class Encoder extends Brick {
    * @return {Promise} Encoded content
    */
   encode (content) {
-    if (!this.areSettingsValid()) {
-      throw new Error(`Can't encode. At least one setting is invalid.`)
+    let invalidSettings = this.getInvalidSettings()
+    if (invalidSettings.length > 0) {
+      throw new Error(
+        `Can't encode due to invalid settings: ` +
+        invalidSettings.map(setting => setting.getName()).join(', '))
     }
     content = Chain.wrap(content)
     if (!this._reverse) {
@@ -77,8 +80,11 @@ export default class Encoder extends Brick {
    * @return {Promise} Decoded content
    */
   decode (content) {
-    if (!this.areSettingsValid()) {
-      throw new Error(`Can't decode. At least one setting is invalid.`)
+    let invalidSettings = this.getInvalidSettings()
+    if (invalidSettings.length > 0) {
+      throw new Error(
+        `Can't encode due to invalid settings: ` +
+        invalidSettings.map(setting => setting.getName()).join(', '))
     }
     content = Chain.wrap(content)
     if (!this._reverse) {

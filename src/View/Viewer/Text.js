@@ -87,7 +87,9 @@ export default class TextViewerView extends ViewerView {
       className: 'viewer-text__textarea',
       spellcheck: 'false',
       value: this._text,
-      onInput: this.textareaValueDidChange.bind(this)
+      onInput: this.textareaValueDidChange.bind(this),
+      onFocus: evt => this.focus(),
+      onBlur: evt => this.blur()
     })
 
     if (this.isDisabled()) {

@@ -69,11 +69,19 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Returns true, if all settings are valid.
+   * Returns an array of invalid Setting objects.
+   * @return {Setting[]}
+   */
+  getInvalidSettings () {
+    return this._settings.filter(setting => !setting.isValid())
+  }
+
+  /**
+   * Returns true if this Brick's Settings are valid.
    * @return {boolean}
    */
   areSettingsValid () {
-    return this._settings.find(setting => !setting.isValid()) === undefined
+    return this.getInvalidSettings().length === 0
   }
 
   /**

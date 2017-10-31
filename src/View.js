@@ -4,7 +4,9 @@ const attachableEvents = {
   onInput: 'input',
   onChange: 'change',
   onMouseEnter: 'mouseenter',
-  onMouseLeave: 'mouseleave'
+  onMouseLeave: 'mouseleave',
+  onBlur: 'blur',
+  onFocus: 'focus'
 }
 
 /**
@@ -58,6 +60,7 @@ export default class View {
     this._superview = null
     this._subviews = []
     this._model = null
+    this._focus = false
   }
 
   /**
@@ -210,6 +213,82 @@ export default class View {
   setSuperview (view) {
     this._superview = view
     return this
+  }
+
+  /**
+   * Focus this view.
+   * @return {View} Fluent interface
+   */
+  focus () {
+    return this.setFocus(true)
+  }
+
+  /**
+   * Release this view's focus.
+   * @return {View} Fluent interface
+   */
+  blur () {
+    return this.setFocus(false)
+  }
+
+  /**
+   * Sets focus.
+   * @param {boolean} focus
+   * @return {View} Fluent interface
+   */
+  setFocus (focus) {
+    if (focus !== this._focus) {
+      this._focus = focus
+      if (focus) {
+        // inform superview
+        if (this._superview !== null) {
+          this._superview.subviewDidFocus(this)
+        }
+        this.didFocus()
+      } else {
+        // blur subviews
+        this._subviews.forEach(subview => subview.blur())
+        this.didBlur()
+      }
+    }
+    return this
+  }
+
+  /**
+   * Returns true, if view or one of the subviews has focus.
+   * @return {boolean}
+   */
+  hasFocus () {
+    return this._focus
+  }
+
+  /**
+   * Triggered when a subview receives focus.
+   * @param {View} subview
+   */
+  subviewDidFocus (subview) {
+    if (this.hasFocus()) {
+      // blur other subviews
+      this._subviews
+        .filter(view => view !== subview)
+        .forEach(view => view.blur())
+    } else {
+      this.focus()
+    }
+  }
+
+  /**
+   * Triggered when view receives focus.
+   */
+  didFocus () {
+
+  }
+
+  /**
+   * Triggered when view loses focus.
+   */
+  didBlur () {
+
   }
 
   /**

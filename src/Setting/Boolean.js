@@ -45,13 +45,17 @@ export default class BooleanSetting extends Setting {
   /**
    * Validates given raw value.
    * @param {mixed} rawValue Value to be validated.
-   * @return {boolean} True, if valid.
+   * @return {boolean|object} True if valid, message object or false if invalid.
    */
   validateValue (rawValue) {
-    return super.validateValue(rawValue) && (
-      knownTrueValues.indexOf(rawValue) !== -1 ||
-      knownFalseValues.indexOf(rawValue) !== -1
-    )
+    if (knownTrueValues.indexOf(rawValue) === -1 &&
+        knownFalseValues.indexOf(rawValue) === -1) {
+      return {
+        key: 'booleanInvalid',
+        message: `The value is not a boolean`
+      }
+    }
+    return super.validateValue(rawValue)
   }
 
   /**

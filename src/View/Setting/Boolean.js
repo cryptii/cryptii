@@ -48,7 +48,9 @@ export default class BooleanSettingView extends SettingView {
       type: 'checkbox',
       id: id,
       onChange: this.inputValueDidChange.bind(this),
-      checked: this.getModel().getValue()
+      checked: this.getModel().getValue(),
+      onFocus: evt => this.focus(),
+      onBlur: evt => this.blur()
     })
 
     let $toggle = View.createElement('label', {

@@ -59,7 +59,9 @@ export default class NumberSettingView extends SettingView {
       className: 'setting-number__input',
       id: this._inputId,
       type: 'number',
-      onInput: this.inputValueDidChange.bind(this)
+      onInput: this.inputValueDidChange.bind(this),
+      onFocus: evt => this.focus(),
+      onBlur: evt => this.blur()
     })
 
     let $stepDown = View.createElement('a', {

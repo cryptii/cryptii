@@ -5,7 +5,6 @@
   flex-wrap: wrap;
   margin: 0 -16px;
   @extend %t-text-link;
-  list-style-type: none;
 
   @include breakpoint(xs, s) {
     justify-content: center;

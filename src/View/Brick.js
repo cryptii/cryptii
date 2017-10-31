@@ -164,6 +164,20 @@ export default class BrickView extends View {
   }
 
   /**
+   * Triggered when view receives focus.
+   */
+  didFocus () {
+    this.getElement().classList.add('brick--focus')
+  }
+
+  /**
+   * Triggered when view loses focus.
+   */
+  didBlur () {
+    this.getElement().classList.remove('brick--focus')
+  }
+
+  /**
    * Triggered when the remove btn has been clicked.
    * @param {Event} evt
    */

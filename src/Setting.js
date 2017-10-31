@@ -19,7 +19,7 @@ export default class Setting extends Viewable {
    * priority (descending).
    * @param {number} [spec.width=12] Setting width in columns (1-12).
    * @param {mixed} [spec.value] Default Setting value.
-   * @param {function(rawValue: mixed, setting: Setting): boolean}
+   * @param {function(rawValue: mixed, setting: Setting): boolean|object}
    * [spec.validateValue] Function to execute whenever a value
    * gets validated, returns true if valid.
    * @param {function(rawValue: mixed, setting: Setting): mixed}
@@ -36,6 +36,9 @@ export default class Setting extends Viewable {
     this._value = spec.value || null
 
     this._valid = true
+    this._message = null
+    this._messageKey = null
+
     this._delegate = null
 
     this._validateValueCallback = spec.validateValue || null
@@ -165,6 +168,22 @@ export default class Setting extends Viewable {
   }
 
   /**
+   * Returns a message that explains why the current value is invalid.
+   * @return {null|string}
+   */
+  getMessage () {
+    return this._message
+  }
+
+  /**
+   * Returns a message key identifying the reason the current value is invalid.
+   * @return {null|string}
+   */
+  getMessageKey () {
+    return this._messageKey
+  }
+
+  /**
    * Sets value, validates it, filters it and notifies delegate.
    * @param {mixed} rawValue Setting value.
    * @param {?Object} [sender] Sender object of this request.
@@ -173,14 +192,22 @@ export default class Setting extends Viewable {
    */
   setValue (rawValue, sender = null) {
     // validate value
-    // TODO handle some kind of validation message to give better feedback
-    let valid = this.validateValue(rawValue)
-    if (this._valid !== valid) {
-      this._valid = valid
-      this.hasView() && this.getView().update()
+    let validationResult = this.validateValue(rawValue)
+    this._valid = validationResult === true
+
+    // update message
+    if (typeof validationResult === 'object') {
+      this._message = validationResult.message
+      this._messageKey = validationResult.key
+    } else {
+      this._message = null
+      this._messageKey = null
     }
 
-    if (!valid) {
+    // update view
+    this.hasView() && this.getView().update()
+
+    if (!this._valid) {
       this._value = rawValue
       return this
     }
@@ -224,7 +251,7 @@ export default class Setting extends Viewable {
    * using {@link Setting.setValue}. Override is required to call super.
    * @override
    * @param {mixed} rawValue Value to be validated.
-   * @return {boolean} True, if valid.
+   * @return {boolean|object} True if valid, message object or false if invalid.
    */
   validateValue (rawValue) {
     if (this._validateValueCallback !== null) {

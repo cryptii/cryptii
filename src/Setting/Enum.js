@@ -124,11 +124,16 @@ export default class EnumSetting extends Setting {
   /**
    * Validates given raw value.
    * @param {mixed} rawValue Value to be validated.
-   * @return {boolean} True, if valid.
+   * @return {boolean|object} True if valid, message object or false if invalid.
    */
   validateValue (rawValue) {
-    return super.validateValue(rawValue) &&
-      this._elements.indexOf(rawValue) !== -1
+    if (this._elements.indexOf(rawValue) === -1) {
+      return {
+        key: 'enumNotInHaystack',
+        message: `The value was not found in the haystack`
+      }
+    }
+    return super.validateValue(rawValue)
   }
 
   /**

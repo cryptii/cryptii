@@ -59,8 +59,10 @@ export default class TextSettingView extends SettingView {
       className: 'setting-text__input',
       id: this._inputId,
       type: 'text',
-      spellcheck: 'false',
-      onInput: this.inputValueDidChange.bind(this)
+      spellcheck: false,
+      onInput: this.inputValueDidChange.bind(this),
+      onFocus: evt => this.focus(),
+      onBlur: evt => this.blur()
     })
 
     let $field = super.renderField()

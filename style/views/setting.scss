@@ -23,6 +23,46 @@
     min-height: 24px;
   }
 
+  &__message {
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: calc(100% + 8px);
+    padding: 9px 12px 8px;
+    border-radius: $default-border-radius;
+    transform: translate(-50%, 100%);
+    z-index: 10;
+    background: $c-red;
+    border-color: $c-red;
+    @extend %t-text;
+    color: $c-white;
+    opacity: 0;
+    visibility: hidden;
+    transition-property: opacity, visibility;
+    transition-duration: 0.2s;
+
+    #{$block}--focus & {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      border-width: 7px;
+      border-style: solid;
+      border-color: transparent;
+      border-top-width: 0;
+      border-bottom-color: inherit;
+    }
+  }
+
+  // width modifier
   @for $cols from 1 through 11 {
     &--width-#{$cols} {
       width: 100% * ($cols / 12);

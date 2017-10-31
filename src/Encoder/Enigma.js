@@ -418,12 +418,20 @@ export default class EnigmaEncoder extends Encoder {
 
     // check format (ab cd ef)
     if (plugboard.match(/^([a-z]{2}\s)*([a-z]{2})$/) === null) {
-      return false
+      return {
+        key: 'enigmaPlugboardInvalidFormat',
+        message:
+          `Invalid plugboard format: pairs of letters to be swapped ` +
+          `expected (e.g. 'ab cd ef')`
+      }
     }
 
     // check if character pairs are unique
     if (!ArrayUtil.isUnique(plugboard.replace(/\s/g, '').split(''))) {
-      return false
+      return {
+        key: 'enigmaPlugboardPairsNotUnique',
+        message: `Pairs of letters to be swapped need to be unique`
+      }
     }
 
     return true

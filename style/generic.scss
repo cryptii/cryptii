@@ -80,6 +80,11 @@ ol {
   padding: 0;
 }
 
+ul,
+ol {
+  list-style-type: none;
+}
+
 a {
   text-decoration: inherit;
   color: inherit;

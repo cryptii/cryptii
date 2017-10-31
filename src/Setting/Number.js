@@ -154,24 +154,33 @@ export default class NumberSetting extends Setting {
   /**
    * Validates given raw value.
    * @param {mixed} rawValue Value to be validated.
-   * @return {boolean} True, if valid.
+   * @return {boolean|object} True if valid, message object or false if invalid.
    */
   validateValue (rawValue) {
     let value = this.filterValue(rawValue)
 
     // is numeric
     if (isNaN(value) || !isFinite(value)) {
-      return false
+      return {
+        key: 'numberNotNumeric',
+        message: `The value is not numeric`
+      }
     }
 
     // validate min value
-    if (this._minValue !== null && value < this._minValue) {
-      return false
+    if (this._min !== null && value < this._min) {
+      return {
+        key: 'numberTooSmall',
+        message: `The value is less than ${this._min}`
+      }
     }
 
     // validate max value
-    if (this._maxValue !== null && value >= this._maxValue) {
-      return false
+    if (this._max !== null && value >= this._max) {
+      return {
+        key: 'numberTooLarge',
+        message: `The value is greater than ${this._max}`
+      }
     }
 
     return super.validateValue(value)
