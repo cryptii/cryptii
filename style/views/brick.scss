@@ -87,13 +87,13 @@
       transform: translate(0, 3px);
       margin-left: 2px;
       line-height: 0;
-      background-image: inline-svg('arrow-drop-down.svg', (path: (fill: $c-primary)));
+      background-image: inline-svg('icons/arrow-drop-down.svg', (path: (fill: $c-primary)));
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: center;
 
       #{$block}.encoder & {
-        background-image: inline-svg('arrow-drop-down.svg', (path: (fill: $c-encoder)));
+        background-image: inline-svg('icons/arrow-drop-down.svg', (path: (fill: $c-encoder)));
       }
 
       #{$block}--selection & {
@@ -148,10 +148,49 @@
   }
 
   &__content {
-
+    
   }
 
-  &__footer {
-    height: 32px;
+  &__status {
+    display: flex;
+    flex-direction: row;
+    padding: 13px 16px;
+    min-height: 48px;
+  }
+
+  &__status-icon {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+    background-image: inline-svg('icons/done.svg', (path: (fill: $c-text-detail)));
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+
+    #{$block}__status--error & {
+      background-image: inline-svg('icons/error.svg', (path: (fill: $c-text-error)));
+    }
+
+    #{$block}__status--forward &,
+    #{$block}__status--backward & {
+      background-image: inline-svg('icons/arrow-left.svg', (path: (fill: $c-text-detail)));
+    }
+
+    #{$block}__status--backward & {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__status-message {
+    display: block;
+    padding-left: 8px;
+    flex-basis: 0;
+    flex-grow: 1;
+    @extend %t-text;
+    color: $c-text-detail;
+
+    #{$block}__status--error & {
+      color: $c-text-error;
+    }
   }
 }

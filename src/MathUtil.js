@@ -68,4 +68,16 @@ export default class MathUtil {
       return [y, x - y * MathUtil.div(a, b), d]
     }
   }
+
+  /**
+   * Returns current timestamp.
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+   * @return {float}
+   */
+  static time () {
+    if (typeof window !== 'undefined') {
+      return window.performance.now()
+    }
+    return parseFloat(new Date().getTime())
+  }
 }

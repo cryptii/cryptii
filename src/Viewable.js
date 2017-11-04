@@ -36,6 +36,15 @@ export default class Viewable {
   }
 
   /**
+   * Updates view if any.
+   * @return {Viewable} Fluent interface
+   */
+  updateView () {
+    this.hasView() && this.getView().setNeedsUpdate()
+    return this
+  }
+
+  /**
    * Triggered when view has been created.
    * Override this method to add initial subviews.
    * @protected

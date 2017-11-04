@@ -204,8 +204,7 @@ export default class Setting extends Viewable {
       this._messageKey = null
     }
 
-    // update view
-    this.hasView() && this.getView().update()
+    this.updateView()
 
     if (!this._valid) {
       this._value = rawValue

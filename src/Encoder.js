@@ -2,6 +2,8 @@
 import Brick from './Brick'
 import Chain from './Chain'
 import EncoderView from './View/Encoder'
+import InvalidInputError from './Error/InvalidInput'
+import MathUtil from './MathUtil'
 
 /**
  * Abstract Brick for encoding and decoding content.
@@ -15,6 +17,10 @@ export default class Encoder extends Brick {
     super()
     this._viewPrototype = EncoderView
     this._reverse = false
+
+    // last translation meta or error
+    this._lastError = null
+    this._lastTranslationMeta = null
   }
 
   /**
@@ -23,22 +29,113 @@ export default class Encoder extends Brick {
    * @return {Promise} Encoded content
    */
   encode (content) {
-    let invalidSettings = this.getInvalidSettings()
-    if (invalidSettings.length > 0) {
-      throw new Error(
-        `Can't encode due to invalid settings: ` +
-        invalidSettings.map(setting => setting.getName()).join(', '))
+    return this.translate(content, true)
+  }
+
+  /**
+   * Prepares and performs decode on given content.
+   * @param {number[]|string|Uint8Array|Chain} content
+   * @return {Promise} Decoded content
+   */
+  decode (content) {
+    return this.translate(content, false)
+  }
+
+  /**
+   * Prepares and performs translation on given content.
+   * @param {number[]|string|Uint8Array|Chain} content
+   * @param {boolean} isEncode True for encode, false for decode.
+   * @return {Promise} Resulting content
+   */
+  translate (content, isEncode) {
+    // track translation start time
+    let time = MathUtil.time()
+
+    // perform translation async
+    return new Promise(resolve => {
+      // wrap content in Chain
+      content = Chain.wrap(content)
+
+      // check for invalid settings
+      let invalidSettings = this.getInvalidSettings()
+      if (invalidSettings.length > 0) {
+        throw new InvalidInputError(
+          `Can't ${isEncode ? 'encode' : 'decode'} with invalid settings: ` +
+          invalidSettings.map(setting => setting.getLabel()).join(', '))
+      }
+
+      // perform actual translation
+      if (isEncode !== this._reverse) {
+        // perform encode
+        resolve(Promise.resolve(this.willEncode(content))
+          .then(this.performEncode.bind(this))
+          .then(this.didEncode.bind(this)))
+      } else {
+        // perform decode
+        resolve(Promise.resolve(this.willDecode(content))
+          .then(this.performDecode.bind(this))
+          .then(this.didDecode.bind(this)))
+      }
+    })
+
+      // track translation meta
+      .then(result => {
+        this._lastError = null
+        this._lastTranslationMeta = {
+          isEncode,
+          duration: MathUtil.time() - time,
+          byteCount: !content.needsByteEncoding() ? content.getSize() : null,
+          charCount: !content.needsTextEncoding() ? content.getLength() : null
+        }
+        this.updateView()
+        return result
+      })
+
+      // track thrown error during translation
+      .catch(error => {
+        this._lastError = error
+        this._lastTranslationMeta = null
+        this.updateView()
+        throw error
+      })
+  }
+
+  /**
+   * Wether to reverse translation.
+   * @return {boolean}
+   */
+  isReverse () {
+    return this._reverse
+  }
+
+  /**
+   * Sets wether to reverse translation.
+   * @param {boolean} reverse
+   * @return {Encoder} Fluent interface
+   */
+  setReverse (reverse) {
+    if (this._reverse !== reverse) {
+      this._reverse = reverse
+      this.updateView()
+      this.hasPipe() && this.getPipe().encoderDidReverse(this, reverse)
     }
-    content = Chain.wrap(content)
-    if (!this._reverse) {
-      return Promise.resolve(this.willEncode(content))
-        .then(this.performEncode.bind(this))
-        .then(this.didEncode.bind(this))
-    } else {
-      return Promise.resolve(this.willDecode(content))
-        .then(this.performDecode.bind(this))
-        .then(this.didDecode.bind(this))
-    }
+    return this
+  }
+
+  /**
+   * Returns error occurred during last translation.
+   * @return {?Error}
+   */
+  getLastError () {
+    return this._lastError
+  }
+
+  /**
+   * Returns meta object of last translation.
+   * @return {?object}
+   */
+  getLastTranslationMeta () {
+    return this._lastTranslationMeta
   }
 
   /**
@@ -72,30 +169,6 @@ export default class Encoder extends Brick {
    */
   didEncode (content) {
     return this.didTranslate(content, true)
-  }
-
-  /**
-   * Prepares and performs decode on given content.
-   * @param {number[]|string|Uint8Array|Chain} content
-   * @return {Promise} Decoded content
-   */
-  decode (content) {
-    let invalidSettings = this.getInvalidSettings()
-    if (invalidSettings.length > 0) {
-      throw new Error(
-        `Can't encode due to invalid settings: ` +
-        invalidSettings.map(setting => setting.getName()).join(', '))
-    }
-    content = Chain.wrap(content)
-    if (!this._reverse) {
-      return Promise.resolve(this.willDecode(content))
-        .then(this.performDecode.bind(this))
-        .then(this.didDecode.bind(this))
-    } else {
-      return Promise.resolve(this.willEncode(content))
-        .then(this.performEncode.bind(this))
-        .then(this.didEncode.bind(this))
-    }
   }
 
   /**
@@ -162,27 +235,5 @@ export default class Encoder extends Brick {
    */
   didTranslate (content, isEncode) {
     return content
-  }
-
-  /**
-   * Wether to reverse translation.
-   * @return {boolean}
-   */
-  isReverse () {
-    return this._reverse
-  }
-
-  /**
-   * Sets wether to reverse translation.
-   * @param {boolean} reverse
-   * @return {Encoder} Fluent interface
-   */
-  setReverse (reverse) {
-    if (this._reverse !== reverse) {
-      this._reverse = reverse
-      this.hasView() && this.getView().update()
-      this.hasPipe() && this.getPipe().encoderDidReverse(this, reverse)
-    }
-    return this
   }
 }

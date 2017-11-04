@@ -46,7 +46,6 @@ export default class HashViewer extends Viewer {
 
   /**
    * Performs view of given content.
-   * @protected
    * @param {string} content
    * @param {function} done Called when performing view has finished.
    */
@@ -83,10 +82,7 @@ export default class HashViewer extends Viewer {
       })
 
       // catch errors
-      .catch(reason => {
-        // TODO handle error
-        done()
-      })
+      .catch(done)
   }
 
   /**

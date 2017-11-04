@@ -32,7 +32,6 @@ export default class TextViewer extends Viewer {
 
   /**
    * Performs view of given content.
-   * @protected
    * @param {string} content
    * @param {function} done Called when performing view has finished.
    */
@@ -48,7 +47,9 @@ export default class TextViewer extends Viewer {
    * @param {string} text
    */
   viewTextDidChange (view, text) {
-    let content = new Chain(text)
-    this.contentDidChange(content)
+    this.dare(() => {
+      let content = new Chain(text)
+      this.contentDidChange(content)
+    })
   }
 }

@@ -14,6 +14,9 @@ export default class BrickView extends View {
     super()
     this._$body = null
     this._$settings = null
+    this._$status = null
+    this._$message = null
+
     this._$selection = null
     this._selectionVisible = false
   }
@@ -80,7 +83,7 @@ export default class BrickView extends View {
     }, [
       this._$settings,
       this.renderContent(),
-      this.renderFooter()
+      this.renderStatus()
     ])
   }
 
@@ -107,14 +110,25 @@ export default class BrickView extends View {
   }
 
   /**
-   * Renders footer.
+   * Renders status.
    * @protected
    * @return {?HTMLElement}
    */
-  renderFooter () {
-    return View.createElement('footer', {
-      className: 'brick__footer'
+  renderStatus () {
+    this._$message = View.createElement('div', {
+      className: 'brick__status-message'
     })
+
+    this._$status = View.createElement('footer', {
+      className: 'brick__status'
+    }, [
+      View.createElement('div', {
+        className: 'brick__status-icon'
+      }),
+      this._$message
+    ])
+
+    return this._$status
   }
 
   /**
@@ -214,5 +228,17 @@ export default class BrickView extends View {
         this._$selection.classList.add('brick__page--hidden')
       }
     }
+  }
+
+  /**
+   * Updates Brick status and message.
+   * @param {string} status Status (e.g. success, error)
+   * @param {string} message Status message
+   * @return {BrickView} Fluent interface
+   */
+  updateStatus (status, message = null) {
+    this._$status.className = `brick__status brick__status--${status}`
+    this._$message.innerText = message || ''
+    return this
   }
 }

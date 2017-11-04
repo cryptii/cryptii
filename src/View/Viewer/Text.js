@@ -85,7 +85,7 @@ export default class TextViewerView extends ViewerView {
   renderContent () {
     this._$textarea = View.createElement('textarea', {
       className: 'viewer-text__textarea',
-      spellcheck: 'false',
+      spellcheck: false,
       value: this._text,
       onInput: this.textareaValueDidChange.bind(this),
       onFocus: evt => this.focus(),
@@ -142,5 +142,19 @@ export default class TextViewerView extends ViewerView {
     this._$textarea.style.height = ''
     this._$textarea.style.height = `${this._$textarea.scrollHeight}px`
     return this
+  }
+
+  /**
+   * Updates view on model change.
+   * @return {View} Fluent interface
+   */
+  update () {
+    // update status
+    let error = this.getModel().getError()
+    if (error !== null) {
+      return this.updateStatus('error', error.message)
+    } else {
+      return this.updateStatus('success')
+    }
   }
 }

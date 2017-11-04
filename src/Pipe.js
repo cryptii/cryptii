@@ -6,7 +6,7 @@ import ByteEncoder from './ByteEncoder'
 import Chain from './Chain'
 import Encoder from './Encoder'
 import PipeView from './View/Pipe'
-import TextEncodingError from './Error/TextEncoding'
+import InvalidInputError from './Error/InvalidInput'
 import Viewable from './Viewable'
 import Viewer from './Viewer'
 
@@ -410,8 +410,8 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Fluent interface
    */
   triggerViewerView (viewer) {
-    // check if viewer settings are valid and if viewer is not busy
-    if (!viewer.areSettingsValid() || this.getBrickMeta(viewer, 'busy')) {
+    // check if viewer is busy
+    if (this.getBrickMeta(viewer, 'busy')) {
       // skip view
       return this
     }
@@ -456,18 +456,6 @@ export default class Pipe extends Viewable {
     // mark brick as no longer busy
     this.setBrickMeta(viewer, 'busy', false)
 
-    if (error) {
-      if (error instanceof TextEncodingError) {
-        // text encoding errors may happen due to malformed user input
-        // TODO display text encoding error in UI
-        console.log(
-          'View interrupted due to a text encoding error: ' +
-          error.message)
-      } else {
-        throw error
-      }
-    }
-
     let settingsVersion = this.getBrickMeta(viewer, 'settingsVersion')
     let bucket = this.getBucketIndexForBrick(viewer)
 
@@ -477,6 +465,11 @@ export default class Pipe extends Viewable {
         settingsVersion !== usedSettingsVersion) {
       // repeat view
       this.triggerViewerView(viewer)
+    }
+
+    // throw unexpected errors
+    if (error && !(error instanceof InvalidInputError)) {
+      throw error
     }
   }
 
@@ -497,12 +490,6 @@ export default class Pipe extends Viewable {
 
     // update encoder direction
     this.setBrickMeta(encoder, 'direction', isEncode)
-
-    // check if encoder settings are valid
-    if (!encoder.areSettingsValid()) {
-      // skip translation
-      return this
-    }
 
     // mark encoder as busy
     this.setBrickMeta(encoder, 'busy', true)
@@ -553,18 +540,6 @@ export default class Pipe extends Viewable {
     // mark brick as no longer busy
     this.setBrickMeta(encoder, 'busy', false)
 
-    if (error) {
-      if (error instanceof TextEncodingError) {
-        // text encoding errors may happen due to malformed user input
-        // TODO display text encoding error in UI
-        console.log(
-          'Translation interrupted due to a text encoding error: ' +
-          error.message)
-      } else {
-        throw error
-      }
-    }
-
     let settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
     let lowerBucket = this.getBucketIndexForBrick(encoder)
     let sourceBucket = isEncode ? lowerBucket : lowerBucket + 1
@@ -581,6 +556,11 @@ export default class Pipe extends Viewable {
         settingsVersion !== usedSettingsVersion) {
       // repeat translation
       this.triggerEncoderTranslation(encoder, isEncode)
+    }
+
+    // throw unexpected errors
+    if (error && !(error instanceof InvalidInputError)) {
+      throw error
     }
   }
 

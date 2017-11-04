@@ -91,7 +91,7 @@ export default class NumberSetting extends Setting {
       value = this._min !== null ? Math.max(value, this._min) : value
 
       // validate value
-      valueFound = this.validateValue(value)
+      valueFound = this.validateValue(value) === true
     }
 
     return valueFound ? value : null

@@ -2,7 +2,7 @@
 import InvalidInputError from './InvalidInput'
 
 /**
- * Errors thrown due to malformed byte encoded text.
+ * Errors thrown due to malformed text encoded bytes.
  */
 export default class TextEncodingError extends InvalidInputError {
   /**
@@ -12,6 +12,6 @@ export default class TextEncodingError extends InvalidInputError {
    */
   constructor (message, index = null) {
     super(message)
-    this.byteIndex = index
+    this.index = index
   }
 }

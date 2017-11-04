@@ -61,6 +61,7 @@ export default class View {
     this._subviews = []
     this._model = null
     this._focus = false
+    this._needsUpdate = false
   }
 
   /**
@@ -83,6 +84,21 @@ export default class View {
    */
   render () {
     return View.createElement('div')
+  }
+
+  /**
+   * Updates this view in next frame.
+   * @return {View} Fluent interface
+   */
+  setNeedsUpdate () {
+    if (!this._needsUpdate) {
+      this._needsUpdate = true
+      window.requestAnimationFrame(() => {
+        this._needsUpdate = false
+        this.update()
+      })
+    }
+    return this
   }
 
   /**

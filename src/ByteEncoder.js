@@ -1,5 +1,6 @@
 
 import StringUtil from './StringUtil'
+import ByteEncodingError from './Error/ByteEncoding'
 
 const base64Alphabet =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -73,8 +74,9 @@ export default class ByteEncoder {
     // decode each byte
     let bytes = StringUtil.chunk(string, 2).map((byteString, index) => {
       let byte = parseInt(byteString, 16)
-      if (isNaN(byte)) {
-        throw new Error(`Invalid byte '${byteString}' at index ${index}`)
+      if (byteString.match(/[0-9a-f]{2}/i) === null || isNaN(byte)) {
+        throw new ByteEncodingError(
+          `Invalid hex encoded byte '${byteString}'`)
       }
       return byte
     })
@@ -107,8 +109,9 @@ export default class ByteEncoder {
     // decode each byte
     let bytes = StringUtil.chunk(string, 8).map((byteString, index) => {
       let byte = parseInt(byteString, 2)
-      if (isNaN(byte)) {
-        throw new Error(`Invalid byte '${byteString}' at index ${index}`)
+      if (byteString.match(/[0-1]{8}/) === null || isNaN(byte)) {
+        throw new ByteEncodingError(
+          `Invalid binary encoded byte '${byteString}'`)
       }
       return byte
     })
@@ -207,7 +210,8 @@ export default class ByteEncoder {
         if (octet !== -1) {
           octets.push(octet)
         } else if (options.foreignCharactersForbidden) {
-          throw new Error(`Invalid character '${character}' at index ${i}`)
+          throw new ByteEncodingError(
+            `Forbidden character '${character}' at index ${i}`)
         }
       }
     }

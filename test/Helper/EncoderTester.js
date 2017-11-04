@@ -48,14 +48,13 @@ export default class EncoderTester {
 
     // wrap expected result in Chain
     const expectedResult =
-      (test.expectedResult === null || test.expectedResult instanceof Chain)
+      test.expectedResult instanceof Chain
       ? test.expectedResult
       : Chain.wrap(test.expectedResult)
 
     // create content and result preview that will be logged
     const contentPreview = content.truncate(28)
-    const expectedResultPreview =
-      expectedResult ? expectedResult.truncate(28) : null
+    const expectedResultPreview = expectedResult.truncate(28)
 
     it(
       `should ${isEncoding ? 'encode' : 'decode'} ` +

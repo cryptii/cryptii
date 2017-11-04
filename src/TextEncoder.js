@@ -133,7 +133,8 @@ export default class TextEncoder {
 
     codePoints.forEach((codePoint, index) => {
       if (TextEncoder.validateCodePoint(codePoint)) {
-        throw new Error(`Invalid code point '${codePoint}' at index ${index}`)
+        throw new TextEncodingError(
+          `Invalid code point '${codePoint}' at ${index}`)
       }
       // append code point bytes
       if (codePoint <= 0x7F) {
@@ -175,7 +176,8 @@ export default class TextEncoder {
         // this is a continuation byte
         if (--remainingBytes < 0) {
           throw new TextEncodingError(
-            `Unexpected continuation byte at index ${i}`, i)
+            `Invalid UTF-8 encoded text: ` +
+            `Unexpected continuation byte at 0x${i.toString(16)}`, i)
         }
 
         // append bits to current code point
@@ -188,7 +190,8 @@ export default class TextEncoder {
       } else if (remainingBytes > 0) {
         // this must be a continuation byte
         throw new TextEncodingError(
-          `Continuation byte expected at index ${i}`, i)
+          `Invalid UTF-8 encoded text: ` +
+          `Continuation byte expected at 0x${i.toString(16)}`, i)
       } else if (byte <= 0b01111111) {
         // 1 byte code point
         // this already is a complete code point
@@ -206,12 +209,15 @@ export default class TextEncoder {
         codePoint = byte % 8
         remainingBytes = 3
       } else {
-        throw new TextEncodingError(`Invalid byte ${byte} at index ${i}`, i)
+        throw new TextEncodingError(
+          `Invalid UTF-8 encoded text: ` +
+          `Invalid byte ${byte} at 0x${i.toString(16)}`, i)
       }
     }
 
     if (remainingBytes !== 0) {
-      throw new TextEncodingError(`Unexpected end of bytes`)
+      throw new TextEncodingError(
+        `Invalid UTF-8 encoded text: Unexpected end of bytes`)
     }
 
     return codePoints

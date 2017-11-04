@@ -108,25 +108,25 @@ export default class BytesViewer extends Viewer {
    * @param {string} text
    */
   viewTextDidChange (view, text) {
-    let string = text
-    let format = this.getSettingValue('format')
+    this.dare(() => {
+      let string = text
+      let format = this.getSettingValue('format')
 
-    // decode string to bytes
-    // TODO handle errors thrown due to malformed user input
-    let bytes
-    switch (format) {
-      case 'hexadecimal':
-        // ignore non-hexadecimal characters (incl. spaces)
-        string = string.replace(/[^0-9a-f]/gi, '')
-        bytes = ByteEncoder.bytesFromHexString(string)
-        break
-      case 'binary':
-        // ignore non-binary characters (incl. spaces)
-        string = string.replace(/[^0|1]/gi, '')
-        bytes = ByteEncoder.bytesFromBinaryString(string)
-        break
-    }
-
-    this.contentDidChange(Chain.wrap(bytes))
+      // decode string to bytes
+      let bytes
+      switch (format) {
+        case 'hexadecimal':
+          // ignore whitespaces
+          string = string.replace(/\s/g, '')
+          bytes = ByteEncoder.bytesFromHexString(string)
+          break
+        case 'binary':
+          // ignore whitespaces
+          string = string.replace(/\s/g, '')
+          bytes = ByteEncoder.bytesFromBinaryString(string)
+          break
+      }
+      this.contentDidChange(Chain.wrap(bytes))
+    })
   }
 }

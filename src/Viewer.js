@@ -1,5 +1,6 @@
 
 import Brick from './Brick'
+import InvalidInputError from './Error/InvalidInput'
 
 /**
  * Abstract Brick for viewing and editing content.
@@ -13,6 +14,8 @@ export default class Viewer extends Brick {
     super()
     this._queuedContent = null
     this._queuedCallback = null
+
+    this._error = null
   }
 
   /**
@@ -22,25 +25,69 @@ export default class Viewer extends Brick {
    * @return {Viewer} Fluent interface
    */
   view (content, done = null) {
-    if (!this.areSettingsValid()) {
-      throw new Error(`Can't view. At least one setting is invalid.`)
-    }
+    this.dare(() => {
+      // check for invalid settings
+      let invalidSettings = this.getInvalidSettings()
+      if (invalidSettings.length > 0) {
+        throw new InvalidInputError(
+          `Can't view content with invalid settings: ` +
+          invalidSettings.map(setting => setting.getLabel()).join(', '))
+      }
 
-    if (!this.hasView()) {
-      // queue view request until view has been created
-      this._queuedContent = content
-      this._queuedCallback = done
-      return this
-    }
+      if (!this.hasView()) {
+        // queue view request until view has been created
+        this._queuedContent = content
+        this._queuedCallback = done
+        return this
+      }
 
-    content = this.willView(content)
+      content = this.willView(content)
 
-    this.performView(content, () => {
-      this.didView(content)
-      done && done()
-    })
-
+      this.performView(content, error => {
+        this.didView(content)
+        this._error = error || null
+        this.updateView()
+        done && done()
+      })
+    }, true)
     return this
+  }
+
+  /**
+   * Runs callback safely, catching and handling thrown errors.
+   * The method is called 'dare' because 'try' is a reserved keyword.
+   * TODO Find a better solution for error handling inside Viewers.
+   * @param {function} callback Callback to execute.
+   * @param {boolean} throwAll Wether to throw all errors
+   * @return {Viewer} Fluent interface
+   */
+  dare (callback, throwAll = false) {
+    try {
+      // run callback
+      callback()
+      // clear error
+      if (this._error !== null) {
+        this._error = null
+        this.updateView()
+      }
+    } catch (error) {
+      // set error
+      this._error = error
+      this.updateView()
+      // throw it if needed
+      if (throwAll || !(error instanceof InvalidInputError)) {
+        throw error
+      }
+    }
+    return this
+  }
+
+  /**
+   * Returns latest error.
+   * @return {?Error}
+   */
+  getError () {
+    return this._error
   }
 
   /**

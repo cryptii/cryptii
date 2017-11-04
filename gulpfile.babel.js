@@ -29,7 +29,7 @@ let distHeader =
   ` - (c) ${meta.author} */\n`
 
 let paths = {
-  assetsSVG: './assets/svg',
+  assets: './assets',
   script: './src',
   scriptDist: './public/dist/script',
   style: './style',
@@ -185,7 +185,7 @@ gulp.task('style', ['clean-style'], () => {
         includePaths: ['node_modules'],
         outputStyle: 'expanded',
         functions: {
-          'inline-svg': sassSVGInliner(paths.assetsSVG)
+          'inline-svg': sassSVGInliner(paths.assets)
         }
       })
         .on('error', sass.logError)

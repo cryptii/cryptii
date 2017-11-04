@@ -61,6 +61,15 @@ export default class EncoderView extends BrickView {
     return $header
   }
 
+  /**
+   * Renders content.
+   * @return {?HTMLElement}
+   */
+  renderContent () {
+    // generic encoder bricks have no content
+    return null
+  }
+
   actionDidClick (action, evt) {
     evt.preventDefault()
     this.toggleSelection(false)
@@ -83,8 +92,43 @@ export default class EncoderView extends BrickView {
    * @return {View} Fluent interface
    */
   update () {
+    // update action
     let reverse = this.getModel().isReverse()
     this._$encodeAction.classList.toggle('brick__action--active', !reverse)
     this._$decodeAction.classList.toggle('brick__action--active', reverse)
+
+    // update status
+    let error = this.getModel().getLastError()
+    let translation = this.getModel().getLastTranslationMeta()
+
+    if (translation !== null) {
+      let status = translation.isEncode !== reverse ? 'backward' : 'forward'
+      let message = `${translation.isEncode ? 'Encoded' : 'Decoded'} `
+
+      if (translation.charCount !== null) {
+        message +=
+          `${translation.charCount} ` +
+          `${translation.charCount === 1 ? 'char' : 'chars'} `
+      } else {
+        message +=
+          `${translation.byteCount} ` +
+          `${translation.byteCount === 1 ? 'byte' : 'bytes'} `
+      }
+
+      if (translation.duration < 10) {
+        message += `in ${parseInt(translation.duration * 100) / 100}ms`
+      } else if (translation.duration < 1000) {
+        message += `in ${parseInt(translation.duration)}ms`
+      } else {
+        message += `in ${parseInt(translation.duration / 1000)}s`
+      }
+      return this.updateStatus(status, message)
+    }
+
+    if (error !== null) {
+      return this.updateStatus('error', error.message)
+    }
+
+    return this
   }
 }
