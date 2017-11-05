@@ -102,8 +102,9 @@ export default class EncoderView extends BrickView {
     let translation = this.getModel().getLastTranslationMeta()
 
     if (translation !== null) {
-      let status = translation.isEncode !== reverse ? 'backward' : 'forward'
-      let message = `${translation.isEncode ? 'Encoded' : 'Decoded'} `
+      let status = translation.isEncode ? 'forward' : 'backward'
+      let message =
+        `${translation.isEncode !== reverse ? 'Encoded' : 'Decoded'} `
 
       if (translation.charCount !== null) {
         message +=

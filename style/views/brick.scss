@@ -182,7 +182,7 @@
       }
     }
 
-    #{$block}__status--backward & {
+    #{$block}__status--forward & {
       transform: rotate(180deg);
 
       @include breakpoint(xs, s) {
