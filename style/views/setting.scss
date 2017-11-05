@@ -35,12 +35,14 @@
     z-index: 10;
     background: $c-red;
     border-color: $c-red;
+    @extend %s-sheet;
     @extend %t-text;
     color: $c-white;
     opacity: 0;
     visibility: hidden;
     transition-property: opacity, visibility;
     transition-duration: 0.2s;
+    word-break: break-all;
 
     #{$block}--focus & {
       opacity: 1;

@@ -33,7 +33,8 @@ export default class TextEncoder {
 
     codePoints.forEach((codePoint, index) => {
       if (TextEncoder.validateCodePoint(codePoint)) {
-        throw new Error(`Invalid code point '${codePoint}' at index ${index}`)
+        throw new TextEncodingError(
+          `Invalid code point '${codePoint}' at index ${index}`)
       }
 
       if (codePoint < 0x10000) {

@@ -211,7 +211,7 @@ export default class Chain {
    * Retrieves the matches when matching a string against a regular expression.
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match
    * @param {RegExp|string} regexp A regular expression object.
-   * @return {array|null}
+   * @return {?array}
    */
   match (regexp) {
     return this.getString().match(regexp)

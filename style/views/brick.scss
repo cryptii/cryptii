@@ -148,22 +148,24 @@
   }
 
   &__content {
-    
+
   }
 
   &__status {
-    display: flex;
-    flex-direction: row;
     padding: 13px 16px;
     min-height: 48px;
+    @extend %t-text;
+    word-break: break-all;
   }
 
   &__status-icon {
-    display: block;
+    display: inline-block;
+    position: relative;
+    top: 3px;
     width: 16px;
     height: 16px;
-    margin-top: 3px;
-    background-image: inline-svg('icons/done.svg', (path: (fill: $c-text-detail)));
+    margin-right: 8px;
+    background-image: inline-svg('icons/done.svg', (path: (fill: $c-text-light)));
     background-repeat: no-repeat;
     background-size: 100% auto;
 
@@ -173,21 +175,25 @@
 
     #{$block}__status--forward &,
     #{$block}__status--backward & {
-      background-image: inline-svg('icons/arrow-left.svg', (path: (fill: $c-text-detail)));
+      background-image: inline-svg('icons/arrow-left.svg', (path: (fill: $c-text-light)));
+
+      @include breakpoint(xs, s) {
+        transform: rotate(90deg);
+      }
     }
 
     #{$block}__status--backward & {
       transform: rotate(180deg);
+
+      @include breakpoint(xs, s) {
+        transform: rotate(270deg);
+      }
     }
   }
 
   &__status-message {
-    display: block;
-    padding-left: 8px;
-    flex-basis: 0;
-    flex-grow: 1;
-    @extend %t-text;
-    color: $c-text-detail;
+    display: inline;
+    color: $c-text-light;
 
     #{$block}__status--error & {
       color: $c-text-error;

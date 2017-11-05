@@ -119,7 +119,7 @@ export default class NumeralSystemEncoder extends Encoder {
    * @protected
    * @param {string} system Numeral system to translate from.
    * @param {string} rawNumber
-   * @return {number|null} Decimal or null, if not defined.
+   * @return {?number} Decimal or null, if not defined.
    */
   static decodeNumber (system, rawNumber) {
     let decimal = null
@@ -148,7 +148,7 @@ export default class NumeralSystemEncoder extends Encoder {
    * @protected
    * @param {string} system Numeral system to translate to.
    * @param {number} decimal
-   * @return {string|null} Number or null, if not defined.
+   * @return {?string} Number or null, if not defined.
    */
   static encodeNumber (system, decimal) {
     switch (system) {
@@ -168,7 +168,7 @@ export default class NumeralSystemEncoder extends Encoder {
    * Translates given decimal to roman numerals.
    * @protected
    * @param {number} decimal Decimal value (1-3999)
-   * @return {string|null} Roman numerals or null, if not defined.
+   * @return {?string} Roman numerals or null, if not defined.
    */
   static decimalToRomanNumerals (decimal) {
     if (decimal <= 0 || decimal >= 4000) {
@@ -194,7 +194,7 @@ export default class NumeralSystemEncoder extends Encoder {
    * Translates given roman numerals to decimal.
    * @protected
    * @param {string} romanNumerals
-   * @return {number|null} Decimal or null, if not defined.
+   * @return {?number} Decimal or null, if not defined.
    */
   static romanNumeralsToDecimal (romanNumerals) {
     romanNumerals = romanNumerals.toString().toUpperCase()

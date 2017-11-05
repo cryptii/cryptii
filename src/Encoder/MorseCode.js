@@ -2,6 +2,7 @@
 import Chain from '../Chain'
 import Encoder from '../Encoder'
 import StringUtil from '../StringUtil'
+import InvalidInputError from '../Error/InvalidInput'
 
 const meta = {
   name: 'morse-code',
@@ -163,10 +164,16 @@ export default class MorseCodeEncoder extends Encoder {
 
     let string = content.toLowerCase().getChars()
       // encode each character
-      .map(char => MorseCodeEncoder.encodeCharacter(
-        char, shortMark, longerMark, spaceMark))
-      // leave out characters that are not defined
-      .filter(code => code !== null)
+      .map(char => {
+        let code = MorseCodeEncoder.encodeCharacter(
+          char, shortMark, longerMark, spaceMark)
+
+        if (code === null) {
+          throw new InvalidInputError(
+            `Char '${char}' is not defined in morse code`)
+        }
+        return code
+      })
       // glue it back together
       .join(' ')
 
@@ -240,8 +247,20 @@ export default class MorseCodeEncoder extends Encoder {
       // split characters by space
       .split(' ')
       // decode each character
-      .map(rawCode => MorseCodeEncoder.decodeCode(
-        rawCode, shortMark, longerMark, spaceMark))
+      .map(rawCode => {
+        if (rawCode === '') {
+          return null
+        }
+
+        let char = MorseCodeEncoder.decodeCode(
+          rawCode, shortMark, longerMark, spaceMark)
+
+        if (char === null) {
+          throw new InvalidInputError(
+            `Code '${rawCode}' is not defined in morse code`)
+        }
+        return char
+      })
       // leave out codes that are not defined
       .filter(char => char !== null)
       // glue it back together
@@ -353,7 +372,7 @@ export default class MorseCodeEncoder extends Encoder {
    * @param {string} shortMark
    * @param {string} longerMark
    * @param {string} spaceMark
-   * @return {string|null} Morse code representation or null, if not defined.
+   * @return {?string} Morse code representation or null, if not defined.
    */
   static encodeCharacter (char, shortMark, longerMark, spaceMark) {
     // handle space
@@ -381,7 +400,7 @@ export default class MorseCodeEncoder extends Encoder {
    * @param {string} shortMark
    * @param {string} longerMark
    * @param {string} spaceMark
-   * @return {string|null} Character or null, if not defined.
+   * @return {?string} Character or null, if not defined.
    */
   static decodeCode (rawCode, shortMark, longerMark, spaceMark) {
     // handle space

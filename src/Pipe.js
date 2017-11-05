@@ -442,7 +442,7 @@ export default class Pipe extends Viewable {
    * the content has changed during previous view.
    * @protected
    * @param {Viewer} viewer
-   * @param {Error|null} error
+   * @param {?Error} error
    * @param {Chain} usedContent
    * @param {number} usedSettingsVersion
    */
@@ -522,7 +522,7 @@ export default class Pipe extends Viewable {
    * previous translation.
    * @protected
    * @param {Encoder} encoder
-   * @param {Error|null} error
+   * @param {?Error} error
    * @param {boolean} isEncode True for encoding, false for decoding.
    * @param {Chain|boolean} result Result chain or false, if failed
    * @param {Chain} usedSource

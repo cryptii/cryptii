@@ -310,6 +310,11 @@ export default class Brick extends Viewable {
     // create brick instance
     let brick = brickFactory.create(name)
 
+    // reverse brick if asked for
+    if (data.reverse === true) {
+      brick.setReverse(true)
+    }
+
     // check for settings
     if (data.settings !== undefined) {
       brick.setSettingValues(data.settings)

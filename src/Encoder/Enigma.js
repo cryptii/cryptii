@@ -455,7 +455,7 @@ export default class EnigmaEncoder extends Encoder {
    * Finds model entry by given name.
    * @protected
    * @param {string} name Model name
-   * @return {object|null} Returns model entry or null if not found.
+   * @return {?object} Returns model entry or null if not found.
    */
   static findModel (name) {
     if (modelMap === null) {
@@ -471,7 +471,7 @@ export default class EnigmaEncoder extends Encoder {
    * Finds rotor entry by given name.
    * @protected
    * @param {string} name Rotor name
-   * @return {object|null} Returns rotor entry or null if not found.
+   * @return {?object} Returns rotor entry or null if not found.
    */
   static findRotor (name) {
     if (rotorMap === null) {
