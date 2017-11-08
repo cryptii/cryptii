@@ -37,6 +37,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and wit
 | `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
 | `morse-code` | Encoding | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
+| `hash` | Modern cryptography | Creating a [message digest](https://en.wikipedia.org/wiki/Cryptographic_hash_function) |
 
 Example usage in code:
 
@@ -53,9 +54,8 @@ Viewers allow users to view and edit content in a specific way or format.
 
 | Name | Category | Description |
 | ---- | -------- | ----------- |
-| `text` | Representation | Viewing and editing in plain text |
-| `bytes` | Representation | Viewing and editing bytes |
-| `hash` | Modern cryptography | Showing [message digest](https://en.wikipedia.org/wiki/Cryptographic_hash_function) of current content |
+| `text` | View | Viewing and editing in plain text |
+| `bytes` | View | Viewing and editing bytes |
 
 ### Chains
 

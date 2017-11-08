@@ -39,22 +39,26 @@ export default class EncoderView extends BrickView {
       onClick: this.actionDidClick.bind(this, 'encode')
     }, 'Encode')
 
-    this._$decodeAction = View.createElement('a', {
-      className: 'brick__action',
-      href: '#',
-      onClick: this.actionDidClick.bind(this, 'decode')
-    }, 'Decode')
-
     let $actions = View.createElement('ul', {
       className: 'brick__actions'
     }, [
       View.createElement('li', {
         className: 'brick__action-item'
-      }, this._$encodeAction),
-      View.createElement('li', {
+      }, this._$encodeAction)
+    ])
+
+    this._$decodeAction = null
+    if (!this.getModel().isEncodeOnly()) {
+      this._$decodeAction = View.createElement('a', {
+        className: 'brick__action',
+        href: '#',
+        onClick: this.actionDidClick.bind(this, 'decode')
+      }, 'Decode')
+      let $decodeActionItem = View.createElement('li', {
         className: 'brick__action-item'
       }, this._$decodeAction)
-    ])
+      $actions.appendChild($decodeActionItem)
+    }
 
     let $header = super.renderHeader()
     $header.insertBefore($actions, $header.firstChild)
@@ -95,7 +99,8 @@ export default class EncoderView extends BrickView {
     // update action
     let reverse = this.getModel().isReverse()
     this._$encodeAction.classList.toggle('brick__action--active', !reverse)
-    this._$decodeAction.classList.toggle('brick__action--active', reverse)
+    this._$decodeAction &&
+      this._$decodeAction.classList.toggle('brick__action--active', reverse)
 
     // update status
     let error = this.getModel().getLastError()

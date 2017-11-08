@@ -17,6 +17,7 @@ export default class Encoder extends Brick {
     super()
     this._viewPrototype = EncoderView
     this._reverse = false
+    this._encodeOnly = false
 
     // last translation meta or error
     this._lastError = null
@@ -55,6 +56,11 @@ export default class Encoder extends Brick {
     return new Promise(resolve => {
       // wrap content in Chain
       content = Chain.wrap(content)
+
+      // check for encode only
+      if (isEncode === this._reverse && this.isEncodeOnly()) {
+        throw new InvalidInputError(`Decoding is not defined`)
+      }
 
       // check for invalid settings
       let invalidSettings = this.getInvalidSettings()
@@ -119,6 +125,25 @@ export default class Encoder extends Brick {
       this.updateView()
       this.hasPipe() && this.getPipe().encoderDidReverse(this, reverse)
     }
+    return this
+  }
+
+  /**
+   * Wether this encoder is encoding only.
+   * @return {boolean}
+   */
+  isEncodeOnly () {
+    return this._encodeOnly
+  }
+
+  /**
+   * Sets wether this encoder is encoding only.
+   * @protected
+   * @param {boolean} encodeOnly
+   * @return {Encoder}
+   */
+  setEncodeOnly (encodeOnly) {
+    this._encodeOnly = encodeOnly
     return this
   }
 

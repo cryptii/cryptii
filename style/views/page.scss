@@ -1,0 +1,32 @@
+
+.page {
+
+  &__header {
+    padding: 40px 0;
+    border-top: 1px solid $c-line;
+    border-bottom: 1px solid $c-line;
+  }
+
+  &__title {
+    @extend %t-h1;
+  }
+
+  &__content {
+    padding: 40px 0;
+    max-width: 848px;
+
+    h2 {
+      margin: 32px 0 16px;
+      @extend %t-h2;
+    }
+
+    p {
+      margin: 0 0 16px;
+      @extend %t-text;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+}

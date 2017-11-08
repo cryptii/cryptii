@@ -8,7 +8,7 @@ import Viewer from '../Viewer'
 const meta = {
   name: 'bytes',
   title: 'Bytes',
-  category: 'Representation',
+  category: 'View',
   type: 'viewer'
 }
 

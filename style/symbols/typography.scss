@@ -25,11 +25,22 @@
   line-height: 18px;
 }
 
-%t-pipe-headline {
+%t-h1 {
   font-family: Roboto, sans-serif;
   font-weight: 500;
   font-size: 21px;
   line-height: 1.5;
+}
+
+%t-h2 {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+%t-pipe-headline {
+  @extend %t-h1;
 }
 
 %t-brick-action {

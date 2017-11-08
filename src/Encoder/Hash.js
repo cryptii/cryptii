@@ -1,19 +1,18 @@
 
 import Browser from '../Browser'
-import Viewer from '../Viewer'
-import TextViewerView from '../View/Viewer/Text'
+import Encoder from '../Encoder'
 
 const meta = {
   name: 'hash',
   title: 'Hash function',
   category: 'Modern cryptography',
-  type: 'viewer'
+  type: 'encoder'
 }
 
 /**
- * Viewer Brick for creating a digest from given hash function and content.
+ * Encoder Brick for creating a digest from given hash function and content.
  */
-export default class HashViewer extends Viewer {
+export default class HashEncoder extends Encoder {
   /**
    * Returns brick meta.
    * @return {object}
@@ -23,11 +22,11 @@ export default class HashViewer extends Viewer {
   }
 
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
-    this._viewPrototype = TextViewerView
+    this.setEncodeOnly(true)
 
     let crypto = window.crypto || window.msCrypto
     this._cryptoSubtle = crypto.subtle || crypto.webkitSubtle
@@ -38,18 +37,18 @@ export default class HashViewer extends Viewer {
         type: 'enum',
         value: 'SHA-256',
         options: {
-          elements: this._getAvailableAlgorithms()
+          elements: this.getAvailableAlgorithms()
         }
       }
     ])
   }
 
   /**
-   * Performs view of given content.
-   * @param {string} content
-   * @param {function} done Called when performing view has finished.
+   * Performs encode on given content.
+   * @param {Chain} content
+   * @return {Chain|Promise} Encoded content
    */
-  performView (content, done) {
+  performEncode (content) {
     let algorithm = this.getSettingValue('algorithm')
 
     // create hash digest from content
@@ -63,33 +62,15 @@ export default class HashViewer extends Viewer {
       })
     }
 
-    result
-
-      // create hex string from buffer
-      .then(buffer => {
-        let view = new DataView(buffer)
-        let hexString = ''
-        for (let i = 0; i < view.byteLength; i += 4) {
-          hexString += ('00000000' + view.getUint32(i).toString(16)).slice(-8)
-        }
-        return hexString
-      })
-
-      // send hash to view
-      .then(hexString => {
-        this.getView().setText(hexString)
-        done()
-      })
-
-      // catch errors
-      .catch(done)
+    return result.then(buffer => new Uint8Array(buffer))
   }
 
   /**
    * Returns digest algorithms available for the current browser.
+   * @protected
    * @return {string[]}
    */
-  _getAvailableAlgorithms () {
+  getAvailableAlgorithms () {
     let algorithms = [
       'SHA-1',
       'SHA-256',
@@ -108,17 +89,5 @@ export default class HashViewer extends Viewer {
     }
 
     return algorithms
-  }
-
-  /**
-   * Triggered when view has been created.
-   * @protected
-   * @param {View} view
-   */
-  didCreateView (view) {
-    // disable text input
-    view.setDisabled(true)
-
-    super.didCreateView(view)
   }
 }
