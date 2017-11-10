@@ -1,17 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-
-    <title>Affine Cipher – Encode and Decode · Cryptii</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="manifest.json">
-    <meta name="apple-mobile-web-app-title" content="Cryptii">
+
+    <title>The Enigma Machine: Encrypt and decrypt online — Cryptii</title>
 
     <!-- favicon -->
-    <link rel="icon" sizes="16x16 32x32 48x48 64x64" href="favicon.ico">
+    <link rel="icon" sizes="16x16 32x32 48x48 64x64" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" sizes="32x32" type="image/png" href="assets/favicon/favicon-32.png">
     <link rel="apple-touch-icon-precomposed" href="assets/favicon/favicon-152.png">
     <link rel="icon" sizes="57x57" href="assets/favicon/favicon-57.png">
     <link rel="icon" sizes="76x76" href="assets/favicon/favicon-76.png">
@@ -30,19 +29,21 @@
     <meta name="msapplication-starturl" content="/">
 
     <!-- style -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500|Source+Code+Pro:400&amp;subset=latin-ext">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500%7CSource+Code+Pro:400&amp;subset=latin-ext">
     <link rel="stylesheet" href="dist/style/cryptii.css?v=1">
 
     <!-- meta -->
-    <meta name="description" content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.">
-    <meta name="keywords" content="cipher, affine function, encode, decode, translator, converter, solver">
+    <meta name="canonical" content="https://v4.cryptii.com/enigma">
+    <meta name="description" content="The Enigma cipher machine is well known for the vital role it played during WWII. Alan Turing and his attempts to crack the Enigma machine code changed history. Nevertheless, many messages could not be decrypted until today.">
+    <meta name="keywords" content="wwii, alan turing, encrypt, decrypt">
+    <meta name="apple-mobile-web-app-title" content="Cryptii">
 
     <!-- micro data -->
-    <meta property="og:title" content="Affine Cipher – Encode and Decode">
-    <meta property="og:description" content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.">
+    <meta property="og:title" content="The Enigma Machine: Encrypt and decrypt online">
+    <meta property="og:description" content="The Enigma cipher machine is well known for the vital role it played during WWII. Alan Turing and his attempts to crack the Enigma machine code changed history. Nevertheless, many messages could not be decrypted until today.">
     <meta property="og:site_name" content="Cryptii">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://v4.cryptii.com/affine-cipher">
+    <meta property="og:url" content="https://v4.cryptii.com/enigma">
     <meta property="fb:app_id" content="127936877936238">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@cryptii">
@@ -75,41 +76,53 @@
 
       <header class="app__header header">
         <div class="header__inner">
-          <a class="header__brand" href="/">
+          <a class="header__brand" href="index.html">
             Cryptii
-            <span class="header__brand-version">v4-beta</span>
+            <span class="header__brand-version">dev</span>
           </a>
-          <div class="featured featured--feedback">
-            <div class="featured__content">
-              <a class="featured__visual" href="https://goo.gl/forms/GIHitdHQdI2k6IKN2" target="_blank" rel="noopener">
-                <span class="featured__visual-text">Feedback</span>
-              </a>
-              <a class="featured__copy" href="https://goo.gl/forms/GIHitdHQdI2k6IKN2" target="_blank" rel="noopener">
-                If you have any feedback, ideas or issues, please fill out this form. Thank you!
-              </a>
-            </div>
-            <a class="featured__disclamer" href="https://fraenz.frieder.es/" target="_blank" rel="noopener">
-              @ffraenz
-            </a>
-          </div>
         </div>
       </header>
 
       <article class="app__pipe pipe">
         <header class="pipe__header">
           <div class="container">
-            <h1 class="pipe__title">Affine Cipher – Encode and Decode</h1>
+            <h1 class="pipe__title">The Enigma Machine: Encrypt and decrypt online</h1>
             <p class="pipe__description">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-              tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-              At vero eos et accusam et justo duo dolores et ea rebum.
+              The Enigma cipher machine is well known for the vital role it
+              played during WWII. Alan Turing and his attempts to crack the
+              Enigma machine code changed history. Nevertheless, many messages
+              could not be decrypted until today.
             </p>
             <ul class="pipe__link-list link-list">
               <li class="link-list__item">
-                <a class="link-list__link" href="#">Binary to Text – Text to Binary</a>
+                <a class="link-list__link" href="#" title="Text to Morse code translator, convert online">
+                  Text to Morse code
+                </a>
               </li>
               <li class="link-list__item">
-                <a class="link-list__link" href="#">Hex to Text – Encode hexadecimal to text</a>
+                <a class="link-list__link" href="#" title="Roman Numerals: Convert and translate online">
+                  Roman Numerals
+                </a>
+              </li>
+              <li class="link-list__item">
+                <a class="link-list__link" href="#" title="Binary to Text: Convert, encode and decode bytes">
+                  Binary to Text
+                </a>
+              </li>
+              <li class="link-list__item">
+                <a class="link-list__link" href="#" title="Base64 to Hex: Encode and decode online">
+                  Base64 to Hex
+                </a>
+              </li>
+              <li class="link-list__item">
+                <a class="link-list__link" href="#" title="Convert Case: Capitalize, lower case, upper case">
+                  Convert Case
+                </a>
+              </li>
+              <li class="link-list__item">
+                <a class="link-list__link" href="#" title="Caesar cipher: Encode and decode online">
+                  Caesar cipher
+                </a>
               </li>
             </ul>
           </div>
@@ -118,11 +131,11 @@
         <script class="pipe__data" type="application/json">
         {
           "version": 1,
-          "title": "Affine Cipher – Encode and Decode",
-          "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
+          "title": "The Enigma Machine: Encrypt and decrypt online",
+          "description": "The Enigma cipher machine is well known for the vital role it played during WWII. Alan Turing and his attempts to crack the Enigma machine code changed history. Nevertheless, many messages could not be decrypted until today.",
           "bricks": [
             { "name": "text" },
-            { "name": "affine-cipher" },
+            { "name": "enigma" },
             { "name": "text" }
           ],
           "content": {
@@ -145,6 +158,11 @@
             </p>
             <ul class="footer__link-list link-list">
               <li class="link-list__item">
+                <a class="link-list__link" href="index.html">
+                  Home
+                </a>
+              </li>
+              <li class="link-list__item">
                 <a class="link-list__link" href="https://github.com/cryptii/cryptii" target="_blank" rel="noopener">
                   GitHub
                 </a>
@@ -155,13 +173,8 @@
                 </a>
               </li>
               <li class="link-list__item">
-                <a class="link-list__link" href="#" target="_blank" rel="noopener">
-                  About
-                </a>
-              </li>
-              <li class="link-list__item">
-                <a class="link-list__link" href="#" target="_blank" rel="noopener">
-                  Legal
+                <a class="link-list__link" href="#">
+                  Impressum
                 </a>
               </li>
             </ul>
