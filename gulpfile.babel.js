@@ -24,10 +24,6 @@ import standard from 'gulp-standard'
 import uglify from 'gulp-uglify'
 
 let meta = require('./package.json')
-let distHeader =
-  `/*! ${meta.name} v${meta.version} (commit ${revision.long()})` +
-  ` - (c) ${meta.author} */\n`
-
 let paths = {
   assets: './assets',
   script: './src',
@@ -37,6 +33,19 @@ let paths = {
   test: './test',
   doc: './public/docs',
 }
+
+// try to retrieve current commit hash
+let distRevision
+try {
+  distRevision = revision.long()
+} catch (evt) {
+  distRevision = 'unknown'
+}
+
+// compose dist header
+let distHeader =
+  `/*! ${meta.name} v${meta.version} (commit ${distRevision})` +
+  ` - (c) ${meta.author} */\n`
 
 gulp.task('lint-test', () => {
   return gulp.src(paths.test + '/**/*.js')
