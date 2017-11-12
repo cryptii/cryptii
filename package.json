@@ -53,6 +53,7 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-stream": "^1.24.1",
     "sass-inline-svg": "^1.0.0",
+    "standard": "^10.0.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }

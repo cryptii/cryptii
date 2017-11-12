@@ -3,10 +3,12 @@ import assert from 'assert'
 import ByteEncoder from '../../src/ByteEncoder'
 import Chain from '../../src/Chain'
 
+const previewLength = 32
+
 /**
- * Utility class for Chain object assertions.
+ * Utility class for Chain object tests.
  */
-export default class ChainAssert {
+export default class ChainUtil {
   /**
    * Asserts Chain objects to be equal. Compares the actual string or the hex
    * representation to display useful feedback if assertion fails.
@@ -14,7 +16,7 @@ export default class ChainAssert {
    * @param {Chain} expected
    * @param {string} [message]
    */
-  static equal (actual, expected, message = undefined) {
+  static assertEqual (actual, expected, message = undefined) {
     assert.ok(actual instanceof Chain,
       'Value is expected to be a Chain object.')
 
@@ -27,5 +29,24 @@ export default class ChainAssert {
       let expectedString = ByteEncoder.hexStringFromBytes(expected.getBytes())
       assert.strictEqual(actualString, expectedString, message)
     }
+  }
+
+  /**
+   * Creates string preview of given Chain object.
+   * @param {Chain} content
+   * @return {string}
+   */
+  static preview (content) {
+    if (!content.needsTextEncoding()) {
+      // truncate text to preview length
+      return content.truncate(previewLength)
+    }
+
+    // create hex byte preview
+    let previewBytes = content.getBytes().slice(0, previewLength / 2)
+    let preview = ByteEncoder.hexStringFromBytes(previewBytes)
+    return content.getBytes().length > previewLength / 2
+      ? preview + '…'
+      : preview
   }
 }

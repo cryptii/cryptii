@@ -3,7 +3,7 @@ import assert from 'assert'
 import { it } from 'mocha'
 
 import Chain from '../../src/Chain'
-import ChainAssert from './ChainAssert'
+import ChainUtil from './ChainUtil'
 
 /**
  * Utility class for testing Encoder objects.
@@ -53,8 +53,8 @@ export default class EncoderTester {
       : Chain.wrap(test.expectedResult)
 
     // create content and result preview that will be logged
-    const contentPreview = content.truncate(28)
-    const expectedResultPreview = expectedResult.truncate(28)
+    const contentPreview = ChainUtil.preview(content)
+    const expectedResultPreview = ChainUtil.preview(expectedResult)
 
     it(
       `should ${isEncoding ? 'encode' : 'decode'} ` +
@@ -79,7 +79,7 @@ export default class EncoderTester {
         Promise.resolve(result)
           .then(result => {
             // verify result
-            ChainAssert.equal(result, expectedResult)
+            ChainUtil.assertEqual(result, expectedResult)
             // no view should have been created during this process
             assert.strictEqual(encoder.hasView(), false)
           })

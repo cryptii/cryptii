@@ -1,6 +1,8 @@
 
 import Browser from '../Browser'
+import Chain from '../Chain'
 import Encoder from '../Encoder'
+import md5 from './Hash/md5'
 
 const meta = {
   name: 'hash',
@@ -28,16 +30,13 @@ export default class HashEncoder extends Encoder {
     super()
     this.setEncodeOnly(true)
 
-    let crypto = window.crypto || window.msCrypto
-    this._cryptoSubtle = crypto.subtle || crypto.webkitSubtle
-
     this.registerSetting([
       {
         name: 'algorithm',
         type: 'enum',
         value: 'SHA-256',
         options: {
-          elements: this.getAvailableAlgorithms()
+          elements: HashEncoder.getAvailableAlgorithms()
         }
       }
     ])
@@ -50,9 +49,33 @@ export default class HashEncoder extends Encoder {
    */
   performEncode (content) {
     let algorithm = this.getSettingValue('algorithm')
+    let bytes = content.getBytes()
 
-    // create hash digest from content
-    let result = this._cryptoSubtle.digest(algorithm, content.getBytes())
+    let result
+    switch (algorithm) {
+      case 'MD5':
+        result = new Promise(resolve => resolve(md5(bytes)))
+        break
+      default:
+        result = this.webCryptoDigest(algorithm, bytes)
+    }
+
+    return result.then(Chain.wrap)
+  }
+
+  /**
+   * Creates message digest using web crypto api.
+   * @protected
+   * @param {string} algorithm
+   * @param {Uint8Array} bytes
+   * @return {Promise}
+   */
+  webCryptoDigest (algorithm, bytes) {
+    let crypto = window.crypto || window.msCrypto
+    let cryptoSubtle = crypto.subtle || crypto.webkitSubtle
+
+    // create message digest from bytes
+    let result = cryptoSubtle.digest(algorithm, bytes)
 
     if (result.oncomplete !== undefined) {
       // wrap IE11 CryptoOperation object in a promise
@@ -70,22 +93,23 @@ export default class HashEncoder extends Encoder {
    * @protected
    * @return {string[]}
    */
-  getAvailableAlgorithms () {
+  static getAvailableAlgorithms () {
     let algorithms = [
+      'MD5',
       'SHA-1',
       'SHA-256',
       'SHA-384',
       'SHA-512'
     ]
 
+    // IE11 does not support SHA-512
     if (Browser.match('ie', 11)) {
-      // only IE11 does not support SHA-512
-      algorithms.splice(3, 1)
+      algorithms.splice(4, 1)
     }
 
+    // SHA-1 does not work in IE and edge despite being documented
     if (Browser.match('ie', 11) || Browser.match('edge')) {
-      // SHA-1 does not work in ie and edge despite being documented differently
-      algorithms.splice(0, 1)
+      algorithms.splice(1, 1)
     }
 
     return algorithms

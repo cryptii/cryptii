@@ -31,7 +31,7 @@ let paths = {
   style: './style',
   styleDist: './public/dist/style',
   test: './test',
-  doc: './public/docs',
+  doc: './public/docs'
 }
 
 // try to retrieve current commit hash
@@ -83,7 +83,7 @@ gulp.task('doc', ['clean-doc'], () => {
       test: {
         type: 'mocha',
         source: paths.test,
-        includes: ['.js$'],
+        includes: ['.js$']
       }
     }))
 })
@@ -138,7 +138,7 @@ gulp.task('script', ['lint-script', 'clean-script'], () => {
       if (err.codeFrame !== undefined) {
         console.error(err.codeFrame)
       }
-      stream.emit('end')
+      appStream.emit('end')
     })
 
     // set output filename
