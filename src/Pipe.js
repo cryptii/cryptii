@@ -681,10 +681,26 @@ export default class Pipe extends Viewable {
    * @return {mixed} Structured data.
    */
   serialize () {
+    // serialize content
+    let bucket = this._selectedBucket
+    let content = this._bucketContent[bucket]
+
+    let contentObject = { bucket }
+    if (!content.needsTextEncoding()) {
+      contentObject.string =
+        content.getString()
+    } else {
+      contentObject.bytes =
+        ByteEncoder.base64StringFromBytes(content.getBytes())
+    }
+
+    // serialize pipe
     return {
+      version: 1,
       title: this.getTitle(),
       description: this.getDescription(),
-      bricks: this._bricks.map(brick => brick.serialize())
+      bricks: this._bricks.map(brick => brick.serialize()),
+      content: contentObject
     }
   }
 
@@ -702,8 +718,9 @@ export default class Pipe extends Viewable {
 
     // extract bricks
     let brickFactory = BrickFactory.getInstance()
-    let bricks = data.bricks.map(brickData =>
-      Brick.extract(brickData, brickFactory))
+    let bricks =
+      data.bricks.map(brickData =>
+        Brick.extract(brickData, brickFactory))
 
     // compose pipe
     let pipe = new Pipe()

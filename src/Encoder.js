@@ -164,6 +164,18 @@ export default class Encoder extends Brick {
   }
 
   /**
+   * Serializes Brick to a JSON serializable object.
+   * @return {mixed} Serialized data
+   */
+  serialize () {
+    let object = super.serialize()
+    if (this.isReverse()) {
+      object.reverse = true
+    }
+    return object
+  }
+
+  /**
    * Triggered before performing encode on given content.
    * Calls {@link Encoder.willTranslate} by default.
    * @protected

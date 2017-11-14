@@ -69,6 +69,20 @@ export default class Brick extends Viewable {
   }
 
   /**
+   * Returns an object mapping setting names to their values.
+   * @return {object}
+   */
+  getSettingValues () {
+    let settingValues = {}
+    this.getSettings()
+      .filter(setting => setting.isVisible())
+      .forEach(setting => {
+        settingValues[setting.getName()] = setting.getValue()
+      })
+    return settingValues
+  }
+
+  /**
    * Returns an array of invalid Setting objects.
    * @return {Setting[]}
    */
@@ -278,12 +292,14 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Serializes Brick to make it JSON serializable
-   * @return {mixed} Serialized data.
+   * Serializes Brick to a JSON serializable object.
+   * @return {mixed} Serialized data
    */
   serialize () {
-    // TODO needs implementation
-    return []
+    return {
+      name: this.getMeta().name,
+      settings: this.getSettingValues()
+    }
   }
 
   /**
@@ -294,28 +310,39 @@ export default class Brick extends Viewable {
    * @return {Brick} Extracted Brick.
    */
   static extract (data, brickFactory) {
-    // retrieve brick name
+    // read brick name
     if (typeof data.name !== 'string') {
       throw new Error(
-        'Brick data malformed. Name attribute needs to be a string.')
+        `Malformed brick data: Attribute 'name' is expected to be a string`)
     }
 
     let name = data.name
 
     // check if brick name exists
     if (!brickFactory.exists(name)) {
-      throw new Error(`Brick data malformed. Unknown brick named '${name}'.`)
+      throw new Error(
+        `Malformed brick data: Unknown brick with name '${name}'`)
     }
 
     // create brick instance
     let brick = brickFactory.create(name)
 
-    // reverse brick if asked for
+    // read and apply reverse
+    if (typeof data.reverse !== 'undefined' &&
+        typeof data.reverse !== 'boolean') {
+      throw new Error(
+        `Malformed brick data: Attribute 'reverse' is expected to be boolean`)
+    }
+
     if (data.reverse === true) {
+      if (typeof brick.setReverse !== 'function') {
+        throw new Error(
+          `Malformed brick data: Brick with name '${name}' can't be reversed`)
+      }
       brick.setReverse(true)
     }
 
-    // check for settings
+    // apply setting values
     if (data.settings !== undefined) {
       brick.setSettingValues(data.settings)
     }
