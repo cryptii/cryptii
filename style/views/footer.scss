@@ -45,6 +45,10 @@
   }
 
   &__link-list {
-    padding-top: 16px;
+    margin-top: 16px;
+
+    @include breakpoint(xs) {
+      margin-top: 24px;
+    }
   }
 }

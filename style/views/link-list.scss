@@ -6,8 +6,26 @@
   margin: 0 -16px;
   @extend %t-text-link;
 
-  @include breakpoint(xs, s) {
+  @include breakpoint(s) {
     justify-content: center;
+  }
+
+  @include breakpoint(xs) {
+    flex-direction: column;
+    margin: 0;
+    border: 1px solid $c-line;
+    border-radius: $default-border-radius;
+  }
+
+  &__item {
+
+    @include breakpoint(xs) {
+      border-bottom: 1px solid $c-line;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
   }
 
   &__link {
@@ -17,6 +35,12 @@
 
     &:hover {
       color: $c-text-primary;
+    }
+
+    @include breakpoint(xs) {
+      display: block;
+      padding: 8px 16px;
+      text-align: left;
     }
   }
 }

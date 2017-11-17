@@ -193,7 +193,8 @@ $header-height: 96px !default;
   }
 
   &__title,
-  &__description {
+  &__description,
+  &__link-list {
     max-width: 600px;
 
     @include breakpoint(xs, s) {
@@ -216,7 +217,11 @@ $header-height: 96px !default;
   }
 
   &__link-list {
-    padding-top: 16px;
+    margin-top: 16px;
+
+    @include breakpoint(xs) {
+      margin-top: 24px;
+    }
   }
 
   &__btn-add {
