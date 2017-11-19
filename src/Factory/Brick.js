@@ -16,6 +16,7 @@ import TextTransformEncoder from '../Encoder/TextTransform'
 import TextViewer from '../Viewer/Text'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
+import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
 
 // singleton instance
 let instance = null
@@ -36,6 +37,7 @@ export default class BrickFactory extends Factory {
       BytesViewer,
       TextTransformEncoder,
       NumeralSystemEncoder,
+      SpellingAlphabetEncoder,
       CaesarCipherEncoder,
       AtbashEncoder,
       AffineCipherEncoder,

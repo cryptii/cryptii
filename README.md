@@ -5,7 +5,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
-Framework and web app for encoding and decoding content.
+Modular online encoding, encryption and conversion tool and framework.
 
 ## Build
 
@@ -28,6 +28,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and wit
 | ---- | -------- | ----------- |
 | `text-transform` | Transform | Transforming character case and arrangement |
 | `numeral-system` | Transform | Translates numerals between systems |
+| `spelling-alphabet` | Alphabets | Several [spelling alphabets](https://en.wikipedia.org/wiki/Spelling_alphabet) |
 | `affine-cipher` | Simple Substitution | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
 | ↳ `caesar-cipher` | Simple Substitution | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
 | ↳ `atbash` | Simple Substitution | [Atbash](https://en.wikipedia.org/wiki/Atbash) using latin or hebrew alphabet |

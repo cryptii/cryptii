@@ -55,4 +55,17 @@ export default class StringUtil {
     let character = string[index]
     return character ? character.match(/\s/) !== null : false
   }
+
+  /**
+   * Converts whitespace characters to U+20 space character.
+   * If requested, reduces strings of whitespaces to a single one.
+   * @param {[type]} string [description]
+   * @param {Boolean} [reduceToSingle=false] [description]
+   * @return {[type]} [description]
+   */
+  static normalizeWhitespaces (string, reduceToSingle = false) {
+    return reduceToSingle
+      ? string.replace(/\s+/, ' ')
+      : string.replace(/\s/, ' ')
+  }
 }
