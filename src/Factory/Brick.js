@@ -3,6 +3,7 @@ import Factory from '../Factory'
 
 // package bricks
 import AffineCipherEncoder from '../Encoder/AffineCipher'
+import Ascii85Encoder from '../Encoder/Ascii85'
 import AtbashEncoder from '../Encoder/Atbash'
 import Base64Encoder from '../Encoder/Base64'
 import BytesViewer from '../Viewer/Bytes'
@@ -12,11 +13,11 @@ import HashEncoder from '../Encoder/Hash'
 import MorseCodeEncoder from '../Encoder/MorseCode'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import ROT13Encoder from '../Encoder/ROT13'
+import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
 import TextTransformEncoder from '../Encoder/TextTransform'
 import TextViewer from '../Viewer/Text'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
-import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
 
 // singleton instance
 let instance = null
@@ -46,6 +47,7 @@ export default class BrickFactory extends Factory {
       EnigmaEncoder,
       UnicodeCodePointsEncoder,
       Base64Encoder,
+      Ascii85Encoder,
       MorseCodeEncoder,
       HashEncoder
     ]
