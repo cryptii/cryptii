@@ -31,8 +31,6 @@
 
     > a {
       @extend %t-text-link;
-      transition-property: color;
-      transition-duration: 0.2s;
 
       &:hover {
         color: $c-text-primary;

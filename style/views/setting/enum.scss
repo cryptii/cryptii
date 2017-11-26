@@ -12,14 +12,14 @@
       top: 50%;
       right: 20px;
       height: 2px;
-      width: 9px;
-      transform: translate(0, 4px) rotate(-45deg);
+      width: 8px;
+      transform: translate(-0.5px, 2px) rotate(-45deg);
       transform-origin: left center;
       background: $c-text;
     }
 
     &::after {
-      transform: translate(0, 4px) rotate(-135deg);
+      transform: translate(0.5px, 2px) rotate(-135deg);
     }
   }
 

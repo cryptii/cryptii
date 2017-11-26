@@ -2,7 +2,7 @@
 $pipe-size: 96px !default;
 $pipe-sticky-headers: false !default;
 $pipe-vertical-padding-xs: 96px !default;
-$pipe-vertical-padding-m: 64px !default;
+$pipe-vertical-padding-m: 48px !default;
 
 $header-height: 96px !default;
 
@@ -153,6 +153,18 @@ $header-height: 96px !default;
     max-width: 448px;
     flex-grow: 1;
 
+    @include breakpoint(m, l) {
+
+      max-width: 576px;
+    }
+
+    &--encoder {
+
+      @include breakpoint(m, l) {
+        max-width: 368px;
+      }
+    }
+
     @include breakpoint(xs, s) {
 
       @include browser(ie-11) {
@@ -236,8 +248,6 @@ $header-height: 96px !default;
     font-size: 0;
     z-index: 1;
     opacity: .4;
-    transition-property: opacity;
-    transition-duration: 0.3s;
 
     &::before,
     &::after {

@@ -1,5 +1,6 @@
 
 import BrickView from './Brick'
+import Encoder from '../Encoder'
 import View from '../View'
 
 // scroll handle speed (px / second)
@@ -161,8 +162,9 @@ export default class PipeView extends View {
    * @return {HTMLElement}
    */
   _createBrickPart (brickView) {
+    let type = brickView.getModel() instanceof Encoder ? 'encoder' : 'viewer'
     return View.createElement('div', {
-      className: 'pipe__part-brick'
+      className: `pipe__part-brick pipe__part-brick--${type}`
     }, brickView.getElement())
   }
 

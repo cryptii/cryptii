@@ -33,13 +33,11 @@
       top: 50%;
       left: 50%;
       display: block;
-      width: 16px;
+      width: 14px;
       height: 2px;
       transform: translate(-50%, -50%) rotate(45deg);
       transform-origin: center center;
-      background-color: #dddddd;
-      transition-property: background-color;
-      transition-duration: 0.3s;
+      background-color: $c-text-light;
     }
 
     &::after {

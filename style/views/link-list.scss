@@ -30,8 +30,6 @@
 
   &__link {
     padding: 0 16px;
-    transition-property: color;
-    transition-duration: 0.2s;
 
     &:hover {
       color: $c-text-primary;

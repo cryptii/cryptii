@@ -12,7 +12,7 @@
   &__label {
     display: table;
     padding: 10px 9px 0 16px;
-    border-right: 1.5px solid $c-line;
+    border-right: 1px solid $c-line;
     @extend %t-setting-label;
     color: $c-setting-label;
   }
