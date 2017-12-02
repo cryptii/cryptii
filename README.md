@@ -36,6 +36,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and wit
 | `vigenere-cipher` | Simple Substitution | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) |
 | `enigma` | Cipher machines | [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) |
 | `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
+| `url-encoding` | Encoding | [URL encoding / Percent-encoding](https://en.wikipedia.org/wiki/Percent-encoding) |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
 | `ascii85` | Encoding | [Ascii85 / Base85](https://en.wikipedia.org/wiki/Ascii85) |
 | `morse-code` | Encoding | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |

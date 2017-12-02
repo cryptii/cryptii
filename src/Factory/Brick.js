@@ -17,6 +17,7 @@ import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
 import TextTransformEncoder from '../Encoder/TextTransform'
 import TextViewer from '../Viewer/Text'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
+import URLEncoder from '../Encoder/URL'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
 
 // singleton instance
@@ -46,6 +47,7 @@ export default class BrickFactory extends Factory {
       VigenereCipherEncoder,
       EnigmaEncoder,
       UnicodeCodePointsEncoder,
+      URLEncoder,
       Base64Encoder,
       Ascii85Encoder,
       MorseCodeEncoder,

@@ -113,6 +113,15 @@ export default class Chain {
   }
 
   /**
+   * Returns byte representation of a Unicode character at given index.
+   * @param {number} index Unicode code point index
+   * @return {Uint8Array} Character bytes
+   */
+  getCharBytesAt (index) {
+    return TextEncoder.bytesFromCodePoints([this.getCodePointAt(index)])
+  }
+
+  /**
    * Returns amount of Unicode code points.
    * @return {number} Amount of Unicode code points
    */
