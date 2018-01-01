@@ -1,7 +1,6 @@
 # cryptii
 
 [![Build Status](https://travis-ci.org/cryptii/cryptii.svg?branch=dev)](https://travis-ci.org/cryptii/cryptii)
-[![Documentation](https://v4.cryptii.com/docs/badge.svg)](https://v4.cryptii.com/docs/)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
