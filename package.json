@@ -1,6 +1,6 @@
 {
   "name": "cryptii",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "author": "Fränz Friederes (fraenz.frieder.es)",
   "description": "Framework and web app for encoding and decoding content.",
   "repository": {
@@ -10,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/cryptii/cryptii/issues"
   },
-  "homepage": "https://v4.cryptii.com/",
+  "homepage": "https://cryptii.com/",
   "license": "MIT",
   "scripts": {
     "build": "gulp build",
