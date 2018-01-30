@@ -95,7 +95,17 @@ export default class Pipe extends Viewable {
     if (index === -1) {
       throw new Error(`Brick is not part of the Pipe. Can't replace it.`)
     }
-    this.spliceBricks(index, 1, brickOrName)
+
+    let brick = brickOrName
+    if (typeof brickOrName === 'string') {
+      brick = BrickFactory.getInstance().create(brickOrName)
+      // apply the same reverse state on the new brick
+      if ((needle instanceof Encoder) && (brick instanceof Encoder)) {
+        brick.setReverse(needle.isReverse())
+      }
+    }
+
+    this.spliceBricks(index, 1, brick)
     return this
   }
 
