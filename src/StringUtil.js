@@ -57,15 +57,36 @@ export default class StringUtil {
   }
 
   /**
-   * Converts whitespace characters to U+20 space character.
-   * If requested, reduces strings of whitespaces to a single one.
-   * @param {[type]} string [description]
-   * @param {Boolean} [reduceToSingle=false] [description]
-   * @return {[type]} [description]
+   * Removes Unicode whitespace characters.
+   * @param {string} string
+   * @return {string} String without whitespaces
+   */
+  static removeWhitespaces (string) {
+    return this.replaceWhitespaces(string, '', true)
+  }
+
+  /**
+   * Replaces Unicode whitespace characters with U+20 space character.
+   * @param {string} string Haystack
+   * @param {Boolean} [reduceToSingle=false] Wether to replace
+   * multiple successive space characters with a single one.
+   * @return {string}
    */
   static normalizeWhitespaces (string, reduceToSingle = false) {
+    return this.replaceWhitespaces(string, ' ', reduceToSingle)
+  }
+
+  /**
+   * Replaces Unicode whitespace characters with given character.
+   * @param {string} string Haystack
+   * @param {string} replacement Replacement string
+   * @param {Boolean} [reduceToSingle=false] Wether to replace
+   * multiple successive space characters with a single one.
+   * @return {string}
+   */
+  static replaceWhitespaces (string, replacement, reduceToSingle = false) {
     return reduceToSingle
-      ? string.replace(/\s+/, ' ')
-      : string.replace(/\s/, ' ')
+      ? string.replace(/\s+/g, replacement)
+      : string.replace(/\s/g, replacement)
   }
 }

@@ -6,6 +6,7 @@ import AffineCipherEncoder from '../Encoder/AffineCipher'
 import Ascii85Encoder from '../Encoder/Ascii85'
 import AtbashEncoder from '../Encoder/Atbash'
 import Base64Encoder from '../Encoder/Base64'
+import BitwiseOperationEncoder from '../Encoder/BitwiseOperation'
 import BytesViewer from '../Viewer/Bytes'
 import CaesarCipherEncoder from '../Encoder/CaesarCipher'
 import EnigmaEncoder from '../Encoder/Enigma'
@@ -39,6 +40,7 @@ export default class BrickFactory extends Factory {
       BytesViewer,
       TextTransformEncoder,
       NumeralSystemEncoder,
+      BitwiseOperationEncoder,
       SpellingAlphabetEncoder,
       CaesarCipherEncoder,
       AtbashEncoder,

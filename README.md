@@ -27,6 +27,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and wit
 | ---- | -------- | ----------- |
 | `text-transform` | Transform | Transforming character case and arrangement |
 | `numeral-system` | Transform | Translates numerals between systems |
+| `bitwise-operation` | Transform | [Bitwise operations](https://en.wikipedia.org/wiki/Bitwise_operation) (NOT, AND, OR, …) |
 | `spelling-alphabet` | Alphabets | Several [spelling alphabets](https://en.wikipedia.org/wiki/Spelling_alphabet) |
 | `affine-cipher` | Simple Substitution | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
 | ↳ `caesar-cipher` | Simple Substitution | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
