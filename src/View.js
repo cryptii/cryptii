@@ -78,6 +78,34 @@ export default class View {
   }
 
   /**
+   * Rerenders the view.
+   * @return {View} Fluent interface
+   */
+  refresh () {
+    let $oldRoot = this._$root
+    if ($oldRoot === null) {
+      // only refresh if there is an existing element
+      return this
+    }
+
+    // render
+    this._$root = null
+    this.willRender()
+    this._$root = this.render()
+    this.didRender()
+
+    // append each subview to new root element
+    this.getSubviews().forEach(this.appendSubviewElement)
+
+    // replace root node in dom
+    if ($oldRoot && $oldRoot.parentNode) {
+      $oldRoot.parentNode.replaceChild(this._$root, $oldRoot)
+    }
+
+    return this
+  }
+
+  /**
    * Renders view.
    * @protected
    * @return {HTMLElement}

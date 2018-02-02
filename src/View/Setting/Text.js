@@ -13,7 +13,7 @@ export default class TextSettingView extends SettingView {
   constructor () {
     super()
     this._$input = null
-    this._inputId = null
+    this._inputId = StringUtil.uniqueId()
   }
 
   /**
@@ -31,8 +31,6 @@ export default class TextSettingView extends SettingView {
    * @return {HTMLElement}
    */
   render () {
-    this._inputId = StringUtil.uniqueId()
-
     let $root = super.render()
     $root.classList.add('setting-text')
     return $root

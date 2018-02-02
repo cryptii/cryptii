@@ -15,6 +15,27 @@ export default class SettingView extends View {
   }
 
   /**
+   * Returns setting appearance.
+   * @return {string}
+   */
+  getStyle () {
+    return this._style
+  }
+
+  /**
+   * Sets the setting appearance.
+   * @param {string} style
+   * @return {Setting} Fluent interface
+   */
+  setStyle (style) {
+    if (this._style !== style) {
+      this._style = style
+      this.refresh()
+    }
+    return this
+  }
+
+  /**
    * Returns the current message, if any.
    * @protected
    * @return {?string} Message or null
@@ -107,22 +128,17 @@ export default class SettingView extends View {
    * @return {SettingView} Fluent interface
    */
   update () {
-    let className = 'setting'
+    let $setting = this.getElement()
 
-    if (this.hasFocus()) {
-      className += ' setting--focus'
-    }
+    // set width attr
+    $setting.dataset.width = this.getModel().getWidth()
 
-    // add width modifier
-    let width = this.getModel().getWidth()
-    if (width < 12) {
-      className += ` setting--width-${width}`
-    }
+    // set focus modifier
+    $setting.classList.toggle('setting--focus', this.hasFocus())
 
     // add invalid modifier
-    if (!this.getModel().isValid() || this.getMessage() !== null) {
-      className += ' setting--invalid'
-    }
+    $setting.classList.toggle('setting--invalid',
+      !this.getModel().isValid() || this.getMessage() !== null)
 
     // remove old message, if any
     if (this._$message !== null) {
@@ -136,8 +152,6 @@ export default class SettingView extends View {
       this.getElement().appendChild(this._$message)
     }
 
-    // apply updated element class name
-    this.getElement().className = className
     return this
   }
 

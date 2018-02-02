@@ -62,6 +62,7 @@ export default class NumeralSystemEncoder extends Encoder {
         label: 'Read',
         type: 'enum',
         value: 'decimal',
+        style: 'radio',
         options: {
           elements: systemNames,
           labels: systemLabels
@@ -72,6 +73,7 @@ export default class NumeralSystemEncoder extends Encoder {
         label: 'Convert to',
         type: 'enum',
         value: 'roman-numerals',
+        style: 'radio',
         options: {
           elements: systemNames,
           labels: systemLabels

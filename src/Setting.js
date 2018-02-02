@@ -14,11 +14,12 @@ export default class Setting extends Viewable {
    * @param {string} name
    * @param {Object} [spec]
    * @param {string} [spec.label] Setting label. Defaults to Setting name.
+   * @param {mixed} [spec.value] Default Setting value.
    * @param {boolean} [spec.visible=true] Wether setting is visible.
    * @param {number} [spec.priority=1] Settings will be ordered by
    * priority (descending).
+   * @param {string} [spec.style="default"] Setting appearance
    * @param {number} [spec.width=12] Setting width in columns (1-12).
-   * @param {mixed} [spec.value] Default Setting value.
    * @param {function(rawValue: mixed, setting: Setting): boolean|object}
    * [spec.validateValue] Function to execute whenever a value
    * gets validated, returns true if valid.
@@ -49,6 +50,7 @@ export default class Setting extends Viewable {
     this._label = spec.label || StringUtil.camelCaseToRegular(name, ' ')
     this._visible = spec.visible !== false
     this._priority = spec.priority || 1
+    this._style = spec.style || 'default'
     this._width = spec.width || 12
     this._viewPrototype = SettingView
   }
@@ -104,6 +106,25 @@ export default class Setting extends Viewable {
   setPriority (priority) {
     this._priority = priority
     this.hasDelegate() && this.getDelegate().settingNeedsLayout(this)
+    return this
+  }
+
+  /**
+   * Returns the setting appearance.
+   * @return {string}
+   */
+  getStyle () {
+    return this._style
+  }
+
+  /**
+   * Sets the setting appearance.
+   * @param {string} style
+   * @return {Setting} Fluent interface
+   */
+  setStyle (style) {
+    this._style = style
+    this.hasView() && this.getView().setStyle(style)
     return this
   }
 
@@ -339,5 +360,16 @@ export default class Setting extends Viewable {
   extractValue (data) {
     this.setValue(data)
     return this
+  }
+
+  /**
+   * Triggered when view has been created.
+   * @protected
+   * @param {View} view
+   */
+  didCreateView (view) {
+    this.getView()
+      .setStyle(this.getStyle())
+      .setMessage(this.getMessage())
   }
 }

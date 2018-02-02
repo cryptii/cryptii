@@ -33,6 +33,7 @@ export default class TextTransformEncoder extends Encoder {
         type: 'enum',
         label: 'Case',
         value: 'none',
+        style: 'radio',
         options: {
           elements: [
             'none',

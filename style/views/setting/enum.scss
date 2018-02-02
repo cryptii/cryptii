@@ -1,42 +1,112 @@
 
 .setting-enum {
+  $block: &;
 
-  &__field {
-    position: relative;
+  &--default {
 
-    &::before,
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 50%;
-      right: 20px;
-      height: 2px;
-      width: 8px;
-      transform: translate(-0.5px, 2px) rotate(-45deg);
-      transform-origin: left center;
-      background: $c-text;
+    #{$block}__field {
+      position: relative;
+
+      &::before,
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        height: 2px;
+        width: 8px;
+        transform: translate(-0.5px, 2px) rotate(-45deg);
+        transform-origin: left center;
+        background: $c-text;
+      }
+
+      &::after {
+        transform: translate(0.5px, 2px) rotate(-135deg);
+      }
     }
 
-    &::after {
-      transform: translate(0.5px, 2px) rotate(-135deg);
+    #{$block}__select {
+      border: none;
+      padding: 8px 16px;
+      line-height: 24px;
+      @extend %t-setting-value;
+      background: transparent;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      @include browser(ie-11) {
+        // hide select dropdown control in ie11
+        &::-ms-expand {
+          display: none;
+        }
+      }
     }
   }
 
-  &__select {
-    border: none;
-    padding: 8px 16px;
-    line-height: 24px;
-    @extend %t-setting-value;
-    background: transparent;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+  &--radio {
 
-    @include browser(ie-11) {
-      // hide select dropdown control in ie11
-      &::-ms-expand {
-        display: none;
+    #{$block}__field {
+      @extend .setting__field;
+    }
+
+    #{$block}__option {
+      position: relative;
+    }
+
+    #{$block}__option-radio {
+      position: absolute;
+      top: 6px;
+      left: 0;
+      z-index: -1;
+      opacity: 0;
+    }
+
+    #{$block}__option-label {
+      display: block;
+      padding: 4px 0 4px 24px;
+      @extend %t-text;
+      line-height: 20px;
+      color: $c-text-detail;
+      user-select: none;
+      cursor: pointer;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 6px;
+        left: 0;
+        width: 12px;
+        height: 12px;
+        background: $c-white;
+        border: 2px solid $c-text-detail;
+        border-radius: 8px;
+        pointer-events: none;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 11px;
+        left: 5px;
+        width: 6px;
+        height: 6px;
+        border-radius: 8px;
+        pointer-events: none;
+      }
+    }
+
+    #{$block}__option-radio:checked + #{$block}__option-label {
+      @extend %t-setting-value;
+      color: $c-text;
+
+      &::before {
+        border-color: $c-text;
+      }
+
+      &::after {
+        background: $c-text;
       }
     }
   }
