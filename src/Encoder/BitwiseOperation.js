@@ -4,7 +4,7 @@ import Encoder from '../Encoder'
 
 const meta = {
   name: 'bitwise-operation',
-  title: 'Bitwise Operation',
+  title: 'Bitwise operation',
   category: 'Transform',
   type: 'encoder'
 }
@@ -64,7 +64,7 @@ export default class BitwiseOperationEncoder extends Encoder {
       },
       {
         name: 'operand',
-        label: 'Repeating Operand B',
+        label: 'Operand B (Repeating)',
         type: 'bytes',
         value: new Uint8Array([15]),
         visible: false,

@@ -42,7 +42,7 @@
     visibility: hidden;
     transition-property: opacity, visibility;
     transition-duration: 0.2s;
-    word-break: break-all;
+    word-break: break-word;
 
     #{$block}--focus & {
       opacity: 1;

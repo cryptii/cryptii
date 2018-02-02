@@ -79,8 +79,17 @@ export default class ByteSettingView extends SettingView {
    * @param {Event} evt
    */
   inputValueDidChange (evt) {
-    // notify model
     let string = StringUtil.removeWhitespaces(this._$input.value)
+
+    // verify hexadecimal format
+    if (string.match(/^[0-9a-f]+$/gi) === null) {
+      return this.setMessage(`The value contains non-hexadecimal characters`)
+    }
+
+    // clear message
+    this.clearMessage()
+
+    // interpret bytes
     let bytes = ByteEncoder.bytesFromHexString(string)
     this.getModel().viewValueDidChange(this, bytes)
   }

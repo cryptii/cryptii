@@ -160,14 +160,6 @@ export default class Setting extends Viewable {
   }
 
   /**
-   * Returns value.
-   * @return {mixed}
-   */
-  getValue () {
-    return this._value
-  }
-
-  /**
    * Returns a message that explains why the current value is invalid.
    * @return {null|string}
    */
@@ -184,6 +176,14 @@ export default class Setting extends Viewable {
   }
 
   /**
+   * Returns value.
+   * @return {mixed}
+   */
+  getValue () {
+    return this._value
+  }
+
+  /**
    * Sets value, validates it, filters it and notifies delegate.
    * @param {mixed} rawValue Setting value.
    * @param {?Object} [sender] Sender object of this request.
@@ -196,15 +196,21 @@ export default class Setting extends Viewable {
     this._valid = validationResult === true
 
     // update message
-    if (typeof validationResult === 'object') {
-      this._message = validationResult.message
-      this._messageKey = validationResult.key
+    if (!this._valid) {
+      if (typeof validationResult === 'object') {
+        this._message = validationResult.message
+        this._messageKey = validationResult.key
+      } else {
+        this._message = 'The value is invalid'
+        this._messageKey = 'invalid'
+      }
     } else {
       this._message = null
       this._messageKey = null
     }
 
-    this.updateView()
+    // update message on view
+    this.hasView() && this.getView().setMessage(this.getMessage())
 
     if (!this._valid) {
       this._value = rawValue

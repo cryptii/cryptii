@@ -11,6 +11,36 @@ export default class SettingView extends View {
   constructor (factory) {
     super(factory)
     this._$message = null
+    this._message = null
+  }
+
+  /**
+   * Returns the current message, if any.
+   * @protected
+   * @return {?string} Message or null
+   */
+  getMessage () {
+    return this._message
+  }
+
+  /**
+   * Sets the message.
+   * @protected
+   * @param {?string} message
+   * @return {SettingView} Fluent interface
+   */
+  setMessage (message) {
+    this._message = message
+    return this.update()
+  }
+
+  /**
+   * Clears the message.
+   * @protected
+   * @return {SettingView} Fluent interface
+   */
+  clearMessage () {
+    return this.setMessage(null)
   }
 
   /**
@@ -55,12 +85,12 @@ export default class SettingView extends View {
    * @return {?HTMLElement}
    */
   renderMessage () {
-    if (this.getModel().getMessage() === null) {
-      return null
+    if (this.getMessage() !== null) {
+      return View.createElement('div', {
+        className: 'setting__message'
+      }, this.getMessage())
     }
-    return View.createElement('div', {
-      className: 'setting__message'
-    }, this.getModel().getMessage())
+    return null
   }
 
   /**
@@ -90,8 +120,7 @@ export default class SettingView extends View {
     }
 
     // add invalid modifier
-    let valid = this.getModel().isValid()
-    if (!valid) {
+    if (!this.getModel().isValid() || this.getMessage() !== null) {
       className += ' setting--invalid'
     }
 
