@@ -11,6 +11,7 @@ import BytesViewer from '../Viewer/Bytes'
 import CaesarCipherEncoder from '../Encoder/CaesarCipher'
 import EnigmaEncoder from '../Encoder/Enigma'
 import HashEncoder from '../Encoder/Hash'
+import HMACEncoder from '../Encoder/HMAC'
 import MorseCodeEncoder from '../Encoder/MorseCode'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import ROT13Encoder from '../Encoder/ROT13'
@@ -53,7 +54,8 @@ export default class BrickFactory extends Factory {
       Base64Encoder,
       Ascii85Encoder,
       MorseCodeEncoder,
-      HashEncoder
+      HashEncoder,
+      HMACEncoder
     ]
 
     // register each brick

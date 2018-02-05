@@ -69,6 +69,7 @@ gulp.task('test', ['lint-test', 'lint-script'], () => {
   return gulp.src(paths.test + '/**/*.js', { read: false })
     .pipe(mocha({
       reporter: 'spec',
+      require: ['babel-polyfill'],
       compilers: [
         'js:babel-core/register'
       ]

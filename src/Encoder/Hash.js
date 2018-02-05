@@ -12,7 +12,7 @@ const meta = {
 }
 
 /**
- * Encoder Brick for creating a digest from given hash function and content.
+ * Encoder Brick for creating message digests.
  */
 export default class HashEncoder extends Encoder {
   /**

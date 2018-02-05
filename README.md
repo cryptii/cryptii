@@ -41,6 +41,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and wit
 | `ascii85` | Encoding | [Ascii85 / Base85](https://en.wikipedia.org/wiki/Ascii85) |
 | `morse-code` | Encoding | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
 | `hash` | Modern cryptography | Creating a [message digest](https://en.wikipedia.org/wiki/Cryptographic_hash_function) |
+| `hmac` | Modern cryptography | Creating a [Hash-based message authentication code](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code) |
 
 Example usage in code:
 
