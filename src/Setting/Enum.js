@@ -89,6 +89,9 @@ export default class EnumSetting extends Setting {
       this._value = this._elements[0]
     }
 
+    // refresh view
+    this.hasView() && this.getView().refresh()
+
     return revalidate ? this.revalidateValue() : this
   }
 
