@@ -143,6 +143,7 @@ export default class Setting extends Viewable {
    */
   setWidth (width) {
     this._width = width
+    this.updateView()
     return this
   }
 

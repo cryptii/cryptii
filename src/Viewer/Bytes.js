@@ -55,12 +55,13 @@ export default class BytesViewer extends Viewer {
         width: 6,
         value: 8,
         options: {
-          elements: [null, 4, 8, 16],
+          elements: [null, 4, 8, 16, 32],
           labels: [
             'None',
             'Half-byte',
             'Byte',
-            '2 Bytes'
+            '2 Bytes',
+            '4 Bytes'
           ]
         }
       }
