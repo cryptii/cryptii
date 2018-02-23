@@ -1,8 +1,11 @@
 
 import { describe } from 'mocha'
 
-import EncoderTester from '../Helper/EncoderTester'
 import Ascii85Encoder from '../../src/Encoder/Ascii85'
+import ByteEncoder from '../../src/ByteEncoder'
+import EncoderTester from '../Helper/EncoderTester'
+
+const bytes = ByteEncoder.bytesFromHexString
 
 /** @test {Ascii85Encoder} */
 describe('Ascii85Encoder', () => EncoderTester.test(Ascii85Encoder, [
@@ -56,5 +59,11 @@ describe('Ascii85Encoder', () => EncoderTester.test(Ascii85Encoder, [
       `CAfu2/AKYi(DIb:@FD,*)+C]U=@3BN#EcYf8ATD3s@q?d$AftVqCh[NqF<G:8+EV:.+Cf>` +
       `-FD5W8ARlolDIal(DId<j@<?3r@:F%a+D58'ATD4$Bl@l3De:,-DJs\`8ARoFb/0JMK@qB` +
       `4^F!,R<AKZ&-DfTqBG%G>uD.RTpAKYo'+CT/5+Cei#DII?(E,9)oF*2M7/c`
+  },
+  {
+    // Z85 test case
+    settings: { variant: 'Z85' },
+    content: bytes('864FD26FB559F75B'),
+    expectedResult: 'HelloWorld'
   }
 ]))

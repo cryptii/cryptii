@@ -10,6 +10,23 @@ const meta = {
   type: 'encoder'
 }
 
+const variantSpecs = [
+  {
+    name: 'original',
+    label: 'Original',
+    alphabet: null,
+    zeroTupleChar: 'z'
+  },
+  {
+    name: 'Z85',
+    label: 'ZeroMQ (Z85)',
+    alphabet:
+      '0123456789abcdefghijklmnopqrstuvwxyzABCDEFG' +
+      'HIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#',
+    zeroTupleChar: null
+  }
+]
+
 /**
  * Encoder Brick for Ascii85/Base85 encoding and decoding.
  */
@@ -23,6 +40,23 @@ export default class Ascii85Encoder extends Encoder {
   }
 
   /**
+   * Brick constructor
+   */
+  constructor () {
+    super()
+    this.registerSetting({
+      name: 'variant',
+      type: 'enum',
+      label: 'Variant',
+      value: 'original',
+      options: {
+        elements: variantSpecs.map(variant => variant.name),
+        labels: variantSpecs.map(variant => variant.label)
+      }
+    })
+  }
+
+  /**
    * Performs encode on given content.
    * @protected
    * @param {Chain} content
@@ -30,6 +64,8 @@ export default class Ascii85Encoder extends Encoder {
    */
   performEncode (content) {
     let bytes = content.getBytes()
+    let variant = variantSpecs.find(variant =>
+      variant.name === this.getSettingValue('variant'))
     let n = bytes.length
 
     // encode each tuple of 4 bytes
@@ -45,7 +81,7 @@ export default class Ascii85Encoder extends Encoder {
         ((bytes[i + 3] || 0))
       ) >>> 0
 
-      if (tuple > 0) {
+      if (variant.zeroTupleChar === null || tuple > 0) {
         // calculate 5 digits by repeatedly dividing
         // by 85 and taking the remainder
         digits = []
@@ -63,10 +99,14 @@ export default class Ascii85Encoder extends Encoder {
         }
 
         // convert digits to characters and glue them together
-        string += digits.map(digit => String.fromCharCode(digit + 33)).join('')
+        string += digits.map(digit =>
+          variant.alphabet === null
+          ? String.fromCharCode(digit + 33)
+          : variant.alphabet[digit]
+        ).join('')
       } else {
-        // an all-zero tuple is encoded as a single character 'z'
-        string += 'z'
+        // an all-zero tuple is encoded as a single character
+        string += variant.zeroTupleChar
       }
     }
 
@@ -97,6 +137,8 @@ export default class Ascii85Encoder extends Encoder {
    */
   performDecode (content) {
     let string = content.getString()
+    let variant = variantSpecs.find(variant =>
+      variant.name === this.getSettingValue('variant'))
     let n = string.length
 
     // decode each tuple of 5 characters
@@ -104,8 +146,8 @@ export default class Ascii85Encoder extends Encoder {
     let i = 0
     let digits, tuple, tupleBytes
     while (i < n) {
-      if (string[i] === 'z') {
-        // a single character 'z' encodes an all-zero tuple
+      if (string[i] === variant.zeroTupleChar) {
+        // a single character encodes an all-zero tuple
         bytes.push(0, 0, 0, 0)
         i++
       } else {
@@ -114,7 +156,10 @@ export default class Ascii85Encoder extends Encoder {
           .substr(i, 5)
           .split('')
           .map((character, index) => {
-            let digit = character.charCodeAt(0) - 33
+            let digit =
+              variant.alphabet === null
+              ? character.charCodeAt(0) - 33
+              : variant.alphabet.indexOf(character)
             if (digit < 0 || digit > 84) {
               throw new InvalidInputError(
                 `Invalid character '${character}' at index ${index}`)
