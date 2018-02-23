@@ -36,13 +36,14 @@ export default class Ascii85Encoder extends Encoder {
     let string = ''
     let digits, j
     for (let i = 0; i < n; i += 4) {
-      // read 32-bit binary number from bytes following the
+      // read 32-bit unsigned integer from bytes following the
       // big-endian convention (most significant byte first)
-      let tuple =
+      let tuple = (
         ((bytes[i]) << 24) +
         ((bytes[i + 1] || 0) << 16) +
         ((bytes[i + 2] || 0) << 8) +
         ((bytes[i + 3] || 0))
+      ) >>> 0
 
       if (tuple > 0) {
         // calculate 5 digits by repeatedly dividing

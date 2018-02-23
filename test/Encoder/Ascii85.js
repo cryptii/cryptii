@@ -38,6 +38,11 @@ describe('Ascii85Encoder', () => EncoderTester.test(Ascii85Encoder, [
     expectedResult: `87cURD]i*`
   },
   {
+    // Unicode characters
+    content: `The quick brown 🦊 jumps over 13 lazy 🐶.`,
+    expectedResult: `<+ohcEHPu*CER),Dg-(An=QS8+DQ%9E-!.?G%G\\:0f'qg@=!2An=PfN/c`
+  },
+  {
     // wikipedia example
     // string with incomplete last 4-tuple
     content:
