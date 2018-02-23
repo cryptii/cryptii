@@ -19,7 +19,7 @@ const variantSpecs = [
   },
   {
     name: 'Z85',
-    label: 'ZeroMQ (Z85)',
+    label: 'Z85 (ZeroMQ)',
     alphabet:
       '0123456789abcdefghijklmnopqrstuvwxyzABCDEFG' +
       'HIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#',

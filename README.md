@@ -38,7 +38,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and wit
 | `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
 | `url-encoding` | Encoding | [URL encoding / Percent-encoding](https://en.wikipedia.org/wiki/Percent-encoding) |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
-| `ascii85` | Encoding | [Ascii85 / Base85](https://en.wikipedia.org/wiki/Ascii85) |
+| `ascii85` | Encoding | [Ascii85 / Base85](https://en.wikipedia.org/wiki/Ascii85) incl. variant [Z85](https://rfc.zeromq.org/spec:32/Z85/) |
 | `morse-code` | Encoding | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
 | `integer` | Data types | Translates between bytes and [integers](https://en.wikipedia.org/wiki/Integer_(computer_science)) |
 | `hash` | Modern cryptography | Creating a [message digest](https://en.wikipedia.org/wiki/Cryptographic_hash_function) |
