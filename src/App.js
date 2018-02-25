@@ -21,15 +21,9 @@ export default class App extends Viewable {
    * @return {Application} Fluent interface
    */
   run () {
-    try {
-      // try to retrieve pipe data, parse errors may occur
-      let $pipeData = document.querySelector('.app .app__pipe .pipe__data')
-      let pipeData = JSON.parse($pipeData.innerHTML)
-      this._pipe = Pipe.extract(pipeData)
-    } catch (err) {
-      // create empty pipe
-      this._pipe = new Pipe()
-    }
+    let $pipeData = document.querySelector('.app .app__pipe .pipe__data')
+    let pipeData = JSON.parse($pipeData.innerHTML)
+    this._pipe = Pipe.extract(pipeData)
 
     // trigger view creation and initial layout
     let view = this.getView()
