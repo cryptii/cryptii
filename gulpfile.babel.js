@@ -7,7 +7,6 @@ import clone from 'gulp-clone'
 import commonJs from 'rollup-plugin-commonjs'
 import concat from 'gulp-concat'
 import del from 'del'
-import esdoc from 'gulp-esdoc-stream'
 import gulp from 'gulp'
 import header from 'gulp-header'
 import mergeStream from 'merge-stream'
@@ -30,8 +29,7 @@ let paths = {
   scriptDist: './public/dist/script',
   style: './style',
   styleDist: './public/dist/style',
-  test: './test',
-  doc: './public/docs'
+  test: './test'
 }
 
 // try to retrieve current commit hash
@@ -76,21 +74,7 @@ gulp.task('test', ['lint-test', 'lint-script'], () => {
     }))
 })
 
-gulp.task('doc', ['clean-doc'], () => {
-  return gulp.src(paths.script + '/**/*.js')
-    .pipe(esdoc({
-      destination: paths.doc,
-      title: 'Cryptii',
-      test: {
-        type: 'mocha',
-        source: paths.test,
-        includes: ['.js$']
-      }
-    }))
-})
-
 let rollupCache
-
 gulp.task('script', ['lint-script', 'clean-script'], () => {
   let appStream = rollup({
     input: paths.script + '/index.js',
@@ -224,10 +208,6 @@ gulp.task('clean-script', () => {
   return del([paths.scriptDist])
 })
 
-gulp.task('clean-doc', () => {
-  return del([paths.doc])
-})
-
 gulp.task('watch', () => {
   // watch scripts and tests
   gulp.watch(
@@ -239,5 +219,5 @@ gulp.task('watch', () => {
     ['style'])
 })
 
-gulp.task('build', ['script', 'style', 'doc'])
+gulp.task('build', ['script', 'style'])
 gulp.task('default', ['test', 'script', 'style', 'watch'])
