@@ -8,8 +8,6 @@ import AffineCipherEncoder from '../src/Encoder/AffineCipher'
 
 const examplePipeData = {
   version: 1,
-  title: 'Affine Cipher – Encode and Decode',
-  description: 'Lorem ipsum dolor sit amet',
   bricks: [
     { name: 'text' },
     { name: 'affine-cipher', settings: { a: 7, b: 7 } },
@@ -27,9 +25,6 @@ describe('Pipe', () => {
   describe('extract()', () => {
     it('should extract pipe from structured data', () => {
       const pipe = Pipe.extract(examplePipeData)
-      // pipe meta
-      assert.strictEqual(pipe.getTitle(), examplePipeData.title)
-      assert.strictEqual(pipe.getDescription(), examplePipeData.description)
       // pipe bricks
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 3)

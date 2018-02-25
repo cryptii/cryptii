@@ -30,10 +30,6 @@ export default class Pipe extends Viewable {
     // content buckets
     this._bucketContent = [new Chain()]
     this._selectedBucket = 0
-
-    // pipe meta
-    this._title = null
-    this._description = null
   }
 
   /**
@@ -616,42 +612,6 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Returns Pipe title.
-   * @return {?string} Pipe title
-   */
-  getTitle () {
-    return this._title
-  }
-
-  /**
-   * Sets Pipe title.
-   * @param {?string} title Pipe title
-   * @return {Pipe} Fluent interface
-   */
-  setTitle (title) {
-    this._title = title
-    return this
-  }
-
-  /**
-   * Returns Pipe description.
-   * @return {?string} Pipe description
-   */
-  getDescription () {
-    return this._description
-  }
-
-  /**
-   * Sets Pipe description.
-   * @param {?string} description Pipe description
-   * @return {Pipe} Fluent interface
-   */
-  setDescription (description) {
-    this._description = description
-    return this
-  }
-
-  /**
    * Triggered when view has been created.
    * @protected
    * @param {View} view
@@ -707,8 +667,6 @@ export default class Pipe extends Viewable {
     // serialize pipe
     return {
       version: 1,
-      title: this.getTitle(),
-      description: this.getDescription(),
       bricks: this._bricks.map(brick => brick.serialize()),
       content: contentObject
     }
@@ -735,8 +693,6 @@ export default class Pipe extends Viewable {
     // compose pipe
     let pipe = new Pipe()
     pipe.addBrick.apply(pipe, bricks)
-    pipe.setTitle(data.title)
-    pipe.setDescription(data.description)
 
     // set content
     if (data.content) {
