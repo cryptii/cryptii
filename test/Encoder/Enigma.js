@@ -63,5 +63,21 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       'mjkmm tcxxf rvapd deykj ahrjj sqyil ttzfe gggla khejr tqoqk pmapf ' +
       'pdgoq zcqho qttpx apdro fdoul uwbnd fwuvs gwvdy jloob nqoam wjeba ' +
       'eihlb gteph hgpst qdmat ccffw yvhvu x'
+  },
+  {
+    // setting testing rotors and position limits
+    settings: {
+      rotor1: 'VII',
+      rotor2: 'VIII',
+      rotor3: 'V',
+      position1: 1,
+      position2: 13,
+      position3: 26,
+      reflector: 'UKW-C',
+      plugboard: '',
+      includeForeignChars: false
+    },
+    content: 'thequ ickbr ownfo xjump sover lazyd ogs',
+    expectedResult: 'aajrl afwxd zskuu qcjrg qiptv qpacp awg'
   }
 ]))

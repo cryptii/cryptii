@@ -209,7 +209,7 @@ export default class EnigmaEncoder extends Encoder {
         options: {
           integer: true,
           min: 1,
-          max: 26
+          max: 27
         }
       },
       {
@@ -221,7 +221,7 @@ export default class EnigmaEncoder extends Encoder {
         options: {
           integer: true,
           min: 1,
-          max: 26
+          max: 27
         }
       },
       {
@@ -233,7 +233,7 @@ export default class EnigmaEncoder extends Encoder {
         options: {
           integer: true,
           min: 1,
-          max: 26
+          max: 27
         }
       },
       {
