@@ -1,4 +1,14 @@
 
 .encoder {
   color: $c-encoder;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: $c-encoder;
+    border-radius: $default-border-radius $default-border-radius 0 0;
+  }
 }

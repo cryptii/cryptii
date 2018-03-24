@@ -9,7 +9,7 @@ $featured-image-width: 130px !default;
   position: relative;
   overflow: hidden;
   width: $featured-width;
-  margin-bottom: -$default-border-radius;
+  margin-bottom: -4px;
   @extend %s-sheet;
 
   @include breakpoint(xs) {

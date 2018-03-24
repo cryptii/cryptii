@@ -196,8 +196,8 @@ $header-height: 96px !default;
 
   &__header {
     order: 2;
-    padding-top: 44px;
-    padding-bottom: 40px;
+    padding-top: 36px;
+    padding-bottom: 32px;
 
     @include breakpoint(xs, s) {
       text-align: center;

@@ -41,7 +41,7 @@ $header-height: 96px !default;
     display: inline-block;
     padding: 2px 6px;
     margin-left: 2px;
-    border: 1px solid $c-line;
+    background: $c-background-shaded;
     border-radius: $default-border-radius;
     @extend %t-text;
     transform: translate(0, -4px);

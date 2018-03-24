@@ -2,6 +2,7 @@
 .brick {
   $block: &;
   display: flex;
+  position: relative;
   flex-direction: column;
   @extend %s-sheet;
 
@@ -37,7 +38,7 @@
       height: 2px;
       transform: translate(-50%, -50%) rotate(45deg);
       transform-origin: center center;
-      background-color: $c-text-light;
+      background-color: $c-text-detail;
     }
 
     &::after {
@@ -63,7 +64,7 @@
     display: block;
     padding: 0 6px;
     @extend %t-brick-action;
-    color: $c-text-light;
+    color: $c-text-detail;
 
     &--active {
       color: inherit;
@@ -163,7 +164,7 @@
     width: 16px;
     height: 16px;
     margin-right: 8px;
-    background-image: inline-svg('icons/done.svg', (path: (fill: $c-text-light)));
+    background-image: inline-svg('icons/done.svg', (path: (fill: $c-text-detail)));
     background-repeat: no-repeat;
     background-size: 100% auto;
 
@@ -173,7 +174,7 @@
 
     #{$block}__status--forward &,
     #{$block}__status--backward & {
-      background-image: inline-svg('icons/arrow-left.svg', (path: (fill: $c-text-light)));
+      background-image: inline-svg('icons/arrow-left.svg', (path: (fill: $c-text-detail)));
 
       @include breakpoint(xs, s) {
         transform: rotate(90deg);
@@ -191,7 +192,7 @@
 
   &__status-message {
     display: inline;
-    color: $c-text-light;
+    color: $c-text-detail;
 
     #{$block}__status--error & {
       color: $c-text-error;

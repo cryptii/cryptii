@@ -2,28 +2,28 @@
 $c-white: #ffffff;
 $c-black: #000000;
 $c-red: #d14700;
+$c-blue: #00b1d1;
 
-$c-primary: #00b1d1;
+$c-primary: $c-blue;
 
 $c-background: $c-white;
+$c-background-shaded: #f2f4f6;
 
-$c-line: #E9E9E9;
-$c-line-shaded: #dddddd;
+$c-line: #e9edf0;
 $c-line-error: $c-red;
 
-$c-text: #333333;
-$c-text-detail: #8C8C8C;
+$c-text: #272727;
+$c-text-detail: #9aa3a8;
 $c-text-primary: #00a3cc;
 $c-text-error: $c-red;
-$c-text-light: #aaaaaa;
 
-$c-footer-text: #666666;
+$c-footer-text: #8898aa;
 
-$c-setting-control-background: #e6e6e6;
-$c-setting-label: $c-text-light;
+$c-setting-control-background: #e3e7ec;
+$c-setting-label: $c-text-detail;
 
 $c-pipe: $c-primary;
-$c-pipe-background: #f2f2f2;
+$c-pipe-background: $c-background-shaded;
 
 $c-viewer: $c-primary;
 $c-encoder: #ff9900;
