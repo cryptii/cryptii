@@ -15,35 +15,32 @@ const models = [
   {
     name: 'I',
     label: 'Enigma I (Army, Air Force)',
-    defaultReflector: 'UKW-A',
     characterGroupSize: 5,
     slots: [
-      { type: 'rotor', default: 'V' },
-      { type: 'rotor', default: 'I' },
-      { type: 'rotor', default: 'III' }
+      { type: 'rotor' },
+      { type: 'rotor' },
+      { type: 'rotor' }
     ]
   },
   {
     name: 'M3',
     label: 'Enigma M3 (Army, Navy)',
-    defaultReflector: 'UKW-B',
     characterGroupSize: 5,
     slots: [
-      { type: 'rotor', default: 'VI' },
-      { type: 'rotor', default: 'I' },
-      { type: 'rotor', default: 'III' }
+      { type: 'rotor' },
+      { type: 'rotor' },
+      { type: 'rotor' }
     ]
   },
   {
     name: 'M4',
     label: 'Enigma M4 "Shark" (Submarines)',
-    defaultReflector: 'UKW-C-thin',
     characterGroupSize: 4,
     slots: [
-      { type: 'rotor-thin', default: 'beta' },
-      { type: 'rotor', default: 'VI' },
-      { type: 'rotor', default: 'I' },
-      { type: 'rotor', default: 'III' }
+      { type: 'rotor-thin' },
+      { type: 'rotor' },
+      { type: 'rotor' },
+      { type: 'rotor' }
     ]
   }
 ]
@@ -188,52 +185,43 @@ export default class EnigmaEncoder extends Encoder {
   constructor () {
     super()
 
-    // collect rotor names and labels
-    let rotorNames = []
-    let rotorLabels = []
+    // retrieve default model with its rotors
+    const model = EnigmaEncoder.findModel('M3')
+    const rotors = EnigmaEncoder.filterRotors(model.name, 'rotor')
+    const rotorNames = rotors.map(rotor => rotor.name)
+    const rotorLabels = rotors.map(rotor => rotor.label)
+    const reflectors = EnigmaEncoder.filterRotors(model.name, 'reflector')
 
-    rotors
-      .filter(rotor => rotor.type === 'rotor')
-      .forEach(rotor => {
-        rotorNames.push(rotor.name)
-        rotorLabels.push(rotor.label)
-      })
+    // model setting
+    this.registerSetting({
+      name: 'model',
+      type: 'enum',
+      value: model.name,
+      priority: 1000,
+      options: {
+        elements: models.map(model => model.name),
+        labels: models.map(model => model.label)
+      }
+    })
 
-    // collect reflector names and labels
-    let reflectorNames = []
-    let reflectorLabels = []
-
-    rotors
-      .filter(rotor => rotor.type === 'reflector')
-      .forEach(rotor => {
-        reflectorNames.push(rotor.name)
-        reflectorLabels.push(rotor.label)
-      })
-
-    this.registerSetting([
-      {
-        name: 'model',
+    // register settings for each possible slot
+    for (let i = 0; i < EnigmaEncoder.getMaxSlotCount(); i++) {
+      // rotor setting
+      this.registerSetting({
+        name: `rotor${i + 1}`,
+        label: `Rotor ${i + 1}`,
         type: 'enum',
-        value: 'M3',
-        priority: 100,
-        options: {
-          elements: models.map(model => model.name),
-          labels: models.map(model => model.label)
-        }
-      },
-      {
-        name: 'rotor1',
-        label: 'Rotor 1',
-        type: 'enum',
-        value: 'VI',
+        value: rotorNames[0],
         options: {
           elements: rotorNames,
           labels: rotorLabels
         }
-      },
-      {
-        name: 'position1',
-        label: 'Position 1',
+      })
+
+      // position setting
+      this.registerSetting({
+        name: `position${i + 1}`,
+        label: `Position ${i + 1}`,
         type: 'number',
         value: 1,
         options: {
@@ -241,102 +229,43 @@ export default class EnigmaEncoder extends Encoder {
           min: 1,
           max: 27
         }
-      },
-      {
-        name: 'rotor2',
-        label: 'Rotor 2',
-        type: 'enum',
-        value: 'I',
-        options: {
-          elements: rotorNames,
-          labels: rotorLabels
-        }
-      },
-      {
-        name: 'position2',
-        label: 'Position 2',
-        type: 'number',
-        value: 17,
-        options: {
-          integer: true,
-          min: 1,
-          max: 27
-        }
-      },
-      {
-        name: 'rotor3',
-        label: 'Rotor 3',
-        type: 'enum',
-        value: 'III',
-        options: {
-          elements: rotorNames,
-          labels: rotorLabels
-        }
-      },
-      {
-        name: 'position3',
-        label: 'Position 3',
-        type: 'number',
-        value: 12,
-        options: {
-          integer: true,
-          min: 1,
-          max: 27
-        }
-      },
-      {
-        name: 'rotor4',
-        label: 'Rotor 4',
-        type: 'enum',
-        value: 'III',
-        visible: false,
-        options: {
-          elements: rotorNames,
-          labels: rotorLabels
-        }
-      },
-      {
-        name: 'position4',
-        label: 'Position 4',
-        type: 'number',
-        value: 12,
-        visible: false,
-        options: {
-          integer: true,
-          min: 1,
-          max: 27
-        }
-      },
-      {
-        name: 'reflector',
-        type: 'enum',
-        value: 'UKW-B',
-        options: {
-          elements: reflectorNames,
-          labels: reflectorLabels
-        }
-      },
-      {
-        name: 'plugboard',
-        type: 'text',
-        value: 'bq cr di ej kw mt os px uz gh',
-        validateValue: this.validatePlugboardValue.bind(this),
-        filterValue: value => new Chain(value.getString().trim().toLowerCase())
-      },
-      {
-        name: 'includeForeignChars',
-        type: 'boolean',
-        label: 'Foreign Chars',
-        value: false,
-        options: {
-          trueLabel: 'Include',
-          falseLabel: 'Ignore'
-        }
-      }
-    ])
+      })
+    }
 
-    // initial model change event
-    this.modelDidChange(this.getSettingValue('model'))
+    // reflector setting
+    this.registerSetting({
+      name: 'reflector',
+      type: 'enum',
+      value: reflectors[0].name,
+      options: {
+        elements: reflectors.map(reflector => reflector.name),
+        labels: reflectors.map(reflector => reflector.label)
+      }
+    })
+
+    // plugboard setting
+    this.registerSetting({
+      name: 'plugboard',
+      type: 'text',
+      value: '',
+      validateValue: this.validatePlugboardValue.bind(this),
+      filterValue: value => new Chain(value.getString().trim().toLowerCase())
+    })
+
+    // foreign char setting
+    this.registerSetting({
+      name: 'includeForeignChars',
+      type: 'boolean',
+      label: 'Foreign Chars',
+      value: false,
+      options: {
+        trueLabel: 'Include',
+        falseLabel: 'Ignore'
+      }
+    })
+
+    // apply options and layout for given model
+    this.applyModel(model.name)
   }
 
   /**
@@ -347,21 +276,24 @@ export default class EnigmaEncoder extends Encoder {
   settingValueDidChange (setting, value) {
     super.settingValueDidChange(setting, value)
     if (setting.getName() === 'model') {
-      this.modelDidChange(value)
+      this.applyModel(value)
     }
   }
 
   /**
-   * Triggered when the model setting has changed.
-   * Updates setting options and layout to reflect the new model.
-   * @param {string} model Model name
+   * Applies options and layout for given model.
+   * @param {string} modelName Model name
+   * @return {EnigmaEncoder} Fluent interface
    */
-  modelDidChange (modelName) {
+  applyModel (modelName) {
     const model = EnigmaEncoder.findModel(modelName)
+    const maxSlotCount = EnigmaEncoder.getMaxSlotCount()
+
+    // use horizontal layout if there are no more than 3 slots in use
     const horizontalLayout = model.slots.length <= 3
 
-    // update settings of each slot
-    for (let i = 0; i < 4; i++) {
+    // update setting options and layout for each slot
+    for (let i = 0; i < maxSlotCount; i++) {
       const slot = i < model.slots.length ? model.slots[i] : null
       const rotorSetting = this.getSetting(`rotor${i + 1}`)
       const positionSetting = this.getSetting(`position${i + 1}`)
@@ -371,24 +303,30 @@ export default class EnigmaEncoder extends Encoder {
       positionSetting.setVisible(slot !== null)
 
       if (slot !== null) {
-        // update rotor options and settings layout
+        // configure and layout rotor setting
         const rotors = EnigmaEncoder.filterRotors(modelName, slot.type)
-        const rotorNames = rotors.map(rotor => rotor.name)
-        const rotorLabels = rotors.map(rotor => rotor.label)
 
         rotorSetting
+          .setElements(
+            rotors.map(rotor => rotor.name),
+            rotors.map(rotor => rotor.label),
+            null, false)
           .setWidth(horizontalLayout ? 4 : 6)
-          .setPriority(horizontalLayout ? 20 - i : 50 - i * 10 + 1)
-          .setElements(rotorNames, rotorLabels, null, false)
+          .setPriority(horizontalLayout
+            ? maxSlotCount * 2 - i
+            : (maxSlotCount - i) * 10 + 1)
 
         // apply slot default if current value is not available for this model
         if (rotorSetting.validateValue(rotorSetting.getValue()) !== true) {
-          rotorSetting.setValue(slot.default)
+          rotorSetting.setValue(rotors[0].name)
         }
 
+        // layout position setting
         positionSetting
           .setWidth(horizontalLayout ? 4 : 6)
-          .setPriority(horizontalLayout ? 10 - i : 50 - i * 10)
+          .setPriority(horizontalLayout
+            ? maxSlotCount - i
+            : (maxSlotCount - i) * 10)
       }
     }
 
@@ -401,9 +339,9 @@ export default class EnigmaEncoder extends Encoder {
       reflectors.map(reflector => reflector.label),
       null, false)
 
-    // apply first default if current value is not available for this model
+    // apply first rotor if current one is not available for this model
     if (reflectorSetting.validateValue(reflectorSetting.getValue()) !== true) {
-      reflectorSetting.setValue(model.defaultReflector)
+      reflectorSetting.setValue(reflectors[0].name)
     }
   }
 
@@ -415,25 +353,25 @@ export default class EnigmaEncoder extends Encoder {
    * @return {Chain}
    */
   performTranslate (content, isEncode) {
-    let includeForeignChars = this.getSettingValue('includeForeignChars')
-    let model = EnigmaEncoder.findModel(this.getSettingValue('model'))
+    const includeForeignChars = this.getSettingValue('includeForeignChars')
+    const model = EnigmaEncoder.findModel(this.getSettingValue('model'))
     let i = 0
 
     // collect selected rotors and positions
     let rotors = []
     let positions = []
     for (i = 0; i < model.slots.length; i++) {
-      let rotorName = this.getSettingValue(`rotor${i + 1}`)
-      rotors.push(EnigmaEncoder.findRotor(rotorName))
+      rotors.push(EnigmaEncoder.findRotor(
+        this.getSettingValue(`rotor${i + 1}`)))
       positions.push(this.getSettingValue(`position${i + 1}`) - 1)
     }
 
     // retrieve reflector
-    let reflector = EnigmaEncoder.findRotor(this.getSettingValue('reflector'))
+    const reflector = EnigmaEncoder.findRotor(this.getSettingValue('reflector'))
 
     // compose plugboard wiring
-    let plugboard = this.getSettingValue('plugboard')
-    let plugboardWiring = this.composePlugboardWiring(plugboard.toString())
+    const plugboard = this.getSettingValue('plugboard')
+    const plugboardWiring = this.composePlugboardWiring(plugboard.toString())
 
     // go through each content code point
     let encodedCodePoints = content.getCodePoints().map((codePoint, index) => {
@@ -533,7 +471,7 @@ export default class EnigmaEncoder extends Encoder {
     if (rotor.notches === undefined) {
       return false
     }
-    let positionChar = String.fromCharCode(97 + MathUtil.mod(position, 26))
+    const positionChar = String.fromCharCode(97 + MathUtil.mod(position, 26))
     return rotor.notches.indexOf(positionChar) !== -1
   }
 
@@ -547,7 +485,7 @@ export default class EnigmaEncoder extends Encoder {
    * @return {number} Mapped character index (0-25)
    */
   rotorMapChar (rotorOrWiring, position, charIndex, isReverse) {
-    let wiring = typeof rotorOrWiring === 'string'
+    const wiring = typeof rotorOrWiring === 'string'
       ? rotorOrWiring
       : rotorOrWiring.wiring
 
@@ -567,7 +505,7 @@ export default class EnigmaEncoder extends Encoder {
    */
   validatePlugboardValue (rawValue, setting) {
     // filter raw value
-    let plugboard = setting.filterValue(rawValue).getString()
+    const plugboard = setting.filterValue(rawValue).getString()
 
     // empty plugboard is valid
     if (plugboard === '') {
@@ -601,7 +539,7 @@ export default class EnigmaEncoder extends Encoder {
    * @return {object} Rotor entry
    */
   composePlugboardWiring (plugboard) {
-    let wiring = 'abcdefghijklmnopqrstuvwxyz'.split('')
+    const wiring = 'abcdefghijklmnopqrstuvwxyz'.split('')
     plugboard.split(' ').forEach(pair => {
       wiring[pair.charCodeAt(0) - 97] = pair[1]
       wiring[pair.charCodeAt(1) - 97] = pair[0]
@@ -623,6 +561,14 @@ export default class EnigmaEncoder extends Encoder {
       })
     }
     return modelMap[name] || null
+  }
+
+  /**
+   * Returns the max slot count for all available models.
+   * @return {number} Max slot count
+   */
+  static getMaxSlotCount () {
+    return models.reduce((max, model) => Math.max(max, model.slots.length), 0)
   }
 
   /**
