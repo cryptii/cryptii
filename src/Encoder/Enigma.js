@@ -197,7 +197,6 @@ export default class EnigmaEncoder extends Encoder {
       name: 'model',
       type: 'enum',
       value: model.name,
-      priority: 1000,
       options: {
         elements: models.map(model => model.name),
         labels: models.map(model => model.label)
@@ -212,6 +211,7 @@ export default class EnigmaEncoder extends Encoder {
         label: `Rotor ${i + 1}`,
         type: 'enum',
         value: rotorNames[0],
+        width: 4,
         options: {
           elements: rotorNames,
           labels: rotorLabels
@@ -224,6 +224,21 @@ export default class EnigmaEncoder extends Encoder {
         label: `Position ${i + 1}`,
         type: 'number',
         value: 1,
+        width: 4,
+        options: {
+          integer: true,
+          min: 1,
+          max: 27
+        }
+      })
+
+      // ring setting
+      this.registerSetting({
+        name: `ring${i + 1}`,
+        label: `Ring ${i + 1}`,
+        type: 'number',
+        value: 1,
+        width: 4,
         options: {
           integer: true,
           min: 1,
@@ -270,6 +285,7 @@ export default class EnigmaEncoder extends Encoder {
 
   /**
    * Triggered when a setting value has changed.
+   * @protected
    * @param {Setting} setting
    * @param {mixed} value Setting value
    */
@@ -282,6 +298,7 @@ export default class EnigmaEncoder extends Encoder {
 
   /**
    * Applies options and layout for given model.
+   * @protected
    * @param {string} modelName Model name
    * @return {EnigmaEncoder} Fluent interface
    */
@@ -289,44 +306,32 @@ export default class EnigmaEncoder extends Encoder {
     const model = EnigmaEncoder.findModel(modelName)
     const maxSlotCount = EnigmaEncoder.getMaxSlotCount()
 
-    // use horizontal layout if there are no more than 3 slots in use
-    const horizontalLayout = model.slots.length <= 3
-
     // update setting options and layout for each slot
     for (let i = 0; i < maxSlotCount; i++) {
       const slot = i < model.slots.length ? model.slots[i] : null
+      const slotVisible = slot !== null
       const rotorSetting = this.getSetting(`rotor${i + 1}`)
+      const ringSetting = this.getSetting(`ring${i + 1}`)
       const positionSetting = this.getSetting(`position${i + 1}`)
 
       // hide or show slot settings depending on model
-      rotorSetting.setVisible(slot !== null)
-      positionSetting.setVisible(slot !== null)
+      rotorSetting.setVisible(slotVisible)
+      ringSetting.setVisible(slotVisible)
+      positionSetting.setVisible(slotVisible)
 
-      if (slot !== null) {
+      if (slotVisible) {
         // configure and layout rotor setting
         const rotors = EnigmaEncoder.filterRotors(modelName, slot.type)
-
-        rotorSetting
-          .setElements(
-            rotors.map(rotor => rotor.name),
-            rotors.map(rotor => rotor.label),
-            null, false)
-          .setWidth(horizontalLayout ? 4 : 6)
-          .setPriority(horizontalLayout
-            ? maxSlotCount * 2 - i
-            : (maxSlotCount - i) * 10 + 1)
+        rotorSetting.setElements(
+          rotors.map(rotor => rotor.name),
+          rotors.map(rotor => rotor.label),
+          null,
+          false)
 
         // apply slot default if current value is not available for this model
         if (rotorSetting.validateValue(rotorSetting.getValue()) !== true) {
           rotorSetting.setValue(rotors[0].name)
         }
-
-        // layout position setting
-        positionSetting
-          .setWidth(horizontalLayout ? 4 : 6)
-          .setPriority(horizontalLayout
-            ? maxSlotCount - i
-            : (maxSlotCount - i) * 10)
       }
     }
 
@@ -337,7 +342,8 @@ export default class EnigmaEncoder extends Encoder {
     reflectorSetting.setElements(
       reflectors.map(reflector => reflector.name),
       reflectors.map(reflector => reflector.label),
-      null, false)
+      null,
+      false)
 
     // apply first rotor if current one is not available for this model
     if (reflectorSetting.validateValue(reflectorSetting.getValue()) !== true) {
@@ -357,13 +363,17 @@ export default class EnigmaEncoder extends Encoder {
     const model = EnigmaEncoder.findModel(this.getSettingValue('model'))
     let i = 0
 
-    // collect selected rotors and positions
+    // collect selected rotors and initial positions
     let rotors = []
     let positions = []
     for (i = 0; i < model.slots.length; i++) {
       rotors.push(EnigmaEncoder.findRotor(
         this.getSettingValue(`rotor${i + 1}`)))
-      positions.push(this.getSettingValue(`position${i + 1}`) - 1)
+
+      // retrieve position and apply ring setting
+      let position = this.getSettingValue(`position${i + 1}`) - 1
+      const ringSetting = this.getSettingValue(`ring${i + 1}`) - 1
+      positions.push(MathUtil.mod(position - ringSetting, 26))
     }
 
     // retrieve reflector
@@ -499,6 +509,7 @@ export default class EnigmaEncoder extends Encoder {
 
   /**
    * Validates plugboard setting value.
+   * @protected
    * @param {mixed} rawValue
    * @param {Setting} setting
    * @return {boolean} Returns true, if value is valid.
@@ -535,6 +546,7 @@ export default class EnigmaEncoder extends Encoder {
 
   /**
    * Creates plugboard wiring from plugboard setting value.
+   * @protected
    * @param {string} plugboard
    * @return {object} Rotor entry
    */
@@ -565,6 +577,7 @@ export default class EnigmaEncoder extends Encoder {
 
   /**
    * Returns the max slot count for all available models.
+   * @protected
    * @return {number} Max slot count
    */
   static getMaxSlotCount () {
@@ -589,6 +602,7 @@ export default class EnigmaEncoder extends Encoder {
 
   /**
    * Filters rotors by model and type.
+   * @protected
    * @param {string} modelName Model name
    * @param {string} [type='rotor'] Rotor type
    * @return {object[]} Array of rotors

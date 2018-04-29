@@ -16,7 +16,6 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       position2: 3,
       position3: 11,
       reflector: 'UKW-B',
-      plugboard: '',
       includeForeignChars: false
     },
     direction: 'encode',
@@ -35,7 +34,6 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       position2: 5,
       position3: 21,
       reflector: 'UKW-B',
-      plugboard: '',
       includeForeignChars: false
     },
     direction: 'encode',
@@ -78,7 +76,6 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       position2: 13,
       position3: 26,
       reflector: 'UKW-C',
-      plugboard: '',
       includeForeignChars: false
     },
     content: 'thequ ickbr ownfo xjump sover lazyd ogs',
@@ -96,7 +93,11 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       position1: 22,
       position2: 10,
       position3: 14,
-      position4: 6,
+      position4: 1,
+      ring1: 1,
+      ring2: 1,
+      ring3: 1,
+      ring4: 22,
       reflector: 'UKW-B-thin',
       plugboard: 'at bl df gj hm nw op qy rz vx'
     },
