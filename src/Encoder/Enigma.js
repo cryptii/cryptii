@@ -14,15 +14,37 @@ const meta = {
 const models = [
   {
     name: 'I',
-    label: 'Enigma I'
+    label: 'Enigma I (Army, Air Force)',
+    defaultReflector: 'UKW-A',
+    characterGroupSize: 5,
+    slots: [
+      { type: 'rotor', default: 'V' },
+      { type: 'rotor', default: 'I' },
+      { type: 'rotor', default: 'III' }
+    ]
   },
   {
     name: 'M3',
-    label: 'Enigma M3'
+    label: 'Enigma M3 (Army, Navy)',
+    defaultReflector: 'UKW-B',
+    characterGroupSize: 5,
+    slots: [
+      { type: 'rotor', default: 'VI' },
+      { type: 'rotor', default: 'I' },
+      { type: 'rotor', default: 'III' }
+    ]
   },
   {
     name: 'M4',
-    label: 'Enigma M4'
+    label: 'Enigma M4 "Shark" (Submarines)',
+    defaultReflector: 'UKW-C-thin',
+    characterGroupSize: 4,
+    slots: [
+      { type: 'rotor-thin', default: 'beta' },
+      { type: 'rotor', default: 'VI' },
+      { type: 'rotor', default: 'I' },
+      { type: 'rotor', default: 'III' }
+    ]
   }
 ]
 
@@ -71,7 +93,7 @@ const rotors = [
     name: 'VI',
     label: 'VI',
     type: 'rotor',
-    models: ['I', 'M3', 'M4'],
+    models: ['M3', 'M4'],
     wiring: 'jpgvoumfyqbenhzrdkasxlictw',
     notches: 'zm'
   },
@@ -79,7 +101,7 @@ const rotors = [
     name: 'VII',
     label: 'VII',
     type: 'rotor',
-    models: ['I', 'M3', 'M4'],
+    models: ['M3', 'M4'],
     wiring: 'nzjhgrcxmyswboufaivlpekqdt',
     notches: 'zm'
   },
@@ -87,30 +109,60 @@ const rotors = [
     name: 'VIII',
     label: 'VIII',
     type: 'rotor',
-    models: ['I', 'M3', 'M4'],
+    models: ['M3', 'M4'],
     wiring: 'fkqhtlxocbjspdzramewniuygv',
     notches: 'zm'
   },
   {
+    name: 'beta',
+    label: 'Beta',
+    type: 'rotor-thin',
+    models: ['M4'],
+    wiring: 'leyjvcnixwpbqmdrtakzgfuhos',
+    rotating: false
+  },
+  {
+    name: 'gamma',
+    label: 'Gamma',
+    type: 'rotor-thin',
+    models: ['M4'],
+    wiring: 'fsokanuerhmbtiycwlqpzxvgjd',
+    rotating: false
+  },
+  {
     name: 'UKW-A',
-    label: 'UKW A (1930-1937)',
+    label: 'UKW A',
     type: 'reflector',
-    wiring: 'ejmzalyxvbwfcrquontspikhgd',
-    notches: null
+    models: ['I'],
+    wiring: 'ejmzalyxvbwfcrquontspikhgd'
   },
   {
     name: 'UKW-B',
-    label: 'UKW B (1937-1945)',
+    label: 'UKW B',
     type: 'reflector',
-    wiring: 'yruhqsldpxngokmiebfzcwvjat',
-    notches: null
+    models: ['I', 'M3'],
+    wiring: 'yruhqsldpxngokmiebfzcwvjat'
   },
   {
     name: 'UKW-C',
-    label: 'UKW C (1940-1941)',
+    label: 'UKW C',
     type: 'reflector',
-    wiring: 'fvpjiaoyedrzxwgctkuqsbnmhl',
-    notches: null
+    models: ['I', 'M3'],
+    wiring: 'fvpjiaoyedrzxwgctkuqsbnmhl'
+  },
+  {
+    name: 'UKW-B-thin',
+    label: 'UKW B thin',
+    type: 'reflector',
+    models: ['M4'],
+    wiring: 'enkqauywjicopblmdxzvfthrgs'
+  },
+  {
+    name: 'UKW-C-thin',
+    label: 'UKW C thin',
+    type: 'reflector',
+    models: ['M4'],
+    wiring: 'rdobjntkvehmlfcwzaxgyipsuq'
   }
 ]
 
@@ -162,6 +214,8 @@ export default class EnigmaEncoder extends Encoder {
       {
         name: 'model',
         type: 'enum',
+        value: 'M3',
+        priority: 100,
         options: {
           elements: models.map(model => model.name),
           labels: models.map(model => model.label)
@@ -171,30 +225,7 @@ export default class EnigmaEncoder extends Encoder {
         name: 'rotor1',
         label: 'Rotor 1',
         type: 'enum',
-        width: 4,
         value: 'VI',
-        options: {
-          elements: rotorNames,
-          labels: rotorLabels
-        }
-      },
-      {
-        name: 'rotor2',
-        label: 'Rotor 2',
-        type: 'enum',
-        width: 4,
-        value: 'I',
-        options: {
-          elements: rotorNames,
-          labels: rotorLabels
-        }
-      },
-      {
-        name: 'rotor3',
-        label: 'Rotor 3',
-        type: 'enum',
-        width: 4,
-        value: 'III',
         options: {
           elements: rotorNames,
           labels: rotorLabels
@@ -204,7 +235,6 @@ export default class EnigmaEncoder extends Encoder {
         name: 'position1',
         label: 'Position 1',
         type: 'number',
-        width: 4,
         value: 1,
         options: {
           integer: true,
@@ -213,10 +243,19 @@ export default class EnigmaEncoder extends Encoder {
         }
       },
       {
+        name: 'rotor2',
+        label: 'Rotor 2',
+        type: 'enum',
+        value: 'I',
+        options: {
+          elements: rotorNames,
+          labels: rotorLabels
+        }
+      },
+      {
         name: 'position2',
         label: 'Position 2',
         type: 'number',
-        width: 4,
         value: 17,
         options: {
           integer: true,
@@ -225,11 +264,43 @@ export default class EnigmaEncoder extends Encoder {
         }
       },
       {
+        name: 'rotor3',
+        label: 'Rotor 3',
+        type: 'enum',
+        value: 'III',
+        options: {
+          elements: rotorNames,
+          labels: rotorLabels
+        }
+      },
+      {
         name: 'position3',
         label: 'Position 3',
         type: 'number',
-        width: 4,
         value: 12,
+        options: {
+          integer: true,
+          min: 1,
+          max: 27
+        }
+      },
+      {
+        name: 'rotor4',
+        label: 'Rotor 4',
+        type: 'enum',
+        value: 'III',
+        visible: false,
+        options: {
+          elements: rotorNames,
+          labels: rotorLabels
+        }
+      },
+      {
+        name: 'position4',
+        label: 'Position 4',
+        type: 'number',
+        value: 12,
+        visible: false,
         options: {
           integer: true,
           min: 1,
@@ -263,6 +334,77 @@ export default class EnigmaEncoder extends Encoder {
         }
       }
     ])
+
+    // initial model change event
+    this.modelDidChange(this.getSettingValue('model'))
+  }
+
+  /**
+   * Triggered when a setting value has changed.
+   * @param {Setting} setting
+   * @param {mixed} value Setting value
+   */
+  settingValueDidChange (setting, value) {
+    super.settingValueDidChange(setting, value)
+    if (setting.getName() === 'model') {
+      this.modelDidChange(value)
+    }
+  }
+
+  /**
+   * Triggered when the model setting has changed.
+   * Updates setting options and layout to reflect the new model.
+   * @param {string} model Model name
+   */
+  modelDidChange (modelName) {
+    const model = EnigmaEncoder.findModel(modelName)
+    const horizontalLayout = model.slots.length <= 3
+
+    // update settings of each slot
+    for (let i = 0; i < 4; i++) {
+      const slot = i < model.slots.length ? model.slots[i] : null
+      const rotorSetting = this.getSetting(`rotor${i + 1}`)
+      const positionSetting = this.getSetting(`position${i + 1}`)
+
+      // hide or show slot settings depending on model
+      rotorSetting.setVisible(slot !== null)
+      positionSetting.setVisible(slot !== null)
+
+      if (slot !== null) {
+        // update rotor options and settings layout
+        const rotors = EnigmaEncoder.filterRotors(modelName, slot.type)
+        const rotorNames = rotors.map(rotor => rotor.name)
+        const rotorLabels = rotors.map(rotor => rotor.label)
+
+        rotorSetting
+          .setWidth(horizontalLayout ? 4 : 6)
+          .setPriority(horizontalLayout ? 20 - i : 50 - i * 10 + 1)
+          .setElements(rotorNames, rotorLabels, null, false)
+
+        // apply slot default if current value is not available for this model
+        if (rotorSetting.validateValue(rotorSetting.getValue()) !== true) {
+          rotorSetting.setValue(slot.default)
+        }
+
+        positionSetting
+          .setWidth(horizontalLayout ? 4 : 6)
+          .setPriority(horizontalLayout ? 10 - i : 50 - i * 10)
+      }
+    }
+
+    // update reflector setting options
+    const reflectors = EnigmaEncoder.filterRotors(modelName, 'reflector')
+    const reflectorSetting = this.getSetting('reflector')
+
+    reflectorSetting.setElements(
+      reflectors.map(reflector => reflector.name),
+      reflectors.map(reflector => reflector.label),
+      null, false)
+
+    // apply first default if current value is not available for this model
+    if (reflectorSetting.validateValue(reflectorSetting.getValue()) !== true) {
+      reflectorSetting.setValue(model.defaultReflector)
+    }
   }
 
   /**
@@ -274,20 +416,17 @@ export default class EnigmaEncoder extends Encoder {
    */
   performTranslate (content, isEncode) {
     let includeForeignChars = this.getSettingValue('includeForeignChars')
+    let model = EnigmaEncoder.findModel(this.getSettingValue('model'))
+    let i = 0
 
-    // retrieve selected rotors
-    let rotors = [
-      EnigmaEncoder.findRotor(this.getSettingValue('rotor1')),
-      EnigmaEncoder.findRotor(this.getSettingValue('rotor2')),
-      EnigmaEncoder.findRotor(this.getSettingValue('rotor3'))
-    ]
-
-    // retrieve initial rotor positions
-    let positions = [
-      this.getSettingValue('position1') - 1,
-      this.getSettingValue('position2') - 1,
-      this.getSettingValue('position3') - 1
-    ]
+    // collect selected rotors and positions
+    let rotors = []
+    let positions = []
+    for (i = 0; i < model.slots.length; i++) {
+      let rotorName = this.getSettingValue(`rotor${i + 1}`)
+      rotors.push(EnigmaEncoder.findRotor(rotorName))
+      positions.push(this.getSettingValue(`position${i + 1}`) - 1)
+    }
 
     // retrieve reflector
     let reflector = EnigmaEncoder.findRotor(this.getSettingValue('reflector'))
@@ -313,30 +452,46 @@ export default class EnigmaEncoder extends Encoder {
         return includeForeignChars ? codePoint : false
       }
 
-      // is middle rotor at notch
-      if (this.rotorAtNotch(rotors[1], positions[1])) {
-        // shift both middle and left rotor
-        positions[0]++
-        positions[1]++
+      // shift rotor
+      let rotorShifted = false
+      i = 0
 
-        // is right rotor at notch
-      } else if (this.rotorAtNotch(rotors[2], positions[2])) {
-        // shift middle rotor
-        positions[1]++
+      while (!rotorShifted && ++i < rotors.length) {
+        // check for notches
+        if (this.rotorAtNotch(rotors[i], positions[i])) {
+          // shift current rotor, if it is not the last one
+          if (i !== rotors.length - 1) {
+            positions[i]++
+          }
+          // shift rotor on its left
+          if (rotors[i - 1].rotating !== false) {
+            positions[i - 1]++
+          }
+          // set shifted flag
+          rotorShifted = true
+        }
       }
 
-      // shift right rotor at every turn
-      positions[2]++
+      // shift last rotor at every turn
+      positions[positions.length - 1]++
 
-      // wire character through rotors
+      // wire characters through the plugboard
       charIndex = this.rotorMapChar(plugboardWiring, 0, charIndex, false)
-      charIndex = this.rotorMapChar(rotors[2], positions[2], charIndex, false)
-      charIndex = this.rotorMapChar(rotors[1], positions[1], charIndex, false)
-      charIndex = this.rotorMapChar(rotors[0], positions[0], charIndex, false)
+
+      // through the rotors (from right to left)
+      for (i = rotors.length - 1; i >= 0; i--) {
+        charIndex = this.rotorMapChar(rotors[i], positions[i], charIndex, false)
+      }
+
+      // through the reflector
       charIndex = this.rotorMapChar(reflector, 0, charIndex, false)
-      charIndex = this.rotorMapChar(rotors[0], positions[0], charIndex, true)
-      charIndex = this.rotorMapChar(rotors[1], positions[1], charIndex, true)
-      charIndex = this.rotorMapChar(rotors[2], positions[2], charIndex, true)
+
+      // through the rotors, again (from left to right)
+      for (i = 0; i < rotors.length; i++) {
+        charIndex = this.rotorMapChar(rotors[i], positions[i], charIndex, true)
+      }
+
+      // through the plugboard (inverted)
       charIndex = this.rotorMapChar(plugboardWiring, 0, charIndex, true)
 
       // translate char index back to code point and return it
@@ -352,8 +507,8 @@ export default class EnigmaEncoder extends Encoder {
           return
         }
 
-        // append a space after each 5 character pair
-        if ((codePoints.length + 1) % 6 === 0) {
+        // append a space after each character group
+        if ((codePoints.length + 1) % (model.characterGroupSize + 1) === 0) {
           codePoints.push(32)
         }
 
@@ -375,6 +530,9 @@ export default class EnigmaEncoder extends Encoder {
    * @return {boolean} True, if rotor has a notch at given position.
    */
   rotorAtNotch (rotor, position) {
+    if (rotor.notches === undefined) {
+      return false
+    }
     let positionChar = String.fromCharCode(97 + MathUtil.mod(position, 26))
     return rotor.notches.indexOf(positionChar) !== -1
   }
@@ -481,5 +639,18 @@ export default class EnigmaEncoder extends Encoder {
       })
     }
     return rotorMap[name] || null
+  }
+
+  /**
+   * Filters rotors by model and type.
+   * @param {string} modelName Model name
+   * @param {string} [type='rotor'] Rotor type
+   * @return {object[]} Array of rotors
+   */
+  static filterRotors (modelName, type = 'rotor') {
+    return rotors
+      .filter(rotor =>
+        rotor.type === type &&
+        rotor.models.indexOf(modelName) !== -1)
   }
 }

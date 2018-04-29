@@ -134,9 +134,15 @@ export default class Brick extends Viewable {
     }
 
     // retrieve setting object
-    const setting = (settingOrSpec instanceof Setting)
-      ? settingOrSpec
-      : SettingFactory.getInstance().create(settingOrSpec)
+    let setting = settingOrSpec
+    if (!(settingOrSpec instanceof Setting)) {
+      // apply default priority
+      if (settingOrSpec.priority === undefined) {
+        settingOrSpec.priority = -this._settings.length
+      }
+      // create setting instance
+      setting = SettingFactory.getInstance().create(settingOrSpec)
+    }
 
     // check if name already exists
     if (this.getSetting(setting.getName()) !== null) {
