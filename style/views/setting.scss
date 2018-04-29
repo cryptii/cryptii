@@ -10,11 +10,12 @@
   width: 100%;
 
   &__label {
-    display: table;
+    display: block;
     padding: 10px 9px 0 16px;
     border-right: 1px solid $c-line;
     @extend %t-setting-label;
     color: $c-setting-label;
+    align-self: flex-start;
   }
 
   &__field {
