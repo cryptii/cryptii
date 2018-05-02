@@ -2,6 +2,7 @@
 import ByteEncoder from '../ByteEncoder'
 import Chain from '../Chain'
 import Encoder from '../Encoder'
+import StringUtil from '../StringUtil'
 
 const meta = {
   name: 'base64',
@@ -11,7 +12,7 @@ const meta = {
 }
 
 /**
- * Encoder Brick for base64 encoding and decoding.
+ * Encoder Brick for base64 encoding and decoding
  */
 export default class Base64Encoder extends Encoder {
   /**
@@ -28,7 +29,7 @@ export default class Base64Encoder extends Encoder {
   constructor () {
     super()
 
-    let variants = ByteEncoder.getBase64Variants()
+    const variants = ByteEncoder.getBase64Variants()
 
     this.registerSetting({
       name: 'variant',
@@ -50,8 +51,9 @@ export default class Base64Encoder extends Encoder {
    * @return {Chain} Encoded content
    */
   performEncode (content) {
-    let variant = this.getSettingValue('variant')
-    let string = ByteEncoder.base64StringFromBytes(content.getBytes(), variant)
+    const variant = this.getSettingValue('variant')
+    const string = ByteEncoder.base64StringFromBytes(
+      content.getBytes(), variant)
     return Chain.wrap(string)
   }
 
@@ -62,8 +64,10 @@ export default class Base64Encoder extends Encoder {
    * @return {Chain} Decoded content
    */
   performDecode (content) {
-    let variant = this.getSettingValue('variant')
-    let bytes = ByteEncoder.bytesFromBase64String(content.getString(), variant)
+    // remove whitespaces before decoding
+    const string = StringUtil.removeWhitespaces(content.getString())
+    const variant = this.getSettingValue('variant')
+    const bytes = ByteEncoder.bytesFromBase64String(string, variant)
     return Chain.wrap(bytes)
   }
 }
