@@ -2,6 +2,7 @@
 import Chain from '../Chain'
 import Encoder from '../Encoder'
 import InvalidInputError from '../Error/InvalidInput'
+import StringUtil from '../StringUtil'
 
 const meta = {
   name: 'ascii85',
@@ -63,18 +64,18 @@ export default class Ascii85Encoder extends Encoder {
    * @return {Chain} Encoded content
    */
   performEncode (content) {
-    let bytes = content.getBytes()
-    let variant = variantSpecs.find(variant =>
+    const bytes = content.getBytes()
+    const variant = variantSpecs.find(variant =>
       variant.name === this.getSettingValue('variant'))
-    let n = bytes.length
+    const n = bytes.length
 
     // encode each tuple of 4 bytes
     let string = ''
-    let digits, j
+    let digits, j, tuple
     for (let i = 0; i < n; i += 4) {
       // read 32-bit unsigned integer from bytes following the
       // big-endian convention (most significant byte first)
-      let tuple = (
+      tuple = (
         ((bytes[i]) << 24) +
         ((bytes[i + 1] || 0) << 16) +
         ((bytes[i + 2] || 0) << 8) +
@@ -121,7 +122,7 @@ export default class Ascii85Encoder extends Encoder {
    */
   willDecode (content) {
     // check for <~ ~> wrappers often used to wrap ascii85 encoded data
-    let wrapperMatches = content.getString().match(/<~(.+?)~>/)
+    const wrapperMatches = content.getString().match(/<~(.+?)~>/)
     if (wrapperMatches !== null) {
       // decode wrapped data only
       return Chain.wrap(wrapperMatches[1])
@@ -136,10 +137,10 @@ export default class Ascii85Encoder extends Encoder {
    * @return {Chain|Promise} Decoded content
    */
   performDecode (content) {
-    let string = content.getString()
-    let variant = variantSpecs.find(variant =>
+    const string = StringUtil.removeWhitespaces(content.getString())
+    const variant = variantSpecs.find(variant =>
       variant.name === this.getSettingValue('variant'))
-    let n = string.length
+    const n = string.length
 
     // decode each tuple of 5 characters
     let bytes = []
