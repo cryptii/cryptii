@@ -23,7 +23,7 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
     expectedResult: 'apzmt ckvko hohmv inhkw rnalk jktsh dem'
   },
   {
-    // thank you so much, Mike Koss, for testing this edge case
+    // Thank you so much, Mike Koss, for testing this edge case
     // on an actual enigma machine (https://youtu.be/unw7St0azMw)
     settings: {
       model: 'M3',
@@ -82,8 +82,8 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
     expectedResult: 'aajrl afwxd zskuu qcjrg qiptv qpacp awg'
   },
   {
-    // real example from Wikipedia:
-    // https://de.wikipedia.org/w/index.php?title=Enigma-M4&oldid=176856055
+    // Example mentioned in a Wikipedia article
+    // https://de.wikipedia.org/w/index.php?title=Enigma-M4&oldid=176856055#Authentischer_Funkspruch
     settings: {
       model: 'M4',
       rotor1: 'beta',
@@ -108,10 +108,44 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       'dyac htsm ysto ssen achx eins vier mbfa ellt ynnn nnno oovi erys icht ' +
       'eins null',
     expectedResult:
-      'nczw vusx pnyu fohj xmqx sfwx wlkj ahsh nmco ohbf wopm kcsm hkse inju ' +
-      'sblk iosr zqaf hmll xcsj usrr dvko hulx wrxj gyli yxeo ahxr hkkf vdre ' +
-      'wezx xxmi fgyu jquk grtv ukam eurb vavq jahv xyha bcjw makl fklm yfvh ' +
-      'hjhe vvrt kofd anjm olbg flle oqlq iclv rhow opbe kvwm uqfm pwpm fwte ' +
+      'nczw vusx pnym imhz xmqx sfwx wlkj ahsh nmco obak uqpm kcsm hkse inju ' +
+      'sblk iosx ckub hmll xcsj usrr dvko hulx wccb gvli yxeo ahxr hkkf vdre ' +
+      'wezl xoba fgyu jquk grtv ukam eurb veks uhhv xyha bcjw makl fklm yfvn ' +
+      'rizr vvrt kofd anjm olbg flle oprg tflv rhow opbe kvwm uqfm pwpa rmfh ' +
       'agkx iibg'
+  },
+  {
+    // Message P1030700
+    // Missing characters have been replaced by 'x' chars
+    // https://enigma.hoerenberg.com/index.php?cat=The%20U534%20messages&page=P1030700
+    settings: {
+      model: 'M4',
+      rotor1: 'gamma',
+      rotor2: 'IV',
+      rotor3: 'III',
+      rotor4: 'VIII',
+      position1: 22,
+      position2: 13,
+      position3: 7,
+      position4: 3,
+      ring1: 1,
+      ring2: 1,
+      ring3: 3,
+      ring4: 21,
+      reflector: 'UKW-B-thin',
+      plugboard: 'ch ej nv ou ty lg sz pk di qb'
+    },
+    content:
+      'qbhe wtdf eqit kuwf quhl iqqg vygr sdoh dcob fmdh xsko fpao drsv bere ' +
+      'iqzv edax shoh biym ciiz skgn dlnf kfvl wwhz xzgq xwss pwls oqxe ance ' +
+      'ljyj cetz tlst twmt obwx ufqx xcen xqqx xcbx xxaw xoho ypdn luxm gozf ' +
+      'zbfl oxjn sstl phxj dyss bnbo zlvp xjba tnnj dlck kbzn rstk pmpn vsre ' +
+      'tkoi ztvs dbsy pzeb sjlo dsjg cxfj venz tqtf i',
+    expectedResult:
+      'komx bdmx uuub oote yfxd xuuu ausb ilvu nyyz wose chsx uuuf lott xvvv ' +
+      'uuur wodr eise chsv ierk krem askk mitu uvzw odre ifuv fyew hsyu uuzw ' +
+      'odre ifun fzwo yuuf zwln reit bnfp oebt byua vzwo zrzi funf nyan yuur ' +
+      'ofdd eeis efhs nulf uuzg wrdq eise chsd reiu nduu uzwo drei sech sfun ' +
+      'fein scec hsuh rwar nemu onde ausn acze iglh l'
   }
 ]))

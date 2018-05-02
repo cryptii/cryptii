@@ -310,6 +310,7 @@ export default class EnigmaEncoder extends Encoder {
     for (let i = 0; i < maxSlotCount; i++) {
       const slot = i < model.slots.length ? model.slots[i] : null
       const slotVisible = slot !== null
+
       const rotorSetting = this.getSetting(`rotor${i + 1}`)
       const ringSetting = this.getSetting(`ring${i + 1}`)
       const positionSetting = this.getSetting(`position${i + 1}`)
@@ -320,7 +321,7 @@ export default class EnigmaEncoder extends Encoder {
       positionSetting.setVisible(slotVisible)
 
       if (slotVisible) {
-        // configure and layout rotor setting
+        // configure rotor setting
         const rotors = EnigmaEncoder.filterRotors(modelName, slot.type)
         rotorSetting.setElements(
           rotors.map(rotor => rotor.name),
@@ -363,17 +364,16 @@ export default class EnigmaEncoder extends Encoder {
     const model = EnigmaEncoder.findModel(this.getSettingValue('model'))
     let i = 0
 
-    // collect selected rotors and initial positions
+    // collect selected rotors, positions and ring settings
     let rotors = []
     let positions = []
-    for (i = 0; i < model.slots.length; i++) {
-      rotors.push(EnigmaEncoder.findRotor(
-        this.getSettingValue(`rotor${i + 1}`)))
+    let ringSettings = []
 
-      // retrieve position and apply ring setting
-      let position = this.getSettingValue(`position${i + 1}`) - 1
-      const ringSetting = this.getSettingValue(`ring${i + 1}`) - 1
-      positions.push(MathUtil.mod(position - ringSetting, 26))
+    for (i = 0; i < model.slots.length; i++) {
+      const rotorName = this.getSettingValue(`rotor${i + 1}`)
+      rotors.push(EnigmaEncoder.findRotor(rotorName))
+      positions.push(this.getSettingValue(`position${i + 1}`) - 1)
+      ringSettings.push(this.getSettingValue(`ring${i + 1}`) - 1)
     }
 
     // retrieve reflector
@@ -406,7 +406,7 @@ export default class EnigmaEncoder extends Encoder {
 
       while (!rotorShifted && ++i < rotors.length) {
         // check for notches
-        if (this.rotorAtNotch(rotors[i], positions[i])) {
+        if (EnigmaEncoder.rotorAtNotch(rotors[i], positions[i])) {
           // shift current rotor, if it is not the last one
           if (i !== rotors.length - 1) {
             positions[i]++
@@ -424,23 +424,28 @@ export default class EnigmaEncoder extends Encoder {
       positions[positions.length - 1]++
 
       // wire characters through the plugboard
-      charIndex = this.rotorMapChar(plugboardWiring, 0, charIndex, false)
+      charIndex = EnigmaEncoder.rotorMapChar(
+        charIndex, plugboardWiring, 0, 0, false)
 
       // through the rotors (from right to left)
       for (i = rotors.length - 1; i >= 0; i--) {
-        charIndex = this.rotorMapChar(rotors[i], positions[i], charIndex, false)
+        charIndex = EnigmaEncoder.rotorMapChar(
+          charIndex, rotors[i], positions[i], ringSettings[i], false)
       }
 
       // through the reflector
-      charIndex = this.rotorMapChar(reflector, 0, charIndex, false)
+      charIndex = EnigmaEncoder.rotorMapChar(
+        charIndex, reflector, 0, 0, false)
 
       // through the rotors, again (from left to right)
       for (i = 0; i < rotors.length; i++) {
-        charIndex = this.rotorMapChar(rotors[i], positions[i], charIndex, true)
+        charIndex = EnigmaEncoder.rotorMapChar(
+          charIndex, rotors[i], positions[i], ringSettings[i], true)
       }
 
       // through the plugboard (inverted)
-      charIndex = this.rotorMapChar(plugboardWiring, 0, charIndex, true)
+      charIndex = EnigmaEncoder.rotorMapChar(
+        charIndex, plugboardWiring, 0, 0, true)
 
       // translate char index back to code point and return it
       return charIndex + 97
@@ -477,7 +482,7 @@ export default class EnigmaEncoder extends Encoder {
    * @param {number} position Rotor position
    * @return {boolean} True, if rotor has a notch at given position.
    */
-  rotorAtNotch (rotor, position) {
+  static rotorAtNotch (rotor, position) {
     if (rotor.notches === undefined) {
       return false
     }
@@ -488,17 +493,24 @@ export default class EnigmaEncoder extends Encoder {
   /**
    * Wires character index (0-25) through given rotor at given position.
    * @protected
+   * @param {number} charIndex Character index (0-25)
    * @param {object|string} rotorOrWiring Rotor entry or wiring
    * @param {number} position Rotor position
-   * @param {number} charIndex Character index (0-25)
+   * @param {number} ringSetting Ring setting
    * @param {boolean} isReverse Wether to wire backwards.
    * @return {number} Mapped character index (0-25)
    */
-  rotorMapChar (rotorOrWiring, position, charIndex, isReverse) {
+  static rotorMapChar (
+    charIndex, rotorOrWiring, position, ringSetting, isReverse
+  ) {
     const wiring = typeof rotorOrWiring === 'string'
       ? rotorOrWiring
       : rotorOrWiring.wiring
 
+    // apply ring setting
+    position = MathUtil.mod(position - ringSetting, 26)
+
+    // map character
     charIndex = MathUtil.mod(charIndex + position, 26)
     charIndex = !isReverse
       ? wiring.charCodeAt(charIndex) - 97
