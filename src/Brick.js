@@ -25,6 +25,7 @@ export default class Brick extends Viewable {
   constructor () {
     super()
     this._settings = []
+    this._hidden = false
     this._viewPrototype = BrickView
     this._pipe = null
   }
@@ -193,6 +194,25 @@ export default class Brick extends Viewable {
   }
 
   /**
+   * Applies randomly chosen values to the brick.
+   * Override to customize behaviour.
+   * @return {Brick} Fluent interface
+   */
+  randomize () {
+    // randomize visible settings
+    this._settings
+      .filter(setting => setting.isVisible())
+      .forEach(setting => {
+        // try to randomize
+        try {
+          setting.randomize()
+        } catch (exception) {
+        }
+      })
+    return this
+  }
+
+  /**
    * Triggered when a setting value has changed.
    * Override is required to call super.
    * @protected
@@ -223,6 +243,27 @@ export default class Brick extends Viewable {
       // add setting back to view
       this.getView().addSubview(setting.getView())
     }
+  }
+
+  /**
+   * Returns true, if brick is set to be hidden.
+   * @return {boolean}
+   */
+  isHidden () {
+    return this._hidden
+  }
+
+  /**
+   * Sets wether this brick is hidden.
+   * @param {boolean} [hidden=true] True, if brick is hidden
+   * @return {Brick} Fluent interface
+   */
+  setHidden (hidden = true) {
+    if (this._hidden !== hidden) {
+      this._hidden = hidden
+      this.hasPipe() && this.getPipe().brickVisibilityDidChange(this, hidden)
+    }
+    return this
   }
 
   /**
@@ -264,11 +305,11 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Triggered when remove button has been clicked.
+   * Triggered when remove menu item has been clicked.
    * @protected
    * @param {View} view
    */
-  viewRemoveButtonDidClick (view) {
+  viewRemoveMenuItemDidClick (view) {
     if (this.hasPipe()) {
       // remove self from pipe
       this.getPipe().removeBrick(this)
@@ -302,10 +343,14 @@ export default class Brick extends Viewable {
    * @return {mixed} Serialized data
    */
   serialize () {
-    return {
+    let data = {
       name: this.getMeta().name,
       settings: this.getSettingValues()
     }
+    if (this.isHidden) {
+      data['hidden'] = true
+    }
+    return data
   }
 
   /**
@@ -332,6 +377,17 @@ export default class Brick extends Viewable {
 
     // create brick instance
     let brick = brickFactory.create(name)
+
+    // read and apply visibility
+    if (typeof data.hidden !== 'undefined' &&
+        typeof data.hidden !== 'boolean') {
+      throw new Error(
+        `Malformed brick data: Attribute 'hidden' is expected to be boolean`)
+    }
+
+    if (data.hidden === true) {
+      brick.setHidden(true)
+    }
 
     // read and apply reverse
     if (typeof data.reverse !== 'undefined' &&

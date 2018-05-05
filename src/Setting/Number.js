@@ -211,7 +211,7 @@ export default class NumberSetting extends Setting {
       throw new Error(`Can't randomize numeric value without min, max range.`)
     }
     if (this.isInteger()) {
-      return random.nextInteger(this.getMin(), this.getMax() + 1)
+      return random.nextInteger(this.getMin(), this.getMax())
     } else {
       return random.nextFloat(this.getMin(), this.getMax())
     }

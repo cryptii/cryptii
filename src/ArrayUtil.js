@@ -1,4 +1,6 @@
 
+import Random from './Random'
+
 /**
  * Utility class providing static methods for common array operations.
  */
@@ -90,5 +92,22 @@ export default class ArrayUtil {
    */
   static unique (array) {
     return array.filter((element, index) => array.indexOf(element) === index)
+  }
+
+  /**
+   * Orders array elements randomly using Fisher–Yates modern shuffle algorithm.
+   * @param {array} array
+   * @param {Random} [random] Random instance
+   * @return {array} Shuffled array
+   */
+  static shuffle (array, random = null) {
+    random = random || new Random()
+    let a = array.slice()
+    let i, j
+    for (i = a.length - 1; i > 0; i--) {
+      j = random.nextInteger(0, i + 1)
+      ;[a[i], a[j]] = [a[j], a[i]]
+    }
+    return a
   }
 }

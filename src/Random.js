@@ -33,11 +33,11 @@ export default class Random {
   /**
    * Returns next random integer between min (inclusive) and max (inclusive).
    * @param {number} min Minimum integer (inclusive)
-   * @param {number} max Maximum integer (inclusive)
+   * @param {number} max Maximum integer (exclusive)
    * @return {number} Pseudo-random integer
    */
   nextInteger (min, max) {
-    return parseInt(this.next() * (max - min + 1)) + min
+    return parseInt(this.next() * (max - min)) + min
   }
 
   /**

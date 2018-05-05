@@ -12,10 +12,15 @@ export default class BrickView extends View {
    */
   constructor () {
     super()
+
+    this._$menu = null
     this._$body = null
     this._$settings = null
     this._$status = null
     this._$message = null
+
+    this._menuVisible = false
+    this._menuHideHandler = this.toggleMenu.bind(this)
 
     this._$selection = null
     this._selectionVisible = false
@@ -47,6 +52,7 @@ export default class BrickView extends View {
    */
   renderHeader () {
     let title = this.getModel().getMeta().title
+    this._$menu = this.renderMenu()
     return View.createElement('header', {
       className: 'brick__header'
     }, [
@@ -63,10 +69,57 @@ export default class BrickView extends View {
         }, title)
       ]),
       View.createElement('a', {
-        className: 'brick__btn-remove',
+        className: 'brick__btn-menu',
         href: '#',
-        onClick: this.removeButtonDidClick.bind(this)
-      }, 'Remove')
+        onClick: evt => {
+          evt.preventDefault()
+          this.toggleMenu()
+        }
+      }, 'Brick menu'),
+      this._$menu
+    ])
+  }
+
+  /**
+   * Renders menu.
+   * @protected
+   * @return {HTMLElement}
+   */
+  renderMenu () {
+    let items = [
+      {
+        label: 'Remove',
+        name: 'remove'
+      },
+      {
+        label: 'Hide',
+        name: 'hide'
+      },
+      {
+        label: 'Randomize',
+        name: 'randomize'
+      }
+    ]
+
+    return View.createElement('div', {
+      className: 'brick__menu menu'
+    }, [
+      View.createElement('ul', {
+        className: 'menu__list'
+      }, items.map(item =>
+        View.createElement('li', {
+          className: 'menu__item'
+        }, [
+          View.createElement('a', {
+            className: 'menu__button',
+            href: '#',
+            onClick: evt => {
+              evt.preventDefault()
+              this.menuItemDidClick(item.name)
+            }
+          }, item.label)
+        ])
+      ))
     ])
   }
 
@@ -192,16 +245,7 @@ export default class BrickView extends View {
   }
 
   /**
-   * Triggered when the remove btn has been clicked.
-   * @param {Event} evt
-   */
-  removeButtonDidClick (evt) {
-    this.getModel().viewRemoveButtonDidClick(this)
-    evt.preventDefault()
-  }
-
-  /**
-   * Toggle selection view.
+   * Toggles selection view.
    * @param {boolean} [visible]
    */
   toggleSelection (visible = !this._selectionVisible) {
@@ -227,6 +271,42 @@ export default class BrickView extends View {
         this._$body.classList.remove('brick__page--hidden')
         this._$selection.classList.add('brick__page--hidden')
       }
+    }
+  }
+
+  /**
+   * Toggles menu.
+   */
+  toggleMenu () {
+    this._menuVisible = !this._menuVisible
+    this._$menu.classList.toggle('menu--visible', this._menuVisible)
+
+    if (this._menuVisible) {
+      // listen to the next window click to hide the menu again
+      window.requestAnimationFrame(() => {
+        window.addEventListener('click', this._menuHideHandler)
+      })
+    } else {
+      // remove listener
+      window.removeEventListener('click', this._menuHideHandler)
+    }
+  }
+
+  /**
+   * Triggered when menu item has been clicked.
+   * @param {string} name Menu item name
+   */
+  menuItemDidClick (name) {
+    switch (name) {
+      case 'remove':
+        this.getModel().viewRemoveMenuItemDidClick(this)
+        break
+      case 'hide':
+        this.getModel().setHidden(true)
+        break
+      case 'randomize':
+        this.getModel().randomize()
+        break
     }
   }
 

@@ -81,7 +81,6 @@ $header-height: 96px !default;
     border-color: $c-pipe;
 
     @include breakpoint(m, l) {
-      width: auto;
       width: 56px;
       height: $pipe-size;
       margin-top: 8px;
@@ -144,6 +143,39 @@ $header-height: 96px !default;
         border-bottom-color: transparent;
         border-left-color: inherit;
       }
+    }
+  }
+
+  &__part-collapsed {
+    display: flex;
+    flex-direction: column;
+    width: $pipe-size;
+    padding: 4px 0;
+
+    @include breakpoint(m, l) {
+      flex-direction: row;
+      height: $pipe-size;
+      width: auto;
+      margin: 8px 0;
+      padding: 0 4px;
+
+      @if $pipe-sticky-headers {
+        position: sticky;
+        top: $pipe-vertical-padding-m;
+      }
+    }
+  }
+
+  &__part-collapsed-fold {
+    width: $pipe-size;
+    height: 8px;
+    margin: 4px 0;
+    background: $c-pipe;
+
+    @include breakpoint(m, l) {
+      width: 8px;
+      height: $pipe-size;
+      margin: 0 4px;
     }
   }
 

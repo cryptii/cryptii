@@ -303,6 +303,15 @@ export default class Pipe extends Viewable {
   }
 
   /**
+   * Delegate method triggered by child Bricks when they change visibility.
+   * @param {Brick} brick Brick which changed visibility
+   * @param {boolean} hidden Wether this brick is hidden
+   */
+  brickVisibilityDidChange (brick, hidden) {
+    this.updateView()
+  }
+
+  /**
    * Delegate method triggered by child Bricks when they got reversed.
    * @protected
    * @param {Encoder} brick Sender

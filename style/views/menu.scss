@@ -1,0 +1,37 @@
+
+.menu {
+  display: block;
+  visibility: hidden;
+  background: $c-white;
+  z-index: 10;
+  max-height: 56px;
+  padding: 8px 0;
+  @extend %s-sheet-menu;
+  overflow: hidden;
+  transition-property: none;
+  transition-duration: 0.6s;
+  transition-timing-function: linear;
+
+  &__list {
+    flex-direction: column;
+  }
+
+  &__button {
+    display: block;
+    padding: 8px 16px;
+    @extend %t-text;
+    line-height: 24px;
+    color: $c-text;
+
+    &:hover {
+      border-radius: 3px;
+      background: $c-background-shaded;
+    }
+  }
+
+  &--visible {
+    transition-property: visibility, max-height;
+    visibility: visible;
+    max-height: 500px;
+  }
+}

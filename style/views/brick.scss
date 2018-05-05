@@ -18,39 +18,39 @@
     border-bottom: 1px solid $c-line;
   }
 
-  &__btn-remove {
+  &__btn-menu {
     display: block;
     position: absolute;
     top: 0;
     right: 0;
-    width: 48px;
-    height: 48px;
+    padding: 17px 16px;
     font-size: 0;
 
-    &::before,
-    &::after {
+    &::before {
       content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
       display: block;
-      width: 14px;
-      height: 2px;
-      transform: translate(-50%, -50%) rotate(45deg);
-      transform-origin: center center;
-      background-color: $c-text-detail;
+      width: 3px;
+      height: 14px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: inline-svg('icons/menu.svg',
+        (circle: (fill: $c-text-detail)));
     }
 
-    &::after {
-      transform: translate(-50%, -50%) rotate(-45deg);
+    &:hover::before {
+      background-image: inline-svg('icons/menu.svg',
+        (circle: (fill: $c-text)));
     }
+  }
 
-    &:hover {
+  &__menu {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    min-width: 160px;
 
-      &::before,
-      &::after {
-        background-color: $c-primary;
-      }
+    @include breakpoint(xs) {
+      right: 8px;
     }
   }
 
@@ -86,13 +86,15 @@
       transform: translate(0, 3px);
       margin-left: 2px;
       line-height: 0;
-      background-image: inline-svg('icons/arrow-drop-down.svg', (path: (fill: $c-primary)));
+      background-image: inline-svg('icons/arrow-drop-down.svg',
+        (path: (fill: $c-primary)));
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: center;
 
       #{$block}.encoder & {
-        background-image: inline-svg('icons/arrow-drop-down.svg', (path: (fill: $c-encoder)));
+        background-image: inline-svg('icons/arrow-drop-down.svg',
+          (path: (fill: $c-encoder)));
       }
 
       #{$block}--selection & {
@@ -164,17 +166,20 @@
     width: 16px;
     height: 16px;
     margin-right: 8px;
-    background-image: inline-svg('icons/done.svg', (path: (fill: $c-text-detail)));
+    background-image: inline-svg('icons/done.svg',
+      (path: (fill: $c-text-detail)));
     background-repeat: no-repeat;
     background-size: 100% auto;
 
     #{$block}__status--error & {
-      background-image: inline-svg('icons/error.svg', (path: (fill: $c-text-error)));
+      background-image: inline-svg('icons/error.svg',
+        (path: (fill: $c-text-error)));
     }
 
     #{$block}__status--forward &,
     #{$block}__status--backward & {
-      background-image: inline-svg('icons/arrow-left.svg', (path: (fill: $c-text-detail)));
+      background-image: inline-svg('icons/arrow-left.svg',
+        (path: (fill: $c-text-detail)));
 
       @include breakpoint(xs, s) {
         transform: rotate(90deg);

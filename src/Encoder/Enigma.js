@@ -3,6 +3,7 @@ import ArrayUtil from '../ArrayUtil'
 import Chain from '../Chain'
 import Encoder from '../Encoder'
 import MathUtil from '../MathUtil'
+import StringUtil from '../StringUtil'
 
 const meta = {
   name: 'enigma',
@@ -10,6 +11,8 @@ const meta = {
   category: 'Cipher machines',
   type: 'encoder'
 }
+
+const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 const models = [
   {
@@ -264,7 +267,8 @@ export default class EnigmaEncoder extends Encoder {
       type: 'text',
       value: '',
       validateValue: this.validatePlugboardValue.bind(this),
-      filterValue: value => new Chain(value.getString().trim().toLowerCase())
+      filterValue: value => new Chain(value.getString().trim().toLowerCase()),
+      randomizeValue: this.randomizePlugboardValue.bind(this)
     })
 
     // foreign char setting
@@ -381,7 +385,7 @@ export default class EnigmaEncoder extends Encoder {
 
     // compose plugboard wiring
     const plugboard = this.getSettingValue('plugboard')
-    const plugboardWiring = this.composePlugboardWiring(plugboard.toString())
+    const plugboardWiring = this.wiringFromPlugboardValue(plugboard.toString())
 
     // go through each content code point
     let encodedCodePoints = content.getCodePoints().map((codePoint, index) => {
@@ -557,13 +561,27 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Creates plugboard wiring from plugboard setting value.
+   * Generates a random plugboard setting value.
+   * @protected
+   * @param {Random} random Random instance
+   * @param {Setting} setting Plugboard setting
+   * @return {string} Randomized plugboard setting value
+   */
+  randomizePlugboardValue (random, setting) {
+    const shuffled =
+      ArrayUtil.shuffle(alphabet.split(''), random)
+      .join('').substr(0, 20)
+    return StringUtil.chunk(shuffled, 2).join(' ')
+  }
+
+  /**
+   * Converts plugboard value to wiring string.
    * @protected
    * @param {string} plugboard
-   * @return {object} Rotor entry
+   * @return {string}
    */
-  composePlugboardWiring (plugboard) {
-    const wiring = 'abcdefghijklmnopqrstuvwxyz'.split('')
+  wiringFromPlugboardValue (plugboard) {
+    const wiring = alphabet.split('')
     plugboard.split(' ').forEach(pair => {
       wiring[pair.charCodeAt(0) - 97] = pair[1]
       wiring[pair.charCodeAt(1) - 97] = pair[0]

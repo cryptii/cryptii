@@ -86,7 +86,7 @@ export default class PipeView extends View {
    */
   appendSubviewElement (view) {
     if (view instanceof BrickView) {
-      this._integrateBrickViews()
+      this.update()
       return this
     }
     return super.appendSubviewElement(view)
@@ -101,7 +101,7 @@ export default class PipeView extends View {
   removeSubviewElement (view) {
     super.removeSubviewElement(view)
     if (view instanceof BrickView) {
-      this._integrateBrickViews()
+      this.update()
     }
     return this
   }
@@ -110,17 +110,18 @@ export default class PipeView extends View {
    * Integrates brick view elements inside pipe structure.
    * @return {PipeView} Fluent interface
    */
-  _integrateBrickViews () {
+  update () {
     // gather brick views in order
-    let brickViews = this.getModel().getBricks().map(brick => brick.getView())
+    const bricks = this.getModel().getBricks()
+    const brickViews = bricks.map(brick => brick.getView())
 
     this.getElement()
-    let $content = this._$content
+    const $content = this._$content
 
     // detach each brick subview element without breaking it
     // (emptying parent via innerHTML does not work in IE11)
     brickViews.forEach(brickView => {
-      let $element = brickView.getElement()
+      const $element = brickView.getElement()
       $element.parentNode && $element.parentNode.removeChild($element)
     })
 
@@ -128,14 +129,29 @@ export default class PipeView extends View {
     $content.innerHTML = ''
 
     // add each brick and pipe parts
-    brickViews.forEach((brickView, index) => {
-      $content.appendChild(this._createPipePart(index))
-      $content.appendChild(this._createBrickPart(brickView))
-    })
+    let collapsedBricks = []
+    for (let i = 0; i < brickViews.length; i++) {
+      if (bricks[i].isHidden()) {
+        // collect hidden bricks
+        collapsedBricks.push(bricks[i])
+      } else {
+        if (collapsedBricks.length > 0) {
+          // append collapsed bricks part
+          $content.appendChild(this._createPipePart(i - collapsedBricks.length))
+          $content.appendChild(this._createCollapsedPart(collapsedBricks))
+          collapsedBricks = []
+        }
+
+        // append brick
+        $content.appendChild(this._createPipePart(i))
+        $content.appendChild(this._createBrickPart(brickViews[i]))
+      }
+    }
 
     // add end part
     $content.appendChild(this._createPipePart(brickViews.length))
 
+    this.layout()
     return this
   }
 
@@ -147,8 +163,8 @@ export default class PipeView extends View {
   _createPipePart (index) {
     return View.createElement('a', {
       className: 'pipe__part-pipe',
-      href: '#',
-      onClick: evt => this.addButtonDidClick(evt, index)
+      onClick: this.addPartDidClick.bind(this, index),
+      href: '#'
     }, [
       View.createElement('div', {
         className: 'pipe__btn-add'
@@ -162,20 +178,47 @@ export default class PipeView extends View {
    * @return {HTMLElement}
    */
   _createBrickPart (brickView) {
-    let type = brickView.getModel() instanceof Encoder ? 'encoder' : 'viewer'
+    const type = brickView.getModel() instanceof Encoder ? 'encoder' : 'viewer'
     return View.createElement('div', {
       className: `pipe__part-brick pipe__part-brick--${type}`
     }, brickView.getElement())
   }
 
   /**
-   * Triggered when user clicked on the button.
-   * @protected
-   * @param {Event} evt
-   * @param {number} index
+   * Creates collapsed part.
+   * @return {HTMLElement}
    */
-  addButtonDidClick (evt, index) {
+  _createCollapsedPart (bricks) {
+    return View.createElement('a', {
+      className: `pipe__part-collapsed`,
+      onClick: this.collapsedPartDidClick.bind(this, bricks),
+      href: '#'
+    }, bricks.map(() =>
+      View.createElement('div', {
+        className: `pipe__part-collapsed-fold`
+      })
+    ))
+  }
+
+  /**
+   * Triggered when user clicks on pipe part.
+   * @protected
+   * @param {number} index
+   * @param {Event} evt
+   */
+  addPartDidClick (index, evt) {
     this.getModel().viewAddButtonDidClick(this, index)
+    evt.preventDefault()
+  }
+
+  /**
+   * Triggered when user clicks on collapsed part.
+   * @param {Brick[]} bricks
+   * @param {Event} evt
+   */
+  collapsedPartDidClick (bricks, evt) {
+    // make bricks in this collapsed group visible
+    bricks.forEach(brick => brick.setHidden(false))
     evt.preventDefault()
   }
 
