@@ -35,6 +35,7 @@ export default class HashEncoder extends Encoder {
         name: 'algorithm',
         type: 'enum',
         value: 'SHA-256',
+        randomizable: false,
         style: 'radio',
         options: {
           elements: HashEncoder.getAvailableAlgorithms()

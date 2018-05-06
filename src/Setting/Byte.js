@@ -108,6 +108,24 @@ export default class ByteSetting extends Setting {
   }
 
   /**
+   * Returns a randomly chosen value or null if not applicable.
+   * @param {Random} random Random number generator
+   * @return {mixed} Randomly chosen value
+   */
+  randomizeValue (random) {
+    const value = super.randomizeValue(random)
+    if (value !== null) {
+      return value
+    }
+    if (this.isValid()) {
+      // use the current value's size to
+      // produce the same amount of random bytes
+      return random.nextBytes(this.getValue().length)
+    }
+    return null
+  }
+
+  /**
    * Triggered when value has been changed inside the view.
    * @protected
    * @param {TextSettingView} view

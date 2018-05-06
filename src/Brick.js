@@ -194,21 +194,32 @@ export default class Brick extends Viewable {
   }
 
   /**
+   * Returns wether this brick is randomizable.
+   * @return {boolean}
+   */
+  isRandomizable () {
+    let randomizable = false
+    let i = -1
+    let setting
+    while (!randomizable && ++i < this._settings.length) {
+      setting = this._settings[i]
+      randomizable = setting.isRandomizable()
+    }
+    return randomizable
+  }
+
+  /**
    * Applies randomly chosen values to the brick.
    * Override to customize behaviour.
    * @return {Brick} Fluent interface
    */
   randomize () {
-    // randomize visible settings
-    this._settings
-      .filter(setting => setting.isVisible())
-      .forEach(setting => {
-        // try to randomize
-        try {
-          setting.randomize()
-        } catch (exception) {
-        }
-      })
+    if (this.isRandomizable()) {
+      // randomize visible settings
+      this._settings
+        .filter(setting => setting.isVisible() && setting.isRandomizable())
+        .forEach(setting => setting.randomize())
+    }
     return this
   }
 

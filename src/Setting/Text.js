@@ -206,6 +206,29 @@ export default class TextSetting extends Setting {
   }
 
   /**
+   * Returns a randomly chosen value or null if not applicable.
+   * @param {Random} random Random number generator
+   * @return {mixed} Randomly chosen value
+   */
+  randomizeValue (random) {
+    const value = super.randomizeValue(random)
+    if (value !== null) {
+      return value
+    }
+    if (this.isValid() && this.getAllowedChars() !== null) {
+      // use the current value's length to
+      // produce the same amount of random chars
+      const length = this.getValue().getLength()
+      let codePoints = []
+      for (let i = 0; i < length; i++) {
+        codePoints.push(random.nextChoice(this.getAllowedChars()))
+      }
+      return Chain.wrap(codePoints)
+    }
+    return null
+  }
+
+  /**
    * Triggered when value has been changed inside the view.
    * @protected
    * @param {TextSettingView} view

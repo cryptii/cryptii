@@ -44,6 +44,7 @@ export default class IntegerEncoder extends Encoder {
         name: 'format',
         type: 'enum',
         value: 'decimal',
+        randomizable: false,
         priority: 30,
         options: {
           elements: [
@@ -64,6 +65,7 @@ export default class IntegerEncoder extends Encoder {
         name: 'type',
         type: 'enum',
         value: 'U8',
+        randomizable: false,
         style: 'radio',
         priority: 20,
         options: {
@@ -75,6 +77,7 @@ export default class IntegerEncoder extends Encoder {
         name: 'byteOrder',
         type: 'enum',
         value: 'big-endian',
+        randomizable: false,
         visible: false,
         priority: 10,
         options: {

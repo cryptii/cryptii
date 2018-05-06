@@ -94,12 +94,15 @@ export default class BrickView extends View {
       {
         label: 'Hide',
         name: 'hide'
-      },
-      {
-        label: 'Randomize',
-        name: 'randomize'
       }
     ]
+
+    if (this.getModel().isRandomizable()) {
+      items.push({
+        label: 'Randomize',
+        name: 'randomize'
+      })
+    }
 
     return View.createElement('div', {
       className: 'brick__menu menu'

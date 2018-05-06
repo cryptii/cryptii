@@ -42,13 +42,15 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
       {
         name: 'alphabet',
         type: 'alphabet',
-        value: defaultAlphabet
+        value: defaultAlphabet,
+        randomizable: false
       },
       {
         name: 'caseSensitivity',
         type: 'boolean',
         width: 6,
-        value: false
+        value: false,
+        randomizable: false
       },
       {
         name: 'includeForeignChars',
@@ -56,6 +58,7 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
         label: 'Foreign Chars',
         width: 6,
         value: true,
+        randomizable: false,
         options: {
           trueLabel: 'Include',
           falseLabel: 'Ignore'

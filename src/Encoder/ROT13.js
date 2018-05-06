@@ -30,6 +30,7 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
       name: 'variant',
       type: 'enum',
       value: 'rot13',
+      randomizable: false,
       style: 'radio',
       options: {
         elements: [

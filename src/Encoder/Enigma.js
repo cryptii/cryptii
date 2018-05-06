@@ -200,6 +200,7 @@ export default class EnigmaEncoder extends Encoder {
       name: 'model',
       type: 'enum',
       value: model.name,
+      randomizable: false,
       options: {
         elements: models.map(model => model.name),
         labels: models.map(model => model.label)
@@ -277,6 +278,7 @@ export default class EnigmaEncoder extends Encoder {
       type: 'boolean',
       label: 'Foreign Chars',
       value: false,
+      randomizable: false,
       options: {
         trueLabel: 'Include',
         falseLabel: 'Ignore'

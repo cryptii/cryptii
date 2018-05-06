@@ -55,6 +55,7 @@ export default class MorseCodeEncoder extends Encoder {
         name: 'variant',
         type: 'enum',
         value: 'english',
+        randomizable: false,
         options: {
           elements: [
             'english'
@@ -68,6 +69,7 @@ export default class MorseCodeEncoder extends Encoder {
         name: 'representation',
         type: 'enum',
         value: 'code',
+        randomizable: false,
         options: {
           elements: [
             'code',
@@ -85,6 +87,7 @@ export default class MorseCodeEncoder extends Encoder {
         type: 'text',
         width: 4,
         value: '.',
+        randomizable: false,
         validateValue:
           this.validateCodeMarkSettingValue.bind(this),
         options: {
@@ -97,6 +100,7 @@ export default class MorseCodeEncoder extends Encoder {
         type: 'text',
         width: 4,
         value: '-',
+        randomizable: false,
         validateValue:
           this.validateCodeMarkSettingValue.bind(this),
         options: {
@@ -109,6 +113,7 @@ export default class MorseCodeEncoder extends Encoder {
         type: 'text',
         width: 4,
         value: '/',
+        randomizable: false,
         validateValue:
           this.validateCodeMarkSettingValue.bind(this),
         options: {
@@ -122,6 +127,7 @@ export default class MorseCodeEncoder extends Encoder {
         width: 6,
         visible: false,
         value: '=',
+        randomizable: false,
         validateValue:
           this.validateTimingMarkSettingValue.bind(this),
         options: {
@@ -135,6 +141,7 @@ export default class MorseCodeEncoder extends Encoder {
         width: 6,
         visible: false,
         value: '.',
+        randomizable: false,
         validateValue:
           this.validateTimingMarkSettingValue.bind(this),
         options: {

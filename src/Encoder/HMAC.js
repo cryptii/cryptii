@@ -45,6 +45,7 @@ export default class HMACEncoder extends Encoder {
         name: 'algorithm',
         type: 'enum',
         value: defaultAlgorithm,
+        randomizable: false,
         style: 'radio',
         options: {
           elements: algorithms

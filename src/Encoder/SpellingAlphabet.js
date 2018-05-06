@@ -107,6 +107,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
     this.registerSetting({
       name: 'alphabet',
       type: 'enum',
+      randomizable: false,
       style: 'radio',
       options: {
         elements: alphabetSpecs.map(alphabet => alphabet.name),

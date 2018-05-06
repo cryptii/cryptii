@@ -140,11 +140,15 @@ export default class EnumSetting extends Setting {
   }
 
   /**
-   * Returns a randomly chosen value.
+   * Returns a randomly chosen value or null if not applicable.
    * @param {Random} random Random number generator
    * @return {mixed} Randomly chosen value
    */
   randomizeValue (random) {
+    const value = super.randomizeValue(random)
+    if (value !== null) {
+      return value
+    }
     return random.nextChoice(this._elements)
   }
 

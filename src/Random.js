@@ -41,6 +41,19 @@ export default class Random {
   }
 
   /**
+   * Returns next random bytes of given size.
+   * @param {number} size Amount of bytes to produce
+   * @return {Uint8Array} Pseudo-random bytes
+   */
+  nextBytes (size) {
+    let bytes = new Uint8Array(size)
+    for (let i = 0; i < size; i++) {
+      bytes[i] = this.nextInteger(0, 256)
+    }
+    return bytes
+  }
+
+  /**
    * Returns next random boolean.
    * @return {boolean} Pseudo-random boolean
    */

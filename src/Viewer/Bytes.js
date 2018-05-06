@@ -37,6 +37,7 @@ export default class BytesViewer extends Viewer {
         type: 'enum',
         width: 6,
         value: 'hexadecimal',
+        randomizable: false,
         options: {
           elements: [
             'hexadecimal',
@@ -54,6 +55,7 @@ export default class BytesViewer extends Viewer {
         type: 'enum',
         width: 6,
         value: 8,
+        randomizable: false,
         options: {
           elements: [null, 4, 8, 16, 32],
           labels: [

@@ -13,13 +13,14 @@ export default class Setting extends Viewable {
    * Setting constructor. Override is required to call super.
    * @param {string} name
    * @param {Object} [spec]
-   * @param {string} [spec.label] Setting label. Defaults to Setting name.
-   * @param {mixed} [spec.value] Default Setting value.
-   * @param {boolean} [spec.visible=true] Wether setting is visible.
+   * @param {string} [spec.label] Setting label, defaults to setting name
+   * @param {mixed} [spec.value] Default Setting value
+   * @param {boolean} [spec.randomizable=true] Wether setting is randomizable
+   * @param {boolean} [spec.visible=true] Wether setting is visible
    * @param {number} [spec.priority=1] Settings will be ordered by
    * priority (descending).
    * @param {string} [spec.style="default"] Setting appearance
-   * @param {number} [spec.width=12] Setting width in columns (1-12).
+   * @param {number} [spec.width=12] Setting width in columns (1-12)
    * @param {function(rawValue: mixed, setting: Setting): boolean|object}
    * [spec.validateValue] Function to execute whenever a value
    * gets validated, returns true if valid.
@@ -35,6 +36,7 @@ export default class Setting extends Viewable {
 
     this._name = name
     this._value = spec.value || null
+    this._randomizable = spec.randomizable !== false
 
     this._valid = true
     this._message = null
@@ -304,18 +306,33 @@ export default class Setting extends Viewable {
   }
 
   /**
+   * Returns true, if setting is randomizable.
+   * @return {boolean}
+   */
+  isRandomizable () {
+    return this._randomizable
+  }
+
+  /**
    * Applies a randomly chosen value.
    * Uses {@link Setting.randomizeValue} internally.
+   * Does nothing when randomizable is set to false.
    * @param {Random} [random] Random number generator
    * @return {Setting} Fluent interface
    */
   randomize (random = null) {
-    let value = this.randomizeValue(random || new Random())
-    return this.setValue(value)
+    if (!this.isRandomizable()) {
+      return this
+    }
+    const value = this.randomizeValue(random || new Random())
+    if (value !== null) {
+      return this.setValue(value)
+    }
+    return this
   }
 
   /**
-   * Returns a randomly chosen value.
+   * Returns a randomly chosen value or null if not applicable.
    * @override
    * @param {Random} random Random number generator
    * @return {mixed} Randomly chosen value
@@ -324,9 +341,8 @@ export default class Setting extends Viewable {
     if (this._randomizeValueCallback !== null) {
       return this._randomizeValueCallback(random, this)
     }
-    // generic Setting objects don't know how to choose a random value
-    // leave the current value as is
-    return this.getValue()
+    // generic settings don't know how to choose a random value
+    return null
   }
 
   /**

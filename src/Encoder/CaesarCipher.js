@@ -46,6 +46,7 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
       label: 'Shift',
       priority: 10,
       value: defaultShift,
+      randomizeValue: this.randomizeShiftValue.bind(this),
       options: {
         integer: true
       }
@@ -81,5 +82,20 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
         break
     }
     return super.settingValueDidChange(setting, value)
+  }
+
+  /**
+   * Generates a random shift setting value.
+   * @protected
+   * @param {Random} random Random instance
+   * @param {Setting} setting Plugboard setting
+   * @return {string} Randomized plugboard setting value
+   */
+  randomizeShiftValue (random, setting) {
+    const alphabetSetting = this.getSetting('alphabet')
+    if (alphabetSetting.isValid()) {
+      return random.nextInteger(1, alphabetSetting.getValue().getLength())
+    }
+    return null
   }
 }

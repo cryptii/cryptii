@@ -37,6 +37,7 @@ export default class AtbashEncoder extends AffineCipherEncoder {
       label: 'Alphabet',
       priority: 10,
       value: 'latin',
+      randomizable: false,
       options: {
         elements: [
           'latin',
@@ -61,6 +62,14 @@ export default class AtbashEncoder extends AffineCipherEncoder {
 
     // apply inital encryption function
     this.applyEncryptionFunctionByAlphabet(latinAlphabet)
+  }
+
+  /**
+   * Returns wether this brick is randomizable.
+   * @return {boolean}
+   */
+  isRandomizable () {
+    return false
   }
 
   /**

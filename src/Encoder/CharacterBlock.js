@@ -52,6 +52,7 @@ export default class CharacterBlockEncoder extends Encoder {
       name: 'separator',
       type: 'text',
       value: ' ',
+      randomizable: false,
       priority: -10,
       options: {
         minLength: 1

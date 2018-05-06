@@ -201,20 +201,21 @@ export default class NumberSetting extends Setting {
   }
 
   /**
-   * Returns a randomly chosen value.
+   * Returns a randomly chosen value or null if not applicable.
    * @param {Random} random Random number generator
-   * @throws Throws an error if random number without range is requested.
    * @return {mixed} Randomly chosen value
    */
   randomizeValue (random) {
-    if (this.getMin() === null || this.getMax() === null) {
-      throw new Error(`Can't randomize numeric value without min, max range.`)
+    const value = super.randomizeValue(random)
+    if (value !== null) {
+      return value
     }
-    if (this.isInteger()) {
-      return random.nextInteger(this.getMin(), this.getMax())
-    } else {
-      return random.nextFloat(this.getMin(), this.getMax())
+    if (this.getMin() !== null && this.getMax() !== null) {
+      return this.isInteger()
+        ? random.nextInteger(this.getMin(), this.getMax())
+        : random.nextFloat(this.getMin(), this.getMax())
     }
+    return null
   }
 
   /**

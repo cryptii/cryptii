@@ -41,6 +41,7 @@ export default class BitwiseOperationEncoder extends Encoder {
         name: 'operation',
         type: 'enum',
         value: 'NOT',
+        randomizable: false,
         style: 'radio',
         options: {
           elements: [

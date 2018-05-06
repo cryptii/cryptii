@@ -32,6 +32,7 @@ export default class UnicodeCodePointsEncoder extends CharacterBlockEncoder {
       name: 'format',
       type: 'enum',
       value: 'unicode',
+      randomizable: false,
       style: 'radio',
       options: {
         elements: [

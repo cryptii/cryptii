@@ -40,6 +40,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
         width: 6,
         value: 5,
         validateValue: this.validateSlopeValue.bind(this),
+        randomizeValue: this.randomizeSlopeValue.bind(this),
         options: {
           integer: true,
           min: 1
@@ -51,6 +52,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
         label: 'Intercept / b',
         width: 6,
         value: 8,
+        randomizeValue: this.randomizeInterceptValue.bind(this),
         options: {
           integer: true,
           min: 1
@@ -59,13 +61,15 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       {
         name: 'alphabet',
         type: 'alphabet',
-        value: defaultAlphabet
+        value: defaultAlphabet,
+        randomizable: false
       },
       {
         name: 'caseSensitivity',
         type: 'boolean',
         width: 6,
-        value: false
+        value: false,
+        randomizable: false
       },
       {
         name: 'includeForeignChars',
@@ -73,6 +77,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
         label: 'Foreign Chars',
         width: 6,
         value: true,
+        randomizable: false,
         options: {
           trueLabel: 'Include',
           falseLabel: 'Ignore'
@@ -180,5 +185,43 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
     }
 
     return true
+  }
+
+  /**
+   * Generates a random slope setting value.
+   * @protected
+   * @param {Random} random Random instance
+   * @param {Setting} setting Setting instance
+   * @return {string} Random slope setting value
+   */
+  randomizeSlopeValue (random, setting) {
+    const alphabetSetting = this.getSetting('alphabet')
+    if (alphabetSetting.isValid()) {
+      const alphabet = alphabetSetting.getValue()
+      const m = alphabet.getLength()
+
+      // create range based on alphabet and filter coprime values
+      // don't use caesar cipher slope (a=1) if possible
+      const range = alphabet.getCodePoints().map((_, i) => i + 1)
+      const coprimes = range.filter(a => a > 1 && MathUtil.isCoprime(a, m))
+      return coprimes.length > 0 ? random.nextChoice(coprimes) : 1
+    }
+    return null
+  }
+
+  /**
+   * Generates a random intercept setting value.
+   * @protected
+   * @param {Random} random Random instance
+   * @param {Setting} setting Setting instance
+   * @return {string} Random intercept setting value
+   */
+  randomizeInterceptValue (random, setting) {
+    const alphabetSetting = this.getSetting('alphabet')
+    if (alphabetSetting.isValid()) {
+      const m = this.getSetting('alphabet').getValue().getLength()
+      return random.nextInteger(1, m)
+    }
+    return null
   }
 }
