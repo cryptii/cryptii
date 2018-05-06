@@ -128,23 +128,23 @@ export default class PipeView extends View {
     // empty content element
     $content.innerHTML = ''
 
-    // add each brick and pipe parts
-    let collapsedBricks = []
-    for (let i = 0; i < brickViews.length; i++) {
-      if (bricks[i].isHidden()) {
-        // collect hidden bricks
-        collapsedBricks.push(bricks[i])
-      } else {
-        if (collapsedBricks.length > 0) {
-          // append collapsed bricks part
-          $content.appendChild(this._createPipePart(i - collapsedBricks.length))
-          $content.appendChild(this._createCollapsedPart(collapsedBricks))
-          collapsedBricks = []
-        }
-
+    // compose pipe
+    let cowards = []
+    for (let i = 0; i < bricks.length; i++) {
+      if (!bricks[i].isHidden()) {
         // append brick
         $content.appendChild(this._createPipePart(i))
         $content.appendChild(this._createBrickPart(brickViews[i]))
+      } else {
+        // collect cowards
+        cowards.push(bricks[i])
+
+        // append cowards group if this is the last coward in the group
+        if (i + 1 === bricks.length || !bricks[i + 1].isHidden()) {
+          $content.appendChild(this._createPipePart(i - cowards.length + 1))
+          $content.appendChild(this._createCollapsedPart(cowards))
+          cowards = []
+        }
       }
     }
 
