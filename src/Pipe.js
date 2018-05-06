@@ -318,14 +318,18 @@ export default class Pipe extends Viewable {
    * @param {boolean} reverse Wether to reverse translation.
    */
   encoderDidReverse (brick, reverse) {
-    let sourceBucket = this.getBucketIndexForBrick(brick)
-    let resultBucket = sourceBucket + 1
-
-    // swap source and result content
-    let sourceContent = this.getContent(sourceBucket)
-    let resultContent = this.getContent(resultBucket)
-    this.setContent(sourceContent, resultBucket, brick)
-    this.setContent(resultContent, sourceBucket, brick)
+    if (
+      this._bricks.length === 3 &&
+      this._bricks[0].getMeta().type === 'viewer' &&
+      this._bricks[1].getMeta().type === 'encoder' &&
+      this._bricks[2].getMeta().type === 'viewer'
+    ) {
+      // having this constellation, swap source and result content
+      // when reversing the encoder brick in the middle
+      let resultContent = this.getContent(1)
+      this.setContent(this.getContent(0), 1, brick)
+      this.setContent(resultContent, 0, brick)
+    }
   }
 
   /**
