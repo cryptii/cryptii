@@ -6,7 +6,7 @@
     position: relative;
     flex-direction: row;
     width: 100%;
-    padding: 8px 16px;
+    padding: 0 2px;
   }
 
   &__value {
@@ -19,7 +19,7 @@
   &__input {
     border: none;
     width: 100%;
-    height: 24px;
+    height: 40px;
     padding: 0;
     text-align: center;
     @extend %t-setting-value;
@@ -39,10 +39,8 @@
   &__btn-step-up {
     display: block;
     position: relative;
-    width: 20px;
-    height: 20px;
-    margin: 2px 0;
-    background: $c-setting-control-background;
+    width: 32px;
+    height: 40px;
     border-radius: 12px;
     font-size: 0;
 
@@ -52,20 +50,18 @@
       display: block;
       position: absolute;
       top: 50%;
-      left: 50%;
+      left: 20px;
       transform: translate(-50%, -50%);
-      width: 8px;
+      width: 10px;
       height: 2px;
-      background: $c-text;
+      background: $c-text-detail;
     }
 
     &:hover {
 
-      background: $c-primary;
-
       &::before,
       &::after {
-        background: $c-white;
+        background: $c-primary;
       }
     }
   }
@@ -78,6 +74,11 @@
   }
 
   &__btn-step-up {
+
+    &::before,
+    &::after {
+      left: 12px
+    }
 
     &::after {
       transform: translate(-50%, -50%) rotate(90deg);
