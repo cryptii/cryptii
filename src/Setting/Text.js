@@ -154,7 +154,7 @@ export default class TextSetting extends Setting {
       return {
         key: 'textLengthTooShort',
         message:
-          `The value is less than ${this._minLength} ` +
+          `The value must be at least ${this._minLength} ` +
           `${this._minLength === 1 ? 'character' : 'characters'} long`
       }
     }
@@ -164,8 +164,8 @@ export default class TextSetting extends Setting {
       return {
         key: 'textLengthTooLong',
         message:
-          `The value is more than ${this._maxLength} ` +
-          `${this._maxLength === 1 ? 'character' : 'characters'} long`
+          `The value must not exceed ${this._maxLength} ` +
+          `${this._maxLength === 1 ? 'character' : 'characters'} in length`
       }
     }
 
@@ -183,7 +183,7 @@ export default class TextSetting extends Setting {
         return {
           key: 'textNotAllowedCharacter',
           message:
-            `The value contains not allowed characters ` +
+            `The value contains characters that are not allowed: ` +
             `'${invalidCharacters.join('')}'`
         }
       }

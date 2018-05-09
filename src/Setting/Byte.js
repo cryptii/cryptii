@@ -89,7 +89,7 @@ export default class ByteSetting extends Setting {
       return {
         key: 'byteSizeTooShort',
         message:
-          `The value is less than ${this._minSize} ` +
+          `The value must be at least ${this._minSize} ` +
           `${this._minSize === 1 ? 'byte' : 'bytes'} long`
       }
     }
@@ -99,8 +99,8 @@ export default class ByteSetting extends Setting {
       return {
         key: 'byteSizeTooLong',
         message:
-          `The value is more than ${this._maxSize} ` +
-          `${this._maxSize === 1 ? 'byte' : 'bytes'} long`
+          `The value must not exceed ${this._maxSize} ` +
+          `${this._maxSize === 1 ? 'byte' : 'bytes'} in length`
       }
     }
 

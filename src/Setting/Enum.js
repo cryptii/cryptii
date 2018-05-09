@@ -133,7 +133,7 @@ export default class EnumSetting extends Setting {
     if (this._elements.indexOf(rawValue) === -1) {
       return {
         key: 'enumNotInHaystack',
-        message: `The value was not found in the haystack`
+        message: `The value must be occur in the list of elements`
       }
     }
     return super.validateValue(rawValue)

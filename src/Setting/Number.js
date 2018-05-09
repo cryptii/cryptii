@@ -171,7 +171,7 @@ export default class NumberSetting extends Setting {
     if (this._min !== null && value < this._min) {
       return {
         key: 'numberTooSmall',
-        message: `The value is less than ${this._min}`
+        message: `The value must be greater than or equal to ${this._min}`
       }
     }
 
@@ -179,7 +179,7 @@ export default class NumberSetting extends Setting {
     if (this._max !== null && value >= this._max) {
       return {
         key: 'numberTooLarge',
-        message: `The value is greater than ${this._max}`
+        message: `The value must be less than ${this._max}`
       }
     }
 

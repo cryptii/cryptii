@@ -39,7 +39,7 @@ export default class AlphabetSetting extends TextSetting {
     if (!ArrayUtil.isUnique(alphabet.getCodePoints())) {
       return {
         key: 'alphabetCharactersNotUnique',
-        message: `The value contains duplicate characters`
+        message: `The value must not contain duplicate characters`
       }
     }
 
