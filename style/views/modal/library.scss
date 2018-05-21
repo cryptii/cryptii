@@ -1,0 +1,52 @@
+
+.modal-library {
+  $block: &;
+
+  &__categories {
+    margin: -12px 0;
+  }
+
+  &__category {
+    padding: 12px 0;
+  }
+
+  &__category-title {
+    display: block;
+    padding-bottom: 12px;
+    @extend %t-text;
+    color: $c-text-detail;
+  }
+
+  &__bricks {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: -4px;
+
+    @include breakpoint(xs) {
+      flex-direction: column;
+    }
+  }
+
+  &__brick {
+    display: block;
+    margin: 4px;
+    padding: 8px 10px;
+    @extend %s-sheet;
+    @extend %t-text;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 8px 1px 0;
+      border-radius: 4px;
+      background: $c-viewer;
+    }
+
+    &--encoder::before {
+      background: $c-encoder;
+    }
+  }
+}

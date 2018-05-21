@@ -76,7 +76,6 @@ export default class EncoderView extends BrickView {
 
   actionDidClick (action, evt) {
     evt.preventDefault()
-    this.toggleSelection(false)
 
     // check if encoder should be reversed
     let reverse = action === 'decode'

@@ -1,6 +1,7 @@
-/public/docs
-/public/dist
-/.tmp*
-node_modules
-.sass-cache
 .DS_Store
+.sass-cache
+/.tmp*
+/public/dist
+/public/docs
+node_modules
+npm-debug.log

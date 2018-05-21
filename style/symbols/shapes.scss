@@ -10,3 +10,9 @@
   border-radius: 3px;
   background: $c-white;
 }
+
+%s-sheet-dialog {
+  box-shadow: 0 1px 3px 0 rgba($c-black, 0.14);
+  border-radius: 4px;
+  background: $c-white;
+}

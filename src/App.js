@@ -3,6 +3,9 @@ import AppView from './View/App'
 import Pipe from './Pipe'
 import Viewable from './Viewable'
 
+// singleton instance
+let instance = null
+
 /**
  * Application
  */
@@ -18,7 +21,7 @@ export default class App extends Viewable {
 
   /**
    * Bootstraps the application.
-   * @return {Application} Fluent interface
+   * @return {App} Fluent interface
    */
   run () {
     let $pipeData = document.querySelector('.app .app__pipe .pipe__data')
@@ -34,6 +37,14 @@ export default class App extends Viewable {
   }
 
   /**
+   * Returns pipe instance.
+   * @return {Pipe}
+   */
+  getPipe () {
+    return this._pipe
+  }
+
+  /**
    * Triggered when view has been created.
    * @protected
    * @param {View} view
@@ -41,5 +52,16 @@ export default class App extends Viewable {
   didCreateView (view) {
     // add pipe subview
     view.addSubview(this._pipe.getView())
+  }
+
+  /**
+   * Get app singleton instance.
+   * @return {App}
+   */
+  static getInstance () {
+    if (instance === null) {
+      instance = new App()
+    }
+    return instance
   }
 }

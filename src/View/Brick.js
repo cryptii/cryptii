@@ -1,5 +1,4 @@
 
-import SelectionView from './Selection'
 import SettingView from './Setting'
 import View from '../View'
 
@@ -21,9 +20,6 @@ export default class BrickView extends View {
 
     this._menuVisible = false
     this._menuHideHandler = this.toggleMenu.bind(this)
-
-    this._$selection = null
-    this._selectionVisible = false
   }
 
   /**
@@ -32,16 +28,15 @@ export default class BrickView extends View {
    * @return {HTMLElement}
    */
   render () {
-    this._$body = this.renderBody()
-    this._$inner = View.createElement('div', {
-      className: 'brick__inner'
-    }, this._$body)
+    this._$settings = this.renderSettings()
 
     return View.createElement('div', {
       className: 'brick'
     }, [
       this.renderHeader(),
-      this._$inner
+      this._$settings,
+      this.renderContent(),
+      this.renderStatus()
     ])
   }
 
@@ -64,7 +59,7 @@ export default class BrickView extends View {
           href: '#',
           onClick: evt => {
             evt.preventDefault()
-            this.toggleSelection()
+            this.getModel().viewReplaceButtonDidClick(this)
           }
         }, title)
       ]),
@@ -127,23 +122,6 @@ export default class BrickView extends View {
   }
 
   /**
-   * Renders brick body.
-   * @protected
-   * @return {HTMLElement}
-   */
-  renderBody () {
-    this._$settings = this.renderSettings()
-
-    return View.createElement('div', {
-      className: 'brick__page brick__body'
-    }, [
-      this._$settings,
-      this.renderContent(),
-      this.renderStatus()
-    ])
-  }
-
-  /**
    * Renders settings.
    * @protected
    * @return {?HTMLElement}
@@ -185,21 +163,6 @@ export default class BrickView extends View {
     ])
 
     return this._$status
-  }
-
-  /**
-   * Renders brick selection.
-   * @protected
-   * @return {HTMLElement}
-   */
-  renderSelection () {
-    let brickFactory = this.getModel().getPipe().getBrickFactory()
-    let selectionView = new SelectionView(brickFactory)
-    selectionView.setModel(this.getModel())
-
-    return View.createElement('div', {
-      className: 'brick__page brick__selection'
-    }, selectionView.getElement())
   }
 
   /**
@@ -245,36 +208,6 @@ export default class BrickView extends View {
    */
   didBlur () {
     this.getElement().classList.remove('brick--focus')
-  }
-
-  /**
-   * Toggles selection view.
-   * @param {boolean} [visible]
-   */
-  toggleSelection (visible = !this._selectionVisible) {
-    if (this._selectionVisible !== visible) {
-      this._selectionVisible = visible
-
-      if (visible) {
-        if (this._$selection === null) {
-          // render selection lazily
-          this._$selection = this.renderSelection()
-          this._$selection.classList.add('brick__page--hidden')
-          this._$inner.appendChild(this._$selection)
-        }
-
-        // wait until next js cycle to trigger transitions
-        setTimeout(() => {
-          this.getElement().classList.add('brick--selection')
-          this._$body.classList.add('brick__page--hidden')
-          this._$selection.classList.remove('brick__page--hidden')
-        }, 0)
-      } else {
-        this.getElement().classList.remove('brick--selection')
-        this._$body.classList.remove('brick__page--hidden')
-        this._$selection.classList.add('brick__page--hidden')
-      }
-    }
   }
 
   /**

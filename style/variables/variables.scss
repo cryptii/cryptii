@@ -7,3 +7,11 @@ $default-border-radius: 2px;
 // sizes
 $header-height: 96px;
 $pipe-size: 96px;
+$modal-library-brick-size: 24px;
+
+// depth
+$z-index-modal: 100;
+$z-index-pipe-scroll-handle: 50;
+$z-index-header: 10;
+$z-index-menu: 10;
+$z-index-setting-message: 10;

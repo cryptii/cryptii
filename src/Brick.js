@@ -306,7 +306,6 @@ export default class Brick extends Viewable {
   /**
    * Triggered when view has been created.
    * @protected
-   * @param {View} view
    */
   didCreateView (view) {
     // add each setting as subview
@@ -318,7 +317,6 @@ export default class Brick extends Viewable {
   /**
    * Triggered when remove menu item has been clicked.
    * @protected
-   * @param {View} view
    */
   viewRemoveMenuItemDidClick (view) {
     if (this.hasPipe()) {
@@ -334,18 +332,12 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Triggered when a brick has been selected inside selection view.
-   * @param {View} view
-   * @param {string} name
+   * Triggered when replace button has been clicked.
+   * @protected
    */
-  selectionViewDidSelect (view, name) {
-    if (this.getMeta().name === name) {
-      return this.getView().toggleSelection(false)
-    }
-
+  viewReplaceButtonDidClick () {
     if (this.hasPipe()) {
-      // replace self by new brick
-      this.getPipe().replaceBrick(this, name)
+      this.getPipe().brickReplaceButtonDidClick(this)
     }
   }
 

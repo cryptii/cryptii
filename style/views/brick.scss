@@ -96,49 +96,7 @@
         background-image: inline-svg('icons/arrow-drop-down.svg',
           (path: (fill: $c-encoder)));
       }
-
-      #{$block}--selection & {
-        transform: translate(0, 3px) rotate(180deg);
-      }
     }
-  }
-
-  &__inner {
-    position: relative;
-  }
-
-  &__page {
-    display: block;
-    border-top: 1px solid $c-line;
-    margin-top: -1px;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    // transition-property: opacity, visibility, transform;
-    // transition-duration: 0.3s;
-
-    &--hidden {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      overflow: hidden;
-      opacity: 0;
-      visibility: hidden;
-      transform: translate(0, 20px);
-    }
-
-    & + & {
-
-      &--hidden {
-        transform: translate(0, -20px);
-      }
-    }
-  }
-
-  &__selection {
-
   }
 
   &__settings {

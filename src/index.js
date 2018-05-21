@@ -8,5 +8,4 @@ if (window) {
 }
 
 // run app
-const app = new App()
-app.run()
+App.getInstance().run()

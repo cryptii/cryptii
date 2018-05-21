@@ -33,7 +33,7 @@
     padding: 9px 12px 8px;
     border-radius: $default-border-radius;
     transform: translate(-50%, 100%);
-    z-index: 10;
+    z-index: $z-index-setting-message;
     background: $c-red;
     border-color: $c-red;
     @extend %s-sheet;

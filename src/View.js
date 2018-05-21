@@ -9,6 +9,12 @@ const attachableEvents = {
   onFocus: 'focus'
 }
 
+const nonStandardAttributes = {
+  role: 'role',
+  ariaHidden: 'aria-hidden',
+  ariaLabel: 'aria-label'
+}
+
 /**
  * Represents a rectangular area on the screen
  * and manages the content in that area.
@@ -30,6 +36,8 @@ export default class View {
       let value = attributes[name]
       if (attachableEvents[name] !== undefined) {
         $element.addEventListener(attachableEvents[name], value)
+      } else if (nonStandardAttributes[name] !== undefined) {
+        $element.setAttribute(nonStandardAttributes[name], value)
       } else {
         $element[name] = value
       }

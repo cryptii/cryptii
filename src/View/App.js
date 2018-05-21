@@ -2,7 +2,7 @@
 import View from '../View'
 
 /**
- * Pipe View.
+ * App View.
  */
 export default class AppView extends View {
   /**

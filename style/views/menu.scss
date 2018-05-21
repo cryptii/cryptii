@@ -3,7 +3,7 @@
   display: block;
   visibility: hidden;
   background: $c-white;
-  z-index: 10;
+  z-index: $z-index-menu;
   max-height: 56px;
   padding: 8px 0;
   @extend %s-sheet-menu;
@@ -24,7 +24,6 @@
     color: $c-text;
 
     &:hover {
-      border-radius: 3px;
       background: $c-background-shaded;
     }
   }

@@ -86,6 +86,15 @@ export default class BrickFactory extends Factory {
   }
 
   /**
+   * Returns array of brick meta objects.
+   * @return {object[]}
+   */
+  getLibrary () {
+    return this.getIdentifiers()
+      .map(identifier => this.getMeta(identifier))
+  }
+
+  /**
    * Get brick factory singleton instance.
    * @return {BrickFactory}
    */

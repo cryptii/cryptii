@@ -3,21 +3,25 @@ $breakpoints: (
   xs: (
     min: 0,
     max: 767px,
-    gutter: 16px
+    gutter: 16px,
+    modal-gutter: 16px
   ),
   s: (
     min: 768px,
     max: 999px,
-    gutter: 32px
+    gutter: 32px,
+    modal-gutter: 24px
   ),
   m: (
     min: 1000px,
     max: 1399px,
-    gutter: 48px
+    gutter: 48px,
+    modal-gutter: 32px
   ),
   l: (
     min: 1400px,
     max: null,
-    gutter: 64px
+    gutter: 64px,
+    modal-gutter: 32px
   )
 );

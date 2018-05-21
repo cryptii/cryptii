@@ -36,7 +36,7 @@ $header-height: 96px !default;
     left: 0;
     bottom: 0;
     width: 15%;
-    z-index: 100;
+    z-index: $z-index-pipe-scroll-handle;
 
     @include breakpoint(xs, s) {
       display: none;

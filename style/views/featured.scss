@@ -38,11 +38,6 @@ $featured-image-width: 130px !default;
     position: relative;
     width: $featured-image-width;
     height: $featured-height;
-
-    #{$block}--feedback & {
-      background: #35b084;
-      color: $c-white;
-    }
   }
 
   &__visual-text {

@@ -9,6 +9,7 @@ import PipeView from './View/Pipe'
 import InvalidInputError from './Error/InvalidInput'
 import Viewable from './Viewable'
 import Viewer from './Viewer'
+import LibraryModalView from './View/Modal/Library'
 
 /**
  * Arrangement of Viewers and Encoders.
@@ -617,14 +618,6 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Returns Brick Factory instance.
-   * @return {BrickFactory}
-   */
-  getBrickFactory () {
-    return BrickFactory.getInstance()
-  }
-
-  /**
    * Triggered when view has been created.
    * @protected
    * @param {View} view
@@ -640,23 +633,56 @@ export default class Pipe extends Viewable {
    * @param {View} view
    * @param {number} index
    */
-  viewAddButtonDidClick (view, index) {
-    let content = null
-    if (index === this._bricks.length) {
-      content = this.getContent(this._bucketContent.length - 1)
-    } else {
-      let bucket = this.getBucketIndexForBrick(this._bricks[index])
-      content = this.getContent(bucket)
+  async viewAddButtonDidClick (view, index) {
+    const library = BrickFactory.getInstance().getLibrary()
+    const modalView = new LibraryModalView(library)
+
+    let name
+    try {
+      name = await modalView.prompt()
+    } catch (error) {
+      // stop here when user cancels the modal view
+      return
     }
 
-    let name = 'text'
-    if (content.needsTextEncoding()) {
-      name = 'bytes'
-    }
-
-    let brick = this.getBrickFactory().create(name)
+    // create brick and add it to the pipe
+    const brick = BrickFactory.getInstance().create(name)
     this.spliceBricks(index, 0, brick)
-    brick.getView().toggleSelection(true)
+
+    Analytics.trackEvent('brick_add', {
+      'event_category': 'bricks',
+      'event_action': 'add',
+      'event_label': name
+    })
+  }
+
+  /**
+   * Triggered when brick view replace button has been clicked.
+   * @protected
+   * @param {Brick} brick
+   */
+  async brickReplaceButtonDidClick (brick) {
+    const library = BrickFactory.getInstance().getLibrary()
+    const modalView = new LibraryModalView(library)
+
+    let name = brick.getMeta().name
+    try {
+      name = await modalView.prompt(name)
+    } catch (error) {
+      // stop here when user cancels the modal view
+      return
+    }
+
+    // replace brick only if a different one is selected
+    if (name !== brick.getMeta().name) {
+      this.replaceBrick(brick, name)
+
+      Analytics.trackEvent('brick_add', {
+        'event_category': 'bricks',
+        'event_action': 'add',
+        'event_label': name
+      })
+    }
   }
 
   /**

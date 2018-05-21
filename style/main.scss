@@ -10,8 +10,9 @@
 @import 'tools/browser';
 
 // symbols
-@import 'symbols/shapes';
 @import 'symbols/typography';
+@import 'symbols/icons';
+@import 'symbols/shapes';
 
 // ground-zero styles
 @import 'normalize-scss/sass/normalize/import-now';
@@ -27,12 +28,15 @@
 // app views
 @import 'views/app';
 @import 'views/header';
+@import 'views/modal';
 @import 'views/menu';
 @import 'views/featured';
 @import 'views/page';
 @import 'views/footer';
 @import 'views/pipe';
-@import 'views/selection';
+
+// modal views
+@import 'views/modal/library';
 
 // brick views
 @import 'views/brick';
