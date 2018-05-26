@@ -103,8 +103,8 @@ export default class Ascii85Encoder extends Encoder {
         // convert digits to characters and glue them together
         string += digits.map(digit =>
           variant.alphabet === null
-          ? String.fromCharCode(digit + 33)
-          : variant.alphabet[digit]
+            ? String.fromCharCode(digit + 33)
+            : variant.alphabet[digit]
         ).join('')
       } else {
         // an all-zero tuple is encoded as a single character
@@ -160,8 +160,8 @@ export default class Ascii85Encoder extends Encoder {
           .map((character, index) => {
             let digit =
               variant.alphabet === null
-              ? character.charCodeAt(0) - 33
-              : variant.alphabet.indexOf(character)
+                ? character.charCodeAt(0) - 33
+                : variant.alphabet.indexOf(character)
             if (digit < 0 || digit > 84) {
               throw new InvalidInputError(
                 `Invalid character '${character}' at index ${index}`)

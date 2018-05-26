@@ -1,5 +1,7 @@
 
-import browser from 'detect-browser/browser'
+import { detect } from 'detect-browser'
+
+const browser = detect()
 
 /**
  * Utility class providing static methods for

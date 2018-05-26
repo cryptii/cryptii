@@ -63,20 +63,18 @@ export default class LibraryModalView extends ModalView {
     // render categories of bricks
     return View.createElement('ul', {
       className: 'modal-library__categories'
-    },
-      categories.map((category, index) =>
-        View.createElement('li', {
-          className: 'modal-library__category'
-        }, [
-          View.createElement('span', {
-            className: 'modal-library__category-title'
-          }, category),
-          View.createElement('ul', {
-            className: 'modal-library__bricks'
-          }, categoryBricks[index].map(this.renderBrick.bind(this)))
-        ])
-      )
-    )
+    }, categories.map((category, index) =>
+      View.createElement('li', {
+        className: 'modal-library__category'
+      }, [
+        View.createElement('span', {
+          className: 'modal-library__category-title'
+        }, category),
+        View.createElement('ul', {
+          className: 'modal-library__bricks'
+        }, categoryBricks[index].map(this.renderBrick.bind(this)))
+      ])
+    ))
   }
 
   /**

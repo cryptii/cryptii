@@ -43,14 +43,14 @@ export default class EncoderTester {
     // wrap content in Chain
     const content =
       test.content instanceof Chain
-      ? test.content
-      : Chain.wrap(test.content)
+        ? test.content
+        : Chain.wrap(test.content)
 
     // wrap expected result in Chain
     const expectedResult =
       test.expectedResult instanceof Chain
-      ? test.expectedResult
-      : Chain.wrap(test.expectedResult)
+        ? test.expectedResult
+        : Chain.wrap(test.expectedResult)
 
     // create content and result preview that will be logged
     const contentPreview = ChainUtil.preview(content)

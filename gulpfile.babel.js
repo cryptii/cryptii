@@ -9,7 +9,7 @@ import concat from 'gulp-concat'
 import del from 'del'
 import gulp from 'gulp'
 import header from 'gulp-header'
-import mergeStream from 'merge-stream'
+import streamQueue from 'streamqueue'
 import mocha from 'gulp-mocha'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import rename from 'gulp-rename'
@@ -22,8 +22,8 @@ import sourcemaps from 'gulp-sourcemaps'
 import standard from 'gulp-standard'
 import uglify from 'gulp-uglify'
 
-let meta = require('./package.json')
-let paths = {
+const meta = require('./package.json')
+const paths = {
   assets: './assets',
   script: './src',
   scriptDist: './public/dist/script',
@@ -41,7 +41,7 @@ try {
 }
 
 // compose dist header
-let distHeader =
+const distHeader =
   `/*! ${meta.name} v${meta.version} (commit ${distRevision})` +
   ` - (c) ${meta.author} */\n`
 
@@ -66,10 +66,10 @@ gulp.task('lint-script', () => {
 gulp.task('test', ['lint-test', 'lint-script'], () => {
   return gulp.src(paths.test + '/**/*.js', { read: false })
     .pipe(mocha({
-      reporter: 'spec',
-      require: ['babel-polyfill'],
-      compilers: [
-        'js:babel-core/register'
+      reporter: 'dot',
+      require: [
+        'babel-core/register',
+        'babel-polyfill'
       ]
     }))
 })
@@ -102,7 +102,8 @@ gulp.task('script', ['lint-script', 'clean-script'], () => {
         main: true
       }),
       commonJs({
-        include: ['node_modules/**']
+        include: ['node_modules/**'],
+        ignore: ['os']
       })
     ],
     format: 'umd',
@@ -144,27 +145,31 @@ gulp.task('script', ['lint-script', 'clean-script'], () => {
     .pipe(header(distHeader))
 
   // create polyfill stream from existing files
-  let polyfillStream = gulp.src([
+  const polyfillStream = gulp.src([
     './node_modules/dom4/build/dom4.js',
     './node_modules/babel-polyfill/dist/polyfill.min.js'
   ], { base: '.' })
     .pipe(sourcemaps.init())
 
   // compose library bundle
-  let libraryBundleStream = appStream.pipe(clone())
+  const libraryBundleStream = appStream.pipe(clone())
     // render sourcemaps
     .pipe(sourcemaps.write('.'))
 
   // compose browser bundle
-  let browserBundleStream = mergeStream(polyfillStream, appStream)
+  const browserBundleStream =
+    streamQueue({ objectMode: true }, polyfillStream, appStream)
     // concat polyfill and library
     .pipe(concat(`${meta.name}-browser.js`))
     // render sourcemaps
     .pipe(sourcemaps.write('.'))
 
   // save bundles and sourcemaps
-  return mergeStream(libraryBundleStream, browserBundleStream)
+  const projectStream =
+    streamQueue({ objectMode: true }, libraryBundleStream, browserBundleStream)
     .pipe(gulp.dest(paths.scriptDist))
+
+  return projectStream
 })
 
 gulp.task('style', ['clean-style'], () => {

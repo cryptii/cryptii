@@ -572,7 +572,7 @@ export default class EnigmaEncoder extends Encoder {
   randomizePlugboardValue (random, setting) {
     const shuffled =
       ArrayUtil.shuffle(alphabet.split(''), random)
-      .join('').substr(0, 20)
+        .join('').substr(0, 20)
     return StringUtil.chunk(shuffled, 2).join(' ')
   }
 

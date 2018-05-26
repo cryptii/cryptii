@@ -129,28 +129,28 @@ export default class TextTransformEncoder extends Encoder {
       case 'capitalize':
         return new Chain(
           content.getString()
-          .replace(/\w\S*/ug, word =>
-            word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
+            .replace(/\w\S*/ug, word =>
+              word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
         )
 
       case 'alternating':
         return new Chain(
           content.getChars()
-          .map((char, index) =>
-            index % 2 === 0
-            ? char.toLowerCase()
-            : char.toUpperCase())
-          .join('')
+            .map((char, index) =>
+              index % 2 === 0
+                ? char.toLowerCase()
+                : char.toUpperCase())
+            .join('')
         )
 
       case 'inverse':
         return new Chain(
           content.getChars()
-          .map(char => {
-            let lowerChar = char.toLowerCase()
-            return char !== lowerChar ? lowerChar : char.toUpperCase()
-          })
-          .join('')
+            .map(char => {
+              let lowerChar = char.toLowerCase()
+              return char !== lowerChar ? lowerChar : char.toUpperCase()
+            })
+            .join('')
         )
     }
     return content

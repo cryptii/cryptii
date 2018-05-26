@@ -192,8 +192,8 @@ export default class SpellingAlphabetEncoder extends Encoder {
     // read spec
     let characters =
       typeof spec.characters === 'string'
-      ? spec.characters.split('')
-      : spec.characters
+        ? spec.characters.split('')
+        : spec.characters
 
     let words = spec.words
 

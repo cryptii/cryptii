@@ -8,8 +8,7 @@ import BitwiseOperationEncoder from '../../src/Encoder/BitwiseOperation'
 const bytes = ByteEncoder.bytesFromHexString
 
 /** @test {BitwiseOperationEncoder} */
-describe('BitwiseOperationEncoder', () =>
-EncoderTester.test(BitwiseOperationEncoder, [
+describe('BitwiseOperationEncoder', () => EncoderTester.test(BitwiseOperationEncoder, [
   {
     settings: { operation: 'NOT' },
     content: bytes('54686520717569636b2062726f776e20666f782'),
