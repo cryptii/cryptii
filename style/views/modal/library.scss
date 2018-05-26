@@ -12,7 +12,7 @@
 
   &__category-title {
     display: block;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
     @extend %t-text;
     color: $c-text-detail;
   }
@@ -31,7 +31,8 @@
   &__brick {
     display: block;
     margin: 4px;
-    padding: 8px 10px;
+    padding: 0 12px;
+    line-height: 40px;
     @extend %s-sheet;
     @extend %t-text;
 

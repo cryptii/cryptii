@@ -7,7 +7,7 @@ import InvalidInputError from '../Error/InvalidInput'
 const meta = {
   name: 'morse-code',
   title: 'Morse code',
-  category: 'Encoding',
+  category: 'Alphabets',
   type: 'encoder'
 }
 

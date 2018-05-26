@@ -4,7 +4,7 @@ import SimpleSubstitutionEncoder from './SimpleSubstitution'
 const meta = {
   name: 'rot13',
   title: 'ROT13',
-  category: 'Simple Substitution',
+  category: 'Substitution cipher',
   type: 'encoder'
 }
 

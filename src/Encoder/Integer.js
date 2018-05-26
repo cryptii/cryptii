@@ -6,7 +6,7 @@ import InvalidInputError from '../Error/InvalidInput'
 const meta = {
   name: 'integer',
   title: 'Integer',
-  category: 'Data types',
+  category: 'Encoding',
   type: 'encoder'
 }
 

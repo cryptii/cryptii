@@ -5,7 +5,7 @@ import Chain from '../Chain'
 const meta = {
   name: 'atbash',
   title: 'Atbash',
-  category: 'Simple Substitution',
+  category: 'Substitution cipher',
   type: 'encoder'
 }
 

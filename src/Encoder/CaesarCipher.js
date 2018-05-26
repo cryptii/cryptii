@@ -5,7 +5,7 @@ import MathUtil from '../MathUtil'
 const meta = {
   name: 'caesar-cipher',
   title: 'Caesar cipher',
-  category: 'Simple Substitution',
+  category: 'Substitution cipher',
   type: 'encoder'
 }
 

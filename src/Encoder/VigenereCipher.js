@@ -5,7 +5,7 @@ import SimpleSubstitutionEncoder from './SimpleSubstitution'
 const meta = {
   name: 'vigenere-cipher',
   title: 'Vigenère cipher',
-  category: 'Simple Substitution',
+  category: 'Substitution cipher',
   type: 'encoder'
 }
 

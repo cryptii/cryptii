@@ -7,8 +7,8 @@ import StringUtil from '../StringUtil'
 
 const meta = {
   name: 'enigma',
-  title: 'Enigma',
-  category: 'Cipher machines',
+  title: 'Enigma machine',
+  category: 'Substitution cipher',
   type: 'encoder'
 }
 
