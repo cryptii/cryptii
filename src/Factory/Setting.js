@@ -13,26 +13,33 @@ import TextSetting from '../Setting/Text'
 let instance = null
 
 /**
- * Factory for Setting objects.
+ * Factory for setting objects
  */
 export default class SettingFactory extends Factory {
   /**
-   * Setting Factory constructor.
+   * Setting factory constructor
    */
   constructor () {
     super()
 
-    // register package settings
-    this.register('alphabet', AlphabetSetting)
-    this.register('boolean', BooleanSetting)
-    this.register('bytes', ByteSetting)
-    this.register('enum', EnumSetting)
-    this.register('number', NumberSetting)
-    this.register('text', TextSetting)
+    // gather package brick classes
+    const invokables = {
+      alphabet: AlphabetSetting,
+      boolean: BooleanSetting,
+      bytes: ByteSetting,
+      enum: EnumSetting,
+      number: NumberSetting,
+      text: TextSetting
+    }
+
+    // register each brick
+    for (let name in invokables) {
+      this.register(name, invokables[name])
+    }
   }
 
   /**
-   * Configure a Setting object based on the provided specification.
+   * Configure a setting object based on the provided specification.
    * @example
    * let variantSetting = SettingFactory.getInstance().create({
    *   name: 'variant',
@@ -40,11 +47,11 @@ export default class SettingFactory extends Factory {
    *   options: {...}
    * })
    * @param {Object} spec Specification
-   * @param {string} spec.name Name to provide to the Setting.
-   * @param {string} spec.type Setting Factory identifier of Setting to use.
+   * @param {string} spec.name Name to provide to the setting
+   * @param {string} spec.type Setting factory identifier to use
    * @throws Throws an error if specification is malformed.
    * @throws Throws an error if Setting type has not been registered.
-   * @return {Setting} Configured Setting object.
+   * @return {Setting} Configured setting object
    */
   create (spec) {
     // validate name

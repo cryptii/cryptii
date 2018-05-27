@@ -3,11 +3,11 @@ import ByteSettingView from '../View/Setting/Byte'
 import Setting from '../Setting'
 
 /**
- * Byte Setting.
+ * Byte setting
  */
 export default class ByteSetting extends Setting {
   /**
-   * Setting constructor.
+   * Setting constructor
    * @param {string} name
    * @param {Object} [spec]
    * @param {mixed} [spec.options] Setting options

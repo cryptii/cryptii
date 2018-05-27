@@ -7,8 +7,8 @@ const CharacterToBlockMode = 0
 const BlockToCharacterMode = 1
 
 /**
- * Abstract Encoder foundation for encoding and decoding between characters
- * and blocks of characters.
+ * Abstract encoder foundation for encoding and decoding between characters
+ * and blocks of characters
  * @abstract
  */
 export default class CharacterBlockEncoder extends Encoder {
@@ -78,13 +78,13 @@ export default class CharacterBlockEncoder extends Encoder {
   performEncode (content) {
     switch (this._mode) {
       case CharacterToBlockMode:
-        let blocks = content.getCodePoints()
+        const blocks = content.getCodePoints()
           .map((codePoint, index) =>
             this.performCharEncodeToBlock(codePoint, index, content))
         return Chain.join(blocks, this.getSeparator())
 
       case BlockToCharacterMode:
-        let codePoints = content.split(this.getSeparator())
+        const codePoints = content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockEncodeToChar(block, index, blocks, content))
         return Chain.wrap(codePoints)
@@ -99,13 +99,13 @@ export default class CharacterBlockEncoder extends Encoder {
   performDecode (content) {
     switch (this._mode) {
       case CharacterToBlockMode:
-        let codePoints = content.split(this.getSeparator())
+        const codePoints = content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockDecodeToChar(block, index, blocks, content))
         return Chain.wrap(codePoints)
 
       case BlockToCharacterMode:
-        let blocks = content.getCodePoints()
+        const blocks = content.getCodePoints()
           .map((codePoint, index) =>
             this.performCharDecodeToBlock(codePoint, index, content))
         return Chain.join(blocks, this.getSeparator())

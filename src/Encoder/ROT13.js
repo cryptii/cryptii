@@ -9,7 +9,7 @@ const meta = {
 }
 
 /**
- * Encoder Brick for ROT13 encoding and decoding.
+ * Encoder brick for ROT13 encoding and decoding
  */
 export default class ROT13Encoder extends SimpleSubstitutionEncoder {
   /**
@@ -25,7 +25,6 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
    */
   constructor () {
     super()
-
     this.registerSetting({
       name: 'variant',
       type: 'enum',
@@ -53,13 +52,13 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
    * Performs encode or decode on given character, index and content.
    * @protected
    * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content.
+   * @param {number} index Unicode code point index inside content
    * @param {Chain} content Content to be translated.
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {number} Resulting Unicode code point
    */
   performCharTranslate (codePoint, index, content, isEncode) {
-    let variant = this.getSettingValue('variant')
+    const variant = this.getSettingValue('variant')
 
     if (variant === 'rot5' || variant === 'rot18') {
       // rotate numbers 0-9
@@ -91,7 +90,7 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
   _rotateCodePoint (codePoint, start, end) {
     // only rotate if code point is inside bounds
     if (codePoint >= start && codePoint <= end) {
-      let count = end - start + 1
+      const count = end - start + 1
       codePoint += count / 2
 
       if (codePoint > end) {

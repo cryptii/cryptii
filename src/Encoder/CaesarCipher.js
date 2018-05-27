@@ -12,7 +12,7 @@ const meta = {
 const defaultShift = 7
 
 /**
- * Encoder Brick for Caesar Cipher encoding and decoding.
+ * Encoder brick for Caesar Cipher encoding and decoding
  */
 export default class CaesarCipherEncoder extends AffineCipherEncoder {
   /**
@@ -64,8 +64,8 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
     switch (setting.getName()) {
       case 'caesarCipherShift':
       case 'alphabet':
-        let shiftSetting = this.getSetting('caesarCipherShift')
-        let alphabetSetting = this.getSetting('alphabet')
+        const shiftSetting = this.getSetting('caesarCipherShift')
+        const alphabetSetting = this.getSetting('alphabet')
 
         // needs valid alphabet and shift setting to set
         // affine cipher's b setting
@@ -73,7 +73,7 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
           let shift = shiftSetting.getValue()
 
           // handle negative shift values
-          let m = alphabetSetting.getValue().getLength()
+          const m = alphabetSetting.getValue().getLength()
           shift = MathUtil.mod(shift, m)
 
           // changing the shift setting changes the hidden b setting

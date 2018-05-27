@@ -16,7 +16,7 @@ const unreservedURLCharacters =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~'
 
 /**
- * Encoder Brick for URL encoding.
+ * Encoder brick for URL encoding
  */
 export default class URLEncoder extends Encoder {
   /**
@@ -36,7 +36,7 @@ export default class URLEncoder extends Encoder {
   performEncode (content) {
     try {
       // try to URL encode string representation of content
-      let chars = content.getChars()
+      const chars = content.getChars()
       let string = ''
       let char
       for (let i = 0; i < chars.length; i++) {
@@ -78,9 +78,9 @@ export default class URLEncoder extends Encoder {
    * @return {Chain} Decoded content
    */
   performDecode (content) {
-    let string = content.getString()
+    const string = content.getString()
+    const bytes = []
     let i = 0
-    let bytes = []
 
     // go through string and collect bytes
     let char, byteString

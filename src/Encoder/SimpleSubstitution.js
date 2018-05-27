@@ -1,9 +1,9 @@
 
-import Encoder from '../Encoder'
 import Chain from '../Chain'
+import Encoder from '../Encoder'
 
 /**
- * Abstract Encoder foundation for simple substitution ciphers.
+ * Abstract encoder foundation for simple substitution ciphers
  * @abstract
  */
 export default class SimpleSubstitutionEncoder extends Encoder {
@@ -18,14 +18,14 @@ export default class SimpleSubstitutionEncoder extends Encoder {
     // encode or decode each code point
     // TODO reduce calls to performCharEncode or performCharDecode
     // to a minimum (e.g. caching)
-    let resultingCodePoints =
+    const resultingCodePoints =
       content.getCodePoints().map((codePoint, index) =>
         isEncode
           ? this.performCharEncode(codePoint, index, content)
           : this.performCharDecode(codePoint, index, content))
 
     // create new chain from resulting code points
-    return new Chain(resultingCodePoints)
+    return Chain.wrap(resultingCodePoints)
   }
 
   /**

@@ -40,7 +40,7 @@ const romanNumeralValues = [
   1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
 
 /**
- * Encoder Brick translating numerals between systems.
+ * Encoder brick translating numerals between systems.
  */
 export default class NumeralSystemEncoder extends Encoder {
   /**
@@ -92,15 +92,15 @@ export default class NumeralSystemEncoder extends Encoder {
    * @return {Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
-    let string = content.toString()
-    let from = this.getSettingValue(isEncode ? 'from' : 'to')
-    let to = this.getSettingValue(isEncode ? 'to' : 'from')
+    const string = content.toString()
+    const from = this.getSettingValue(isEncode ? 'from' : 'to')
+    const to = this.getSettingValue(isEncode ? 'to' : 'from')
 
-    let pattern = systemPatterns[systemNames.indexOf(from)]
+    const pattern = systemPatterns[systemNames.indexOf(from)]
 
     // find numbers using pattern
     return string.replace(pattern, (match, rawNumber, offset) => {
-      let alone =
+      const alone =
         (offset === 0 || StringUtil.isWhitespace(string, offset - 1)) &&
         (string.length === offset + rawNumber.length ||
           StringUtil.isWhitespace(string, offset + rawNumber.length))
@@ -110,8 +110,8 @@ export default class NumeralSystemEncoder extends Encoder {
         return rawNumber
       }
 
-      let decimal = NumeralSystemEncoder.decodeNumber(from, rawNumber)
-      let encodedValue = decimal !== null
+      const decimal = NumeralSystemEncoder.decodeNumber(from, rawNumber)
+      const encodedValue = decimal !== null
         ? NumeralSystemEncoder.encodeNumber(to, decimal)
         : null
       return encodedValue || rawNumber
@@ -121,9 +121,9 @@ export default class NumeralSystemEncoder extends Encoder {
   /**
    * Translates number from given system to decimal.
    * @protected
-   * @param {string} system Numeral system to translate from.
+   * @param {string} system Numeral system to translate from
    * @param {string} rawNumber
-   * @return {?number} Decimal or null, if not defined.
+   * @return {?number} Decimal or null, if not defined
    */
   static decodeNumber (system, rawNumber) {
     let decimal = null
@@ -150,9 +150,9 @@ export default class NumeralSystemEncoder extends Encoder {
   /**
    * Translates number from decimal to given system.
    * @protected
-   * @param {string} system Numeral system to translate to.
+   * @param {string} system Numeral system to translate to
    * @param {number} decimal
-   * @return {?string} Number or null, if not defined.
+   * @return {?string} Number or null, if not defined
    */
   static encodeNumber (system, decimal) {
     switch (system) {
@@ -172,7 +172,7 @@ export default class NumeralSystemEncoder extends Encoder {
    * Translates given decimal to roman numerals.
    * @protected
    * @param {number} decimal Decimal value (1-3999)
-   * @return {?string} Roman numerals or null, if not defined.
+   * @return {?string} Roman numerals or null, if not defined
    */
   static decimalToRomanNumerals (decimal) {
     if (decimal <= 0 || decimal >= 4000) {
@@ -181,10 +181,11 @@ export default class NumeralSystemEncoder extends Encoder {
 
     let remainder = decimal
     let romanNumerals = ''
+    let numeral
 
     while (remainder > 0) {
       // find highest roman numeral less or equal to the decimal
-      let numeral = romanNumeralValues.findIndex(value => remainder >= value)
+      numeral = romanNumeralValues.findIndex(value => remainder >= value)
       // add digit
       romanNumerals += romanNumeralSymbols[numeral]
       // substract roman mumeral from remainder

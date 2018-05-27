@@ -6,7 +6,7 @@ import StringUtil from './StringUtil'
 import Viewable from './Viewable'
 
 /**
- * Abstract setting.
+ * Abstract setting
  */
 export default class Setting extends Viewable {
   /**
@@ -75,7 +75,7 @@ export default class Setting extends Viewable {
 
   /**
    * Returns wether Setting is visible.
-   * @return {boolean} True, if visible.
+   * @return {boolean} True, if visible
    */
   isVisible () {
     return this._visible
@@ -159,7 +159,7 @@ export default class Setting extends Viewable {
 
   /**
    * Returns true, if delegate is set.
-   * @return {boolean} True, if delegate is set.
+   * @return {boolean} True, if delegate is set
    */
   hasDelegate () {
     return this._delegate !== null
@@ -177,7 +177,7 @@ export default class Setting extends Viewable {
 
   /**
    * Returns true, if value is valid.
-   * @return {boolean} True, if valid.
+   * @return {boolean} True, if valid
    */
   isValid () {
     return this._valid
@@ -216,7 +216,7 @@ export default class Setting extends Viewable {
    */
   setValue (rawValue, sender = null) {
     // validate value
-    let validationResult = this.validateValue(rawValue)
+    const validationResult = this.validateValue(rawValue)
     this._valid = validationResult === true
 
     // update message
@@ -245,7 +245,7 @@ export default class Setting extends Viewable {
     const value = this.filterValue(rawValue)
 
     // check if value changed
-    let equal = value instanceof Chain
+    const equal = value instanceof Chain
       ? value.isEqualTo(this._value)
       : this._value === value
 
@@ -279,8 +279,8 @@ export default class Setting extends Viewable {
    * Validates given raw value. Called whenever a value gets set
    * using {@link Setting.setValue}. Override is required to call super.
    * @override
-   * @param {mixed} rawValue Value to be validated.
-   * @return {boolean|object} True if valid, message object or false if invalid.
+   * @param {mixed} rawValue Value to be validated
+   * @return {boolean|object} True if valid, message object or false if invalid
    */
   validateValue (rawValue) {
     if (this._validateValueCallback !== null) {
@@ -294,7 +294,7 @@ export default class Setting extends Viewable {
    * Filters given raw value. Called whenever a value gets set
    * using {@link Setting.setValue}. Override is required to call super.
    * @override
-   * @param {mixed} rawValue Value to be filtered.
+   * @param {mixed} rawValue Value to be filtered
    * @return {mixed} Filtered value
    */
   filterValue (rawValue) {
@@ -353,7 +353,6 @@ export default class Setting extends Viewable {
    */
   serializeValue () {
     const value = this.getValue()
-
     if (
       typeof value !== 'boolean' &&
       typeof value !== 'number' &&
@@ -363,7 +362,6 @@ export default class Setting extends Viewable {
         `Generic Settings can only serialize boolean, number and string ` +
         `values safely. Found value type ${typeof value}.`)
     }
-
     return value
   }
 

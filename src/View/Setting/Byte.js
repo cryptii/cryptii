@@ -5,7 +5,7 @@ import StringUtil from '../../StringUtil'
 import View from '../../View'
 
 /**
- * Byte Setting View.
+ * Byte setting view
  */
 export default class ByteSettingView extends SettingView {
   /**
@@ -22,7 +22,7 @@ export default class ByteSettingView extends SettingView {
    * @return {SettingView} Fluent interface
    */
   updateValue () {
-    let bytes = this.getModel().getValue()
+    const bytes = this.getModel().getValue()
     let string = ByteEncoder.hexStringFromBytes(bytes)
     string = StringUtil.chunk(string, 2).join(' ')
     this._$input.value = string
@@ -35,7 +35,7 @@ export default class ByteSettingView extends SettingView {
    * @return {HTMLElement}
    */
   render () {
-    let $root = super.render()
+    const $root = super.render()
     $root.classList.add('setting-byte')
     return $root
   }
@@ -46,7 +46,7 @@ export default class ByteSettingView extends SettingView {
    * @return {?HTMLElement}
    */
   renderLabel () {
-    let $label = super.renderLabel()
+    const $label = super.renderLabel()
     $label.htmlFor = this._inputId
     return $label
   }
@@ -67,7 +67,7 @@ export default class ByteSettingView extends SettingView {
       onBlur: evt => this.blur()
     })
 
-    let $field = super.renderField()
+    const $field = super.renderField()
     $field.appendChild(this._$input)
     return $field
   }
@@ -77,7 +77,7 @@ export default class ByteSettingView extends SettingView {
    * @param {Event} evt
    */
   inputValueDidChange (evt) {
-    let string = StringUtil.removeWhitespaces(this._$input.value)
+    const string = StringUtil.removeWhitespaces(this._$input.value)
 
     // verify hexadecimal format
     if (string.match(/^[0-9a-f]+$/gi) === null) {
@@ -88,7 +88,7 @@ export default class ByteSettingView extends SettingView {
     this.clearMessage()
 
     // interpret bytes
-    let bytes = ByteEncoder.bytesFromHexString(string)
+    const bytes = ByteEncoder.bytesFromHexString(string)
     this.getModel().viewValueDidChange(this, bytes)
   }
 }

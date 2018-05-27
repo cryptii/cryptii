@@ -4,7 +4,7 @@ import StringUtil from '../../StringUtil'
 import View from '../../View'
 
 /**
- * Number Setting View.
+ * Number setting view
  */
 export default class NumberSettingView extends SettingView {
   /**
@@ -31,7 +31,7 @@ export default class NumberSettingView extends SettingView {
    * @return {HTMLElement}
    */
   render () {
-    let $root = super.render()
+    const $root = super.render()
     $root.classList.add('setting-number')
     return $root
   }
@@ -42,7 +42,7 @@ export default class NumberSettingView extends SettingView {
    * @return {?HTMLElement}
    */
   renderLabel () {
-    let $label = super.renderLabel()
+    const $label = super.renderLabel()
     $label.htmlFor = this._inputId
     return $label
   }
@@ -62,23 +62,23 @@ export default class NumberSettingView extends SettingView {
       onBlur: evt => this.blur()
     })
 
-    let $stepDown = View.createElement('a', {
+    const $stepDown = View.createElement('a', {
       className: 'setting-number__btn-step-down',
       href: '#',
       onClick: this.stepDownButtonDidClick.bind(this)
     }, 'Step Down')
 
-    let $value = View.createElement('div', {
+    const $value = View.createElement('div', {
       className: 'setting-number__value'
     }, this._$input)
 
-    let $stepUp = View.createElement('a', {
+    const $stepUp = View.createElement('a', {
       className: 'setting-number__btn-step-up',
       href: '#',
       onClick: this.stepUpButtonDidClick.bind(this)
     }, 'Step Up')
 
-    let $field = super.renderField()
+    const $field = super.renderField()
     $field.classList.remove('setting__field')
     $field.classList.add('setting-number__field')
     $field.appendChild($stepDown)

@@ -1,10 +1,11 @@
 
 /**
- * Abstract factory.
+ * Abstract factory implementation resolving registered identifiers to
+ * invokables to create instances.
  */
 export default class Factory {
   /**
-   * Factory constructor.
+   * Factory constructor
    */
   constructor () {
     this._identifiers = []
@@ -25,7 +26,7 @@ export default class Factory {
    * @return {class}
    */
   getInvokable (identifier) {
-    let index = this._identifiers.indexOf(identifier)
+    const index = this._identifiers.indexOf(identifier)
     if (index === -1) {
       throw new Error(
         `Invokable for '${identifier}' has not been registered yet.`)
@@ -64,8 +65,8 @@ export default class Factory {
   /**
    * Creates a new instance by given identifier.
    * @param {string} identifier
-   * @param {...mixed} args Arguments passed to the invokable constructor.
-   * @return {object} Instantiated object.
+   * @param {...mixed} args Arguments passed to the invokable constructor
+   * @return {object} Instantiated object
    */
   create (identifier, ...args) {
     if (!this.exists(identifier)) {
@@ -78,13 +79,11 @@ export default class Factory {
 
     // the following lines do basically this: new invokable(...args)
     args.splice(0, 0, invokable)
-    const instance = new (Function.prototype.bind.apply(invokable, args))()
-
-    return instance
+    return new (Function.prototype.bind.apply(invokable, args))()
   }
 
   /**
-   * Get factory singleton instance.
+   * Returns factory singleton instance.
    * @abstract
    * @return {Factory}
    */

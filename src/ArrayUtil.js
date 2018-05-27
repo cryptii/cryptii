@@ -9,7 +9,7 @@ export default class ArrayUtil {
    * Deep comparison of two values.
    * @param {mixed} a
    * @param {mixed} b
-   * @return {boolean} True, if equal.
+   * @return {boolean} True, if equal
    */
   static isEqual (a, b) {
     // compare instance
@@ -55,7 +55,7 @@ export default class ArrayUtil {
       }
 
       // collect keys of objects
-      let keys = ArrayUtil.unique(Object.keys(a).concat(Object.keys(b)))
+      const keys = ArrayUtil.unique(Object.keys(a).concat(Object.keys(b)))
 
       // compare items for each key
       let i = -1
@@ -102,7 +102,7 @@ export default class ArrayUtil {
    */
   static shuffle (array, random = null) {
     random = random || new Random()
-    let a = array.slice()
+    const a = array.slice()
     let i, j
     for (i = a.length - 1; i > 0; i--) {
       j = random.nextInteger(0, i + 1)

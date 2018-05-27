@@ -60,7 +60,7 @@ describe('ByteEncoder', () => {
   describe('hexStringFromBytes()', () => {
     it('should encode bytes to hex string', () => {
       hexTests.forEach(test => {
-        let string = ByteEncoder.hexStringFromBytes(test.bytes)
+        const string = ByteEncoder.hexStringFromBytes(test.bytes)
         assert.strictEqual(string, test.string)
       })
     })
@@ -69,7 +69,7 @@ describe('ByteEncoder', () => {
   describe('bytesFromHexString()', () => {
     it('should decode hex string to bytes', () => {
       hexTests.forEach(test => {
-        let bytes = ByteEncoder.bytesFromHexString(test.string)
+        const bytes = ByteEncoder.bytesFromHexString(test.string)
         assert.deepStrictEqual(Array.from(bytes), test.bytes)
       })
     })
@@ -78,8 +78,8 @@ describe('ByteEncoder', () => {
   describe('base64StringFromBytes()', () => {
     it('should encode bytes to base64 string', () => {
       base64Tests.forEach(test => {
-        let bytes = ByteEncoder.bytesFromHexString(test.hex)
-        let base64 = ByteEncoder.base64StringFromBytes(bytes, test.variant)
+        const bytes = ByteEncoder.bytesFromHexString(test.hex)
+        const base64 = ByteEncoder.base64StringFromBytes(bytes, test.variant)
         assert.strictEqual(base64, test.base64)
       })
     })
@@ -88,7 +88,8 @@ describe('ByteEncoder', () => {
   describe('bytesFromBase64String()', () => {
     it('should decode base64 string to bytes', () => {
       base64Tests.forEach(test => {
-        let bytes = ByteEncoder.bytesFromBase64String(test.base64, test.variant)
+        const bytes = ByteEncoder.bytesFromBase64String(
+          test.base64, test.variant)
         assert.deepStrictEqual(bytes, ByteEncoder.bytesFromHexString(test.hex))
       })
     })

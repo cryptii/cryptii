@@ -5,7 +5,7 @@
 export default class Random {
   /**
    * Random generator constructor.
-   * @param {string} [seed] Seed to use during randomization.
+   * @param {string} [seed] Seed to be used during randomization.
    */
   constructor (seed = null) {
     this._seed = seed
@@ -46,7 +46,7 @@ export default class Random {
    * @return {Uint8Array} Pseudo-random bytes
    */
   nextBytes (size) {
-    let bytes = new Uint8Array(size)
+    const bytes = new Uint8Array(size)
     for (let i = 0; i < size; i++) {
       bytes[i] = this.nextInteger(0, 256)
     }
@@ -63,11 +63,11 @@ export default class Random {
 
   /**
    * Chooses random item from given array.
-   * @param {mixed[]} array Array of items to choose from.
+   * @param {mixed[]} array Array of items to choose from
    * @return {mixed} Pseudo-random chosen item
    */
   nextChoice (array) {
-    let index = this.nextInteger(0, array.length - 1)
+    const index = this.nextInteger(0, array.length - 1)
     return array[index]
   }
 }

@@ -3,16 +3,16 @@ import NumberSettingView from '../View/Setting/Number'
 import Setting from '../Setting'
 
 /**
- * Number Setting.
+ * Number setting
  */
 export default class NumberSetting extends Setting {
   /**
-   * Setting constructor.
+   * Setting constructor
    * @param {string} name
    * @param {Object} spec
    * @param {mixed} [spec.options] Setting options
-   * @param {boolean} [spec.options.integer=false] Wether to use integer values.
-   * @param {?number} [spec.options.step=1] Step size.
+   * @param {boolean} [spec.options.integer=false] Wether to use integer values
+   * @param {?number} [spec.options.step=1] Step size
    * @param {?number} [spec.options.min=null] Minimum value (inclusive)
    * @param {?number} [spec.options.max=null] Maximum value (exclusive)
    */
@@ -65,9 +65,9 @@ export default class NumberSetting extends Setting {
 
   /**
    * Step up or down value until finding the next valid one.
-   * @param {number} step Relative step size.
-   * @param {number} [maxTries=100] Max number of tries to find a valid value.
-   * @return {?number} Resulting value or null if unable to find.
+   * @param {number} step Relative step size
+   * @param {number} [maxTries=100] Max number of tries to find a valid value
+   * @return {?number} Resulting value or null if unable to find
    */
   stepValue (step, maxTries = 100) {
     let value = this.getValue()
@@ -102,7 +102,7 @@ export default class NumberSetting extends Setting {
    * @return {NumberSetting} Fluent interface
    */
   stepUp () {
-    let value = this.stepValue(this._step)
+    const value = this.stepValue(this._step)
     return value !== null ? this.setValue(value) : this
   }
 
@@ -111,7 +111,7 @@ export default class NumberSetting extends Setting {
    * @return {NumberSetting} Fluent interface
    */
   stepDown () {
-    let value = this.stepValue(-this._step)
+    const value = this.stepValue(-this._step)
     return value !== null ? this.setValue(value) : this
   }
 
@@ -153,11 +153,11 @@ export default class NumberSetting extends Setting {
 
   /**
    * Validates given raw value.
-   * @param {mixed} rawValue Value to be validated.
-   * @return {boolean|object} True if valid, message object or false if invalid.
+   * @param {mixed} rawValue Value to be validated
+   * @return {boolean|object} True if valid, message object or false if invalid
    */
   validateValue (rawValue) {
-    let value = this.filterValue(rawValue)
+    const value = this.filterValue(rawValue)
 
     // is numeric
     if (isNaN(value) || !isFinite(value)) {
@@ -188,7 +188,7 @@ export default class NumberSetting extends Setting {
 
   /**
    * Filters given raw value.
-   * @param {mixed} rawValue Value to be filtered.
+   * @param {mixed} rawValue Value to be filtered
    * @return {mixed} Filtered value
    */
   filterValue (rawValue) {

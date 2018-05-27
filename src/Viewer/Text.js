@@ -11,7 +11,7 @@ const meta = {
 }
 
 /**
- * Viewer Brick for viewing and editing content as plain text.
+ * Viewer brick for viewing and editing content as plain text
  */
 export default class TextViewer extends Viewer {
   /**
@@ -48,8 +48,7 @@ export default class TextViewer extends Viewer {
    */
   viewTextDidChange (view, text) {
     this.dare(() => {
-      let content = new Chain(text)
-      this.contentDidChange(content)
+      this.contentDidChange(Chain.wrap(text))
     })
   }
 }

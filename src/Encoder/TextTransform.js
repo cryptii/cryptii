@@ -10,7 +10,7 @@ const meta = {
 }
 
 /**
- * Encoder Brick for text transformations.
+ * Encoder brick for text transformations
  */
 export default class TextTransformEncoder extends Encoder {
   /**
@@ -82,11 +82,11 @@ export default class TextTransformEncoder extends Encoder {
    */
   performEncode (content) {
     // transform case
-    let caseTransform = this.getSettingValue('case')
+    const caseTransform = this.getSettingValue('case')
     content = this._encodeCase(content, caseTransform)
 
     // transform arrangement
-    let arrangementTransform = this.getSettingValue('arrangement')
+    const arrangementTransform = this.getSettingValue('arrangement')
     content = this._encodeArrangement(content, arrangementTransform)
 
     return content
@@ -100,11 +100,11 @@ export default class TextTransformEncoder extends Encoder {
    */
   performDecode (content) {
     // transform arrangement
-    let arrangementTransform = this.getSettingValue('arrangement')
+    const arrangementTransform = this.getSettingValue('arrangement')
     content = this._decodeArrangement(content, arrangementTransform)
 
     // transform case
-    let caseTransform = this.getSettingValue('case')
+    const caseTransform = this.getSettingValue('case')
     if (caseTransform === 'inverse') {
       content = this._decodeCase(content, caseTransform)
     }
@@ -127,14 +127,14 @@ export default class TextTransformEncoder extends Encoder {
         return content.toUpperCase()
 
       case 'capitalize':
-        return new Chain(
+        return Chain.wrap(
           content.getString()
             .replace(/\w\S*/ug, word =>
               word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
         )
 
       case 'alternating':
-        return new Chain(
+        return Chain.wrap(
           content.getChars()
             .map((char, index) =>
               index % 2 === 0
@@ -144,7 +144,7 @@ export default class TextTransformEncoder extends Encoder {
         )
 
       case 'inverse':
-        return new Chain(
+        return Chain.wrap(
           content.getChars()
             .map(char => {
               let lowerChar = char.toLowerCase()

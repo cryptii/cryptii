@@ -47,8 +47,8 @@ export default class LibraryModalView extends ModalView {
    */
   renderBricks () {
     // compose categories
-    let categories = []
-    let categoryBricks = []
+    const categories = []
+    const categoryBricks = []
 
     this._library.forEach(meta => {
       const index = categories.indexOf(meta.category)

@@ -9,11 +9,11 @@ const scrollHandleSpeed = 1000
 const scrollHandleDisabledClass = 'pipe__scroll-handle--disabled'
 
 /**
- * Pipe View.
+ * Pipe view
  */
 export default class PipeView extends View {
   /**
-   * Pipe constructor.
+   * Pipe view constructor
    */
   constructor () {
     super()
@@ -227,8 +227,8 @@ export default class PipeView extends View {
    * @param {WheelEvent} evt
    */
   mouseDidWheel (evt) {
-    let deltaX = evt.deltaX
-    let deltaY = evt.deltaY
+    const deltaX = evt.deltaX
+    const deltaY = evt.deltaY
 
     if (Math.abs(deltaX) <= Math.abs(deltaY)) {
       // ignore vertical scrolling
@@ -261,9 +261,9 @@ export default class PipeView extends View {
     }
 
     // calculate intermediate scroll position
-    let direction = this._scrollHandleIndex === 0 ? -1 : 1
-    let duration = (new Date().getTime() - this._scrollHandleStartTime) / 1000
-    let delta = direction * Math.pow(duration, 2) * scrollHandleSpeed
+    const direction = this._scrollHandleIndex === 0 ? -1 : 1
+    const duration = (new Date().getTime() - this._scrollHandleStartTime) / 1000
+    const delta = direction * Math.pow(duration, 2) * scrollHandleSpeed
     this.scrollTo(this._scrollHandleStartPosition + delta)
 
     window.requestAnimationFrame(this.scrollHandleDidScroll.bind(this))
@@ -332,9 +332,7 @@ export default class PipeView extends View {
       }
 
       // apply change to DOM
-      let transform = x > 0 ? `translate(${-x}px, 0)` : ''
-      this._$content.style.webkitTransform = transform
-      this._$content.style.transform = transform
+      this._$content.style.transform = x > 0 ? `translate(${-x}px, 0)` : ''
 
       this._scrollPosition = x
     }

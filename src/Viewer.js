@@ -3,7 +3,7 @@ import Brick from './Brick'
 import InvalidInputError from './Error/InvalidInput'
 
 /**
- * Abstract Brick for viewing and editing content.
+ * Abstract brick for viewing and editing content.
  * @abstract
  */
 export default class Viewer extends Brick {
@@ -21,7 +21,7 @@ export default class Viewer extends Brick {
   /**
    * Views content.
    * @param {Chain} content
-   * @param {function} [done] Called when viewing content has finished.
+   * @param {function} [done] Called when viewing content has finished
    * @return {Viewer} Fluent interface
    */
   view (content, done = null) {
@@ -57,7 +57,7 @@ export default class Viewer extends Brick {
    * Runs callback safely, catching and handling thrown errors.
    * The method is called 'dare' because 'try' is a reserved keyword.
    * TODO Find a better solution for error handling inside Viewers.
-   * @param {function} callback Callback to execute.
+   * @param {function} callback Callback to execute
    * @param {boolean} throwAll Wether to throw all errors
    * @return {Viewer} Fluent interface
    */
@@ -105,7 +105,7 @@ export default class Viewer extends Brick {
    * @protected
    * @abstract
    * @param {string} content
-   * @param {function} done Called when performing view has finished.
+   * @param {function} done Called when performing view has finished
    */
   performView (content, done) {
     // abstract method

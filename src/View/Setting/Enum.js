@@ -4,7 +4,7 @@ import StringUtil from '../../StringUtil'
 import View from '../../View'
 
 /**
- * Enum Setting View.
+ * Enum setting view
  */
 export default class EnumSettingView extends SettingView {
   /**

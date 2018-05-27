@@ -3,7 +3,7 @@ import SettingView from './Setting'
 import View from '../View'
 
 /**
- * Brick View.
+ * Brick view
  */
 export default class BrickView extends View {
   /**
@@ -46,7 +46,7 @@ export default class BrickView extends View {
    * @return {?HTMLElement}
    */
   renderHeader () {
-    let title = this.getModel().getMeta().title
+    const title = this.getModel().getMeta().title
     this._$menu = this.renderMenu()
     return View.createElement('header', {
       className: 'brick__header'
@@ -81,7 +81,7 @@ export default class BrickView extends View {
    * @return {HTMLElement}
    */
   renderMenu () {
-    let items = [
+    const items = [
       {
         label: 'Remove',
         name: 'remove'
@@ -176,7 +176,7 @@ export default class BrickView extends View {
       this.getElement()
 
       // get setting subviews
-      let settingViews = this.getSubviews()
+      const settingViews = this.getSubviews()
         .filter(view => view instanceof SettingView)
 
       // integrate new setting view
@@ -185,8 +185,8 @@ export default class BrickView extends View {
         b.getModel().getPriority() - a.getModel().getPriority())
 
       // retrieve position of setting view we are integrating
-      let index = settingViews.indexOf(view)
-      let $referenceNode = index < settingViews.length - 1
+      const index = settingViews.indexOf(view)
+      const $referenceNode = index < settingViews.length - 1
         ? settingViews[index + 1].getElement()
         : null
 

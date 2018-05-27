@@ -12,7 +12,7 @@ const meta = {
 }
 
 /**
- * Encoder Brick for base64 encoding and decoding
+ * Encoder brick for base64 encoding and decoding
  */
 export default class Base64Encoder extends Encoder {
   /**
@@ -28,9 +28,7 @@ export default class Base64Encoder extends Encoder {
    */
   constructor () {
     super()
-
     const variants = ByteEncoder.getBase64Variants()
-
     this.registerSetting({
       name: 'variant',
       type: 'enum',

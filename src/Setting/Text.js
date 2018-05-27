@@ -6,11 +6,11 @@ import TextEncoder from '../TextEncoder'
 import TextSettingView from '../View/Setting/Text'
 
 /**
- * Text Setting.
+ * Text setting
  */
 export default class TextSetting extends Setting {
   /**
-   * Setting constructor.
+   * Setting constructor
    * @param {string} name
    * @param {Object} [spec]
    * @param {mixed} [spec.options] Setting options
@@ -19,7 +19,7 @@ export default class TextSetting extends Setting {
    * @param {?number[]} [spec.options.allowedCodePoints=null]
    * Restricts text to given Unicode code points.
    * @param {boolean} [spec.options.caseSensitivity=false]
-   * Wether to respect case sensitivity.
+   * Wether to respect case sensitivity
    */
   constructor (name, spec = {}) {
     super(name, spec)
@@ -50,7 +50,7 @@ export default class TextSetting extends Setting {
   /**
    * Sets min text length.
    * @param {?number} minLength Min text length
-   * @param {boolean} [revalidate=true] Wether to revalidate current value.
+   * @param {boolean} [revalidate=true] Wether to revalidate current value
    * @return {TextSetting} Fluent interface
    */
   setMinLength (minLength, revalidate = true) {
@@ -72,7 +72,7 @@ export default class TextSetting extends Setting {
   /**
    * Sets max text length.
    * @param {?number} maxLength Max text length
-   * @param {boolean} [revalidate=true] Wether to revalidate current value.
+   * @param {boolean} [revalidate=true] Wether to revalidate current value
    * @return {TextSetting} Fluent interface
    */
   setMaxLength (maxLength, revalidate = true) {
@@ -94,7 +94,7 @@ export default class TextSetting extends Setting {
   /**
    * Restricts text to given Unicode code points.
    * @param {?number[]|string|Chain} allowedChars
-   * @param {boolean} [revalidate=true] Wether to revalidate current value.
+   * @param {boolean} [revalidate=true] Wether to revalidate current value
    * @return {TextSetting} Fluent interface
    */
   setAllowedChars (allowedChars, revalidate = true) {
@@ -123,7 +123,7 @@ export default class TextSetting extends Setting {
   /**
    * Sets wether to respect case sensitivity.
    * @param {boolean} caseSensitivity
-   * @param {boolean} [revalidate=true] Wether to revalidate current value.
+   * @param {boolean} [revalidate=true] Wether to revalidate current value
    * @return {TextSetting} Fluent interface
    */
   setCaseSensitivity (caseSensitivity, revalidate = true) {
@@ -136,8 +136,8 @@ export default class TextSetting extends Setting {
 
   /**
    * Validates given raw value.
-   * @param {mixed} rawValue Value to be validated.
-   * @return {boolean|object} True if valid, message object or false if invalid.
+   * @param {mixed} rawValue Value to be validated
+   * @return {boolean|object} True if valid, message object or false if invalid
    */
   validateValue (rawValue) {
     if (typeof rawValue.toString !== 'function') {
@@ -147,7 +147,7 @@ export default class TextSetting extends Setting {
       }
     }
 
-    let value = this.filterValue(rawValue)
+    const value = this.filterValue(rawValue)
 
     // validate min text length
     if (this._minLength !== null && value.getLength() < this._minLength) {
@@ -219,7 +219,7 @@ export default class TextSetting extends Setting {
       // use the current value's length to
       // produce the same amount of random chars
       const length = this.getValue().getLength()
-      let codePoints = []
+      const codePoints = []
       for (let i = 0; i < length; i++) {
         codePoints.push(random.nextChoice(this.getAllowedChars()))
       }

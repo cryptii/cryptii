@@ -85,7 +85,7 @@ const alphabetSpecs = [
 const spaceWord = '(space)'
 
 /**
- * Encoder Brick translating characters into words of given spelling alphabet.
+ * Encoder brick translating characters into words of given spelling alphabet.
  */
 export default class SpellingAlphabetEncoder extends Encoder {
   /**
@@ -127,18 +127,18 @@ export default class SpellingAlphabetEncoder extends Encoder {
    */
   performTranslate (content, isEncode) {
     // retrieve content string and normalize its whitespaces
-    let string = StringUtil.normalizeWhitespaces(content.getString())
+    const string = StringUtil.normalizeWhitespaces(content.getString())
 
     // alphabet characters
-    let replacementMap = isEncode ? this._characterMap : this._wordMap
-    let searchValues = Object.keys(replacementMap)
+    const replacementMap = isEncode ? this._characterMap : this._wordMap
+    const searchValues = Object.keys(replacementMap)
 
     let index = 0
-    let resultValues = []
+    const resultValues = []
 
     while (index < string.length) {
       // find next occurance in string
-      let searchValue = searchValues.find(char =>
+      const searchValue = searchValues.find(char =>
         string.substr(index, char.length).toLowerCase() === char)
 
       if (searchValue !== undefined) {
@@ -146,7 +146,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
         resultValues.push(replacementMap[searchValue])
         index += searchValue.length
       } else {
-        let char = string.substr(index, 1)
+        const char = string.substr(index, 1)
         // omit whitespaces when decoding
         if (isEncode || char !== ' ') {
           // append foreign character to result
@@ -157,7 +157,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
     }
 
     // string together result
-    let result = resultValues.join(isEncode ? ' ' : '')
+    const result = resultValues.join(isEncode ? ' ' : '')
     return Chain.wrap(result)
   }
 
@@ -183,22 +183,22 @@ export default class SpellingAlphabetEncoder extends Encoder {
    * @return {SpellingAlphabetEncoder} Fluent interface
    */
   buildTranslationMap () {
-    let name = this.getSettingValue('alphabet')
-    let spec = alphabetSpecs.find(spec => spec.name === name)
+    const name = this.getSettingValue('alphabet')
+    const spec = alphabetSpecs.find(spec => spec.name === name)
     if (spec === undefined) {
       throw new Error(`Alphabet with name '${name}' is not defined`)
     }
 
     // read spec
-    let characters =
+    const characters =
       typeof spec.characters === 'string'
         ? spec.characters.split('')
         : spec.characters
 
-    let words = spec.words
+    const words = spec.words
 
     // build encode map
-    let characterMap = {}
+    const characterMap = {}
     characters.forEach((character, index) => {
       if (characterMap[character] === undefined) {
         characterMap[character] = words[index]
@@ -206,7 +206,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
     })
 
     // build decode map
-    let wordMap = {}
+    const wordMap = {}
     words.forEach((word, index) => {
       word = word.toLowerCase()
       if (wordMap[word] === undefined) {

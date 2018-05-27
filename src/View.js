@@ -1,14 +1,4 @@
 
-const attachableEvents = {
-  onClick: 'click',
-  onInput: 'input',
-  onChange: 'change',
-  onMouseEnter: 'mouseenter',
-  onMouseLeave: 'mouseleave',
-  onBlur: 'blur',
-  onFocus: 'focus'
-}
-
 const nonStandardAttributes = {
   role: 'role',
   ariaHidden: 'aria-hidden',
@@ -28,18 +18,21 @@ export default class View {
    * @return {HTMLElement}
    */
   static createElement (type, attributes = {}, children = null) {
-    // create element
-    let $element = document.createElement(type)
+    const $element = document.createElement(type)
 
     // set element attributes
     Object.keys(attributes).forEach(name => {
-      let value = attributes[name]
-      if (attachableEvents[name] !== undefined) {
-        $element.addEventListener(attachableEvents[name], value)
-      } else if (nonStandardAttributes[name] !== undefined) {
-        $element.setAttribute(nonStandardAttributes[name], value)
+      const value = attributes[name]
+      if (nonStandardAttributes[name] === undefined) {
+        // lowercase event attributes
+        const attributeName =
+          name.indexOf('on') === 0
+            ? name.toLowerCase()
+            : name
+        $element[attributeName] = value
       } else {
-        $element[name] = value
+        // set non-standard attribute
+        $element.setAttribute(nonStandardAttributes[name], value)
       }
     })
 
@@ -52,7 +45,6 @@ export default class View {
         children.forEach($child => $child && $element.appendChild($child))
         break
       case '[object Null]':
-        // no child to add
         break
       default:
         $element.appendChild(children)
@@ -61,7 +53,7 @@ export default class View {
   }
 
   /**
-   * View constructor.
+   * View constructor
    */
   constructor () {
     this._$root = null
@@ -90,7 +82,7 @@ export default class View {
    * @return {View} Fluent interface
    */
   refresh () {
-    let $oldRoot = this._$root
+    const $oldRoot = this._$root
     if ($oldRoot === null) {
       // only refresh if there is an existing element
       return this
@@ -114,7 +106,7 @@ export default class View {
   }
 
   /**
-   * Renders view.
+   * Renders the view.
    * @protected
    * @return {HTMLElement}
    */
@@ -123,7 +115,7 @@ export default class View {
   }
 
   /**
-   * Updates this view in next frame.
+   * Updates this view at next frame.
    * @return {View} Fluent interface
    */
   setNeedsUpdate () {
@@ -171,7 +163,7 @@ export default class View {
 
   /**
    * Adds subview.
-   * @param {View} view View to add as subview.
+   * @param {View} view View to add as subview
    * @return {View} Fluent interface
    */
   addSubview (view) {
@@ -231,7 +223,7 @@ export default class View {
    */
   removeSubviewElement (view) {
     // remove subview element from its parent node
-    let $element = view.getElement()
+    const $element = view.getElement()
     if ($element.parentNode !== null) {
       $element.parentNode.removeChild(view.getElement())
     }
@@ -353,7 +345,7 @@ export default class View {
 
   /**
    * Returns true, if model is set.
-   * @return {boolean} True, if model is set.
+   * @return {boolean} True, if model is set
    */
   hasModel () {
     return this._model !== null

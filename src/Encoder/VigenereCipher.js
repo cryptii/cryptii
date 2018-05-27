@@ -12,7 +12,7 @@ const meta = {
 const defaultAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 /**
- * Encoder Brick for Vigenère cipher encoding and decoding.
+ * Encoder brick for Vigenère cipher encoding and decoding
  */
 export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
   /**
@@ -71,7 +71,7 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
    * Triggered before performing encode or decode on given content.
    * @protected
    * @param {Chain} content
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {Chain} Filtered content
    */
   willTranslate (content, isEncode) {
@@ -84,13 +84,13 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
    * Performs encode or decode on given character, index and content.
    * @protected
    * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content.
-   * @param {Chain} content Content to be translated.
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {number} index Unicode code point index inside content
+   * @param {Chain} content Content to be translated
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {number} Resulting Unicode code point
    */
   performCharTranslate (codePoint, index, content, isEncode) {
-    let alphabet = this.getSettingValue('alphabet')
+    const alphabet = this.getSettingValue('alphabet')
     let charIndex = alphabet.indexOfCodePoint(codePoint)
 
     if (charIndex === -1) {
@@ -105,12 +105,12 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
     }
 
     // get key code point for this character index
-    let key = this.getSettingValue('key')
-    let keyIndex = MathUtil.mod(index, key.getLength())
-    let keyCodePoint = key.getCodePointAt(keyIndex)
+    const key = this.getSettingValue('key')
+    const keyIndex = MathUtil.mod(index, key.getLength())
+    const keyCodePoint = key.getCodePointAt(keyIndex)
 
     // determine shift by position in alphabet and inverse it if decoding
-    let shift = alphabet.indexOfCodePoint(keyCodePoint) * (isEncode ? 1 : -1)
+    const shift = alphabet.indexOfCodePoint(keyCodePoint) * (isEncode ? 1 : -1)
 
     // shift character index
     charIndex = MathUtil.mod(charIndex + shift, alphabet.getLength())

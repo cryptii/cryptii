@@ -11,7 +11,7 @@ let instance = null
  */
 export default class App extends Viewable {
   /**
-   * Application constructor.
+   * Application constructor
    */
   constructor () {
     super()
@@ -24,12 +24,12 @@ export default class App extends Viewable {
    * @return {App} Fluent interface
    */
   run () {
-    let $pipeData = document.querySelector('.app .app__pipe .pipe__data')
-    let pipeData = JSON.parse($pipeData.innerHTML)
+    const $pipeData = document.querySelector('.app .app__pipe .pipe__data')
+    const pipeData = JSON.parse($pipeData.innerHTML)
     this._pipe = Pipe.extract(pipeData)
 
     // trigger view creation and initial layout
-    let view = this.getView()
+    const view = this.getView()
     view.layout()
     setTimeout(view.layout.bind(view), 100)
 
@@ -55,7 +55,7 @@ export default class App extends Viewable {
   }
 
   /**
-   * Get app singleton instance.
+   * Returns app singleton instance.
    * @return {App}
    */
   static getInstance () {

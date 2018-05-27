@@ -1,13 +1,13 @@
 
-import TextSetting from './Text'
 import ArrayUtil from '../ArrayUtil'
+import TextSetting from './Text'
 
 /**
- * Alphabet Setting allowing the selection of Unicode characters.
+ * Alphabet setting allowing the selection of Unicode characters.
  */
 export default class AlphabetSetting extends TextSetting {
   /**
-   * Setting constructor.
+   * Setting constructor
    * @param {string} name
    * @param {Object} [spec]
    * @param {mixed} [spec.options] Setting options
@@ -22,20 +22,20 @@ export default class AlphabetSetting extends TextSetting {
   /**
    * Validates given raw value.
    * @param {mixed} rawValue Value to be validated.
-   * @return {boolean|object} True if valid, message object or false if invalid.
+   * @return {boolean|object} True if valid, message object or false if invalid
    */
   validateValue (rawValue) {
-    let result = super.validateValue(rawValue)
+    const result = super.validateValue(rawValue)
     if (result !== true) {
       return result
     }
 
     // filter value
-    let value = this.filterValue(rawValue)
+    const value = this.filterValue(rawValue)
 
     // check if alphabet only contains unique characters
     // while respecting case sensitivity
-    let alphabet = this.isCaseSensitive() ? value : value.toLowerCase()
+    const alphabet = this.isCaseSensitive() ? value : value.toLowerCase()
     if (!ArrayUtil.isUnique(alphabet.getCodePoints())) {
       return {
         key: 'alphabetCharactersNotUnique',

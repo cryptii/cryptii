@@ -3,7 +3,7 @@ import ViewerView from '../Viewer'
 import View from '../../View'
 
 /**
- * TextViewer Brick View.
+ * Text viewer view
  */
 export default class TextViewerView extends ViewerView {
   /**
@@ -72,7 +72,7 @@ export default class TextViewerView extends ViewerView {
    * @return {HTMLElement}
    */
   render () {
-    let $root = super.render()
+    const $root = super.render()
     $root.classList.add('viewer-text')
     return $root
   }
@@ -96,7 +96,7 @@ export default class TextViewerView extends ViewerView {
       this._$textarea.disabled = 'disabled'
     }
 
-    let $content = super.renderContent()
+    const $content = super.renderContent()
     $content.appendChild(this._$textarea)
     return $content
   }
@@ -112,7 +112,7 @@ export default class TextViewerView extends ViewerView {
       return false
     }
 
-    let text = this._$textarea.value
+    const text = this._$textarea.value
 
     if (this._text !== text) {
       this._text = text
@@ -150,7 +150,7 @@ export default class TextViewerView extends ViewerView {
    */
   update () {
     // update status
-    let error = this.getModel().getError()
+    const error = this.getModel().getError()
     if (error !== null) {
       return this.updateStatus('error', error.message)
     } else {

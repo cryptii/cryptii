@@ -25,8 +25,8 @@ export default class ChainUtil {
       assert.strictEqual(actual.getString(), expected.getString(), message)
     } else {
       // content is byte encoded
-      let actualString = ByteEncoder.hexStringFromBytes(actual.getBytes())
-      let expectedString = ByteEncoder.hexStringFromBytes(expected.getBytes())
+      const actualString = ByteEncoder.hexStringFromBytes(actual.getBytes())
+      const expectedString = ByteEncoder.hexStringFromBytes(expected.getBytes())
       assert.strictEqual(actualString, expectedString, message)
     }
   }
@@ -43,8 +43,8 @@ export default class ChainUtil {
     }
 
     // create hex byte preview
-    let previewBytes = content.getBytes().slice(0, previewLength / 2)
-    let preview = ByteEncoder.hexStringFromBytes(previewBytes)
+    const previewBytes = content.getBytes().slice(0, previewLength / 2)
+    const preview = ByteEncoder.hexStringFromBytes(previewBytes)
     return content.getBytes().length > previewLength / 2
       ? preview + '…'
       : preview

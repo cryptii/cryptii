@@ -4,7 +4,7 @@ import StringUtil from '../../StringUtil'
 import View from '../../View'
 
 /**
- * Text Setting View.
+ * Text setting view
  */
 export default class TextSettingView extends SettingView {
   /**
@@ -31,7 +31,7 @@ export default class TextSettingView extends SettingView {
    * @return {HTMLElement}
    */
   render () {
-    let $root = super.render()
+    const $root = super.render()
     $root.classList.add('setting-text')
     return $root
   }
@@ -42,7 +42,7 @@ export default class TextSettingView extends SettingView {
    * @return {?HTMLElement}
    */
   renderLabel () {
-    let $label = super.renderLabel()
+    const $label = super.renderLabel()
     $label.htmlFor = this._inputId
     return $label
   }
@@ -63,7 +63,7 @@ export default class TextSettingView extends SettingView {
       onBlur: evt => this.blur()
     })
 
-    let $field = super.renderField()
+    const $field = super.renderField()
     $field.appendChild(this._$input)
     return $field
   }

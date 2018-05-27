@@ -4,11 +4,11 @@ import ByteEncoder from './ByteEncoder'
 import TextEncoder from './TextEncoder'
 import TextEncodingError from './Error/TextEncoding'
 
-// empty chain constant, instantiated lazily by Chain.empty
+// empty chain instance instantiated lazily by static Chain.empty method
 let emptyChain = null
 
 /**
- * Container for storing String, Unicode code point and byte content.
+ * Container for storing strings, Unicode code points and bytes.
  * When requested, it lazily translates between these representations.
  */
 export default class Chain {
@@ -27,10 +27,9 @@ export default class Chain {
     this._codePoints = null
     this._string = null
     this._bytes = null
-
     this._encoding = encoding
 
-    let valueType = Object.prototype.toString.call(value)
+    const valueType = Object.prototype.toString.call(value)
     switch (valueType) {
       case '[object Null]':
         // initializes empty chain
@@ -77,7 +76,7 @@ export default class Chain {
 
   /**
    * Returns a string for each Unicode character.
-   * @return {String[]}
+   * @return {string[]}
    */
   getChars () {
     return this.getCodePoints().map(codePoint =>
@@ -86,7 +85,7 @@ export default class Chain {
 
   /**
    * Returns a new array iterator that contains the Unicode code points for each
-   * index. Makes Chains iterable (e.g. using the for...of statement).
+   * index. Makes chains iterable (e.g. using the for...of statement).
    * @return {iterator}
    */
   [Symbol.iterator] () {
@@ -94,26 +93,25 @@ export default class Chain {
   }
 
   /**
-   * Returns Unicode code point at given index.
+   * Returns a Unicode code point at given index.
    * @param {number} index Unicode code point index
    * @return {number} Unicode code point
    */
   getCodePointAt (index) {
-    let codePoints = this.getCodePoints()
-    return codePoints[index]
+    return this.getCodePoints()[index]
   }
 
   /**
-   * Returns string representation of Unicode character at given index.
+   * Returns the string representation of Unicode character at given index.
    * @param {number} index Unicode code point index
-   * @return {string} Character
+   * @return {string} Character string
    */
   getCharAt (index) {
     return TextEncoder.stringFromCodePoints([this.getCodePointAt(index)])
   }
 
   /**
-   * Returns byte representation of a Unicode character at given index.
+   * Returns the byte representation of a Unicode character at given index.
    * @param {number} index Unicode code point index
    * @return {Uint8Array} Character bytes
    */
@@ -122,7 +120,7 @@ export default class Chain {
   }
 
   /**
-   * Returns amount of Unicode code points.
+   * Returns the amount of Unicode code points inside chain.
    * @return {number} Amount of Unicode code points
    */
   getLength () {
@@ -134,9 +132,7 @@ export default class Chain {
    * @return {string}
    */
   getString () {
-    // lazily retrieve string
     if (this._string === null) {
-      // retrieve string from code points
       this._string = TextEncoder.stringFromCodePoints(this.getCodePoints())
     }
     return this._string
@@ -151,24 +147,24 @@ export default class Chain {
   }
 
   /**
-   * Returns lower case representation of this Chain.
-   * @return {Chain} Lower case Chain
+   * Returns lower case representation of this chain.
+   * @return {Chain} Lower case chain
    */
   toLowerCase () {
     return Chain.wrap(this.getString().toLowerCase(), this._encoding)
   }
 
   /**
-   * Returns upper case representation of this Chain.
-   * @return {Chain} Upper case Chain
+   * Returns upper case representation of this chain.
+   * @return {Chain} Upper case chain
    */
   toUpperCase () {
     return Chain.wrap(this.getString().toUpperCase(), this._encoding)
   }
 
   /**
-   * Splits a Chain object into an array of Chains by separating it, using a
-   * specified separator string or Chain to determine where to make each split.
+   * Splits a chain into an array of chains by separating it, using the
+   * specified separator string or chain to determine where to make each split.
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
    * @param {string|Chain} [separator]
    * @param {number} [limit]
@@ -190,25 +186,20 @@ export default class Chain {
    */
   substr (start, length = undefined) {
     if (length <= 0 || start >= this.getLength()) {
-      // return empty chain
       return Chain.empty()
-    }
-
-    if (start < 0) {
+    } else if (start < 0) {
       start = Math.max(this.getLength() + start, 0)
     }
 
-    // slice code points
-    let codePoints = this.getCodePoints()
+    const codePoints = this.getCodePoints()
       .slice(start, length ? start + length : undefined)
-
     return Chain.wrap(codePoints, this._encoding)
   }
 
   /**
-   * Truncates Chain to given length and adds ellipsis if truncated.
-   * @param {number} length Length the string should be truncated to.
-   * @return {Chain} Truncated Chain
+   * Truncates chain to given length and adds ellipsis if truncated.
+   * @param {number} length Length the string should be truncated to
+   * @return {Chain} Truncated or original chain depending on length
    */
   truncate (length) {
     return this.getLength() > length
@@ -227,7 +218,8 @@ export default class Chain {
   }
 
   /**
-   * Returns a string describing the content of this Chain.
+   * Returns a string describing the content of this chain.
+   * Useful for logging, debugging.
    * @return {string}
    */
   getDescription () {
@@ -241,8 +233,8 @@ export default class Chain {
   }
 
   /**
-   * Returns wether given text is contained in this Chain.
-   * @param {Chain|string} needle String or Chain to search for.
+   * Returns wether given text is contained in this chain.
+   * @param {Chain|string} needle String or Chain to search for
    * @return {boolean}
    */
   contains (needle) {
@@ -252,9 +244,9 @@ export default class Chain {
   /**
    * Returns the first index at which a given code point can be found
    * and -1 if not found.
-   * @param {number} codePoint Unicode code point to search for.
-   * @param {number} [start] Index to start the search at.
-   * @return {number} Code point index; -1 if not found.
+   * @param {number} codePoint Unicode code point to search for
+   * @param {number} [start] Index to start the search at
+   * @return {number} Code point index; -1 if not found
    */
   indexOfCodePoint (codePoint, start = undefined) {
     return this.getCodePoints().indexOf(codePoint, start)
@@ -264,33 +256,29 @@ export default class Chain {
    * Returns the first index at which a given string can be found
    * and -1 if not found.
    * @param {string|Chain} value Search element
-   * @param {number} [start] Index to start the search at.
-   * @return {number} Code point index; -1 if not found.
+   * @param {number} [start] Index to start the search at
+   * @return {number} Code point index; -1 if not found
    */
   indexOf (value, start = undefined) {
-    // find element in string representation
-    let string = this.getString()
-    let stringIndex = string.indexOf(value.toString(), start)
+    const string = this.getString()
+    const stringIndex = string.indexOf(value.toString(), start)
 
     if (stringIndex === -1) {
-      // not found
       return -1
     } else {
       // translate string index into code point index
-      let leftPartString = string.substr(0, stringIndex)
-      let leftPartCodePoints = TextEncoder.codePointsFromString(leftPartString)
+      const leftPart = string.substr(0, stringIndex)
+      const leftPartCodePoints = TextEncoder.codePointsFromString(leftPart)
       return leftPartCodePoints.length
     }
   }
 
   /**
    * Lazily retrieves the byte representation.
-   * @return {Uint8Array} Uint8Array of bytes.
+   * @return {Uint8Array} Uint8Array of bytes
    */
   getBytes () {
-    // lazily retrieve bytes
     if (this._bytes === null) {
-      // retrieve bytes from code points
       this._bytes = TextEncoder.bytesFromCodePoints(
         this.getCodePoints(), this._encoding)
     }
@@ -303,8 +291,7 @@ export default class Chain {
    * @return {number} Byte
    */
   getByteAt (index) {
-    let bytes = this.getBytes()
-    return bytes[index]
+    return this.getBytes()[index]
   }
 
   /**
@@ -336,12 +323,13 @@ export default class Chain {
   }
 
   /**
-   * Returns true if Chain contains an empty string, zero Unicode
-   * characters or bytes.
+   * Returns true if chain contains an empty string, zero Unicode
+   * characters or zero bytes.
    * @return {boolean}
    */
   isEmpty () {
     return (
+      this === emptyChain ||
       (this._codePoints !== null && this._codePoints.length === 0) ||
       (this._string !== null && this._string === '') ||
       (this._bytes !== null && this._bytes.length === 0)
@@ -349,10 +337,10 @@ export default class Chain {
   }
 
   /**
-   * Returns true if this Chain's content is equal to given Chain's content.
+   * Returns true if this chain's content is equal to given chain's content.
    * Only encodes or decodes between text and bytes if necessary.
-   * @param {?Chain} chain Chain to compare to.
-   * @return {boolean} True, if content is equal.
+   * @param {?Chain} chain Chain to compare to
+   * @return {boolean} True, if content is equal
    */
   isEqualTo (chain) {
     // check pointer
@@ -401,7 +389,7 @@ export default class Chain {
   }
 
   /**
-   * Returns byte encoding this Chain has been created with.
+   * Returns byte encoding this chain has been created with.
    * @return {string} Byte encoding
    */
   getEncoding () {
@@ -411,8 +399,8 @@ export default class Chain {
   /**
    * Returns true if the content of given chains is equal.
    * Uses {@link Chain.isEqualTo} internally.
-   * @param {?...Chain} chains Chains to compare.
-   * @return {boolean} True, if content is equal.
+   * @param {?...Chain} chains Chains to compare
+   * @return {boolean} True, if content is equal
    */
   static isEqual (...chains) {
     if (chains.length < 2) {
@@ -420,7 +408,7 @@ export default class Chain {
     }
 
     // retrieve first chain and verify instance
-    let first = chains[0]
+    const first = chains[0]
     if (!(first instanceof Chain)) {
       return false
     }
@@ -435,7 +423,7 @@ export default class Chain {
   }
 
   /**
-   * Wraps value inside a Chain object if it is not already a Chain.
+   * Wraps value inside a chain object if it is not already a chain.
    * @param {?number[]|string|Uint8Array|Chain} value
    * @param {string} [encoding='utf8'] Byte encoding
    * @return {Chain}
@@ -454,7 +442,7 @@ export default class Chain {
   }
 
   /**
-   * Joins all elements of an array (or an array-like object) into a Chain.
+   * Joins all elements of an array (or an array-like object) into a chain.
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
    * @param {array} elements
    * @param {string|Chain} [separator]
@@ -468,7 +456,7 @@ export default class Chain {
   }
 
   /**
-   * Returns the empty Chain constant.
+   * Returns the empty chain constant.
    * @return {Chain} Empty Chain
    */
   static empty () {

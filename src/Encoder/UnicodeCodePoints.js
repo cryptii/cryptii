@@ -9,8 +9,8 @@ const meta = {
 }
 
 /**
- * Encoder Brick for translation between characters and their respective
- * Unicode code point values in a given format.
+ * Encoder brick for translation between characters and their respective
+ * Unicode code point values in a given format
  */
 export default class UnicodeCodePointsEncoder extends CharacterBlockEncoder {
   /**

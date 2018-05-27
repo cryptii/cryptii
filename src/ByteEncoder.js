@@ -72,8 +72,8 @@ export default class ByteEncoder {
     }
 
     // decode each byte
-    let bytes = StringUtil.chunk(string, 2).map((byteString, index) => {
-      let byte = parseInt(byteString, 16)
+    const bytes = StringUtil.chunk(string, 2).map((byteString, index) => {
+      const byte = parseInt(byteString, 16)
       if (byteString.match(/[0-9a-f]{2}/i) === null || isNaN(byte)) {
         throw new ByteEncodingError(
           `Invalid hex encoded byte '${byteString}'`)
@@ -107,8 +107,8 @@ export default class ByteEncoder {
     }
 
     // decode each byte
-    let bytes = StringUtil.chunk(string, 8).map((byteString, index) => {
-      let byte = parseInt(byteString, 2)
+    const bytes = StringUtil.chunk(string, 8).map((byteString, index) => {
+      const byte = parseInt(byteString, 2)
       if (byteString.match(/[0-1]{8}/) === null || isNaN(byte)) {
         throw new ByteEncodingError(
           `Invalid binary encoded byte '${byteString}'`)
@@ -126,9 +126,9 @@ export default class ByteEncoder {
    * @return {string} Base64 string
    */
   static base64StringFromBytes (bytes, variant = 'base64') {
-    let options = base64Variants[variant]
-    let alphabet = options.alphabet
-    let padCharacter = !options.padCharacterOptional && options.padCharacter
+    const options = base64Variants[variant]
+    const alphabet = options.alphabet
+    const padCharacter = !options.padCharacterOptional && options.padCharacter
       ? options.padCharacter : ''
 
     // encode each 3-byte-pair
@@ -183,12 +183,12 @@ export default class ByteEncoder {
    * @return {Uint8Array} Bytes
    */
   static bytesFromBase64String (string, variant = 'base64') {
-    let options = base64Variants[variant]
-    let alphabet = options.alphabet
+    const options = base64Variants[variant]
+    const alphabet = options.alphabet
 
     // translate each character into an octet
-    let length = string.length
-    let octets = []
+    const length = string.length
+    const octets = []
     let character, octet
     let i = -1
 
@@ -217,8 +217,9 @@ export default class ByteEncoder {
     }
 
     // decode each pair of 4 characters
-    let bytes = []
+    const bytes = []
     let octet1, octet2, octet3, octet4
+    let byte2, byte3
 
     for (let i = 0; i < octets.length; i += 4) {
       // collect octets
@@ -231,14 +232,14 @@ export default class ByteEncoder {
       bytes.push((octet1 << 2) | (octet2 >> 4))
 
       // bits 3-6 from octet2 joined by bits 1-4 from octet3
-      let byte2 = ((octet2 & 15) << 4) | (octet3 >> 2)
+      byte2 = ((octet2 & 15) << 4) | (octet3 >> 2)
 
       if (i + 2 < octets.length || byte2 !== 0) {
         bytes.push(byte2)
       }
 
       // bits 1-2 from octet3 joined by bits 1-6 from octet4
-      let byte3 = ((octet3 & 3) << 6) | octet4
+      byte3 = ((octet3 & 3) << 6) | octet4
 
       if (i + 3 < octets.length || byte3 !== 0) {
         bytes.push(byte3)
@@ -254,7 +255,7 @@ export default class ByteEncoder {
    */
   static getBase64Variants () {
     return Object.keys(base64Variants).map(name => {
-      let options = base64Variants[name]
+      const options = base64Variants[name]
       return {
         name,
         label: options.label,

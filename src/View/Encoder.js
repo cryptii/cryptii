@@ -1,10 +1,9 @@
 
-import Analytics from '../Analytics'
 import BrickView from './Brick'
 import View from '../View'
 
 /**
- * Encoder Brick View.
+ * Encoder brick view
  */
 export default class EncoderView extends BrickView {
   /**
@@ -22,7 +21,7 @@ export default class EncoderView extends BrickView {
    * @return {HTMLElement}
    */
   render () {
-    let $root = super.render()
+    const $root = super.render()
     $root.classList.add('encoder')
     return $root
   }
@@ -39,7 +38,7 @@ export default class EncoderView extends BrickView {
       onClick: this.actionDidClick.bind(this, 'encode')
     }, 'Encode')
 
-    let $actions = View.createElement('ul', {
+    const $actions = View.createElement('ul', {
       className: 'brick__actions'
     }, [
       View.createElement('li', {
@@ -54,13 +53,13 @@ export default class EncoderView extends BrickView {
         href: '#',
         onClick: this.actionDidClick.bind(this, 'decode')
       }, 'Decode')
-      let $decodeActionItem = View.createElement('li', {
+      const $decodeActionItem = View.createElement('li', {
         className: 'brick__action-item'
       }, this._$decodeAction)
       $actions.appendChild($decodeActionItem)
     }
 
-    let $header = super.renderHeader()
+    const $header = super.renderHeader()
     $header.insertBefore($actions, $header.firstChild)
     return $header
   }
@@ -78,15 +77,9 @@ export default class EncoderView extends BrickView {
     evt.preventDefault()
 
     // check if encoder should be reversed
-    let reverse = action === 'decode'
+    const reverse = action === 'decode'
     if (this.getModel().isReverse() !== reverse) {
       this.getModel().setReverse(reverse)
-
-      Analytics.trackEvent('encoder_reverse', {
-        'event_category': 'encoder',
-        'event_action': 'reverse',
-        'event_label': this.getModel().getMeta().name
-      })
     }
   }
 
@@ -96,17 +89,17 @@ export default class EncoderView extends BrickView {
    */
   update () {
     // update action
-    let reverse = this.getModel().isReverse()
+    const reverse = this.getModel().isReverse()
     this._$encodeAction.classList.toggle('brick__action--active', !reverse)
     this._$decodeAction &&
       this._$decodeAction.classList.toggle('brick__action--active', reverse)
 
     // update status
-    let error = this.getModel().getLastError()
-    let translation = this.getModel().getLastTranslationMeta()
+    const error = this.getModel().getLastError()
+    const translation = this.getModel().getLastTranslationMeta()
 
     if (translation !== null) {
-      let status = translation.isEncode ? 'forward' : 'backward'
+      const status = translation.isEncode ? 'forward' : 'backward'
       let message =
         `${translation.isEncode !== reverse ? 'Encoded' : 'Decoded'} `
 

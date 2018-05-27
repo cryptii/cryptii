@@ -3,11 +3,11 @@ import EnumSettingView from '../View/Setting/Enum'
 import Setting from '../Setting'
 
 /**
- * Enum Setting.
+ * Enum setting
  */
 export default class EnumSetting extends Setting {
   /**
-   * Setting constructor.
+   * Setting constructor
    * @param {string} name
    * @param {Object} spec
    * @param {mixed} spec.options Setting options
@@ -59,7 +59,7 @@ export default class EnumSetting extends Setting {
    * @param {string[]} elements
    * @param {string[]} [labels=elements]
    * @param {string[]} [descriptions]
-   * @param {boolean} [revalidate=true] Wether to revalidate current value.
+   * @param {boolean} [revalidate=true] Wether to revalidate current value
    * @throws Throws an error if array of elements is empty.
    * @throws Throws an error if element and label arrays have different lengths.
    * @return {EnumSetting} Fluent interface
@@ -120,14 +120,14 @@ export default class EnumSetting extends Setting {
    * @return {EnumSetting} Fluent interface
    */
   setSelectedIndex (index) {
-    let value = this._elements[index]
+    const value = this._elements[index]
     return this.setValue(value)
   }
 
   /**
    * Validates given raw value.
-   * @param {mixed} rawValue Value to be validated.
-   * @return {boolean|object} True if valid, message object or false if invalid.
+   * @param {mixed} rawValue Value to be validated
+   * @return {boolean|object} True if valid, message object or false if invalid
    */
   validateValue (rawValue) {
     if (this._elements.indexOf(rawValue) === -1) {

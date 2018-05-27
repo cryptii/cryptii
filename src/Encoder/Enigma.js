@@ -171,7 +171,7 @@ let modelMap = null
 let rotorMap = null
 
 /**
- * Encoder Brick for Enigma I, M3, M4 encoding and decoding.
+ * Encoder brick for Enigma I, M3, M4 encoding and decoding
  */
 export default class EnigmaEncoder extends Encoder {
   /**
@@ -268,7 +268,7 @@ export default class EnigmaEncoder extends Encoder {
       type: 'text',
       value: '',
       validateValue: this.validatePlugboardValue.bind(this),
-      filterValue: value => new Chain(value.getString().trim().toLowerCase()),
+      filterValue: value => Chain.wrap(value.getString().trim().toLowerCase()),
       randomizeValue: this.randomizePlugboardValue.bind(this)
     })
 
@@ -371,9 +371,9 @@ export default class EnigmaEncoder extends Encoder {
     let i = 0
 
     // collect selected rotors, positions and ring settings
-    let rotors = []
-    let positions = []
-    let ringSettings = []
+    const rotors = []
+    const positions = []
+    const ringSettings = []
 
     for (i = 0; i < model.slots.length; i++) {
       const rotorName = this.getSettingValue(`rotor${i + 1}`)
@@ -458,7 +458,7 @@ export default class EnigmaEncoder extends Encoder {
     })
 
     if (!includeForeignChars) {
-      let codePoints = []
+      const codePoints = []
 
       encodedCodePoints.forEach(codePoint => {
         // filter foreign characters
@@ -486,7 +486,7 @@ export default class EnigmaEncoder extends Encoder {
    * @protected
    * @param {object} rotor Rotor entry
    * @param {number} position Rotor position
-   * @return {boolean} True, if rotor has a notch at given position.
+   * @return {boolean} True, if rotor has a notch at given position
    */
   static rotorAtNotch (rotor, position) {
     if (rotor.notches === undefined) {
@@ -503,7 +503,7 @@ export default class EnigmaEncoder extends Encoder {
    * @param {object|string} rotorOrWiring Rotor entry or wiring
    * @param {number} position Rotor position
    * @param {number} ringSetting Ring setting
-   * @param {boolean} isReverse Wether to wire backwards.
+   * @param {boolean} isReverse Wether to wire backwards
    * @return {number} Mapped character index (0-25)
    */
   static rotorMapChar (

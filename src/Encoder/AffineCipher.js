@@ -12,7 +12,7 @@ const meta = {
 const defaultAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 /**
- * Encoder Brick for Affine Cipher encoding and decoding.
+ * Encoder brick for Affine Cipher encoding and decoding
  */
 export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   /**
@@ -90,7 +90,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
    * Triggered before performing encode or decode on given content.
    * @protected
    * @param {Chain} content
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {Chain} Filtered content
    */
   willTranslate (content, isEncode) {
@@ -103,17 +103,17 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
    * Performs encode or decode on given character, index and content.
    * @protected
    * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content.
-   * @param {Chain} content Content to be translated.
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {number} index Unicode code point index inside content
+   * @param {Chain} content Content to be translated
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @return {number} Resulting Unicode code point
    */
   performCharTranslate (codePoint, index, content, isEncode) {
-    let a = this.getSettingValue('a')
-    let b = this.getSettingValue('b')
-    let alphabet = this.getSettingValue('alphabet')
-    let m = alphabet.getLength()
-    let x = alphabet.indexOfCodePoint(codePoint)
+    const a = this.getSettingValue('a')
+    const b = this.getSettingValue('b')
+    const alphabet = this.getSettingValue('alphabet')
+    const m = alphabet.getLength()
+    const x = alphabet.indexOfCodePoint(codePoint)
 
     if (x === -1) {
       // character not in alphabet
@@ -127,7 +127,6 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
     }
 
     let y
-
     if (isEncode) {
       // E(x) = (ax + b) mod m
       y = MathUtil.mod(a * x + b, m)
@@ -167,14 +166,14 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
    * @return {boolean|object}
    */
   validateSlopeValue (a) {
-    let alphabetSetting = this.getSetting('alphabet')
+    const alphabetSetting = this.getSetting('alphabet')
     if (!alphabetSetting.isValid()) {
       // can't validate slope without valid alphabet setting
       return false
     }
 
     // the value a must be chosen such that a and m are coprime
-    let m = alphabetSetting.getValue().getLength()
+    const m = alphabetSetting.getValue().getLength()
     if (!MathUtil.isCoprime(a, m)) {
       return {
         key: 'affineCipherFunctionInvalid',

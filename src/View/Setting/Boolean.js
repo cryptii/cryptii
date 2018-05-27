@@ -4,7 +4,7 @@ import StringUtil from '../../StringUtil'
 import View from '../../View'
 
 /**
- * Boolean Setting View.
+ * Boolean setting view
  */
 export default class BooleanSettingView extends SettingView {
   /**
@@ -30,7 +30,7 @@ export default class BooleanSettingView extends SettingView {
    * @return {HTMLElement}
    */
   render () {
-    let $root = super.render()
+    const $root = super.render()
     $root.classList.add('setting-boolean')
     return $root
   }
@@ -41,7 +41,7 @@ export default class BooleanSettingView extends SettingView {
    * @return {?HTMLElement}
    */
   renderField () {
-    let id = StringUtil.uniqueId()
+    const id = StringUtil.uniqueId()
 
     this._$input = View.createElement('input', {
       className: 'setting-boolean__input',
@@ -53,7 +53,7 @@ export default class BooleanSettingView extends SettingView {
       onBlur: evt => this.blur()
     })
 
-    let $toggle = View.createElement('label', {
+    const $toggle = View.createElement('label', {
       className: 'setting-boolean__toggle',
       htmlFor: id
     }, [
@@ -65,7 +65,7 @@ export default class BooleanSettingView extends SettingView {
       }, this.getModel().getFalseLabel())
     ])
 
-    let $field = super.renderField()
+    const $field = super.renderField()
     $field.appendChild(this._$input)
     $field.appendChild($toggle)
     return $field

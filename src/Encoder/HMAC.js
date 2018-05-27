@@ -11,7 +11,7 @@ const meta = {
 }
 
 /**
- * Encoder Brick for creating HMAC digests using given hash function.
+ * Encoder brick for creating HMAC digests using given hash function
  */
 export default class HMACEncoder extends Encoder {
   /**
@@ -31,8 +31,8 @@ export default class HMACEncoder extends Encoder {
 
     // create internal hash encoder instance
     this._hashEncoder = new HashEncoder()
-    let defaultAlgorithm = this._hashEncoder.getSettingValue('algorithm')
-    let algorithms = this._hashEncoder.getSetting('algorithm').getElements()
+    const defaultAlgorithm = this._hashEncoder.getSettingValue('algorithm')
+    const algorithms = this._hashEncoder.getSetting('algorithm').getElements()
 
     // register settings
     this.registerSetting([
@@ -60,20 +60,20 @@ export default class HMACEncoder extends Encoder {
    * @return {Chain|Promise} Encoded content
    */
   async performEncode (content) {
-    let key = this.getSettingValue('key')
-    let message = content.getBytes()
+    const message = content.getBytes()
 
     // shorten keys longer than block size by sending it through the hash func
+    let key = this.getSettingValue('key')
     if (key.length > 64) {
       key = await this.runHashFunction(key)
     }
 
     // keys shorter than block size are padded to block size
-    let outerKey = new Uint8Array(64)
+    const outerKey = new Uint8Array(64)
     outerKey.set(key, 0)
 
     // compose inner message and prepare outer key
-    let innerMessage = new Uint8Array(64 + message.length)
+    const innerMessage = new Uint8Array(64 + message.length)
     innerMessage.set(outerKey, 0)
     innerMessage.set(message, 64)
 
@@ -83,15 +83,15 @@ export default class HMACEncoder extends Encoder {
     }
 
     // calculate inner digest
-    let innerDigest = await this.runHashFunction(innerMessage)
+    const innerDigest = await this.runHashFunction(innerMessage)
 
     // compose outer message
-    let outerMessage = new Uint8Array(64 + innerDigest.length)
+    const outerMessage = new Uint8Array(64 + innerDigest.length)
     outerMessage.set(outerKey, 0)
     outerMessage.set(innerDigest, 64)
 
     // calculate hmac digest
-    let result = await this.runHashFunction(outerMessage)
+    const result = await this.runHashFunction(outerMessage)
     return Chain.wrap(result)
   }
 
@@ -101,7 +101,7 @@ export default class HMACEncoder extends Encoder {
    * @return {Promise}
    */
   async runHashFunction (message) {
-    let digestChain = await this._hashEncoder.encode(Chain.wrap(message))
+    const digestChain = await this._hashEncoder.encode(Chain.wrap(message))
     return digestChain.getBytes()
   }
 

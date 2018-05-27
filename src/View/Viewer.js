@@ -3,7 +3,7 @@ import BrickView from './Brick'
 import View from '../View'
 
 /**
- * Viewer Brick View.
+ * Viewer brick view
  */
 export default class ViewerView extends BrickView {
   /**
@@ -12,7 +12,7 @@ export default class ViewerView extends BrickView {
    * @return {HTMLElement}
    */
   render () {
-    let $root = super.render()
+    const $root = super.render()
     $root.classList.add('viewer')
     return $root
   }
@@ -23,7 +23,7 @@ export default class ViewerView extends BrickView {
    * @return {BrickView} Fluent interface
    */
   renderHeader () {
-    let $actions = View.createElement('ul', {
+    const $actions = View.createElement('ul', {
       className: 'brick__actions'
     }, [
       View.createElement('li', {
@@ -35,7 +35,7 @@ export default class ViewerView extends BrickView {
       ])
     ])
 
-    let $header = super.renderHeader()
+    const $header = super.renderHeader()
     $header.insertBefore($actions, $header.firstChild)
     return $header
   }

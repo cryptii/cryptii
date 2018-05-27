@@ -1,12 +1,11 @@
 
-import Analytics from './Analytics'
 import BrickView from './View/Brick'
 import Setting from './Setting'
 import SettingFactory from './Factory/Setting'
 import Viewable from './Viewable'
 
 /**
- * Abstract element of the Pipe.
+ * Abstract element of the pipe
  * @abstract
  */
 export default class Brick extends Viewable {
@@ -48,7 +47,7 @@ export default class Brick extends Viewable {
 
   /**
    * Finds Setting with given name.
-   * @param {string} name Setting name to search for.
+   * @param {string} name Setting name to search for
    * @return {?Setting} Returns Setting or null if not found.
    */
   getSetting (name) {
@@ -57,7 +56,7 @@ export default class Brick extends Viewable {
 
   /**
    * Convenience method for finding a Setting and returning its value.
-   * @param {string} name Setting name to search for.
+   * @param {string} name Setting name to search for
    * @throws Throws an error if Setting with given name does not exist.
    * @return {mixed} Setting value.
    */
@@ -74,7 +73,7 @@ export default class Brick extends Viewable {
    * @return {object}
    */
   getSettingValues () {
-    let settingValues = {}
+    const settingValues = {}
     this.getSettings()
       .filter(setting => setting.isVisible())
       .forEach(setting => {
@@ -166,7 +165,7 @@ export default class Brick extends Viewable {
 
   /**
    * Convenience method for finding a Setting and setting its value.
-   * @param {string} name Setting name to search for.
+   * @param {string} name Setting name to search for
    * @param {mixed} value Setting value
    * @throws Throws an error if Setting with given name does not exist.
    * @return {Brick} Fluent interface
@@ -182,14 +181,14 @@ export default class Brick extends Viewable {
 
   /**
    * Sets multiple Setting values by Object.
-   * @param {Object} nameValuePairs Object mapping Setting names to values.
+   * @param {Object} nameValuePairs Object mapping Setting names to values
    * @throws Throws an error if Setting with given name does not exist.
    * @return {Brick} Fluent interface
    */
   setSettingValues (nameValuePairs) {
-    // set each setting value
-    Object.keys(nameValuePairs).forEach(name =>
-      this.setSettingValue(name, nameValuePairs[name]))
+    for (let name in nameValuePairs) {
+      this.setSettingValue(name, nameValuePairs[name])
+    }
     return this
   }
 
@@ -278,7 +277,7 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Returns the Pipe.
+   * Returns the pipe.
    * @return {?Pipe}
    */
   getPipe () {
@@ -287,14 +286,14 @@ export default class Brick extends Viewable {
 
   /**
    * Returns true, if pipe is set.
-   * @return {boolean} True, if pipe is set.
+   * @return {boolean} True, if pipe is set
    */
   hasPipe () {
     return this._pipe !== null
   }
 
   /**
-   * Sets the Pipe.
+   * Sets the pipe.
    * @param {?Pipe} pipe
    * @return {Brick} Fluent interface
    */
@@ -322,12 +321,6 @@ export default class Brick extends Viewable {
     if (this.hasPipe()) {
       // remove self from pipe
       this.getPipe().removeBrick(this)
-
-      Analytics.trackEvent('brick_remove', {
-        'event_category': 'bricks',
-        'event_action': 'remove',
-        'event_label': this.getMeta().name
-      })
     }
   }
 
@@ -342,11 +335,11 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Serializes Brick to a JSON serializable object.
+   * Serializes brick to a JSON serializable object.
    * @return {mixed} Serialized data
    */
   serialize () {
-    let data = {
+    const data = {
       name: this.getMeta().name,
       settings: this.getSettingValues()
     }
@@ -357,11 +350,11 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Extracts Brick from serialized data.
+   * Extracts brick from serialized data.
    * @param {mixed} data Serialized data
-   * @param {BrickFactory} brickFactory Brick factory instance.
+   * @param {BrickFactory} brickFactory brick factory instance
    * @throws {Error} Throws an error if data is malformed.
-   * @return {Brick} Extracted Brick.
+   * @return {Brick} Extracted brick
    */
   static extract (data, brickFactory) {
     // read brick name
@@ -370,7 +363,7 @@ export default class Brick extends Viewable {
         `Malformed brick data: Attribute 'name' is expected to be a string`)
     }
 
-    let name = data.name
+    const name = data.name
 
     // check if brick name exists
     if (!brickFactory.exists(name)) {
@@ -379,7 +372,7 @@ export default class Brick extends Viewable {
     }
 
     // create brick instance
-    let brick = brickFactory.create(name)
+    const brick = brickFactory.create(name)
 
     // read and apply visibility
     if (typeof data.hidden !== 'undefined' &&

@@ -23,7 +23,7 @@ const typeLabels = [
 ]
 
 /**
- * Encoder Brick translating between bytes and integers.
+ * Encoder brick translating between bytes and integers.
  */
 export default class IntegerEncoder extends Encoder {
   /**
@@ -100,21 +100,22 @@ export default class IntegerEncoder extends Encoder {
    * @return {Chain|Promise} Encoded content
    */
   performEncode (content) {
-    let typeName = this.getSettingValue('type')
-    let typeIndex = typeNames.indexOf(typeName)
-    let bytesPerInteger = typeBytes[typeIndex]
-    let isBigEndian = this.getSettingValue('byteOrder') === 'big-endian'
+    const typeName = this.getSettingValue('type')
+    const typeIndex = typeNames.indexOf(typeName)
+    const bytesPerInteger = typeBytes[typeIndex]
+    const isBigEndian = this.getSettingValue('byteOrder') === 'big-endian'
 
     let size = content.getSize()
     if (size % bytesPerInteger !== 0) {
       size += bytesPerInteger - size % bytesPerInteger
     }
 
-    let bytes = new Uint8Array(size)
+    const bytes = new Uint8Array(size)
     bytes.set(content.getBytes())
 
     // collect integers
-    let integers = this.createIntegerTypeArray(size / bytesPerInteger, typeName)
+    const integers = this.createIntegerTypeArray(
+      size / bytesPerInteger, typeName)
     let integer = 0
     let i = 0
     while (i < bytes.length) {
@@ -130,8 +131,8 @@ export default class IntegerEncoder extends Encoder {
     }
 
     // convert integers to strings
-    let format = this.getSettingValue('format')
-    let integerStrings = []
+    const format = this.getSettingValue('format')
+    const integerStrings = []
 
     for (i = 0; i < integers.length; i++) {
       switch (format) {
@@ -149,7 +150,7 @@ export default class IntegerEncoder extends Encoder {
       }
     }
 
-    let string = integerStrings.join(' ')
+    const string = integerStrings.join(' ')
     return Chain.wrap(string)
   }
 
@@ -160,15 +161,16 @@ export default class IntegerEncoder extends Encoder {
    * @return {Chain|Promise} Decoded content
    */
   performDecode (content) {
-    let typeName = this.getSettingValue('type')
-    let typeIndex = typeNames.indexOf(typeName)
-    let bytesPerInteger = typeBytes[typeIndex]
-    let isBigEndian = this.getSettingValue('byteOrder') === 'big-endian'
+    const typeName = this.getSettingValue('type')
+    const typeIndex = typeNames.indexOf(typeName)
+    const bytesPerInteger = typeBytes[typeIndex]
+    const isBigEndian = this.getSettingValue('byteOrder') === 'big-endian'
 
     // read integers from string
-    let format = this.getSettingValue('format')
-    let integerStrings = content.getString().split(/\s+/)
-    let integers = this.createIntegerTypeArray(integerStrings.length, typeName)
+    const format = this.getSettingValue('format')
+    const integerStrings = content.getString().split(/\s+/)
+    const integers = this.createIntegerTypeArray(
+      integerStrings.length, typeName)
 
     let i, integer, integerString
     for (i = 0; i < integerStrings.length; i++) {
@@ -202,7 +204,7 @@ export default class IntegerEncoder extends Encoder {
     }
 
     // write bytes
-    let bytes = new Uint8Array(integers.length * bytesPerInteger)
+    const bytes = new Uint8Array(integers.length * bytesPerInteger)
     let integerByte
     for (i = 0; i < bytes.length; i++) {
       integer = integers[parseInt(i / bytesPerInteger)]
@@ -249,9 +251,8 @@ export default class IntegerEncoder extends Encoder {
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
       case 'type':
-        let typeIndex = typeNames.indexOf(this.getSettingValue('type'))
-        let bytesPerInteger = typeBytes[typeIndex]
-        this.getSetting('byteOrder').setVisible(bytesPerInteger > 1)
+        const typeIndex = typeNames.indexOf(this.getSettingValue('type'))
+        this.getSetting('byteOrder').setVisible(typeBytes[typeIndex] > 1)
     }
     return super.settingValueDidChange(setting, value)
   }

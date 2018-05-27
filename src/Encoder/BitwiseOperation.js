@@ -20,7 +20,7 @@ const operationInverseMap = {
 }
 
 /**
- * Encoder Brick for bitwise operations on bytes.
+ * Encoder brick for bitwise operations on bytes
  */
 export default class BitwiseOperationEncoder extends Encoder {
   /**
@@ -85,9 +85,9 @@ export default class BitwiseOperationEncoder extends Encoder {
    * @return {Chain}
    */
   performTranslate (content, isEncode) {
-    let bytes = content.getBytes()
+    const bytes = content.getBytes()
+    const operandBytes = this.getSettingValue('operand')
     let operation = this.getSettingValue('operation')
-    let operandBytes = this.getSettingValue('operand')
 
     if (!isEncode) {
       // inverse operation
@@ -95,7 +95,7 @@ export default class BitwiseOperationEncoder extends Encoder {
     }
 
     // perform operation on each byte
-    let result = bytes.map((byte, index) =>
+    const result = bytes.map((byte, index) =>
       this.performByteOperation(byte, operation,
         operandBytes[index % operandBytes.length]))
 
@@ -141,8 +141,7 @@ export default class BitwiseOperationEncoder extends Encoder {
   settingValueDidChange (setting, value) {
     if (setting.getName() === 'operation') {
       // only make operand visible when necessary
-      let operandSetting = this.getSetting('operand')
-      operandSetting.setVisible(value !== 'NOT')
+      this.getSetting('operand').setVisible(value !== 'NOT')
     }
     return super.settingValueDidChange(setting, value)
   }

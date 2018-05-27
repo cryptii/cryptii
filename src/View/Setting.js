@@ -2,7 +2,7 @@
 import View from '../View'
 
 /**
- * Setting View.
+ * Setting view
  */
 export default class SettingView extends View {
   /**
@@ -128,7 +128,7 @@ export default class SettingView extends View {
    * @return {SettingView} Fluent interface
    */
   update () {
-    let $setting = this.getElement()
+    const $setting = this.getElement()
 
     // set width attr
     $setting.dataset.width = this.getModel().getWidth()

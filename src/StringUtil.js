@@ -31,7 +31,7 @@ export default class StringUtil {
    * @return {string}
    */
   static uniqueId () {
-    let uid = new Date().getTime() + (++iterator)
+    const uid = new Date().getTime() + (++iterator)
     return uid.toString(16)
   }
 
@@ -52,7 +52,7 @@ export default class StringUtil {
    * @return {boolean}
    */
   static isWhitespace (string, index = 0) {
-    let character = string[index]
+    const character = string[index]
     return character ? character.match(/\s/) !== null : false
   }
 
@@ -69,7 +69,7 @@ export default class StringUtil {
    * Replaces Unicode whitespace characters with U+20 space character.
    * @param {string} string Haystack
    * @param {Boolean} [reduceToSingle=false] Wether to replace
-   * multiple successive space characters with a single one.
+   * multiple successive space characters with a single one
    * @return {string}
    */
   static normalizeWhitespaces (string, reduceToSingle = false) {
@@ -81,7 +81,7 @@ export default class StringUtil {
    * @param {string} string Haystack
    * @param {string} replacement Replacement string
    * @param {Boolean} [reduceToSingle=false] Wether to replace
-   * multiple successive space characters with a single one.
+   * multiple successive space characters with a single one
    * @return {string}
    */
   static replaceWhitespaces (string, replacement, reduceToSingle = false) {

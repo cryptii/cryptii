@@ -13,7 +13,7 @@ const meta = {
 }
 
 /**
- * Viewer Brick for viewing and editing bytes.
+ * Viewer brick for viewing and editing bytes
  */
 export default class BytesViewer extends Viewer {
   /**
@@ -77,8 +77,8 @@ export default class BytesViewer extends Viewer {
    * @param {function} done Called when performing view has finished.
    */
   performView (content, done) {
-    let bytes = content.getBytes()
-    let format = this.getSettingValue('format')
+    const bytes = content.getBytes()
+    const format = this.getSettingValue('format')
 
     // encode bytes to string
     let string, charBits
@@ -93,9 +93,9 @@ export default class BytesViewer extends Viewer {
     }
 
     // group result
-    let groupBits = this.getSettingValue('groupBits')
+    const groupBits = this.getSettingValue('groupBits')
     if (groupBits !== null) {
-      let groupChars = groupBits / charBits
+      const groupChars = groupBits / charBits
       string = StringUtil.chunk(string, groupChars).join(' ')
     }
 
@@ -112,20 +112,19 @@ export default class BytesViewer extends Viewer {
    */
   viewTextDidChange (view, text) {
     this.dare(() => {
+      const format = this.getSettingValue('format')
       let string = text
-      let format = this.getSettingValue('format')
+
+      // ignore whitespaces
+      string = string.replace(/\s/g, '')
 
       // decode string to bytes
       let bytes
       switch (format) {
         case 'hexadecimal':
-          // ignore whitespaces
-          string = string.replace(/\s/g, '')
           bytes = ByteEncoder.bytesFromHexString(string)
           break
         case 'binary':
-          // ignore whitespaces
-          string = string.replace(/\s/g, '')
           bytes = ByteEncoder.bytesFromBinaryString(string)
           break
       }

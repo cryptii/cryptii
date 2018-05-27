@@ -8,7 +8,7 @@ import TextEncodingError from './Error/TextEncoding'
 export default class TextEncoder {
   /**
    * Validates a single Unicode code point.
-   * @return {boolean} True, if code point is valid.
+   * @return {boolean} True, if code point is valid
    */
   static validateCodePoint (codePoint) {
     return (

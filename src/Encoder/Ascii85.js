@@ -29,7 +29,7 @@ const variantSpecs = [
 ]
 
 /**
- * Encoder Brick for Ascii85/Base85 encoding and decoding.
+ * Encoder brick for Ascii85/Base85 encoding and decoding
  */
 export default class Ascii85Encoder extends Encoder {
   /**
@@ -144,7 +144,7 @@ export default class Ascii85Encoder extends Encoder {
     const n = string.length
 
     // decode each tuple of 5 characters
-    let bytes = []
+    const bytes = []
     let i = 0
     let digits, tuple, tupleBytes
     while (i < n) {
@@ -158,7 +158,7 @@ export default class Ascii85Encoder extends Encoder {
           .substr(i, 5)
           .split('')
           .map((character, index) => {
-            let digit =
+            const digit =
               variant.alphabet === null
                 ? character.charCodeAt(0) - 33
                 : variant.alphabet.indexOf(character)

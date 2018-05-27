@@ -6,11 +6,11 @@ const knownTrueValues = [true, 1, '1', 'true']
 const knownFalseValues = [false, 0, '0', 'false']
 
 /**
- * Boolean Setting.
+ * Boolean setting
  */
 export default class BooleanSetting extends Setting {
   /**
-   * Setting constructor.
+   * Setting constructor
    * @param {string} name
    * @param {Object} [spec] See {@link Setting.constructor}
    * @param {mixed} [spec.options] Setting options

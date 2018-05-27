@@ -18,8 +18,6 @@ export default class Encoder extends Brick {
     this._viewPrototype = EncoderView
     this._reverse = false
     this._encodeOnly = false
-
-    // last translation meta or error
     this._lastError = null
     this._lastTranslationMeta = null
   }
@@ -45,14 +43,13 @@ export default class Encoder extends Brick {
   /**
    * Prepares and performs translation on given content.
    * @param {number[]|string|Uint8Array|Chain} content
-   * @param {boolean} isEncode True for encode, false for decode.
+   * @param {boolean} isEncode True for encode, false for decode
    * @return {Promise} Resulting content
    */
   translate (content, isEncode) {
     // track translation start time
-    let time = MathUtil.time()
+    const startTime = MathUtil.time()
 
-    // perform translation async
     return new Promise(resolve => {
       // wrap content in Chain
       content = Chain.wrap(content)
@@ -63,7 +60,7 @@ export default class Encoder extends Brick {
       }
 
       // check for invalid settings
-      let invalidSettings = this.getInvalidSettings()
+      const invalidSettings = this.getInvalidSettings()
       if (invalidSettings.length > 0) {
         throw new InvalidInputError(
           `Can't ${isEncode ? 'encode' : 'decode'} with invalid settings: ` +
@@ -89,7 +86,7 @@ export default class Encoder extends Brick {
         this._lastError = null
         this._lastTranslationMeta = {
           isEncode,
-          duration: MathUtil.time() - time,
+          duration: MathUtil.time() - startTime,
           byteCount: !content.needsByteEncoding() ? content.getSize() : null,
           charCount: !content.needsTextEncoding() ? content.getLength() : null
         }
@@ -168,7 +165,7 @@ export default class Encoder extends Brick {
    * @return {mixed} Serialized data
    */
   serialize () {
-    let object = super.serialize()
+    const object = super.serialize()
     if (this.isReverse()) {
       object.reverse = true
     }

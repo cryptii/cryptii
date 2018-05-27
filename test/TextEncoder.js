@@ -19,15 +19,15 @@ describe('TextEncoder', () => {
   /** @test {TextEncoder.stringFromCodePoints} */
   describe('stringFromCodePoints()', () => {
     it('should return an empty String when empty Array given', () => {
-      let string = TextEncoder.stringFromCodePoints([])
+      const string = TextEncoder.stringFromCodePoints([])
       assert.strictEqual(string, '')
     })
     it('should translate ASCII code points to Strings', () => {
-      let string = TextEncoder.stringFromCodePoints(exampleASCII.codePoints)
+      const string = TextEncoder.stringFromCodePoints(exampleASCII.codePoints)
       assert.strictEqual(string, exampleASCII.string)
     })
     it('should translate emoji code points to Strings', () => {
-      let string = TextEncoder.stringFromCodePoints(exampleEmoji.codePoints)
+      const string = TextEncoder.stringFromCodePoints(exampleEmoji.codePoints)
       assert.strictEqual(string, exampleEmoji.string)
     })
   })
@@ -35,15 +35,15 @@ describe('TextEncoder', () => {
   /** @test {TextEncoder.codePointsFromString} */
   describe('codePointsFromString()', () => {
     it('should return an empty Array when empty String given', () => {
-      let codePoints = TextEncoder.codePointsFromString('')
+      const codePoints = TextEncoder.codePointsFromString('')
       assert.deepStrictEqual(codePoints, [])
     })
     it('should translate Strings to ASCII code points', () => {
-      let codePoints = TextEncoder.codePointsFromString(exampleASCII.string)
+      const codePoints = TextEncoder.codePointsFromString(exampleASCII.string)
       assert.deepStrictEqual(codePoints, exampleASCII.codePoints)
     })
     it('should translate Strings to emoji code points', () => {
-      let codePoints = TextEncoder.codePointsFromString(exampleEmoji.string)
+      const codePoints = TextEncoder.codePointsFromString(exampleEmoji.string)
       assert.deepStrictEqual(codePoints, exampleEmoji.codePoints)
     })
   })
@@ -51,11 +51,11 @@ describe('TextEncoder', () => {
   /** @test {TextEncoder.bytesFromCodePoints} */
   describe('bytesFromCodePoints()', () => {
     it('should return an empty Uint8Array when empty Array given', () => {
-      let bytes = TextEncoder.bytesFromCodePoints([])
+      const bytes = TextEncoder.bytesFromCodePoints([])
       assert.deepStrictEqual(Array.from(bytes), [])
     })
     it('should UTF-8 encode ASCII characters to the same byte values', () => {
-      let bytes = TextEncoder.bytesFromCodePoints(exampleASCII.codePoints, 'utf8')
+      const bytes = TextEncoder.bytesFromCodePoints(exampleASCII.codePoints, 'utf8')
       assert.deepEqual(bytes, exampleASCII.codePoints)
     })
     it('should UTF-8 encode first possible code points of certain byte lengths', () => {
@@ -91,12 +91,12 @@ describe('TextEncoder', () => {
   /** @test {TextEncoder.codePointsFromBytes} */
   describe('codePointsFromBytes()', () => {
     it('should return an empty Array when empty Uint8Array given', () => {
-      let codePoints = TextEncoder.codePointsFromBytes(new Uint8Array(0))
+      const codePoints = TextEncoder.codePointsFromBytes(new Uint8Array(0))
       assert.deepStrictEqual(codePoints, [])
     })
     it('should UTF-8 decode byte values to the same ASCII characters', () => {
-      let bytes = new Uint8Array(exampleASCII.codePoints)
-      let codePoints = TextEncoder.codePointsFromBytes(bytes, 'utf8')
+      const bytes = new Uint8Array(exampleASCII.codePoints)
+      const codePoints = TextEncoder.codePointsFromBytes(bytes, 'utf8')
       assert.deepEqual(exampleASCII.codePoints, codePoints)
     })
     it('should UTF-8 decode first possible code points of certain byte lengths', () => {

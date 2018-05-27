@@ -17,7 +17,7 @@ export default class MathUtil {
   }
 
   /**
-   * Integer division (a \ b).
+   * Integer division (a / b)
    * @param {number} a
    * @param {number} b
    * @return {number}
@@ -70,14 +70,16 @@ export default class MathUtil {
   }
 
   /**
-   * Returns current timestamp.
+   * Returns the time elapsed since the time origin in ms.
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+   * @see https://nodejs.org/api/process.html#process_process_hrtime_time
    * @return {float}
    */
   static time () {
     if (typeof window !== 'undefined') {
       return window.performance.now()
+    } else {
+      return process.hrtime()[1] / 1e+6
     }
-    return parseFloat(new Date().getTime())
   }
 }

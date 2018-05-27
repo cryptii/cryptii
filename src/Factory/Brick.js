@@ -27,17 +27,17 @@ import VigenereCipherEncoder from '../Encoder/VigenereCipher'
 let instance = null
 
 /**
- * Factory for Brick objects.
+ * Factory for brick objects
  */
 export default class BrickFactory extends Factory {
   /**
-   * Brick Factory constructor.
+   * Brick factory constructor
    */
   constructor () {
     super()
 
     // gather package brick classes
-    let invokables = [
+    const invokables = [
       TextViewer,
       BytesViewer,
       TextTransformEncoder,
@@ -71,7 +71,7 @@ export default class BrickFactory extends Factory {
    * @return {BrickFactory} Fluent interface
    */
   register (invokable) {
-    let identifier = invokable.getMeta().name
+    const identifier = invokable.getMeta().name
     return super.register(identifier, invokable)
   }
 

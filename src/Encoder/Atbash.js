@@ -13,7 +13,7 @@ const latinAlphabet = Chain.wrap('abcdefghijklmnopqrstuvwxyz')
 const hebrewAlphabet = Chain.wrap('תשרקצפעסנמלכיטחזוהדגבא')
 
 /**
- * Encoder Brick for Atbash encoding and decoding.
+ * Encoder brick for Atbash encoding and decoding
  */
 export default class AtbashEncoder extends AffineCipherEncoder {
   /**
@@ -100,7 +100,7 @@ export default class AtbashEncoder extends AffineCipherEncoder {
    * @return {Atbash} Fluent interface
    */
   applyEncryptionFunctionByAlphabet (alphabet) {
-    let m = alphabet.getLength()
+    const m = alphabet.getLength()
     this.setSettingValue('a', m - 1)
     this.setSettingValue('b', m - 1)
     return this

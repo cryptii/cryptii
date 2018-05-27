@@ -12,7 +12,7 @@ const meta = {
 }
 
 /**
- * Encoder Brick for creating message digests.
+ * Encoder brick for creating message digests
  */
 export default class HashEncoder extends Encoder {
   /**
@@ -50,8 +50,8 @@ export default class HashEncoder extends Encoder {
    * @return {Chain|Promise} Encoded content
    */
   performEncode (content) {
-    let algorithm = this.getSettingValue('algorithm')
-    let bytes = content.getBytes()
+    const algorithm = this.getSettingValue('algorithm')
+    const bytes = content.getBytes()
 
     let result
     switch (algorithm) {
@@ -73,8 +73,8 @@ export default class HashEncoder extends Encoder {
    * @return {Promise}
    */
   webCryptoDigest (algorithm, bytes) {
-    let crypto = window.crypto || window.msCrypto
-    let cryptoSubtle = crypto.subtle || crypto.webkitSubtle
+    const crypto = window.crypto || window.msCrypto
+    const cryptoSubtle = crypto.subtle || crypto.webkitSubtle
 
     // create message digest from bytes
     let result = cryptoSubtle.digest(algorithm, bytes)
@@ -96,7 +96,7 @@ export default class HashEncoder extends Encoder {
    * @return {string[]}
    */
   static getAvailableAlgorithms () {
-    let algorithms = [
+    const algorithms = [
       'MD5',
       'SHA-1',
       'SHA-256',

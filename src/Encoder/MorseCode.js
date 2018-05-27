@@ -11,8 +11,8 @@ const meta = {
   type: 'encoder'
 }
 
-let alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789.,?\'!/()&:;=+-_"$@'
-let codeAlphabet = [
+const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789.,?\'!/()&:;=+-_"$@'
+const codeAlphabet = [
   /* eslint-disable no-multi-spaces */
 
   // letters: a-z
@@ -34,7 +34,7 @@ let codeAlphabet = [
 ]
 
 /**
- * Encoder Brick for morse code encoding and decoding.
+ * Encoder brick for morse code encoding and decoding
  */
 export default class MorseCodeEncoder extends Encoder {
   /**
@@ -157,7 +157,7 @@ export default class MorseCodeEncoder extends Encoder {
    * @return {Chain|Promise} Encoded content
    */
   performEncode (content) {
-    let representation = this.getSettingValue('representation')
+    const representation = this.getSettingValue('representation')
 
     let shortMark = '.'
     let longerMark = '-'
@@ -186,8 +186,8 @@ export default class MorseCodeEncoder extends Encoder {
 
     if (representation === 'timing') {
       // translate to timing representation
-      let signalOnMark = this.getSettingValue('signalOnMark').getString()
-      let signalOffMark = this.getSettingValue('signalOffMark').getString()
+      const signalOnMark = this.getSettingValue('signalOnMark').getString()
+      const signalOffMark = this.getSettingValue('signalOffMark').getString()
 
       string = string
         .split('')
@@ -218,8 +218,8 @@ export default class MorseCodeEncoder extends Encoder {
    * @return {Chain|Promise} Decoded content
    */
   performDecode (content) {
+    const representation = this.getSettingValue('representation')
     let string = content.getString()
-    let representation = this.getSettingValue('representation')
 
     let shortMark = '.'
     let longerMark = '-'
@@ -233,7 +233,7 @@ export default class MorseCodeEncoder extends Encoder {
 
     if (representation === 'timing') {
       // interpret timing code
-      let fromMarks = [
+      const fromMarks = [
         this.getSettingValue('signalOnMark').getString(),
         this.getSettingValue('signalOffMark').getString()]
 
@@ -259,7 +259,7 @@ export default class MorseCodeEncoder extends Encoder {
           return null
         }
 
-        let char = MorseCodeEncoder.decodeCode(
+        const char = MorseCodeEncoder.decodeCode(
           rawCode, shortMark, longerMark, spaceMark)
 
         if (char === null) {
@@ -285,7 +285,7 @@ export default class MorseCodeEncoder extends Encoder {
    * @return {boolean} Returns true, if value is valid.
    */
   validateCodeMarkSettingValue (rawValue, setting) {
-    let mark = setting.filterValue(rawValue)
+    const mark = setting.filterValue(rawValue)
 
     // because morse code letters are separated by whitespaces they
     // are not allowed inside morse code marks
@@ -296,7 +296,7 @@ export default class MorseCodeEncoder extends Encoder {
       }
     }
 
-    let equalSettingName =
+    const equalSettingName =
       ['shortMark', 'longerMark', 'spaceMark']
         .filter(name => name !== setting.getName())
         .find(name => mark.isEqualTo(this.getSettingValue(name)))
@@ -320,8 +320,8 @@ export default class MorseCodeEncoder extends Encoder {
    * @return {boolean} Returns true, if value is valid.
    */
   validateTimingMarkSettingValue (rawValue, setting) {
-    let mark = setting.filterValue(rawValue)
-    let equalSettingName =
+    const mark = setting.filterValue(rawValue)
+    const equalSettingName =
       ['signalOnMark', 'signalOffMark']
         .filter(name => name !== setting.getName())
         .find(name => mark.indexOf(this.getSettingValue(name)) === 0)
@@ -388,14 +388,14 @@ export default class MorseCodeEncoder extends Encoder {
     }
 
     // find char in alphabet
-    let index = alphabet.indexOf(char)
+    const index = alphabet.indexOf(char)
     if (index === -1) {
       // char is not defined
       return null
     }
 
     // translate marks
-    let code = codeAlphabet[index]
+    const code = codeAlphabet[index]
     return MorseCodeEncoder.translateMarks(
       code, ['.', '-'], [shortMark, longerMark])
   }
@@ -416,11 +416,11 @@ export default class MorseCodeEncoder extends Encoder {
     }
 
     // translate marks
-    let code = MorseCodeEncoder.translateMarks(
+    const code = MorseCodeEncoder.translateMarks(
       rawCode, [shortMark, longerMark], ['.', '-'])
 
     // find code in alphabet
-    let index = codeAlphabet.indexOf(code)
+    const index = codeAlphabet.indexOf(code)
     return index !== -1 ? alphabet[index] : null
   }
 

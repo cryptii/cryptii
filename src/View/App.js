@@ -2,7 +2,7 @@
 import View from '../View'
 
 /**
- * App View.
+ * App view
  */
 export default class AppView extends View {
   /**
@@ -12,7 +12,7 @@ export default class AppView extends View {
    */
   render () {
     // use existing element
-    let $root = document.querySelector('.app')
+    const $root = document.querySelector('.app')
 
     // bind events
     window.addEventListener('resize', this.windowDidResize.bind(this), false)

@@ -1,22 +1,21 @@
 
-import Analytics from './Analytics'
 import Brick from './Brick'
 import BrickFactory from './Factory/Brick'
 import ByteEncoder from './ByteEncoder'
 import Chain from './Chain'
 import Encoder from './Encoder'
-import PipeView from './View/Pipe'
 import InvalidInputError from './Error/InvalidInput'
+import LibraryModalView from './View/Modal/Library'
+import PipeView from './View/Pipe'
 import Viewable from './Viewable'
 import Viewer from './Viewer'
-import LibraryModalView from './View/Modal/Library'
 
 /**
- * Arrangement of Viewers and Encoders.
+ * Arrangement of viewers and encoders.
  */
 export default class Pipe extends Viewable {
   /**
-   * Creates empty Pipe.
+   * Creates empty pipe.
    */
   constructor () {
     super()
@@ -29,12 +28,12 @@ export default class Pipe extends Viewable {
     this._brickMeta = []
 
     // content buckets
-    this._bucketContent = [new Chain()]
+    this._bucketContent = [Chain.empty()]
     this._selectedBucket = 0
   }
 
   /**
-   * Returns Pipe bricks.
+   * Returns pipe bricks.
    * @return {Brick[]}
    */
   getBricks () {
@@ -44,15 +43,15 @@ export default class Pipe extends Viewable {
   /**
    * Returns wether given brick is part of this pipe.
    * @param {Brick} brick
-   * @return {boolean} True, if brick is part of pipe.
+   * @return {boolean} True, if brick is part of pipe
    */
   containsBrick (brick) {
     return this._bricks.indexOf(brick) !== -1
   }
 
   /**
-   * Adds Bricks to the end of the Pipe.
-   * @param {...Brick|string} bricksOrNames Bricks to be added.
+   * Adds bricks to the end of the pipe.
+   * @param {...Brick|string} bricksOrNames bricks to be added
    * @return {Pipe} Fluent interface
    */
   addBrick (...bricksOrNames) {
@@ -61,8 +60,8 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Removes Bricks from the Pipe.
-   * @param {...Brick|number} bricksOrIndexes Bricks to be removed.
+   * Removes bricks from the pipe.
+   * @param {...Brick|number} bricksOrIndexes Bricks to be removed
    * @return {Pipe} Fluent interface
    */
   removeBrick (...bricksOrIndexes) {
@@ -82,13 +81,13 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Replaces brick.
+   * Replaces a brick.
    * @param {Brick} needle
    * @param {Brick|string} brickOrName
    * @return {Pipe} Fluent interface
    */
   replaceBrick (needle, brickOrName) {
-    let index = this._bricks.indexOf(needle)
+    const index = this._bricks.indexOf(needle)
     if (index === -1) {
       throw new Error(`Brick is not part of the Pipe. Can't replace it.`)
     }
@@ -107,11 +106,11 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Removes and inserts bricks at given index.
-   * @param {number} index Index at which bricks should be removed or inserted.
-   * @param {number} removeCount How many bricks should be removed at position.
-   * @param {...Brick|string} bricksOrNames Bricks to be added.
-   * @return {Brick[]} Array of bricks that have been removed.
+   * Removes and/or inserts bricks at given index.
+   * @param {number} index Index at which bricks should be removed or inserted
+   * @param {number} removeCount Amount of bricks to be removed
+   * @param {...Brick|string} bricksOrNames Bricks to be added
+   * @return {Brick[]} Array of bricks that have been removed
    */
   spliceBricks (index, removeCount, ...bricksOrNames) {
     // normalize index
@@ -120,13 +119,13 @@ export default class Pipe extends Viewable {
     }
 
     // map brick names to actual brick instances
-    let bricks = bricksOrNames.map(brickOrName =>
+    const bricks = bricksOrNames.map(brickOrName =>
       typeof brickOrName === 'string'
         ? BrickFactory.getInstance().create(brickOrName)
         : brickOrName)
 
     // splice internal brick array
-    let removedBricks = this._bricks.splice.apply(this._bricks,
+    const removedBricks = this._bricks.splice.apply(this._bricks,
       [index, removeCount].concat(bricks))
 
     // splice internal meta array
@@ -147,13 +146,6 @@ export default class Pipe extends Viewable {
       if (brick instanceof Encoder) {
         bucketInsertCount++
       }
-
-      Analytics.trackEvent('brick_view', {
-        'event_category': 'bricks',
-        'event_action': 'view',
-        'event_label': brick.getMeta().name,
-        'non_interaction': true
-      })
     })
 
     removedBricks.forEach(brick => {
@@ -212,34 +204,27 @@ export default class Pipe extends Viewable {
       bricks.forEach(viewer => this.triggerViewerView(viewer))
     }
 
-    Analytics.trackEvent('pipe_view', {
-      'event_category': 'pipe',
-      'event_action': 'view',
-      'event_label': this._bricks.map(brick => brick.getMeta().name).join(', '),
-      'non_interaction': true
-    })
-
     // layout
     this.hasView() && this.getView().layout()
     return removedBricks
   }
 
   /**
-   * Returns meta entry for given Brick and key.
+   * Returns a meta entry for given brick and key.
    * @protected
    * @param {Brick} brick
    * @param {string} key
    * @param {mixed} [defaultValue=undefined] Default value returned when no meta
-   * entry was found for given Brick and key.
-   * @throws {Error} Throws an error if Brick is not part of the Pipe.
+   * entry was found for given brick and key.
+   * @throws {Error} Throws an error if given brick is not part of the pipe.
    * @return {mixed} Meta entry value
    */
   getBrickMeta (brick, key, defaultValue = undefined) {
-    let index = this._bricks.indexOf(brick)
+    const index = this._bricks.indexOf(brick)
     if (index === -1) {
-      throw new Error(`Brick is not part of the Pipe. Can't retrieve its meta.`)
+      throw new Error(`Brick is not part of the pipe. Can't retrieve its meta.`)
     }
-    let value = this._brickMeta[index][key]
+    const value = this._brickMeta[index][key]
     return value !== undefined ? value : defaultValue
   }
 
@@ -252,7 +237,7 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Fluent interface
    */
   setBrickMeta (brick, key, value) {
-    let index = this._bricks.indexOf(brick)
+    const index = this._bricks.indexOf(brick)
     if (index !== -1) {
       this._brickMeta[index][key] = value
     }
@@ -260,9 +245,9 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Delegate method triggered by child Viewers if their content changed.
+   * Delegate method triggered by child viewers if their content changed.
    * @protected
-   * @param {Viewer} viewer Sender
+   * @param {Viewer} viewer Sender viewer
    * @param {Chain} content
    */
   viewerContentDidChange (viewer, content) {
@@ -270,33 +255,32 @@ export default class Pipe extends Viewable {
       // ignore this event
       return
     }
-
-    let bucket = this.getBucketIndexForBrick(viewer)
+    const bucket = this.getBucketIndexForBrick(viewer)
     this.setContent(content, bucket, viewer)
   }
 
   /**
-   * Delegate method triggered by child Bricks when their settings changed.
+   * Delegate method triggered by child bricks when their settings changed.
    * @protected
-   * @param {Encoder} brick Sender
+   * @param {Encoder} brick Sender brick
    */
   brickSettingDidChange (brick) {
-    let brickIndex = this._bricks.indexOf(brick)
+    const brickIndex = this._bricks.indexOf(brick)
     if (brickIndex === -1) {
       // encoder is not part of pipe
       // ignore this event
       return
     }
 
-    let brickMeta = this._brickMeta[brickIndex]
+    const brickMeta = this._brickMeta[brickIndex]
 
     // increment brick settings version
     brickMeta.settingsVersion++
 
     if (brick instanceof Encoder) {
       // trigger encode or decode depending on last translation direction
-      let translationMeta = brick.getLastTranslationMeta()
-      let isEncode = translationMeta === null || translationMeta.isEncode
+      const translationMeta = brick.getLastTranslationMeta()
+      const isEncode = translationMeta === null || translationMeta.isEncode
       this.triggerEncoderTranslation(brick, isEncode)
     } else {
       this.triggerViewerView(brick)
@@ -304,19 +288,19 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Delegate method triggered by child Bricks when they change visibility.
+   * Delegate method triggered by child bricks when they change visibility.
    * @param {Brick} brick Brick which changed visibility
-   * @param {boolean} hidden Wether this brick is hidden
+   * @param {boolean} hidden Wether brick is now hidden
    */
   brickVisibilityDidChange (brick, hidden) {
     this.updateView()
   }
 
   /**
-   * Delegate method triggered by child Bricks when they got reversed.
+   * Delegate method triggered by child bricks when they got reversed.
    * @protected
-   * @param {Encoder} brick Sender
-   * @param {boolean} reverse Wether to reverse translation.
+   * @param {Encoder} brick Sender brick
+   * @param {boolean} reverse Wether to reverse translation
    */
   encoderDidReverse (brick, reverse) {
     if (
@@ -327,7 +311,7 @@ export default class Pipe extends Viewable {
     ) {
       // having this constellation, swap source and result content
       // when reversing the encoder brick in the middle
-      let resultContent = this.getContent(1)
+      const resultContent = this.getContent(1)
       this.setContent(this.getContent(0), 1, brick)
       this.setContent(resultContent, 0, brick)
     }
@@ -336,7 +320,7 @@ export default class Pipe extends Viewable {
   /**
    * Returns bucket index for given brick.
    * @param {Brick} brick
-   * @throws {Error} Throws an error if brick is not part of Pipe.
+   * @throws {Error} Throws an error if brick is not part of pipe.
    * @return {number}
    */
   getBucketIndexForBrick (brick) {
@@ -357,7 +341,6 @@ export default class Pipe extends Viewable {
     if (!foundBrick) {
       throw new Error(`Can't find bucket for brick. Brick is not part of Pipe.`)
     }
-
     return encoderCount
   }
 
@@ -375,7 +358,7 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Sets content of given bucket and propagates it through brick chain.
+   * Sets content of given bucket and propagates it through the pipe.
    * @param {number[]|string|Uint8Array|Chain} content
    * @param {number} [bucket=0] Bucket index
    * @param {Brick} [sender=null] Sender brick or null
@@ -416,7 +399,7 @@ export default class Pipe extends Viewable {
     // collect bricks that are attached to this bucket
     let lowerEncoder = null
     let upperEncoder = null
-    let viewers = []
+    const viewers = []
 
     let encoderCount = 0
     let i = -1
@@ -476,9 +459,9 @@ export default class Pipe extends Viewable {
     this.setBrickMeta(viewer, 'busy', true)
 
     // collect view data
-    let bucket = this.getBucketIndexForBrick(viewer)
-    let content = this.getContent(bucket)
-    let settingsVersion = this.getBrickMeta(viewer, 'settingsVersion')
+    const bucket = this.getBucketIndexForBrick(viewer)
+    const content = this.getContent(bucket)
+    const settingsVersion = this.getBrickMeta(viewer, 'settingsVersion')
 
     // trigger view asynchronously
     setTimeout(() => {
@@ -495,7 +478,7 @@ export default class Pipe extends Viewable {
 
   /**
    * Triggered when viewer did finish viewing content. Triggers new view when
-   * the content has changed during previous view.
+   * the content has changed in the meantime.
    * @protected
    * @param {Viewer} viewer
    * @param {?Error} error
@@ -512,8 +495,8 @@ export default class Pipe extends Viewable {
     // mark brick as no longer busy
     this.setBrickMeta(viewer, 'busy', false)
 
-    let settingsVersion = this.getBrickMeta(viewer, 'settingsVersion')
-    let bucket = this.getBucketIndexForBrick(viewer)
+    const settingsVersion = this.getBrickMeta(viewer, 'settingsVersion')
+    const bucket = this.getBucketIndexForBrick(viewer)
 
     // there were views skipped when the current content or brick
     //  settings changed during last view
@@ -548,19 +531,17 @@ export default class Pipe extends Viewable {
     this.setBrickMeta(encoder, 'busy', true)
 
     // collect translation data
-    let sourceBucket = this.getBucketIndexForBrick(encoder) + (isEncode ? 0 : 1)
-    let source = this.getContent(sourceBucket)
-    let settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
+    const sourceBucket =
+      this.getBucketIndexForBrick(encoder) + (isEncode ? 0 : 1)
+    const source = this.getContent(sourceBucket)
+    const settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
 
-    // trigger translation, create a promise to catch all errors
-    new Promise(resolve =>
-      resolve(isEncode ? encoder.encode(source) : encoder.decode(source)))
-
+    // trigger translation
+    encoder.translate(source, isEncode)
       // handle result
       .then(result =>
         this.encoderTranslationDidFinish(
           encoder, null, isEncode, result, source, settingsVersion))
-
       // catch errors
       .catch(error =>
         this.encoderTranslationDidFinish(
@@ -570,13 +551,12 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Triggered when a result comes back from the encoder. Propagates result and
-   * triggers new translation when the source content has changed during
-   * previous translation.
+   * Triggered when a result comes back from the encoder. Propagates it and
+   * triggers a new translation when the source has changed in the meantime.
    * @protected
    * @param {Encoder} encoder
    * @param {?Error} error
-   * @param {boolean} isEncode True for encoding, false for decoding.
+   * @param {boolean} isEncode True for encoding, false for decoding
    * @param {Chain|boolean} result Result chain or false, if failed
    * @param {Chain} usedSource
    * @param {number} usedSettingsVersion
@@ -593,10 +573,10 @@ export default class Pipe extends Viewable {
     // mark brick as no longer busy
     this.setBrickMeta(encoder, 'busy', false)
 
-    let settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
-    let lowerBucket = this.getBucketIndexForBrick(encoder)
-    let sourceBucket = isEncode ? lowerBucket : lowerBucket + 1
-    let resultBucket = isEncode ? lowerBucket + 1 : lowerBucket
+    const settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
+    const lowerBucket = this.getBucketIndexForBrick(encoder)
+    const sourceBucket = isEncode ? lowerBucket : lowerBucket + 1
+    const resultBucket = isEncode ? lowerBucket + 1 : lowerBucket
 
     if (!error) {
       // propagate result
@@ -604,7 +584,7 @@ export default class Pipe extends Viewable {
     }
 
     // there were translations skipped when the current source content or brick
-    //  settings changed during last translation
+    // settings changed during last translation
     if (!this.getContent(sourceBucket).isEqualTo(usedSource) ||
         settingsVersion !== usedSettingsVersion) {
       // repeat translation
@@ -648,12 +628,6 @@ export default class Pipe extends Viewable {
     // create brick and add it to the pipe
     const brick = BrickFactory.getInstance().create(name)
     this.spliceBricks(index, 0, brick)
-
-    Analytics.trackEvent('brick_add', {
-      'event_category': 'bricks',
-      'event_action': 'add',
-      'event_label': name
-    })
   }
 
   /**
@@ -676,25 +650,19 @@ export default class Pipe extends Viewable {
     // replace brick only if a different one is selected
     if (name !== brick.getMeta().name) {
       this.replaceBrick(brick, name)
-
-      Analytics.trackEvent('brick_add', {
-        'event_category': 'bricks',
-        'event_action': 'add',
-        'event_label': name
-      })
     }
   }
 
   /**
-   * Serializes Pipe to make it JSON serializable
+   * Serializes pipe to make it JSON serializable
    * @return {mixed} Structured data.
    */
   serialize () {
     // serialize content
-    let bucket = this._selectedBucket
-    let content = this._bucketContent[bucket]
+    const bucket = this._selectedBucket
+    const content = this._bucketContent[bucket]
 
-    let contentObject = { bucket }
+    const contentObject = { bucket }
     if (!content.needsTextEncoding()) {
       contentObject.string =
         content.getString()
@@ -712,10 +680,10 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Extracts Pipe from structured data.
-   * @param {mixed} data Structured data.
+   * Extracts pipe from structured data.
+   * @param {mixed} data Structured data
    * @throws {Error} Throws an error if structured data is malformed.
-   * @return {Pipe} Extracted Pipe.
+   * @return {Pipe} Extracted pipe
    */
   static extract (data) {
     // verify data
@@ -724,22 +692,22 @@ export default class Pipe extends Viewable {
     }
 
     // extract bricks
-    let brickFactory = BrickFactory.getInstance()
-    let bricks =
+    const brickFactory = BrickFactory.getInstance()
+    const bricks =
       data.bricks.map(brickData =>
         Brick.extract(brickData, brickFactory))
 
     // compose pipe
-    let pipe = new Pipe()
+    const pipe = new Pipe()
     pipe.addBrick.apply(pipe, bricks)
 
     // set content
     if (data.content) {
-      let bucket = data.content.bucket || 0
+      const bucket = data.content.bucket || 0
       if (typeof data.content.string === 'string') {
         pipe.setContent(data.content.string, bucket)
       } else if (typeof data.content.bytes === 'string') {
-        let bytes = ByteEncoder.bytesFromBase64String(data.content.bytes)
+        const bytes = ByteEncoder.bytesFromBase64String(data.content.bytes)
         pipe.setContent(bytes, bucket)
       }
     }
