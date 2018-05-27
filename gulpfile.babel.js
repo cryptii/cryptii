@@ -45,7 +45,11 @@ const distHeader =
   `/*! ${meta.name} v${meta.version} (commit ${distRevision})` +
   ` - (c) ${meta.author} */\n`
 
-gulp.task('lint-test', () => {
+gulp.task('script-clean', () => {
+  return del([paths.scriptDist])
+})
+
+gulp.task('script-test-lint', () => {
   return gulp.src(paths.test + '/**/*.js')
     .pipe(standard())
     .pipe(standard.reporter('default', {
@@ -54,16 +58,7 @@ gulp.task('lint-test', () => {
     }))
 })
 
-gulp.task('lint-script', () => {
-  return gulp.src(paths.script + '/**/*.js')
-    .pipe(standard())
-    .pipe(standard.reporter('default', {
-      breakOnError: true,
-      quiet: true
-    }))
-})
-
-gulp.task('test', ['lint-test', 'lint-script'], () => {
+gulp.task('script-test', () => {
   return gulp.src(paths.test + '/**/*.js', { read: false })
     .pipe(mocha({
       reporter: 'dot',
@@ -74,8 +69,17 @@ gulp.task('test', ['lint-test', 'lint-script'], () => {
     }))
 })
 
+gulp.task('script-lint', () => {
+  return gulp.src(paths.script + '/**/*.js')
+    .pipe(standard())
+    .pipe(standard.reporter('default', {
+      breakOnError: true,
+      quiet: true
+    }))
+})
+
 let rollupCache
-gulp.task('script', ['lint-script', 'clean-script'], () => {
+gulp.task('script', () => {
   let appStream = rollup({
     input: paths.script + '/index.js',
     external: [
@@ -172,7 +176,11 @@ gulp.task('script', ['lint-script', 'clean-script'], () => {
   return projectStream
 })
 
-gulp.task('style', ['clean-style'], () => {
+gulp.task('style-clean', () => {
+  return del([paths.styleDist])
+})
+
+gulp.task('style', () => {
   return gulp.src(paths.style + '/main.scss')
 
     // init sourcemaps
@@ -205,24 +213,37 @@ gulp.task('style', ['clean-style'], () => {
     .pipe(gulp.dest(paths.styleDist))
 })
 
-gulp.task('clean-style', () => {
-  return del([paths.styleDist])
-})
-
-gulp.task('clean-script', () => {
-  return del([paths.scriptDist])
-})
-
 gulp.task('watch', () => {
-  // watch scripts and tests
-  gulp.watch(
-    [paths.script + '/**/*.js', paths.test + '/**/*.js'],
-    ['test', 'script'])
-  // watch styles
-  gulp.watch(
-    paths.style + '/**/*.scss',
-    ['style'])
+  gulp.watch(paths.script + '/**/*.js', gulp.series(
+    'script-lint',
+    'script-test',
+    'script-clean',
+    'script'
+  ))
+
+  gulp.watch(paths.test + '/**/*.js', gulp.series(
+    'script-test-lint',
+    'script-test'
+  ))
+
+  gulp.watch(paths.style + '/**/*.scss', gulp.series(
+    'style-clean',
+    'style'
+  ))
 })
 
-gulp.task('build', ['script', 'style'])
-gulp.task('default', ['test', 'script', 'style', 'watch'])
+gulp.task('test', gulp.series(
+  gulp.parallel('script-lint', 'script-test-lint'),
+  'script-test'
+))
+
+gulp.task('build', gulp.series(
+  'test',
+  gulp.parallel('script-clean', 'style-clean'),
+  gulp.parallel('script', 'style')
+))
+
+gulp.task('default', gulp.series(
+  'build',
+  'watch'
+))
