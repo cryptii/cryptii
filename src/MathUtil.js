@@ -76,10 +76,13 @@ export default class MathUtil {
    * @return {float}
    */
   static time () {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' &&
+        typeof window.performance !== 'undefined') {
       return window.performance.now()
-    } else {
+    } else if (typeof process !== 'undefined') {
       return process.hrtime()[1] / 1e+6
+    } else {
+      return parseFloat(new Date().getTime())
     }
   }
 }
