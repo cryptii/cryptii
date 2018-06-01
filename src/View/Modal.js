@@ -12,14 +12,15 @@ export default class ModalView extends View {
   constructor (title) {
     super()
     this._title = title
-
     this._visible = false
     this._value = null
     this._finishCallback = null
     this._cancelCallback = null
 
+    // handlers
+    this._keyUpHandler = this.keyDidPress.bind(this)
+
     // elements
-    this._$body = document.querySelector('body')
     this._$outer = null
     this._$dialog = null
   }
@@ -66,14 +67,23 @@ export default class ModalView extends View {
       }, { once: true })
 
       // trigger modal transition
-      this._$body.classList.toggle('modal-visible', visible)
+      document.body.classList.toggle('modal-visible', visible)
       $element.classList.toggle('modal--visible', visible)
 
-      // set dialog height to transition to
       if (visible) {
+        // set dialog height to transition to
         this._$dialog.style.height = `${dialogHeight}px`
+
+        // listen to key press events to close the modal when hitting escape
+        this._keyUpHandler &&
+          document.addEventListener('keyup', this._keyUpHandler)
       } else {
+        // set dialog height to transition to
         this._$dialog.style.height = '0px'
+
+        // remove key press listener
+        this._keyUpHandler &&
+          document.removeEventListener('keyup', this._keyUpHandler)
       }
     }
     return this
@@ -261,5 +271,17 @@ export default class ModalView extends View {
    */
   renderContent () {
     // override
+  }
+
+  /**
+   * Triggered when a key has been pressed.
+   * @param {Event} evt
+   */
+  keyDidPress (evt) {
+    // has the escape key been pressed
+    if (evt.keyCode === 27) {
+      evt.preventDefault()
+      this.cancel()
+    }
   }
 }
