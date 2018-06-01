@@ -14,7 +14,6 @@ export default class ByteSettingView extends SettingView {
   constructor () {
     super()
     this._$input = null
-    this._inputId = StringUtil.uniqueId()
   }
 
   /**
@@ -41,17 +40,6 @@ export default class ByteSettingView extends SettingView {
   }
 
   /**
-   * Renders label.
-   * @protected
-   * @return {?HTMLElement}
-   */
-  renderLabel () {
-    const $label = super.renderLabel()
-    $label.htmlFor = this._inputId
-    return $label
-  }
-
-  /**
    * Renders field.
    * @protected
    * @return {?HTMLElement}
@@ -59,7 +47,7 @@ export default class ByteSettingView extends SettingView {
   renderField () {
     this._$input = View.createElement('input', {
       className: 'setting-byte__input',
-      id: this._inputId,
+      id: this.getId(),
       type: 'text',
       spellcheck: false,
       onInput: this.inputValueDidChange.bind(this),
@@ -68,6 +56,8 @@ export default class ByteSettingView extends SettingView {
     })
 
     const $field = super.renderField()
+    $field.classList.remove('setting__field')
+    $field.classList.add('setting-byte__field')
     $field.appendChild(this._$input)
     return $field
   }

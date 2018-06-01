@@ -29,9 +29,12 @@ export default class BrickView extends View {
    */
   render () {
     this._$settings = this.renderSettings()
+    const meta = this.getModel().getMeta()
 
     return View.createElement('div', {
-      className: 'brick'
+      className: 'brick',
+      role: 'region',
+      ariaLabel: `${meta.title} ${meta.type}`
     }, [
       this.renderHeader(),
       this._$settings,

@@ -28,8 +28,10 @@
 
     #{$block}__select {
       border: none;
-      padding: 8px 16px;
-      line-height: 24px;
+      padding:
+        $setting-field-padding-v ($setting-padding-h + 16px)
+        $setting-field-padding-v $setting-padding-h;
+      line-height: $setting-field-height - $setting-field-padding-v * 2;
       @extend %t-setting-value;
       background: transparent;
       -webkit-appearance: none;
@@ -67,7 +69,7 @@
       display: block;
       padding: 4px 0 4px 24px;
       @extend %t-text;
-      line-height: 20px;
+      line-height: 22px;
       color: $c-text-detail;
       user-select: none;
       cursor: pointer;

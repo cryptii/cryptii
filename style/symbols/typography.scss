@@ -2,7 +2,7 @@
 %t-text {
   font-family: Roboto, sans-serif;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
 }
 
@@ -46,7 +46,7 @@
 %t-brick-action {
   font-family: Roboto, sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 15px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -61,8 +61,8 @@
 %t-setting-label {
   font-family: Roboto, sans-serif;
   font-weight: 500;
-  font-size: 11px;
-  line-height: 8px;
+  font-size: 12px;
+  line-height: 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -70,24 +70,12 @@
 %t-setting-value {
   font-family: Roboto, sans-serif;
   font-weight: 500;
-  font-size: 15px;
-
-  @include breakpoint(xs, s) {
-    // font size needs to have a min size of 16px
-    // to prevent focus zoom on iOS
-    font-size: 16px;
-  }
+  font-size: 16px;
 }
 
 %t-monospace {
   font-family: "Source Code Pro", monospace;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
-
-  @include breakpoint(xs, s) {
-    // font size needs to have a min size of 16px
-    // to prevent focus zoom on iOS
-    font-size: 16px;
-  }
 }

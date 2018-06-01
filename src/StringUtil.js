@@ -31,8 +31,7 @@ export default class StringUtil {
    * @return {string}
    */
   static uniqueId () {
-    const uid = new Date().getTime() + (++iterator)
-    return uid.toString(16)
+    return 'u' + (++iterator).toString(16)
   }
 
   /**

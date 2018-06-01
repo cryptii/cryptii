@@ -85,6 +85,7 @@ export default class TextViewerView extends ViewerView {
   renderContent () {
     this._$textarea = View.createElement('textarea', {
       className: 'viewer-text__textarea',
+      ariaLabel: 'Content',
       spellcheck: false,
       value: this._text,
       onInput: this.textareaValueDidChange.bind(this),

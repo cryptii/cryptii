@@ -1,6 +1,5 @@
 
 import SettingView from '../Setting'
-import StringUtil from '../../StringUtil'
 import View from '../../View'
 
 /**
@@ -41,12 +40,10 @@ export default class BooleanSettingView extends SettingView {
    * @return {?HTMLElement}
    */
   renderField () {
-    const id = StringUtil.uniqueId()
-
     this._$input = View.createElement('input', {
       className: 'setting-boolean__input',
       type: 'checkbox',
-      id: id,
+      id: this.getId(),
       onChange: this.inputValueDidChange.bind(this),
       checked: this.getModel().getValue(),
       onFocus: evt => this.focus(),
@@ -55,7 +52,7 @@ export default class BooleanSettingView extends SettingView {
 
     const $toggle = View.createElement('label', {
       className: 'setting-boolean__toggle',
-      htmlFor: id
+      htmlFor: this.getId()
     }, [
       View.createElement('span', {
         className: 'setting-boolean__choice'

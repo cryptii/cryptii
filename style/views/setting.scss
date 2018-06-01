@@ -11,7 +11,9 @@
 
   &__label {
     display: block;
-    padding: 10px 9px 0 16px;
+    padding:
+      $setting-label-padding-v $setting-label-padding-v
+      0 $setting-padding-h;
     border-right: 1px solid $c-line;
     @extend %t-setting-label;
     color: $c-setting-label;
@@ -20,8 +22,8 @@
 
   &__field {
     position: relative;
-    margin: 8px 16px;
-    min-height: 24px;
+    margin: $setting-field-padding-v $setting-padding-h;
+    min-height: $setting-field-height - $setting-field-padding-v * 2;
   }
 
   &__message {
@@ -70,7 +72,7 @@
     &[data-width="#{$cols}"] {
       width: 100% * ($cols / 12);
 
-      @if $cols < 6 {
+      @if $cols < 8 {
         // remove label border for small setting cells
         #{$block}__label {
           border: none;

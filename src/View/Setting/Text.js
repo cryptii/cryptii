@@ -1,6 +1,5 @@
 
 import SettingView from '../Setting'
-import StringUtil from '../../StringUtil'
 import View from '../../View'
 
 /**
@@ -13,7 +12,6 @@ export default class TextSettingView extends SettingView {
   constructor () {
     super()
     this._$input = null
-    this._inputId = StringUtil.uniqueId()
   }
 
   /**
@@ -37,17 +35,6 @@ export default class TextSettingView extends SettingView {
   }
 
   /**
-   * Renders label.
-   * @protected
-   * @return {?HTMLElement}
-   */
-  renderLabel () {
-    const $label = super.renderLabel()
-    $label.htmlFor = this._inputId
-    return $label
-  }
-
-  /**
    * Renders field.
    * @protected
    * @return {?HTMLElement}
@@ -55,7 +42,7 @@ export default class TextSettingView extends SettingView {
   renderField () {
     this._$input = View.createElement('input', {
       className: 'setting-text__input',
-      id: this._inputId,
+      id: this.getId(),
       type: 'text',
       spellcheck: false,
       onInput: this.inputValueDidChange.bind(this),
@@ -64,6 +51,8 @@ export default class TextSettingView extends SettingView {
     })
 
     const $field = super.renderField()
+    $field.classList.remove('setting__field')
+    $field.classList.add('setting-text__field')
     $field.appendChild(this._$input)
     return $field
   }

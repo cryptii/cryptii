@@ -168,7 +168,7 @@ export default class PipeView extends View {
     }, [
       View.createElement('div', {
         className: 'pipe__btn-add'
-      }, 'Add Encoder or Viewer')
+      }, 'Add encoder or viewer')
     ])
   }
 

@@ -6,7 +6,6 @@
     position: relative;
     flex-direction: row;
     width: 100%;
-    padding: 0 2px;
   }
 
   &__value {
@@ -19,7 +18,7 @@
   &__input {
     border: none;
     width: 100%;
-    height: 40px;
+    height: $setting-field-height;
     padding: 0;
     text-align: center;
     @extend %t-setting-value;
@@ -39,8 +38,8 @@
   &__btn-step-up {
     display: block;
     position: relative;
-    width: 32px;
-    height: 40px;
+    width: $setting-padding-h + 16px;
+    height: $setting-field-height;
     border-radius: 12px;
     font-size: 0;
 
@@ -50,7 +49,7 @@
       display: block;
       position: absolute;
       top: 50%;
-      left: 20px;
+      left: $setting-padding-h + 4px;
       transform: translate(-50%, -50%);
       width: 10px;
       height: 2px;

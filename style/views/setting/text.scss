@@ -1,9 +1,10 @@
 
 .setting-text {
 
-  &__input {
+  &__input[type='text'] {
+    height: $setting-field-height;
+    padding: $setting-field-padding-v $setting-padding-h;
     border: none;
-    height: 24px;
     @extend %t-setting-value;
   }
 }

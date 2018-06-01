@@ -246,7 +246,7 @@ $header-height: 96px !default;
     }
 
     @include breakpoint(m, l) {
-      max-width: 848px;
+      max-width: 896px;
     }
   }
 
@@ -277,9 +277,10 @@ $header-height: 96px !default;
     height: 24px;
     border: 2px solid $c-white;
     border-radius: 13px;
-    font-size: 0;
+    text-indent: -1000px;
     z-index: 1;
     opacity: .4;
+    overflow: hidden;
 
     &::before,
     &::after {

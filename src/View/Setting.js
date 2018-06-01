@@ -1,4 +1,5 @@
 
+import StringUtil from '../StringUtil'
 import View from '../View'
 
 /**
@@ -12,6 +13,7 @@ export default class SettingView extends View {
     super(factory)
     this._$message = null
     this._message = null
+    this._id = StringUtil.uniqueId()
   }
 
   /**
@@ -65,6 +67,14 @@ export default class SettingView extends View {
   }
 
   /**
+   * Returns setting id.
+   * @return {string}
+   */
+  getId () {
+    return this._id
+  }
+
+  /**
    * Renders view.
    * @protected
    * @return {HTMLElement}
@@ -85,7 +95,8 @@ export default class SettingView extends View {
    */
   renderLabel () {
     return View.createElement('label', {
-      className: 'setting__label'
+      className: 'setting__label',
+      htmlFor: this.getId()
     }, this.getModel().getLabel())
   }
 

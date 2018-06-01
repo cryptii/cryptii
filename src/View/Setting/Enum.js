@@ -1,6 +1,5 @@
 
 import SettingView from '../Setting'
-import StringUtil from '../../StringUtil'
 import View from '../../View'
 
 /**
@@ -14,7 +13,6 @@ export default class EnumSettingView extends SettingView {
     super()
     this._$select = null
     this._$$radio = []
-    this._inputId = StringUtil.uniqueId()
   }
 
   /**
@@ -22,7 +20,7 @@ export default class EnumSettingView extends SettingView {
    * @return {SettingView} Fluent interface
    */
   updateValue () {
-    let selectedIndex = this.getModel().getSelectedIndex()
+    const selectedIndex = this.getModel().getSelectedIndex()
     if (this.getStyle() === 'radio') {
       this._$$radio.forEach(($radio, index) => {
         $radio.checked = index === selectedIndex
@@ -39,7 +37,7 @@ export default class EnumSettingView extends SettingView {
    * @return {HTMLElement}
    */
   render () {
-    let $root = super.render()
+    const $root = super.render()
     $root.className += ` setting-enum setting-enum--${this.getStyle()}`
     return $root
   }
@@ -51,43 +49,54 @@ export default class EnumSettingView extends SettingView {
    */
   renderField () {
     // collect labels
-    let elementLabels = this.getModel().getElementLabels()
-    let elementDescriptions = this.getModel().getElementDescriptions()
+    const elementLabels = this.getModel().getElementLabels()
+    const elementDescriptions = this.getModel().getElementDescriptions()
 
     // prepare field
-    let $field = super.renderField()
+    const $field = super.renderField()
     $field.classList.remove('setting__field')
     $field.classList.add('setting-enum__field')
 
     if (this.getStyle() === 'radio') {
       this._$$radio = []
 
+      // prepare radio group
+      const $radioGroup = View.createElement('div', {
+        className: 'setting-enum__options',
+        role: 'radiogroup',
+        id: this.getId()
+      })
+
+      $field.appendChild($radioGroup)
+
       // render each option
       elementLabels.map((label, index) => {
-        let $radio = View.createElement('input', {
+        const optionId = `${this.getId()}-${index + 1}`
+
+        const $radio = View.createElement('input', {
           type: 'radio',
           className: 'setting-enum__option-radio',
+          id: optionId,
           onChange: this.valueDidChange.bind(this),
-          id: `${this._inputId}-${index}`,
-          name: this._inputId
+          name: this.getId()
         })
 
-        let $option = View.createElement('div', {
+        const $option = View.createElement('div', {
           className: 'setting-enum__option'
         }, [
           $radio,
           View.createElement('label', {
-            htmlFor: `${this._inputId}-${index}`,
+            htmlFor: optionId,
             className: 'setting-enum__option-label'
           }, label)
         ])
 
         this._$$radio.push($radio)
-        $field.appendChild($option)
+        $radioGroup.appendChild($option)
       })
     } else {
       // create option for each element
-      let $options = elementLabels.map((label, index) =>
+      const $options = elementLabels.map((label, index) =>
         View.createElement('option', {
           value: index,
           title: elementDescriptions[index] || ''
@@ -96,6 +105,7 @@ export default class EnumSettingView extends SettingView {
       // create select element
       this._$select = View.createElement('select', {
         className: 'setting-enum__select',
+        id: this.getId(),
         onChange: this.valueDidChange.bind(this),
         onFocus: evt => this.focus(),
         onBlur: evt => this.blur()
@@ -114,12 +124,12 @@ export default class EnumSettingView extends SettingView {
    */
   valueDidChange (evt) {
     // retrieve selected index
-    let index = this.getStyle() === 'radio'
+    const index = this.getStyle() === 'radio'
       ? this._$$radio.findIndex($radio => $radio.checked)
       : parseInt(this._$select.value)
 
     // notify model
-    let value = this.getModel().getElementAt(index)
+    const value = this.getModel().getElementAt(index)
     this.getModel().viewValueDidChange(this, value)
   }
 }

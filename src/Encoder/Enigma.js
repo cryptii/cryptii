@@ -225,7 +225,7 @@ export default class EnigmaEncoder extends Encoder {
       // position setting
       this.registerSetting({
         name: `position${i + 1}`,
-        label: `Position ${i + 1}`,
+        label: `Position`,
         type: 'number',
         value: 1,
         width: 4,
@@ -239,7 +239,7 @@ export default class EnigmaEncoder extends Encoder {
       // ring setting
       this.registerSetting({
         name: `ring${i + 1}`,
-        label: `Ring ${i + 1}`,
+        label: `Ring`,
         type: 'number',
         value: 1,
         width: 4,
