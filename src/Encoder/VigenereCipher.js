@@ -1,6 +1,7 @@
 
+import Chain from '../Chain'
+import Encoder from '../Encoder'
 import MathUtil from '../MathUtil'
-import SimpleSubstitutionEncoder from './SimpleSubstitution'
 
 const meta = {
   name: 'vigenere-cipher',
@@ -14,7 +15,7 @@ const defaultAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 /**
  * Encoder brick for Vigenère cipher encoding and decoding
  */
-export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
+export default class VigenereCipherEncoder extends Encoder {
   /**
    * Returns brick meta.
    * @return {object}
@@ -24,12 +25,28 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
   }
 
   /**
-   * Encoder constructor
+   * Constructor
    */
   constructor () {
     super()
-
     this.registerSetting([
+      {
+        name: 'variant',
+        type: 'enum',
+        value: 'standard',
+        options: {
+          elements: [
+            'standard',
+            'beaufort-cipher',
+            'variant-beaufort-cipher'
+          ],
+          labels: [
+            'Standard',
+            'Beaufort cipher',
+            'Variant Beaufort cipher'
+          ]
+        }
+      },
       {
         name: 'key',
         type: 'text',
@@ -68,53 +85,62 @@ export default class VigenereCipherEncoder extends SimpleSubstitutionEncoder {
   }
 
   /**
-   * Triggered before performing encode or decode on given content.
-   * @protected
+   * Performs encode or decode on given content.
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain} Filtered content
+   * @return {Chain|Promise} Resulting content
    */
-  willTranslate (content, isEncode) {
-    return !this.getSettingValue('caseSensitivity')
-      ? content.toLowerCase()
-      : content
-  }
+  performTranslate (content, isEncode) {
+    const { alphabet, variant, key, includeForeignChars } =
+      this.getSettingValues()
 
-  /**
-   * Performs encode or decode on given character, index and content.
-   * @protected
-   * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content
-   * @param {Chain} content Content to be translated
-   * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {number} Resulting Unicode code point
-   */
-  performCharTranslate (codePoint, index, content, isEncode) {
-    const alphabet = this.getSettingValue('alphabet')
-    let charIndex = alphabet.indexOfCodePoint(codePoint)
+    // handle case sensitivity
+    if (!this.getSettingValue('caseSensitivity')) {
+      content = content.toLowerCase()
+    }
 
-    if (charIndex === -1) {
-      // characters not in alphabet
-      if (!this.getSettingValue('includeForeignChars')) {
-        // return null character
-        return 0
-      } else {
-        // leave it unchanged
-        return codePoint
+    let j = 0
+    let resultCodePoints = []
+    let charIndex, codePoint, keyCodePoint, keyIndex
+
+    // translate each character
+    for (let i = 0; i < content.getLength(); i++) {
+      codePoint = content.getCodePointAt(i)
+      charIndex = alphabet.indexOfCodePoint(codePoint)
+
+      if (charIndex !== -1) {
+        // calculate shift from key
+        keyCodePoint = key.getCodePointAt(MathUtil.mod(j, key.getLength()))
+        keyIndex = alphabet.indexOfCodePoint(keyCodePoint)
+
+        // shift char index depending on variant
+        switch (variant) {
+          case 'beaufort-cipher':
+            charIndex = keyIndex - charIndex
+            break
+          case 'variant-beaufort-cipher':
+            charIndex = isEncode
+              ? charIndex - keyIndex
+              : charIndex + keyIndex
+            break
+          default:
+            charIndex = isEncode
+              ? charIndex + keyIndex
+              : charIndex - keyIndex
+        }
+
+        // match code point to shifted char index and add it to result
+        charIndex = MathUtil.mod(charIndex, alphabet.getLength())
+        codePoint = alphabet.getCodePointAt(charIndex)
+        resultCodePoints.push(codePoint)
+        j++
+      } else if (includeForeignChars) {
+        // add foreign character to result
+        resultCodePoints.push(codePoint)
       }
     }
 
-    // get key code point for this character index
-    const key = this.getSettingValue('key')
-    const keyIndex = MathUtil.mod(index, key.getLength())
-    const keyCodePoint = key.getCodePointAt(keyIndex)
-
-    // determine shift by position in alphabet and inverse it if decoding
-    const shift = alphabet.indexOfCodePoint(keyCodePoint) * (isEncode ? 1 : -1)
-
-    // shift character index
-    charIndex = MathUtil.mod(charIndex + shift, alphabet.getLength())
-    return alphabet.getCodePointAt(charIndex)
+    return Chain.wrap(resultCodePoints)
   }
 
   /**

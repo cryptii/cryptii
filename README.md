@@ -33,7 +33,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and wit
 | ↳ `caesar-cipher` | Simple Substitution | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
 | ↳ `atbash` | Simple Substitution | [Atbash](https://en.wikipedia.org/wiki/Atbash) using latin or hebrew alphabet |
 | `rot13` | Simple Substitution | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
-| `vigenere-cipher` | Simple Substitution | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) |
+| `vigenere-cipher` | Simple Substitution | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
 | `enigma` | Cipher machines | [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) |
 | `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
 | `url-encoding` | Encoding | [URL encoding / Percent-encoding](https://en.wikipedia.org/wiki/Percent-encoding) |
