@@ -7,43 +7,60 @@ $header-height: 96px !default;
   @extend .container;
 
   @include breakpoint(xs) {
-    padding: 0;
+    padding: 24px 0;
   }
 
   &__inner {
     display: flex;
-    flex-direction: row;
+    margin: -8px 0;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    @include breakpoint(s, l) {
+      flex-direction: row;
+      justify-content: flex-start;
+      height: $header-height;
+      margin: 0 -8px;
+    }
+  }
+
+  &__item {
+    padding: 8px 0;
+
+    @include breakpoint(s, l) {
+      padding: 0 8px;
+    }
+  }
+
+  &__featured {
+    @extend .header__item;
 
     @include breakpoint(xs) {
-      justify-content: center;
-      flex-direction: column;
+      margin-bottom: -24px;
     }
   }
 
   &__brand {
     display: block;
-    height: $header-height;
-    padding: 24px 0;
     line-height: 1.4;
     @extend %t-brand;
-
-    @include breakpoint(xs) {
-      text-align: center;
-    }
-
-    @include breakpoint(s, l) {
-      flex-basis: 0;
-      flex-grow: 1;
-    }
   }
 
-  &__brand-version {
-    display: inline-block;
-    padding: 2px 6px;
-    margin-left: 2px;
+  &__badge {
+    display: block;
+    padding: 0 8px;
+    line-height: 32px;
     background: $c-background-shaded;
     border-radius: $default-border-radius;
     @extend %t-text;
-    transform: translate(0, -4px);
+  }
+
+  &__flexible-space {
+
+    @include breakpoint(s, l) {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
   }
 }
