@@ -24,6 +24,7 @@ export default class Brick extends Viewable {
   constructor () {
     super()
     this._settings = []
+    this._alias = null
     this._hidden = false
     this._viewPrototype = BrickView
     this._pipe = null
@@ -256,6 +257,34 @@ export default class Brick extends Viewable {
   }
 
   /**
+   * Returns brick alias, if any.
+   * @return {?string} Brick alias or null
+   */
+  getAlias () {
+    return this._alias
+  }
+
+  /**
+   * Sets the brick alias.
+   * @param {?string} alias Brick alias or null to clear it
+   * @return {Brick} Fluent interface
+   */
+  setAlias (alias) {
+    this._alias = alias
+    return this
+  }
+
+  /**
+   * Returns brick title.
+   * @return {string} Brick title
+   */
+  getTitle () {
+    return this._alias === null
+      ? this.getMeta().title
+      : this._alias
+  }
+
+  /**
    * Returns true, if brick is set to be hidden.
    * @return {boolean}
    */
@@ -374,11 +403,24 @@ export default class Brick extends Viewable {
     // create brick instance
     const brick = brickFactory.create(name)
 
+    // read and apply alias
+    if (typeof data.alias !== 'undefined' &&
+        typeof data.alias !== 'string') {
+      throw new Error(
+        `Malformed brick data: ` +
+        `Optional attribute 'alias' is expected to be string`)
+    }
+
+    if (data.alias !== undefined) {
+      brick.setAlias(data.alias)
+    }
+
     // read and apply visibility
     if (typeof data.hidden !== 'undefined' &&
         typeof data.hidden !== 'boolean') {
       throw new Error(
-        `Malformed brick data: Attribute 'hidden' is expected to be boolean`)
+        `Malformed brick data: ` +
+        `Optional attribute 'hidden' is expected to be boolean`)
     }
 
     if (data.hidden === true) {
@@ -389,7 +431,8 @@ export default class Brick extends Viewable {
     if (typeof data.reverse !== 'undefined' &&
         typeof data.reverse !== 'boolean') {
       throw new Error(
-        `Malformed brick data: Attribute 'reverse' is expected to be boolean`)
+        `Malformed brick data: ` +
+        `Optional attribute 'reverse' is expected to be boolean`)
     }
 
     if (data.reverse === true) {

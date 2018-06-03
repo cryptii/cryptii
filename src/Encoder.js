@@ -56,7 +56,8 @@ export default class Encoder extends Brick {
 
       // check for encode only
       if (isEncode === this._reverse && this.isEncodeOnly()) {
-        throw new InvalidInputError(`Decoding is not defined`)
+        throw new InvalidInputError(
+          `Decoding step is not defined for '${this.getMeta().title}'`)
       }
 
       // check for invalid settings

@@ -49,7 +49,6 @@ export default class BrickView extends View {
    * @return {?HTMLElement}
    */
   renderHeader () {
-    const title = this.getModel().getMeta().title
     this._$menu = this.renderMenu()
     return View.createElement('header', {
       className: 'brick__header'
@@ -64,7 +63,7 @@ export default class BrickView extends View {
             evt.preventDefault()
             this.getModel().viewReplaceButtonDidClick(this)
           }
-        }, title)
+        }, this.getModel().getTitle())
       ]),
       View.createElement('a', {
         className: 'brick__btn-menu',

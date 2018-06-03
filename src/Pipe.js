@@ -168,7 +168,7 @@ export default class Pipe extends Viewable {
       }
 
       // create new empty buckets
-      let insertBuckets = new Array(bucketInsertCount)
+      const insertBuckets = new Array(bucketInsertCount)
         .fill().map(() => Chain.empty())
 
       if (bucketRemoveCount > 0) {
@@ -192,7 +192,7 @@ export default class Pipe extends Viewable {
         this._selectedBucket = bucketChangeIndex - 1
         this.propagateContent(this._selectedBucket, true)
       } else {
-        let delta = bucketInsertCount - bucketRemoveCount
+        const delta = bucketInsertCount - bucketRemoveCount
         // selected bucket is situated after the changing part
         this._selectedBucket += delta
         // propagate content backward after changing part
@@ -309,11 +309,13 @@ export default class Pipe extends Viewable {
       this._bricks[1].getMeta().type === 'encoder' &&
       this._bricks[2].getMeta().type === 'viewer'
     ) {
-      // having this constellation, swap source and result content
+      // having this constellation, swap source and result viewer
       // when reversing the encoder brick in the middle
       const resultContent = this.getContent(1)
-      this.setContent(this.getContent(0), 1, brick)
-      this.setContent(resultContent, 0, brick)
+      const bricks = this.spliceBricks(0, 3)
+      bricks.reverse()
+      this.setContent(resultContent, 0)
+      this.spliceBricks(0, 0, ...bricks)
     }
   }
 
