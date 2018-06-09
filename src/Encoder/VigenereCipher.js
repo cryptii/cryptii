@@ -38,12 +38,14 @@ export default class VigenereCipherEncoder extends Encoder {
           elements: [
             'standard',
             'beaufort-cipher',
-            'variant-beaufort-cipher'
+            'variant-beaufort-cipher',
+            'trithemius-cipher'
           ],
           labels: [
             'Standard',
             'Beaufort cipher',
-            'Variant Beaufort cipher'
+            'Variant Beaufort cipher',
+            'Trithemius cipher'
           ]
         }
       },
@@ -107,20 +109,25 @@ export default class VigenereCipherEncoder extends Encoder {
    * @return {Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
-    const { alphabet, variant, includeForeignChars, keyMode } =
-      this.getSettingValues()
+    const { variant, alphabet, includeForeignChars } = this.getSettingValues()
 
     // handle case sensitivity
     if (!this.getSettingValue('caseSensitivity')) {
       content = content.toLowerCase()
     }
 
-    let j = 0
-    let resultCodePoints = []
-    let key = this.getSettingValue('key')
-    let charIndex, codePoint, resultCodePoint, keyCodePoint, keyIndex
+    // choose key and key mode
+    let { key, keyMode } = this.getSettingValues()
+    if (variant === 'trithemius-cipher') {
+      key = alphabet
+      keyMode = 'repeat'
+    }
 
     // translate each character
+    let j = 0
+    let resultCodePoints = []
+    let charIndex, codePoint, resultCodePoint, keyCodePoint, keyIndex
+
     for (let i = 0; i < content.getLength(); i++) {
       codePoint = content.getCodePointAt(i)
       charIndex = alphabet.indexOfCodePoint(codePoint)
@@ -176,6 +183,11 @@ export default class VigenereCipherEncoder extends Encoder {
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
+      case 'variant':
+        // key and keyMode setting visibility depend on the variant
+        this.getSetting('key').setVisible(value !== 'trithemius-cipher')
+        this.getSetting('keyMode').setVisible(value !== 'trithemius-cipher')
+        break
       case 'alphabet':
         // update allowed chars of key setting
         this.getSetting('key').setAllowedChars(value)

@@ -27,6 +27,11 @@ describe('VigenereCipherEncoder', () => EncoderTester.test(VigenereCipherEncoder
     expectedResult: 'the quick brown fox jumps over 13 lazy dogs.'
   },
   {
+    settings: { variant: 'trithemius-cipher' },
+    content: 'the quick brown fox jumps over the lazy dog',
+    expectedResult: 'tig tynir jayhz scm zleim jrbp shf nddd jvo'
+  },
+  {
     settings: { key: 'AKEY', caseSensitivity: false },
     direction: 'encode',
     content: 'Geheimnis',
