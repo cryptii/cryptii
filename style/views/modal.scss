@@ -1,4 +1,5 @@
 
+// body class to prevent the document from scrolling while modal is open
 .modal-visible {
   overflow: hidden;
 }
@@ -143,9 +144,5 @@
       padding: $value;
     }
     background: $c-background-shaded;
-  }
-
-  &__content {
-
   }
 }

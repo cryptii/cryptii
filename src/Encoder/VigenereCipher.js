@@ -57,6 +57,22 @@ export default class VigenereCipherEncoder extends Encoder {
         }
       },
       {
+        name: 'keyMode',
+        type: 'enum',
+        value: 'repeat',
+        randomizable: false,
+        options: {
+          elements: [
+            'repeat',
+            'autokey'
+          ],
+          labels: [
+            'Repeat',
+            'Autokey'
+          ]
+        }
+      },
+      {
         name: 'alphabet',
         type: 'alphabet',
         value: defaultAlphabet,
@@ -91,7 +107,7 @@ export default class VigenereCipherEncoder extends Encoder {
    * @return {Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
-    const { alphabet, variant, key, includeForeignChars } =
+    const { alphabet, variant, includeForeignChars, keyMode } =
       this.getSettingValues()
 
     // handle case sensitivity
@@ -101,7 +117,8 @@ export default class VigenereCipherEncoder extends Encoder {
 
     let j = 0
     let resultCodePoints = []
-    let charIndex, codePoint, keyCodePoint, keyIndex
+    let key = this.getSettingValue('key')
+    let charIndex, codePoint, resultCodePoint, keyCodePoint, keyIndex
 
     // translate each character
     for (let i = 0; i < content.getLength(); i++) {
@@ -131,8 +148,15 @@ export default class VigenereCipherEncoder extends Encoder {
 
         // match code point to shifted char index and add it to result
         charIndex = MathUtil.mod(charIndex, alphabet.getLength())
-        codePoint = alphabet.getCodePointAt(charIndex)
-        resultCodePoints.push(codePoint)
+        resultCodePoint = alphabet.getCodePointAt(charIndex)
+        resultCodePoints.push(resultCodePoint)
+
+        // extend the key with the current character, if requested
+        if (keyMode === 'autokey') {
+          const nextKeyCodePoint = isEncode ? codePoint : resultCodePoint
+          key = Chain.join([key, Chain.wrap([nextKeyCodePoint])], '')
+        }
+
         j++
       } else if (includeForeignChars) {
         // add foreign character to result

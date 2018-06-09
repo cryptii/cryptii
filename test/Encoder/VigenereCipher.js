@@ -12,6 +12,11 @@ describe('VigenereCipherEncoder', () => EncoderTester.test(VigenereCipherEncoder
     expectedResult: 'tri ousgi bbsun psv jeqns yzcr 13 vexy nses.'
   },
   {
+    settings: { key: 'secretkey', keyMode: 'autokey' },
+    content: 'the quick brown fox jumps over the lazy dog',
+    expectedResult: 'llg hybmo zkvad zwz tvddo baso cbq asnt hfz'
+  },
+  {
     settings: { key: 'akey', variant: 'beaufort-cipher' },
     content: 'the quick brown fox jumps over 13 lazy dogs.',
     expectedResult: 'hda igcco ztqcn fqb rqsji wjuj 13 zezc hqsi.'
@@ -22,13 +27,13 @@ describe('VigenereCipherEncoder', () => EncoderTester.test(VigenereCipherEncoder
     expectedResult: 'the quick brown fox jumps over 13 lazy dogs.'
   },
   {
-    settings: { caseSensitivity: false, key: 'AKEY' },
+    settings: { key: 'AKEY', caseSensitivity: false },
     direction: 'encode',
     content: 'Geheimnis',
     expectedResult: 'golciwrgs'
   },
   {
-    settings: { caseSensitivity: false, key: 'AKEY' },
+    settings: { key: 'AKEY', caseSensitivity: false },
     direction: 'decode',
     content: 'Golciwrgs',
     expectedResult: 'geheimnis'
