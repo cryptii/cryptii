@@ -11,7 +11,7 @@ const meta = {
 }
 
 /**
- * Encoder brick for creating HMAC digests using given hash function
+ * Encoder brick for creating HMAC digests using an underlying hash function
  */
 export default class HMACEncoder extends Encoder {
   /**
@@ -31,8 +31,7 @@ export default class HMACEncoder extends Encoder {
 
     // create internal hash encoder instance
     this._hashEncoder = new HashEncoder()
-    const defaultAlgorithm = this._hashEncoder.getSettingValue('algorithm')
-    const algorithms = this._hashEncoder.getSetting('algorithm').getElements()
+    const hashAlgorithmSetting = this._hashEncoder.getSetting('algorithm')
 
     // register settings
     this.registerSetting([
@@ -44,11 +43,12 @@ export default class HMACEncoder extends Encoder {
       {
         name: 'algorithm',
         type: 'enum',
-        value: defaultAlgorithm,
+        value: hashAlgorithmSetting.getValue(),
         randomizable: false,
         style: 'radio',
         options: {
-          elements: algorithms
+          elements: hashAlgorithmSetting.getElements(),
+          labels: hashAlgorithmSetting.getElementLabels()
         }
       }
     ])
@@ -61,62 +61,60 @@ export default class HMACEncoder extends Encoder {
    */
   async performEncode (content) {
     const message = content.getBytes()
+    const algorithm = this.getSettingValue('algorithm')
+    const blockSize = HashEncoder.getAlgorithmBlockSize(algorithm)
 
     // shorten keys longer than block size by sending it through the hash func
     let key = this.getSettingValue('key')
-    if (key.length > 64) {
-      key = await this.runHashFunction(key)
+    if (key.length > blockSize) {
+      key = await this.createDigest(algorithm, key)
     }
 
     // keys shorter than block size are padded to block size
-    const outerKey = new Uint8Array(64)
+    const outerKey = new Uint8Array(blockSize)
     outerKey.set(key, 0)
 
     // compose inner message and prepare outer key
-    const innerMessage = new Uint8Array(64 + message.length)
+    const innerMessage = new Uint8Array(blockSize + message.length)
     innerMessage.set(outerKey, 0)
-    innerMessage.set(message, 64)
+    innerMessage.set(message, blockSize)
 
-    for (let i = 0; i < 64; i++) {
+    for (let i = 0; i < blockSize; i++) {
       innerMessage[i] ^= 0x36
       outerKey[i] ^= 0x5C
     }
 
     // calculate inner digest
-    const innerDigest = await this.runHashFunction(innerMessage)
+    const innerDigest = await this.createDigest(algorithm, innerMessage)
 
     // compose outer message
-    const outerMessage = new Uint8Array(64 + innerDigest.length)
+    const outerMessage = new Uint8Array(blockSize + innerDigest.length)
     outerMessage.set(outerKey, 0)
-    outerMessage.set(innerDigest, 64)
+    outerMessage.set(innerDigest, blockSize)
 
     // calculate hmac digest
-    const result = await this.runHashFunction(outerMessage)
+    const result = await this.createDigest(algorithm, outerMessage)
     return Chain.wrap(result)
   }
 
   /**
-   * Runs hash function on given message using internal hash encoder.
-   * @param {Uint8Array} message
+   * Creates message digest using given algorithm.
+   * @protected
+   * @param {string} name Algorithm name
+   * @param {Uint8Array} message Message bytes
    * @return {Promise}
    */
-  async runHashFunction (message) {
+  async createDigest (name, message) {
+    // lazily create internal hash encoder instance
+    if (this._hashEncoder === null) {
+      this._hashEncoder = new HashEncoder()
+    }
+
+    // configure algorithm
+    this._hashEncoder.setSettingValue('algorithm', name)
+
+    // create digest using hash encoder
     const digestChain = await this._hashEncoder.encode(Chain.wrap(message))
     return digestChain.getBytes()
-  }
-
-  /**
-   * Triggered when a setting value has changed.
-   * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
-   */
-  settingValueDidChange (setting, value) {
-    if (setting.getName() === 'algorithm') {
-      // set same algorithm on the internal hash encoder
-      this._hashEncoder.setSettingValue('algorithm', value)
-    }
-    return super.settingValueDidChange(setting, value)
   }
 }

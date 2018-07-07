@@ -3,6 +3,7 @@ import Browser from '../Browser'
 import Chain from '../Chain'
 import Encoder from '../Encoder'
 import md5 from './Hash/md5'
+import nodeCrypto from 'crypto'
 
 const meta = {
   name: 'hash',
@@ -10,6 +11,45 @@ const meta = {
   category: 'Modern cryptography',
   type: 'encoder'
 }
+
+const algorithms = [
+  {
+    name: 'md5',
+    label: 'MD5',
+    blockSize: 64,
+    available: true
+  },
+  {
+    name: 'sha1',
+    label: 'SHA-1',
+    blockSize: 64,
+    browserAlgorithm: 'SHA-1',
+    browserExceptions: ['ie-11', 'edge'],
+    nodeAlgorithm: 'sha1'
+  },
+  {
+    name: 'sha256',
+    label: 'SHA-256',
+    blockSize: 64,
+    browserAlgorithm: 'SHA-256',
+    nodeAlgorithm: 'sha256'
+  },
+  {
+    name: 'sha384',
+    label: 'SHA-384',
+    blockSize: 128,
+    browserAlgorithm: 'SHA-384',
+    nodeAlgorithm: 'sha384'
+  },
+  {
+    name: 'sha512',
+    label: 'SHA-512',
+    blockSize: 128,
+    browserAlgorithm: 'SHA-512',
+    browserExceptions: ['ie-11'],
+    nodeAlgorithm: 'sha512'
+  }
+]
 
 /**
  * Encoder brick for creating message digests
@@ -30,15 +70,17 @@ export default class HashEncoder extends Encoder {
     super()
     this.setEncodeOnly(true)
 
+    const algorithms = HashEncoder.filterAvailableAlgorithms()
     this.registerSetting([
       {
         name: 'algorithm',
         type: 'enum',
-        value: 'SHA-256',
+        value: 'sha256',
         randomizable: false,
         style: 'radio',
         options: {
-          elements: HashEncoder.getAvailableAlgorithms()
+          elements: algorithms.map(algorithm => algorithm.name),
+          labels: algorithms.map(algorithm => algorithm.label)
         }
       }
     ])
@@ -49,71 +91,94 @@ export default class HashEncoder extends Encoder {
    * @param {Chain} content
    * @return {Chain|Promise} Encoded content
    */
-  performEncode (content) {
-    const algorithm = this.getSettingValue('algorithm')
-    const bytes = content.getBytes()
-
-    let result
-    switch (algorithm) {
-      case 'MD5':
-        result = new Promise(resolve => resolve(md5(bytes)))
-        break
-      default:
-        result = this.webCryptoDigest(algorithm, bytes)
-    }
-
-    return result.then(Chain.wrap)
+  async performEncode (content) {
+    const algorithmName = this.getSettingValue('algorithm')
+    const digest = await this.createDigest(algorithmName, content.getBytes())
+    return Chain.wrap(digest)
   }
 
   /**
-   * Creates message digest using web crypto api.
+   * Creates message digest using given algorithm.
    * @protected
-   * @param {string} algorithm
-   * @param {Uint8Array} bytes
+   * @param {string} name Algorithm name
+   * @param {Uint8Array} message Message bytes
    * @return {Promise}
    */
-  webCryptoDigest (algorithm, bytes) {
-    const crypto = window.crypto || window.msCrypto
-    const cryptoSubtle = crypto.subtle || crypto.webkitSubtle
+  createDigest (name, message) {
+    const algorithm = algorithms.find(algorithm => algorithm.name === name)
 
-    // create message digest from bytes
-    let result = cryptoSubtle.digest(algorithm, bytes)
-
-    if (result.oncomplete !== undefined) {
-      // wrap IE11 CryptoOperation object in a promise
-      result = new Promise((resolve, reject) => {
-        result.oncomplete = resolve.bind(this, result.result)
-        result.onerror = reject
-      })
+    switch (name) {
+      case 'md5':
+        return new Promise(resolve => resolve(md5(message)))
     }
 
-    return result.then(buffer => new Uint8Array(buffer))
+    if (Browser.isNode()) {
+      // create message digest using Node Crypto async
+      return new Promise((resolve, reject) => {
+        const resultBuffer =
+          nodeCrypto.createHash(algorithm.nodeAlgorithm)
+            .update(global.Buffer.from(message))
+            .digest()
+        resolve(new Uint8Array(resultBuffer))
+      })
+    } else {
+      // get crypto subtle instance
+      const crypto = window.crypto || window.msCrypto
+      const cryptoSubtle = crypto.subtle || crypto.webkitSubtle
+
+      // create message digest using Web Crypto Api
+      let result = cryptoSubtle.digest(algorithm.browserAlgorithm, message)
+
+      // IE11 exception
+      if (result.oncomplete !== undefined) {
+        // wrap IE11 CryptoOperation object in a promise
+        result = new Promise((resolve, reject) => {
+          result.oncomplete = resolve.bind(this, result.result)
+          result.onerror = reject
+        })
+      }
+
+      return result.then(buffer => new Uint8Array(buffer))
+    }
   }
 
   /**
-   * Returns digest algorithms available for the current browser.
+   * Returns algorithm objects available in the current environment.
    * @protected
-   * @return {string[]}
+   * @return {object[]}
    */
-  static getAvailableAlgorithms () {
-    const algorithms = [
-      'MD5',
-      'SHA-1',
-      'SHA-256',
-      'SHA-384',
-      'SHA-512'
-    ]
+  static filterAvailableAlgorithms () {
+    const isNode = Browser.isNode()
+    return algorithms.filter(algorithm => {
+      // algorithm availability not bound to the environment
+      if (algorithm.available === true) {
+        return true
+      }
 
-    // IE11 does not support SHA-512
-    if (Browser.match('ie', 11)) {
-      algorithms.splice(4, 1)
-    }
+      // browser environment
+      if (!isNode && algorithm.browserAlgorithm !== undefined) {
+        if (algorithm.browserExceptions !== undefined) {
+          return !Browser.match.apply(Browser, algorithm.browserExceptions)
+        }
+        return true
+      }
 
-    // SHA-1 does not work in IE and edge despite being documented
-    if (Browser.match('ie', 11) || Browser.match('edge')) {
-      algorithms.splice(1, 1)
-    }
+      // node environment
+      if (isNode && algorithm.nodeAlgorithm !== undefined) {
+        return true
+      }
 
-    return algorithms
+      return false
+    })
+  }
+
+  /**
+   * Returns block size (in bytes) for given algorithm name.
+   * @param {string} name Algorithm name
+   * @return {int|null} Block size integer or null, if algorithm is not defined
+   */
+  static getAlgorithmBlockSize (name) {
+    const algorithm = algorithms.find(algorithm => algorithm.name === name)
+    return algorithm !== undefined ? algorithm.blockSize : null
   }
 }

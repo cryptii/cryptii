@@ -82,8 +82,12 @@ let rollupCache
 gulp.task('script', () => {
   let appStream = rollup({
     input: paths.script + '/index.js',
-    external: [
-    ],
+    external: ['crypto'],
+    globals: {
+      // node modules that won't be accessed
+      // outside the node environment
+      crypto: 'window'
+    },
     plugins: [
       babel({
         babelrc: false,
