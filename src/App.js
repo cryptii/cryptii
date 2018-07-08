@@ -1,5 +1,6 @@
 
 import AppView from './View/App'
+import Browser from './Browser'
 import Pipe from './Pipe'
 import Viewable from './Viewable'
 
@@ -24,6 +25,10 @@ export default class App extends Viewable {
    * @return {App} Fluent interface
    */
   run () {
+    // apply browser class name
+    Browser.applyClassName()
+
+    // read pipe data
     const $pipeData = document.querySelector('.app .app__pipe .pipe__data')
     const pipeData = JSON.parse($pipeData.innerHTML)
     this._pipe = Pipe.extract(pipeData)

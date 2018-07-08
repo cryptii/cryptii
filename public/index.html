@@ -200,7 +200,13 @@
     </div>
 
     <!-- script -->
-    <script async src="dist/script/cryptii-browser.js?v=3"></script>
+    <script src="dist/script/cryptii-browser.js?v=3"></script>
+    <script>
+    (function () {
+      'use strict';
+      cryptii.App.getInstance().run();
+    })();
+    </script>
 
   </body>
 </html>

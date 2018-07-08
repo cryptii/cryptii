@@ -1,5 +1,4 @@
 
-import App from '../App'
 import View from '../View'
 
 /**
@@ -39,8 +38,8 @@ export default class ModalView extends View {
       const $element = this.getElement()
 
       if (visible) {
-        // add modal view to app view
-        App.getInstance().getView().addSubview(this)
+        // add modal view to dom
+        document.body.appendChild($element)
       }
 
       // measure dialog height
@@ -98,11 +97,16 @@ export default class ModalView extends View {
     if (visible) {
       this._$dialog.removeAttribute('style')
     } else {
-      // remove view from dom and clean up
       setTimeout(() => {
-        this.removeFromSuperview()
+        // clean up
         this._$dialog.removeAttribute('style')
         this._$outer.removeAttribute('style')
+
+        // remove element from dom
+        const $element = this.getElement()
+        if ($element.parentNode !== null) {
+          $element.parentNode.removeChild($element)
+        }
       }, 100)
 
       // trigger finish or cancel callback

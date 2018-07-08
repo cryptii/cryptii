@@ -34,6 +34,7 @@
     "git-rev-sync": "^1.12.0",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^5.0.0",
+    "gulp-better-rollup": "^3.3.0",
     "gulp-clean-css": "^3.9.4",
     "gulp-clone": "^2.0.1",
     "gulp-concat": "^2.6.1",
@@ -48,11 +49,8 @@
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-stream": "^1.24.1",
     "sass-inline-svg": "^1.1.0",
     "standard": "^11.0.1",
-    "streamqueue": "^1.1.2",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
+    "streamqueue": "^1.1.2"
   }
 }

@@ -52,7 +52,7 @@ export default class Browser {
    */
   static applyClassName () {
     const browserIdentifier = Browser.getIdentifier()
-    if (browserIdentifier) {
+    if (!Browser.isNode() && browserIdentifier) {
       // add browser identifier class name to html tag
       // makes browser sass mixin work
       const $html = document.querySelector('html')

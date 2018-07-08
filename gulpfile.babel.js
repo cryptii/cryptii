@@ -1,7 +1,6 @@
 
 import autoprefixer from 'gulp-autoprefixer'
 import babel from 'rollup-plugin-babel'
-import buffer from 'vinyl-buffer'
 import cleanCSS from 'gulp-clean-css'
 import clone from 'gulp-clone'
 import commonJs from 'rollup-plugin-commonjs'
@@ -9,17 +8,16 @@ import concat from 'gulp-concat'
 import del from 'del'
 import gulp from 'gulp'
 import header from 'gulp-header'
-import streamQueue from 'streamqueue'
 import mocha from 'gulp-mocha'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import rename from 'gulp-rename'
 import revision from 'git-rev-sync'
-import rollup from 'rollup-stream'
+import rollup from 'gulp-better-rollup'
 import sass from 'gulp-sass'
 import sassSVGInliner from 'sass-inline-svg'
-import source from 'vinyl-source-stream'
 import sourcemaps from 'gulp-sourcemaps'
 import standard from 'gulp-standard'
+import streamQueue from 'streamqueue'
 import uglify from 'gulp-uglify'
 
 const meta = require('./package.json')
@@ -78,73 +76,47 @@ gulp.task('script-lint', () => {
     }))
 })
 
-let rollupCache
 gulp.task('script', () => {
-  let appStream = rollup({
-    input: paths.script + '/index.js',
-    external: ['crypto'],
-    globals: {
-      // node modules that won't be accessed
-      // outside the node environment
-      crypto: 'window'
-    },
-    plugins: [
-      babel({
-        babelrc: false,
-        presets: [
-          ['env', {
-            loose: true,
-            modules: false
-          }]
-        ],
-        plugins: [
-          'external-helpers',
-          ['babel-plugin-transform-builtin-extend', {
-            globals: ['Error']
-          }]
-        ],
-        exclude: ['node_modules/**']
-      }),
-      nodeResolve({
-        jsnext: true,
-        main: true
-      }),
-      commonJs({
-        include: ['node_modules/**'],
-        ignore: ['os']
-      })
-    ],
-    format: 'umd',
-    sourcemap: true,
-    cache: rollupCache,
-    amd: { id: meta.name }
-  })
-
-  appStream = appStream
-    // enable rollup cache
-    .on('bundle', (bundle) => {
-      rollupCache = bundle
-    })
-
-    // handle errors gracefully
-    .on('error', err => {
-      console.error(err.message)
-      if (err.codeFrame !== undefined) {
-        console.error(err.codeFrame)
+  const appStream = gulp.src(paths.script + '/index.js')
+    .pipe(sourcemaps.init())
+    .pipe(rollup({
+      external: ['crypto'],
+      plugins: [
+        babel({
+          babelrc: false,
+          presets: [
+            ['env', {
+              loose: true,
+              modules: false
+            }]
+          ],
+          plugins: [
+            'external-helpers',
+            ['babel-plugin-transform-builtin-extend', {
+              globals: ['Error']
+            }]
+          ],
+          exclude: ['node_modules/**']
+        }),
+        nodeResolve({
+          jsnext: true,
+          main: true
+        }),
+        commonJs({
+          include: ['node_modules/**'],
+          ignore: ['os']
+        })
+      ]
+    }, {
+      format: 'umd',
+      name: meta.name,
+      globals: {
+        crypto: 'crypto'
       }
-      appStream.emit('end')
-    })
+    }))
 
     // set output filename
-    .pipe(source(`${meta.name}.js`, paths.src))
-
-    // buffer the output
-    .pipe(buffer())
-
-    // init sourcemaps with inline sourcemap produced by rollup-stream
-    .pipe(sourcemaps.init({
-      loadMaps: true
-    }))
+    .pipe(rename(`${meta.name}.js`))
 
     // minify code
     .pipe(uglify())
@@ -167,15 +139,15 @@ gulp.task('script', () => {
   // compose browser bundle
   const browserBundleStream =
     streamQueue({ objectMode: true }, polyfillStream, appStream)
-    // concat polyfill and library
-    .pipe(concat(`${meta.name}-browser.js`))
-    // render sourcemaps
-    .pipe(sourcemaps.write('.'))
+      // concat polyfill and library
+      .pipe(concat(`${meta.name}-browser.js`))
+      // render sourcemaps
+      .pipe(sourcemaps.write('.'))
 
   // save bundles and sourcemaps
   const projectStream =
     streamQueue({ objectMode: true }, libraryBundleStream, browserBundleStream)
-    .pipe(gulp.dest(paths.scriptDist))
+      .pipe(gulp.dest(paths.scriptDist))
 
   return projectStream
 })
