@@ -1,7 +1,6 @@
 .DS_Store
 .sass-cache
 /.tmp*
-/public/dist
-/public/docs
+/dist
 node_modules
 npm-debug.log

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>The Enigma machine: Encrypt and decrypt online — Cryptii</title>
+
+    <!-- style -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500%7CSource+Code+Pro:400&amp;subset=latin-ext">
+    <link rel="stylesheet" href="dist/style/cryptii.css">
+
+  </head>
+  <body>
+
+    <div class="app">
+
+      <header class="app__header header">
+        <div class="header__inner">
+          <div class="header__item">
+            <a class="header__brand" href="index.html">Cryptii</a>
+          </div>
+          <div class="header__item">
+            <span class="header__badge">dev</span>
+          </div>
+        </div>
+      </header>
+
+      <article class="app__pipe pipe">
+        <header class="pipe__header">
+          <div class="container">
+            <h1 class="pipe__title">Modular online encoding, encryption and conversion tool</h1>
+            <p class="pipe__description">
+              Web app that encodes, decodes, encrypts, decrypts, converts, translates, simulates and views content online offering a variety of ciphers, formats, algorithms and methods
+              <a class="btn-more" href="https://cryptii.com" target="_blank" rel="noopener">Read more</a>
+            </p>
+          </div>
+        </header>
+        <div class="pipe__scrollable"></div>
+        <script class="pipe__data" type="application/json">
+        {
+          "version": 1,
+          "bricks": [
+            {
+              "name": "text",
+              "alias": "Plaintext"
+            },
+            {
+              "name": "enigma",
+              "settings": {
+                "model": "M3",
+                "rotor1": "VI",
+                "rotor2": "I",
+                "rotor3": "III",
+                "position1": 1,
+                "position2": 17,
+                "position3": 12,
+                "reflector": "UKW-B",
+                "plugboard": "bq cr di ej kw mt os px uz gh"
+              }
+            },
+            {
+              "name": "text",
+              "alias": "Ciphertext"
+            }
+          ],
+          "content": {
+            "bucket": 0,
+            "string": "The quick brown fox jumps over 13 lazy dogs."
+          }
+        }
+        </script>
+      </article>
+
+      <footer class="app__footer footer">
+        <div class="container">
+          <div class="footer__inner">
+            <h2 class="footer__brand"><a href="https://cryptii.com">Cryptii</a></h2>
+            <p class="footer__description">
+              Web app that encodes, decodes, encrypts, decrypts, converts, translates, simulates and
+              views content online offering a variety of ciphers, formats, algorithms and methods.
+              Designed and built with love by <a href="https://fraenz.frieder.es/" target="_blank" rel="noopener">@ffraenz</a>.
+              Code licensed <a href="https://github.com/cryptii/cryptii/blob/dev/LICENSE.md" target="_blank" rel="noopener">MIT</a>.
+            </p>
+            <ul class="footer__link-list link-list">
+              <li class="link-list__item">
+                <a class="link-list__link" href="https://cryptii.com">
+                  Live version
+                </a>
+              </li>
+              <li class="link-list__item">
+                <a class="link-list__link" href="https://github.com/cryptii/cryptii" target="_blank" rel="noopener">
+                  GitHub
+                </a>
+              </li>
+              <li class="link-list__item">
+                <a class="link-list__link" href="https://github.com/cryptii/cryptii/issues/new" target="_blank" rel="noopener">
+                  Report an issue
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- script -->
+    <script src="dist/script/cryptii-browser.js"></script>
+    <script>
+    (function () {
+      'use strict';
+      cryptii.App.getInstance().run();
+    })();
+    </script>
+
+  </body>
+</html>

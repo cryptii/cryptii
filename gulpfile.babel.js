@@ -24,9 +24,9 @@ const meta = require('./package.json')
 const paths = {
   assets: './assets',
   script: './src',
-  scriptDist: './public/dist/script',
+  scriptDist: './dist/script',
   style: './style',
-  styleDist: './public/dist/style',
+  styleDist: './dist/style',
   test: './test'
 }
 
