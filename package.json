@@ -36,6 +36,7 @@
     "gulp-autoprefixer": "^5.0.0",
     "gulp-better-rollup": "^3.3.0",
     "gulp-clean-css": "^3.9.4",
+    "gulp-cli": "^2.0.1",
     "gulp-clone": "^2.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-header": "^2.0.5",
