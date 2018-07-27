@@ -666,7 +666,7 @@ export default class Pipe extends Viewable {
 
     // serialize content
     let content, contentEncoding
-    if (!content.needsTextEncoding()) {
+    if (!contentChain.needsTextEncoding()) {
       content = contentChain.getString()
       contentEncoding = 'text'
     } else {
@@ -678,7 +678,17 @@ export default class Pipe extends Viewable {
     const bricks = this._bricks.map(brick => brick.serialize())
 
     // compose pipe object
-    return { bricks, content, contentBucket, contentEncoding }
+    const pipe = { bricks, content }
+
+    // add optional attributes
+    if (contentBucket !== 0) {
+      pipe.contentBucket = contentBucket
+    }
+    if (contentEncoding !== 'text') {
+      pipe.contentEncoding = contentEncoding
+    }
+
+    return pipe
   }
 
   /**
