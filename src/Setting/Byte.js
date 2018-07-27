@@ -1,4 +1,5 @@
 
+import ByteEncoder from '../ByteEncoder'
 import ByteSettingView from '../View/Setting/Byte'
 import Setting from '../Setting'
 
@@ -123,6 +124,30 @@ export default class ByteSetting extends Setting {
       return random.nextBytes(this.getValue().length)
     }
     return null
+  }
+
+  /**
+   * Serializes Setting value to make it JSON serializable.
+   * @throws Throws an error if safe serialization not possible.
+   * @return {mixed} Serialized data
+   */
+  serializeValue () {
+    return ByteEncoder.base64StringFromBytes(this.getValue())
+  }
+
+  /**
+   * Extracts value from {@link Setting.serializeValue} serialized data
+   * and applies it to this Setting.
+   * @param {mixed} data Serialized data
+   * @return {Setting} Fluent interface
+   */
+  extractValue (data) {
+    if (typeof data !== 'string') {
+      throw new Error(
+        `Value of setting '${this.getName()}' is expected to be a valid ` +
+        `base64 string.`)
+    }
+    return this.setValue(ByteEncoder.bytesFromBase64String(data))
   }
 
   /**

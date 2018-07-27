@@ -229,6 +229,29 @@ export default class TextSetting extends Setting {
   }
 
   /**
+   * Serializes Setting value to make it JSON serializable.
+   * @throws Throws an error if safe serialization not possible.
+   * @return {mixed} Serialized data
+   */
+  serializeValue () {
+    return this.getValue().getString()
+  }
+
+  /**
+   * Extracts value from {@link Setting.serializeValue} serialized data
+   * and applies it to this Setting.
+   * @param {mixed} data Serialized data
+   * @return {Setting} Fluent interface
+   */
+  extractValue (data) {
+    if (typeof data !== 'string') {
+      throw new Error(
+        `Value of setting '${this.getName()}' is expected to be a string.`)
+    }
+    return this.setValue(Chain.wrap(data))
+  }
+
+  /**
    * Triggered when value has been changed inside the view.
    * @protected
    * @param {TextSettingView} view

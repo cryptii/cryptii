@@ -35,7 +35,7 @@ export default class Setting extends Viewable {
     super()
 
     this._name = name
-    this._value = spec.value || null
+    this._value = spec.value !== undefined ? spec.value : null
     this._randomizable = spec.randomizable !== false
 
     this._valid = true
@@ -352,6 +352,8 @@ export default class Setting extends Viewable {
    * @return {mixed} Serialized data
    */
   serializeValue () {
+    // generic settings can only serialize boolean,
+    // number and string values safely
     const value = this.getValue()
     if (
       typeof value !== 'boolean' &&
@@ -359,8 +361,8 @@ export default class Setting extends Viewable {
       typeof value !== 'string'
     ) {
       throw new Error(
-        `Generic Settings can only serialize boolean, number and string ` +
-        `values safely. Found value type ${typeof value}.`)
+        `Value of setting '${this.getName()}' is expected to be a boolean, ` +
+        `number or string. Found value type '${typeof value}'.`)
     }
     return value
   }

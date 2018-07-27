@@ -368,11 +368,15 @@ export default class Brick extends Viewable {
    * @return {mixed} Serialized data
    */
   serialize () {
+    const serializedSettingValues = {}
+    this.getSettings().forEach(setting => {
+      serializedSettingValues[setting.getName()] = setting.serializeValue()
+    })
     const data = {
       name: this.getMeta().name,
-      settings: this.getSettingValues()
+      settings: serializedSettingValues
     }
-    if (this.isHidden) {
+    if (this.isHidden()) {
       data['hidden'] = true
     }
     return data

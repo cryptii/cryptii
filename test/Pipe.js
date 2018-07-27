@@ -7,16 +7,13 @@ import TextViewer from '../src/Viewer/Text'
 import AffineCipherEncoder from '../src/Encoder/AffineCipher'
 
 const examplePipeData = {
-  version: 1,
   bricks: [
     { name: 'text' },
     { name: 'affine-cipher', settings: { a: 7, b: 7 } },
     { name: 'text' }
   ],
-  content: {
-    bucket: 0,
-    string: 'The quick brown fox jumps over 13 lazy dogs.'
-  }
+  content: 'The quick brown fox jumps over 13 lazy dogs.',
+  contentBucket: 0
 }
 
 /** @test {Pipe} */
@@ -40,8 +37,8 @@ describe('Pipe', () => {
         examplePipeData.bricks[1].settings.b)
       // content applied to the pipe
       assert.strictEqual(
-        pipe.getContent(examplePipeData.content.bucket).getString(),
-        examplePipeData.content.string)
+        pipe.getContent(examplePipeData.contentBucket).getString(),
+        examplePipeData.content)
       // view should only be created lazily
       assert.strictEqual(pipe.hasView(), false)
     })

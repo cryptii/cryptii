@@ -660,25 +660,25 @@ export default class Pipe extends Viewable {
    * @return {mixed} Structured data.
    */
   serialize () {
+    // get selected bucket and content
+    const contentBucket = this._selectedBucket
+    const contentChain = this._bucketContent[contentBucket]
+
     // serialize content
-    const bucket = this._selectedBucket
-    const content = this._bucketContent[bucket]
-
-    const contentObject = { bucket }
+    let content, contentEncoding
     if (!content.needsTextEncoding()) {
-      contentObject.string =
-        content.getString()
+      content = contentChain.getString()
+      contentEncoding = 'text'
     } else {
-      contentObject.bytes =
-        ByteEncoder.base64StringFromBytes(content.getBytes())
+      content = ByteEncoder.base64StringFromBytes(contentChain.getBytes())
+      contentEncoding = 'base64'
     }
 
-    // serialize pipe
-    return {
-      version: 1,
-      bricks: this._bricks.map(brick => brick.serialize()),
-      content: contentObject
-    }
+    // serialize bricks
+    const bricks = this._bricks.map(brick => brick.serialize())
+
+    // compose pipe object
+    return { bricks, content, contentBucket, contentEncoding }
   }
 
   /**
@@ -688,9 +688,31 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Extracted pipe
    */
   static extract (data) {
-    // verify data
+    // verify bricks
     if (!Array.isArray(data.bricks)) {
       throw new Error(`Can't extract bricks from structured data.`)
+    }
+
+    // verify content bucket
+    if (typeof data.contentBucket !== 'undefined' &&
+        typeof data.contentBucket !== 'number') {
+      throw new Error(
+        `Malformed pipe data: ` +
+        `Optional attribute 'contentBucket' is expected to be a number.`)
+    }
+
+    // verify content encoding
+    if (typeof data.contentEncoding !== 'undefined' &&
+        typeof data.contentEncoding !== 'string') {
+      throw new Error(
+        `Malformed pipe data: ` +
+        `Optional attribute 'contentEncoding' is expected to be a string.`)
+    }
+
+    // verify content
+    if (typeof data.content !== 'string') {
+      throw new Error(
+        `Malformed pipe data: Attribute 'content' is expected to be a string.`)
     }
 
     // extract bricks
@@ -699,21 +721,34 @@ export default class Pipe extends Viewable {
       data.bricks.map(brickData =>
         Brick.extract(brickData, brickFactory))
 
+    // extract content bucket
+    const bucket = data.contentBucket !== undefined ? data.contentBucket : 0
+
+    // extract content encoding
+    const contentEncoding =
+      data.contentEncoding !== undefined
+        ? data.contentEncoding
+        : 'text'
+
+    // extract content
+    let content
+    switch (contentEncoding) {
+      case 'text':
+        content = data.content
+        break
+      case 'base64':
+        content = ByteEncoder.bytesFromBase64String(data.content)
+        break
+      default:
+        throw new Error(
+          `Malformed pipe data: ` +
+          `Content encoding '${contentEncoding}' is not supported.`)
+    }
+
     // compose pipe
     const pipe = new Pipe()
     pipe.addBrick.apply(pipe, bricks)
-
-    // set content
-    if (data.content) {
-      const bucket = data.content.bucket || 0
-      if (typeof data.content.string === 'string') {
-        pipe.setContent(data.content.string, bucket)
-      } else if (typeof data.content.bytes === 'string') {
-        const bytes = ByteEncoder.bytesFromBase64String(data.content.bytes)
-        pipe.setContent(bytes, bucket)
-      }
-    }
-
+    pipe.setContent(content, bucket)
     return pipe
   }
 }
