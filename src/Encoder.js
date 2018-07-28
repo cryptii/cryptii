@@ -27,7 +27,7 @@ export default class Encoder extends Brick {
    * @param {number[]|string|Uint8Array|Chain} content
    * @return {Promise} Encoded content
    */
-  encode (content) {
+  async encode (content) {
     return this.translate(content, true)
   }
 
@@ -36,7 +36,7 @@ export default class Encoder extends Brick {
    * @param {number[]|string|Uint8Array|Chain} content
    * @return {Promise} Decoded content
    */
-  decode (content) {
+  async decode (content) {
     return this.translate(content, false)
   }
 
@@ -46,11 +46,11 @@ export default class Encoder extends Brick {
    * @param {boolean} isEncode True for encode, false for decode
    * @return {Promise} Resulting content
    */
-  translate (content, isEncode) {
-    // track translation start time
-    const startTime = MathUtil.time()
+  async translate (content, isEncode) {
+    try {
+      // track translation start time
+      const startTime = MathUtil.time()
 
-    return new Promise(resolve => {
       // wrap content in Chain
       content = Chain.wrap(content)
 
@@ -71,37 +71,33 @@ export default class Encoder extends Brick {
       // perform actual translation
       if (isEncode !== this._reverse) {
         // perform encode
-        resolve(Promise.resolve(this.willEncode(content))
-          .then(this.performEncode.bind(this))
-          .then(this.didEncode.bind(this)))
+        content = await this.willEncode(content)
+        content = await this.performEncode(content)
+        content = await this.didEncode(content)
       } else {
         // perform decode
-        resolve(Promise.resolve(this.willDecode(content))
-          .then(this.performDecode.bind(this))
-          .then(this.didDecode.bind(this)))
+        content = await this.willDecode(content)
+        content = await this.performDecode(content)
+        content = await this.didDecode(content)
       }
-    })
 
-      // track translation meta
-      .then(result => {
-        this._lastError = null
-        this._lastTranslationMeta = {
-          isEncode,
-          duration: MathUtil.time() - startTime,
-          byteCount: !content.needsByteEncoding() ? content.getSize() : null,
-          charCount: !content.needsTextEncoding() ? content.getLength() : null
-        }
-        this.updateView()
-        return result
-      })
-
-      // track thrown error during translation
-      .catch(error => {
-        this._lastError = error
-        this._lastTranslationMeta = null
-        this.updateView()
-        throw error
-      })
+      // track successful translation
+      this._lastError = null
+      this._lastTranslationMeta = {
+        isEncode,
+        duration: MathUtil.time() - startTime,
+        byteCount: !content.needsByteEncoding() ? content.getSize() : null,
+        charCount: !content.needsTextEncoding() ? content.getLength() : null
+      }
+      this.updateView()
+      return content
+    } catch (error) {
+      // track failed translation
+      this._lastError = error
+      this._lastTranslationMeta = null
+      this.updateView()
+      throw error
+    }
   }
 
   /**

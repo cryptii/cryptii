@@ -113,7 +113,7 @@ export default class Pipe extends Viewable {
   spliceBricks (index, removeCount, ...bricksOrNames) {
     // normalize index
     if (index < 0) {
-      index = Math.max(this._bricks.length + index, 0)
+      index = Math.max(this._bricks.length + index + 1, 0)
     }
 
     // map brick names to actual brick instances
@@ -210,138 +210,6 @@ export default class Pipe extends Viewable {
     // layout
     this.hasView() && this.getView().layout()
     return removedBricks
-  }
-
-  /**
-   * Returns the current state for given brick.
-   * @protected
-   * @param {Brick} brick
-   * @param {string} key
-   * @throws {Error} Throws an error if given brick is not part of the pipe.
-   * @return {mixed} Current brick state
-   */
-  getBrickState (brick, key) {
-    const index = this._bricks.indexOf(brick)
-    if (index === -1) {
-      throw new Error(`Brick is not part of the pipe and thus has no state.`)
-    }
-    return this._brickState[index][key]
-  }
-
-  /**
-   * Updates the current state on given brick.
-   * @protected
-   * @param {Brick} brick
-   * @param {string} key
-   * @param {mixed} value
-   * @return {Pipe} Fluent interface
-   */
-  setBrickState (brick, key, value) {
-    const index = this._bricks.indexOf(brick)
-    if (index === -1) {
-      throw new Error(`Brick is not part of the pipe and thus has no state.`)
-    }
-    this._brickState[index][key] = value
-    return this
-  }
-
-  /**
-   * Delegate method triggered by child viewers if their content changed.
-   * @protected
-   * @param {Viewer} viewer Sender viewer
-   * @param {Chain} content
-   */
-  viewerContentDidChange (viewer, content) {
-    // ignore events from bricks that are not part of the pipe
-    if (!this.containsBrick(viewer)) {
-      return
-    }
-    const bucket = this.getBucketIndexForBrick(viewer)
-    this.setContent(content, bucket, viewer)
-  }
-
-  /**
-   * Delegate method triggered by child bricks when their settings changed.
-   * @protected
-   * @param {Encoder} brick Sender brick
-   */
-  brickSettingDidChange (brick) {
-    // ignore events from bricks that are not part of the pipe
-    if (!this.containsBrick(brick)) {
-      return
-    }
-
-    // increase brick settings version
-    this.setBrickState(brick, this.getBrickState(brick, 'settingsVersion') + 1)
-
-    if (brick instanceof Encoder) {
-      // trigger encode or decode depending on location of the selected bucket
-      const lowerBucket = this.getBucketIndexForBrick(brick)
-      const isEncode = this._selectedBucket > lowerBucket
-      this.triggerEncoderTranslation(brick, isEncode)
-    } else {
-      // trigger view
-      this.triggerViewerView(brick)
-    }
-  }
-
-  /**
-   * Delegate method triggered by child bricks when they change visibility.
-   * @param {Brick} brick Brick which changed visibility
-   * @param {boolean} hidden Wether brick is now hidden
-   */
-  brickVisibilityDidChange (brick, hidden) {
-    this.updateView()
-  }
-
-  /**
-   * Delegate method triggered by child bricks when they got reversed.
-   * @protected
-   * @param {Encoder} brick Sender brick
-   * @param {boolean} reverse Wether to reverse translation
-   */
-  encoderDidReverse (brick, reverse) {
-    if (
-      this._bricks.length === 3 &&
-      this._bricks[0].getMeta().type === 'viewer' &&
-      this._bricks[1].getMeta().type === 'encoder' &&
-      this._bricks[2].getMeta().type === 'viewer'
-    ) {
-      // having this constellation, swap source and result viewer
-      // when reversing the encoder brick in the middle
-      const resultContent = this.getContent(1)
-      const bricks = this.spliceBricks(0, 3)
-      bricks.reverse()
-      this.setContent(resultContent, 0)
-      this.spliceBricks(0, 0, ...bricks)
-    }
-  }
-
-  /**
-   * Returns lower bucket index for given brick.
-   * @param {Brick} brick
-   * @throws {Error} Throws an error if brick is not part of pipe.
-   * @return {number}
-   */
-  getBucketIndexForBrick (brick) {
-    // the bucket index is equal to the amount of
-    // encoder bricks placed before given brick
-    let foundBrick = false
-    let encoderCount = 0
-    let i = -1
-
-    while (!foundBrick && ++i < this._bricks.length) {
-      if (this._bricks[i] === brick) {
-        foundBrick = true
-      } else if (this._bricks[i] instanceof Encoder) {
-        encoderCount++
-      }
-    }
-
-    if (!foundBrick) {
-      throw new Error(`Can't find bucket for brick. Brick is not part of Pipe.`)
-    }
-    return encoderCount
   }
 
   /**
@@ -445,12 +313,10 @@ export default class Pipe extends Viewable {
    * view accordingly.
    * @protected
    * @param {Viewer} viewer
-   * @return {Pipe} Fluent interface
    */
-  triggerViewerView (viewer) {
+  async triggerViewerView (viewer) {
     // check if viewer is busy
     if (this.getBrickState(viewer, 'busy')) {
-      // skip view
       return this
     }
 
@@ -462,45 +328,29 @@ export default class Pipe extends Viewable {
     const content = this.getContent(bucket)
     const settingsVersion = this.getBrickState(viewer, 'settingsVersion')
 
-    // trigger view asynchronously
-    setTimeout(() => {
-      try {
-        viewer.view(content, () =>
-          this.viewerViewDidFinish(viewer, null, content, settingsVersion))
-      } catch (error) {
-        this.viewerViewDidFinish(viewer, error, content, settingsVersion)
-      }
-    }, 0)
+    // trigger viewer view and await completion
+    let error
+    try {
+      await viewer.view(content)
+    } catch (e) {
+      error = e
+    }
 
-    return this
-  }
-
-  /**
-   * Triggered when viewer did finish viewing content. Triggers new view when
-   * the content has changed in the meantime.
-   * @protected
-   * @param {Viewer} viewer
-   * @param {?Error} error
-   * @param {Chain} usedContent
-   * @param {number} usedSettingsVersion
-   */
-  viewerViewDidFinish (viewer, error, usedContent, usedSettingsVersion) {
-    // check if viewer is still part of the pipe
+    // stop here if viewer is no longer part of the pipe
     if (!this.containsBrick(viewer)) {
-      // do nothing
       return
     }
 
-    // mark brick as no longer busy
+    // mark viewer as no longer busy
     this.setBrickState(viewer, 'busy', false)
 
-    const settingsVersion = this.getBrickState(viewer, 'settingsVersion')
-    const bucket = this.getBucketIndexForBrick(viewer)
+    // collect post view data, buckets may have changed in the meantime
+    const postSettingsVersion = this.getBrickState(viewer, 'settingsVersion')
+    const postBucket = this.getBucketIndexForBrick(viewer)
 
-    // there were views skipped when the current content or brick
-    //  settings changed during last view
-    if (!this.getContent(bucket).isEqualTo(usedContent) ||
-        settingsVersion !== usedSettingsVersion) {
+    // check if the bucket or the viewer settings have changed in the meantime
+    if (!this.getContent(postBucket).isEqualTo(content) ||
+        settingsVersion !== postSettingsVersion) {
       // repeat view
       this.triggerViewerView(viewer)
     }
@@ -586,13 +436,135 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Triggered when view has been created.
+   * Returns the current state for given brick.
    * @protected
-   * @param {View} view
+   * @param {Brick} brick
+   * @param {string} key
+   * @throws {Error} Throws an error if given brick is not part of the pipe.
+   * @return {mixed} Current brick state
    */
-  didCreateView (view) {
-    // add each brick as subview
-    this._bricks.forEach(brick => view.addSubview(brick.getView()))
+  getBrickState (brick, key) {
+    const index = this._bricks.indexOf(brick)
+    if (index === -1) {
+      throw new Error(`Brick is not part of the pipe and thus has no state.`)
+    }
+    return this._brickState[index][key]
+  }
+
+  /**
+   * Updates the current state on given brick.
+   * @protected
+   * @param {Brick} brick
+   * @param {string} key
+   * @param {mixed} value
+   * @return {Pipe} Fluent interface
+   */
+  setBrickState (brick, key, value) {
+    const index = this._bricks.indexOf(brick)
+    if (index === -1) {
+      throw new Error(`Brick is not part of the pipe and thus has no state.`)
+    }
+    this._brickState[index][key] = value
+    return this
+  }
+
+  /**
+   * Returns lower bucket index for given brick.
+   * @param {Brick} brick
+   * @throws {Error} Throws an error if brick is not part of pipe.
+   * @return {number}
+   */
+  getBucketIndexForBrick (brick) {
+    // the bucket index is equal to the amount of
+    // encoder bricks placed before given brick
+    let foundBrick = false
+    let encoderCount = 0
+    let i = -1
+
+    while (!foundBrick && ++i < this._bricks.length) {
+      if (this._bricks[i] === brick) {
+        foundBrick = true
+      } else if (this._bricks[i] instanceof Encoder) {
+        encoderCount++
+      }
+    }
+
+    if (!foundBrick) {
+      throw new Error(`Can't find bucket for brick. Brick is not part of Pipe.`)
+    }
+    return encoderCount
+  }
+
+  /**
+   * Delegate method triggered by child viewers if their content changed.
+   * @protected
+   * @param {Viewer} viewer Sender viewer
+   * @param {Chain} content
+   */
+  viewerContentDidChange (viewer, content) {
+    // ignore events from bricks that are not part of the pipe
+    if (!this.containsBrick(viewer)) {
+      return
+    }
+    const bucket = this.getBucketIndexForBrick(viewer)
+    this.setContent(content, bucket, viewer)
+  }
+
+  /**
+   * Delegate method triggered by child bricks when their settings changed.
+   * @protected
+   * @param {Encoder} brick Sender brick
+   */
+  brickSettingDidChange (brick) {
+    // ignore events from bricks that are not part of the pipe
+    if (!this.containsBrick(brick)) {
+      return
+    }
+
+    // increase brick settings version
+    this.setBrickState(brick, this.getBrickState(brick, 'settingsVersion') + 1)
+
+    if (brick instanceof Encoder) {
+      // trigger encode or decode depending on location of the selected bucket
+      const lowerBucket = this.getBucketIndexForBrick(brick)
+      const isEncode = this._selectedBucket > lowerBucket
+      this.triggerEncoderTranslation(brick, isEncode)
+    } else {
+      // trigger view
+      this.triggerViewerView(brick)
+    }
+  }
+
+  /**
+   * Delegate method triggered by child bricks when they change visibility.
+   * @param {Brick} brick Brick which changed visibility
+   * @param {boolean} hidden Wether brick is now hidden
+   */
+  brickVisibilityDidChange (brick, hidden) {
+    this.updateView()
+  }
+
+  /**
+   * Delegate method triggered by child bricks when they got reversed.
+   * @protected
+   * @param {Encoder} brick Sender brick
+   * @param {boolean} reverse Wether to reverse translation
+   */
+  encoderDidReverse (brick, reverse) {
+    if (
+      this._bricks.length === 3 &&
+      this._bricks[0].getMeta().type === 'viewer' &&
+      this._bricks[1].getMeta().type === 'encoder' &&
+      this._bricks[2].getMeta().type === 'viewer'
+    ) {
+      // having this constellation, swap source and result viewer
+      // when reversing the encoder brick in the middle
+      const resultContent = this.getContent(1)
+      const bricks = this.spliceBricks(0, 3)
+      bricks.reverse()
+      this.setContent(resultContent, 0)
+      this.spliceBricks(0, 0, ...bricks)
+    }
   }
 
   /**
@@ -639,6 +611,16 @@ export default class Pipe extends Viewable {
     if (name !== brick.getMeta().name) {
       this.replaceBrick(brick, name)
     }
+  }
+
+  /**
+   * Triggered when view has been created.
+   * @protected
+   * @param {View} view
+   */
+  didCreateView (view) {
+    // add each brick as subview
+    this._bricks.forEach(brick => view.addSubview(brick.getView()))
   }
 
   /**

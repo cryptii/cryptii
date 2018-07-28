@@ -13,19 +13,16 @@ export default class Viewer extends Brick {
   constructor () {
     super()
     this._queuedContent = null
-    this._queuedCallback = null
-
     this._error = null
   }
 
   /**
    * Views content.
    * @param {Chain} content
-   * @param {function} [done] Called when viewing content has finished
-   * @return {Viewer} Fluent interface
+   * @return {Promise} Resolves when completed.
    */
-  view (content, done = null) {
-    this.dare(() => {
+  async view (content) {
+    try {
       // check for invalid settings
       let invalidSettings = this.getInvalidSettings()
       if (invalidSettings.length > 0) {
@@ -35,36 +32,70 @@ export default class Viewer extends Brick {
       }
 
       if (!this.hasView()) {
-        // queue view request until view has been created
+        // run view as soon as the view is being created
         this._queuedContent = content
-        this._queuedCallback = done
-        return this
+        return
       }
 
-      content = this.willView(content)
+      // perform actual view
+      content = await this.willView(content)
+      await this.performView(content)
+      await this.didView(content)
 
-      this.performView(content, error => {
-        this.didView(content)
-        this._error = error || null
+      // clear error
+      if (this._error !== null) {
+        this._error = null
         this.updateView()
-        done && done()
-      })
-    }, true)
-    return this
+      }
+    } catch (error) {
+      this._error = error
+      this.updateView()
+      throw error
+    }
+  }
+
+  /**
+   * Triggered before performing view of given content.
+   * @protected
+   * @param {string} content
+   * @return {Chain|Promise} Filtered content
+   */
+  async willView (content) {
+    return content
+  }
+
+  /**
+   * Performs view of given content.
+   * @protected
+   * @abstract
+   * @param {string} content
+   * @return {void|Promise} Resolves when completed.
+   */
+  async performView (content) {
+    // abstract method
+  }
+
+  /**
+   * Triggered after performing view of given content.
+   * @protected
+   * @abstract
+   * @return {void|Promise} Resolves when completed.
+   */
+  async didView (content) {
+    // abstract method
   }
 
   /**
    * Runs callback safely, catching and handling thrown errors.
    * The method is called 'dare' because 'try' is a reserved keyword.
-   * TODO Find a better solution for error handling inside Viewers.
-   * @param {function} callback Callback to execute
+   * @param {function} callback Function to be executed
    * @param {boolean} throwAll Wether to throw all errors
    * @return {Viewer} Fluent interface
    */
-  dare (callback, throwAll = false) {
+  async dare (callback, throwAll = false) {
     try {
       // run callback
-      callback()
+      await callback()
       // clear error
       if (this._error !== null) {
         this._error = null
@@ -91,51 +122,17 @@ export default class Viewer extends Brick {
   }
 
   /**
-   * Triggered before performing view of given content.
-   * @protected
-   * @param {string} content
-   * @return {string} Filtered content
-   */
-  willView (content) {
-    return content
-  }
-
-  /**
-   * Performs view of given content.
-   * @protected
-   * @abstract
-   * @param {string} content
-   * @param {function} done Called when performing view has finished
-   */
-  performView (content, done) {
-    // abstract method
-  }
-
-  /**
-   * Triggered after performing view of given content.
-   * @protected
-   * @abstract
-   * @param {string} content
-   */
-  didView (content) {
-    // abstract method
-  }
-
-  /**
    * Triggered when view has been created.
    * @protected
    * @param {View} view
    */
   didCreateView (view) {
     super.didCreateView(view)
-
     if (this._queuedContent !== null) {
       // perform queued view
-      this.view(this._queuedContent, this._queuedCallback)
-
+      this.view(this._queuedContent)
       // clear queued view
       this._queuedContent = null
-      this._queuedCallback = null
     }
   }
 

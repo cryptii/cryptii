@@ -25,7 +25,7 @@ export default class BytesViewer extends Viewer {
   }
 
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
@@ -74,9 +74,9 @@ export default class BytesViewer extends Viewer {
    * Performs view of given content.
    * @protected
    * @param {string} content
-   * @param {function} done Called when performing view has finished.
+   * @return {void|Promise} Resolves when completed.
    */
-  performView (content, done) {
+  async performView (content) {
     const bytes = content.getBytes()
     const format = this.getSettingValue('format')
 
@@ -101,7 +101,6 @@ export default class BytesViewer extends Viewer {
 
     // show it
     this.getView().setText(string)
-    done()
   }
 
   /**

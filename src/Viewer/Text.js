@@ -32,12 +32,12 @@ export default class TextViewer extends Viewer {
 
   /**
    * Performs view of given content.
+   * @protected
    * @param {string} content
-   * @param {function} done Called when performing view has finished.
+   * @return {void|Promise} Resolves when completed.
    */
-  performView (content, done) {
+  async performView (content) {
     this.getView().setText(content.getString())
-    done()
   }
 
   /**

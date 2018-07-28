@@ -49,14 +49,14 @@ describe('Pipe', () => {
       const pipe = new Pipe()
       const viewer = new TextViewer()
       pipe.addBrick(viewer)
-      assert.deepStrictEqual(pipe.getBricks()[0], viewer)
+      assert.strictEqual(pipe.getBricks()[0], viewer)
       assert.strictEqual(pipe.hasView(), false)
     })
     it('should add brick to the end of a pipe', () => {
       const pipe = Pipe.extract(examplePipeData)
       const viewer = new TextViewer()
       pipe.addBrick(viewer)
-      assert.deepStrictEqual(pipe.getBricks()[3], viewer)
+      assert.strictEqual(pipe.getBricks()[3], viewer)
     })
   })
   /** @test {Pipe.removeBrick} */

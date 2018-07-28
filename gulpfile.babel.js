@@ -199,7 +199,10 @@ gulp.task('watch', () => {
 
   gulp.watch(paths.test + '/**/*.js', gulp.series(
     'script-test-lint',
-    'script-test'
+    'script-test',
+    'script-lint',
+    'script-clean',
+    'script'
   ))
 
   gulp.watch(paths.style + '/**/*.scss', gulp.series(
