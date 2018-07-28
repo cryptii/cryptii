@@ -1,4 +1,5 @@
 
+import Chain from '../Chain'
 import Encoder from '../Encoder'
 import StringUtil from '../StringUtil'
 
@@ -99,7 +100,7 @@ export default class NumeralSystemEncoder extends Encoder {
     const pattern = systemPatterns[systemNames.indexOf(from)]
 
     // find numbers using pattern
-    return string.replace(pattern, (match, rawNumber, offset) => {
+    const result = string.replace(pattern, (match, rawNumber, offset) => {
       const alone =
         (offset === 0 || StringUtil.isWhitespace(string, offset - 1)) &&
         (string.length === offset + rawNumber.length ||
@@ -116,6 +117,8 @@ export default class NumeralSystemEncoder extends Encoder {
         : null
       return encodedValue || rawNumber
     })
+
+    return Chain.wrap(result)
   }
 
   /**
