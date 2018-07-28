@@ -15,19 +15,17 @@ import Viewer from './Viewer'
  */
 export default class Pipe extends Viewable {
   /**
-   * Creates empty pipe.
+   * Constructor
    */
   constructor () {
     super()
     this._viewPrototype = PipeView
 
-    // brick arrangement
+    // empty array of bricks and brick state objects
     this._bricks = []
+    this._brickState = []
 
-    // meta objects for each brick
-    this._brickMeta = []
-
-    // content buckets
+    // new pipes contain one empty bucket
     this._bucketContent = [Chain.empty()]
     this._selectedBucket = 0
   }
@@ -128,8 +126,8 @@ export default class Pipe extends Viewable {
     const removedBricks = this._bricks.splice.apply(this._bricks,
       [index, removeCount].concat(bricks))
 
-    // splice internal meta array
-    this._brickMeta.splice.apply(this._brickMeta,
+    // splice internal state array
+    this._brickState.splice.apply(this._brickState,
       [index, removeCount].concat(bricks.map(() => ({
         settingsVersion: 1,
         busy: false
@@ -180,8 +178,13 @@ export default class Pipe extends Viewable {
       this._bucketContent.splice.apply(this._bucketContent,
         [bucketChangeIndex, bucketRemoveCount].concat(insertBuckets))
 
-      // update selected bucket accordingly
-      if (this._selectedBucket <= bucketChangeIndex - 1) {
+      // update selected bucket and propagate content accordingly
+      if (bucketRemoveCount === 1 && bucketInsertCount === 1) {
+        // a single bucket gets replaced (common replace brick scenario)
+        // the selected bucket stays unchanged
+        this.propagateContent(this._selectedBucket,
+          bucketChangeIndex > this._selectedBucket)
+      } else if (this._selectedBucket <= bucketChangeIndex - 1) {
         // selected bucket is situated before the changing part
         // leave it unchanged, propagate content forward before changing part
         this.propagateContent(bucketChangeIndex - 1, true)
@@ -210,37 +213,35 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Returns a meta entry for given brick and key.
+   * Returns the current state for given brick.
    * @protected
    * @param {Brick} brick
    * @param {string} key
-   * @param {mixed} [defaultValue=undefined] Default value returned when no meta
-   * entry was found for given brick and key.
    * @throws {Error} Throws an error if given brick is not part of the pipe.
-   * @return {mixed} Meta entry value
+   * @return {mixed} Current brick state
    */
-  getBrickMeta (brick, key, defaultValue = undefined) {
+  getBrickState (brick, key) {
     const index = this._bricks.indexOf(brick)
     if (index === -1) {
-      throw new Error(`Brick is not part of the pipe. Can't retrieve its meta.`)
+      throw new Error(`Brick is not part of the pipe and thus has no state.`)
     }
-    const value = this._brickMeta[index][key]
-    return value !== undefined ? value : defaultValue
+    return this._brickState[index][key]
   }
 
   /**
-   * Sets meta value on given brick.
+   * Updates the current state on given brick.
    * @protected
    * @param {Brick} brick
    * @param {string} key
    * @param {mixed} value
    * @return {Pipe} Fluent interface
    */
-  setBrickMeta (brick, key, value) {
+  setBrickState (brick, key, value) {
     const index = this._bricks.indexOf(brick)
-    if (index !== -1) {
-      this._brickMeta[index][key] = value
+    if (index === -1) {
+      throw new Error(`Brick is not part of the pipe and thus has no state.`)
     }
+    this._brickState[index][key] = value
     return this
   }
 
@@ -251,8 +252,8 @@ export default class Pipe extends Viewable {
    * @param {Chain} content
    */
   viewerContentDidChange (viewer, content) {
+    // ignore events from bricks that are not part of the pipe
     if (!this.containsBrick(viewer)) {
-      // ignore this event
       return
     }
     const bucket = this.getBucketIndexForBrick(viewer)
@@ -265,24 +266,21 @@ export default class Pipe extends Viewable {
    * @param {Encoder} brick Sender brick
    */
   brickSettingDidChange (brick) {
-    const brickIndex = this._bricks.indexOf(brick)
-    if (brickIndex === -1) {
-      // encoder is not part of pipe
-      // ignore this event
+    // ignore events from bricks that are not part of the pipe
+    if (!this.containsBrick(brick)) {
       return
     }
 
-    const brickMeta = this._brickMeta[brickIndex]
-
-    // increment brick settings version
-    brickMeta.settingsVersion++
+    // increase brick settings version
+    this.setBrickState(brick, this.getBrickState(brick, 'settingsVersion') + 1)
 
     if (brick instanceof Encoder) {
-      // trigger encode or decode depending on last translation direction
-      const translationMeta = brick.getLastTranslationMeta()
-      const isEncode = translationMeta === null || translationMeta.isEncode
+      // trigger encode or decode depending on location of the selected bucket
+      const lowerBucket = this.getBucketIndexForBrick(brick)
+      const isEncode = this._selectedBucket > lowerBucket
       this.triggerEncoderTranslation(brick, isEncode)
     } else {
+      // trigger view
       this.triggerViewerView(brick)
     }
   }
@@ -320,7 +318,7 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Returns bucket index for given brick.
+   * Returns lower bucket index for given brick.
    * @param {Brick} brick
    * @throws {Error} Throws an error if brick is not part of pipe.
    * @return {number}
@@ -370,17 +368,16 @@ export default class Pipe extends Viewable {
     // wrap content inside Chain
     content = Chain.wrap(content)
 
-    // check for changes
+    // stop here, if no changes are being applied
     if (this.getContent(bucket).isEqualTo(content)) {
-      // nothing to do
       return this
     }
 
-    // set bucket content
+    // update bucket content
     this._bucketContent[bucket] = content
 
+    // select the last changed bucket
     if (sender === null || sender instanceof Viewer) {
-      // track last changed bucket to propagate from here when changing pipe
       this._selectedBucket = bucket
     }
 
@@ -452,18 +449,18 @@ export default class Pipe extends Viewable {
    */
   triggerViewerView (viewer) {
     // check if viewer is busy
-    if (this.getBrickMeta(viewer, 'busy')) {
+    if (this.getBrickState(viewer, 'busy')) {
       // skip view
       return this
     }
 
     // mark viewer as busy
-    this.setBrickMeta(viewer, 'busy', true)
+    this.setBrickState(viewer, 'busy', true)
 
     // collect view data
     const bucket = this.getBucketIndexForBrick(viewer)
     const content = this.getContent(bucket)
-    const settingsVersion = this.getBrickMeta(viewer, 'settingsVersion')
+    const settingsVersion = this.getBrickState(viewer, 'settingsVersion')
 
     // trigger view asynchronously
     setTimeout(() => {
@@ -495,9 +492,9 @@ export default class Pipe extends Viewable {
     }
 
     // mark brick as no longer busy
-    this.setBrickMeta(viewer, 'busy', false)
+    this.setBrickState(viewer, 'busy', false)
 
-    const settingsVersion = this.getBrickMeta(viewer, 'settingsVersion')
+    const settingsVersion = this.getBrickState(viewer, 'settingsVersion')
     const bucket = this.getBucketIndexForBrick(viewer)
 
     // there were views skipped when the current content or brick
@@ -515,80 +512,69 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Triggers encoder translation. Keeps track of busy encoders and skips
-   * translations accordingly.
+   * Triggers encoder translation and handles their results. Keeps track of busy
+   * encoders and skips or repeats translations accordingly.
    * @protected
    * @param {Encoder} encoder
    * @param {boolean} isEncode True for encoding, false for decoding.
-   * @return {Pipe} Fluent interface
    */
-  triggerEncoderTranslation (encoder, isEncode) {
-    // check if encoder is not busy
-    if (this.getBrickMeta(encoder, 'busy')) {
-      // skip translation
+  async triggerEncoderTranslation (encoder, isEncode) {
+    // skip translation if encoder is currently busy
+    // as soon as the encoder responds the translation will be repeated when the
+    // source content differs
+    if (this.getBrickState(encoder, 'busy')) {
       return this
     }
 
     // mark encoder as busy
-    this.setBrickMeta(encoder, 'busy', true)
+    this.setBrickState(encoder, 'busy', true)
 
     // collect translation data
-    const sourceBucket =
-      this.getBucketIndexForBrick(encoder) + (isEncode ? 0 : 1)
-    const source = this.getContent(sourceBucket)
-    const settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
+    const lowerBucket = this.getBucketIndexForBrick(encoder)
+    const source = this.getContent(lowerBucket + (isEncode ? 0 : 1))
+    const settingsVersion = this.getBrickState(encoder, 'settingsVersion')
 
-    // trigger translation
-    encoder.translate(source, isEncode)
-      // handle result
-      .then(result =>
-        this.encoderTranslationDidFinish(
-          encoder, null, isEncode, result, source, settingsVersion))
-      // catch errors
-      .catch(error =>
-        this.encoderTranslationDidFinish(
-          encoder, error, isEncode, false, source, settingsVersion))
+    // trigger encoder translation and await result
+    let result, error
+    try {
+      result = await encoder.translate(source, isEncode)
+    } catch (e) {
+      error = e
+    }
 
-    return this
-  }
-
-  /**
-   * Triggered when a result comes back from the encoder. Propagates it and
-   * triggers a new translation when the source has changed in the meantime.
-   * @protected
-   * @param {Encoder} encoder
-   * @param {?Error} error
-   * @param {boolean} isEncode True for encoding, false for decoding
-   * @param {Chain|boolean} result Result chain or false, if failed
-   * @param {Chain} usedSource
-   * @param {number} usedSettingsVersion
-   */
-  encoderTranslationDidFinish (
-    encoder, error, isEncode, result, usedSource, usedSettingsVersion) {
-    // check if encoder is still part of the pipe
+    // stop here if encoder is no longer part of the pipe
     if (!this.containsBrick(encoder)) {
-      // result is no longer relevant
-      // do nothing
       return
     }
 
-    // mark brick as no longer busy
-    this.setBrickMeta(encoder, 'busy', false)
+    // mark encoder as no longer busy
+    this.setBrickState(encoder, 'busy', false)
 
-    const settingsVersion = this.getBrickMeta(encoder, 'settingsVersion')
-    const lowerBucket = this.getBucketIndexForBrick(encoder)
-    const sourceBucket = isEncode ? lowerBucket : lowerBucket + 1
-    const resultBucket = isEncode ? lowerBucket + 1 : lowerBucket
+    // collect post translation data, buckets may have changed in the meantim
+    const postSettingsVersion = this.getBrickState(encoder, 'settingsVersion')
+    const postLowerBucket = this.getBucketIndexForBrick(encoder)
+    const postSource = this.getContent(postLowerBucket + (isEncode ? 0 : 1))
+    const resultBucket = postLowerBucket + (isEncode ? 1 : 0)
 
+    // check if the currently selected bucket has been relocated in the opposite
+    // encoding direction in the meantime
+    if ((isEncode && this._selectedBucket >= resultBucket) ||
+        (!isEncode && this._selectedBucket <= resultBucket)) {
+      // trigger translation in the opposite direction
+      this.triggerEncoderTranslation(encoder, !isEncode)
+      // result of this translation is no longer relevant
+      // throw it away and stop here
+      return
+    }
+
+    // if translation succeeded, propagate result
     if (!error) {
-      // propagate result
       this.setContent(result, resultBucket, encoder)
     }
 
-    // there were translations skipped when the current source content or brick
-    // settings changed during last translation
-    if (!this.getContent(sourceBucket).isEqualTo(usedSource) ||
-        settingsVersion !== usedSettingsVersion) {
+    // check if the source or the encoder settings have changed in the meantime
+    if (!postSource.isEqualTo(source) ||
+        settingsVersion !== postSettingsVersion) {
       // repeat translation
       this.triggerEncoderTranslation(encoder, isEncode)
     }

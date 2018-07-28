@@ -358,11 +358,12 @@ export default class Setting extends Viewable {
     if (
       typeof value !== 'boolean' &&
       typeof value !== 'number' &&
-      typeof value !== 'string'
+      typeof value !== 'string' &&
+      value !== null
     ) {
       throw new Error(
         `Value of setting '${this.getName()}' is expected to be a boolean, ` +
-        `number or string. Found value type '${typeof value}'.`)
+        `number, string or null. Found value type '${typeof value}'.`)
     }
     return value
   }
