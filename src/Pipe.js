@@ -511,6 +511,15 @@ export default class Pipe extends Viewable {
   }
 
   /**
+   * Delegate method triggered by child bricks when they change visibility.
+   * @param {Brick} brick Brick which changed visibility
+   * @param {boolean} hidden Wether brick is now hidden
+   */
+  brickVisibilityDidChange (brick, hidden) {
+    this.updateView()
+  }
+
+  /**
    * Delegate method triggered by child bricks when their settings changed.
    * @protected
    * @param {Encoder} brick Sender brick
@@ -536,15 +545,6 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Delegate method triggered by child bricks when they change visibility.
-   * @param {Brick} brick Brick which changed visibility
-   * @param {boolean} hidden Wether brick is now hidden
-   */
-  brickVisibilityDidChange (brick, hidden) {
-    this.updateView()
-  }
-
-  /**
    * Delegate method triggered by child bricks when they got reversed.
    * @protected
    * @param {Encoder} brick Sender brick
@@ -564,6 +564,9 @@ export default class Pipe extends Viewable {
       bricks.reverse()
       this.setContent(resultContent, 0)
       this.spliceBricks(0, 0, ...bricks)
+    } else {
+      // treat other scenarios like setting change events
+      this.brickSettingDidChange(brick)
     }
   }
 
@@ -588,6 +591,34 @@ export default class Pipe extends Viewable {
     // create brick and add it to the pipe
     const brick = BrickFactory.getInstance().create(name)
     this.spliceBricks(index, 0, brick)
+  }
+
+  /**
+   * Triggered when a brick is dropped on given index.
+   * @param {View} view Pipe view
+   * @param {number} index Index at which the brick is dropped
+   * @param {Brick|object} brickOrData Brick or brick data being dropped
+   * @param {boolean} copy Wether to copy or move the brick
+   */
+  viewBrickDidDrop (view, index, brickOrData, copy = false) {
+    let brick = brickOrData
+    if (!(brickOrData instanceof Brick)) {
+      // consider this to be brick data
+      brick = Brick.extract(brickOrData, BrickFactory.getInstance())
+      copy = true
+    } else if (copy) {
+      // make a copy of the brick
+      brick = Brick.extract(brick.serialize(), BrickFactory.getInstance())
+    }
+
+    const fromIndex = this._bricks.indexOf(brick)
+    if (!copy && index > fromIndex) {
+      index--
+    }
+    if (copy || fromIndex !== index) {
+      !copy && this.spliceBricks(fromIndex, 1)
+      this.spliceBricks(index, 0, brick)
+    }
   }
 
   /**

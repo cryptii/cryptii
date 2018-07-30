@@ -16,6 +16,16 @@
     padding: 16px;
     height: 104px;
     border-bottom: 1px solid $c-line;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+
+    .pipe--dragging & {
+
+      // inherit grabbing cursor from pipe
+      cursor: inherit;
+    }
   }
 
   &__btn-menu {
@@ -103,7 +113,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-left: -1px;
   }
 
   &__content {

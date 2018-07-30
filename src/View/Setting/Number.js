@@ -52,6 +52,7 @@ export default class NumberSettingView extends SettingView {
     const $stepDown = View.createElement('a', {
       className: 'setting-number__btn-step-down',
       href: '#',
+      draggable: false,
       onClick: this.stepDownButtonDidClick.bind(this)
     }, 'Step Down')
 
@@ -62,6 +63,7 @@ export default class NumberSettingView extends SettingView {
     const $stepUp = View.createElement('a', {
       className: 'setting-number__btn-step-up',
       href: '#',
+      draggable: false,
       onClick: this.stepUpButtonDidClick.bind(this)
     }, 'Step Up')
 

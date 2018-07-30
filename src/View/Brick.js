@@ -15,6 +15,7 @@ export default class BrickView extends View {
     this._$menu = null
     this._$body = null
     this._$settings = null
+    this._$header = null
     this._$status = null
     this._$message = null
 
@@ -29,6 +30,7 @@ export default class BrickView extends View {
    */
   render () {
     this._$settings = this.renderSettings()
+    this._$header = this.renderHeader()
     const meta = this.getModel().getMeta()
 
     return View.createElement('div', {
@@ -36,7 +38,7 @@ export default class BrickView extends View {
       role: 'region',
       ariaLabel: `${meta.title} ${meta.type}`
     }, [
-      this.renderHeader(),
+      this._$header,
       this._$settings,
       this.renderContent(),
       this.renderStatus()
@@ -59,6 +61,7 @@ export default class BrickView extends View {
         View.createElement('a', {
           className: 'brick__btn-toggle',
           href: '#',
+          draggable: false,
           onClick: evt => {
             evt.preventDefault()
             this.getModel().viewReplaceButtonDidClick(this)
@@ -68,12 +71,12 @@ export default class BrickView extends View {
       View.createElement('a', {
         className: 'brick__btn-menu',
         href: '#',
+        draggable: false,
         onClick: evt => {
           evt.preventDefault()
           this.toggleMenu()
         }
-      }, 'Brick menu'),
-      this._$menu
+      }, 'Brick menu')
     ])
   }
 
@@ -113,6 +116,7 @@ export default class BrickView extends View {
           View.createElement('a', {
             className: 'menu__button',
             href: '#',
+            draggable: false,
             onClick: evt => {
               evt.preventDefault()
               this.menuItemDidClick(item.name)
@@ -193,6 +197,21 @@ export default class BrickView extends View {
         : null
 
       this._$settings.insertBefore(view.getElement(), $referenceNode)
+
+      // set 'first' modifier on first setting in each row
+      let columns = 0
+      settingViews.forEach(settingView => {
+        const width = settingView.getModel().getWidth()
+        const $setting = settingView.getElement()
+        columns += width
+        if (columns === width || columns > 12) {
+          columns = width
+          $setting.classList.add('setting--first')
+        } else {
+          $setting.classList.remove('setting--first')
+        }
+      })
+
       return this
     }
     return super.appendSubviewElement(view)
@@ -217,14 +236,23 @@ export default class BrickView extends View {
    */
   toggleMenu () {
     this._menuVisible = !this._menuVisible
-    this._$menu.classList.toggle('menu--visible', this._menuVisible)
 
     if (this._menuVisible) {
+      // append menu and trigger next cycle
+      this._$header.appendChild(this._$menu)
+      this._$menu.getBoundingClientRect()
+
+      // show menu animated
+      this._$menu.classList.add('menu--visible')
+
       // listen to the next window click to hide the menu again
       window.requestAnimationFrame(() => {
         window.addEventListener('click', this._menuHideHandler)
       })
     } else {
+      // remove menu
+      this._$header.removeChild(this._$menu)
+
       // remove listener
       window.removeEventListener('click', this._menuHideHandler)
     }

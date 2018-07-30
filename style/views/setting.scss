@@ -31,7 +31,7 @@
     position: absolute;
     left: 50%;
     bottom: 0;
-    width: calc(100% + 8px);
+    width: 100%;
     padding: 9px 12px 8px;
     border-radius: $default-border-radius;
     transform: translate(-50%, 100%);
@@ -79,6 +79,12 @@
         }
       }
     }
+  }
+
+  &--first {
+
+    // modifier applied on first setting in each row
+    border-left: none;
   }
 
   &--invalid {
