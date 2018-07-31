@@ -200,7 +200,10 @@ export default class PipeView extends View {
   _createPipePart (index) {
     return View.createElement('a', {
       className: 'pipe__part-pipe',
-      onClick: this.addPartDidClick.bind(this, index),
+      onClick: evt => {
+        this.getModel().viewAddButtonDidClick(this, index)
+        evt.preventDefault()
+      },
       href: '#',
       draggable: false
     }, [
@@ -236,7 +239,10 @@ export default class PipeView extends View {
   _createCollapsedPart (bricks) {
     return View.createElement('a', {
       className: `pipe__part-collapsed`,
-      onClick: this.collapsedPartDidClick.bind(this, bricks),
+      onClick: evt => {
+        this.getModel().viewHiddenBrickGroupDidClick(this, bricks)
+        evt.preventDefault()
+      },
       href: '#',
       draggable: false
     }, bricks.map(() =>
@@ -402,28 +408,6 @@ export default class PipeView extends View {
         this.getElement().classList.remove('pipe--dragging')
       }
     }
-  }
-
-  /**
-   * Triggered when user clicks on pipe part.
-   * @protected
-   * @param {number} index
-   * @param {Event} evt
-   */
-  addPartDidClick (index, evt) {
-    this.getModel().viewAddButtonDidClick(this, index)
-    evt.preventDefault()
-  }
-
-  /**
-   * Triggered when user clicks on collapsed part.
-   * @param {Brick[]} bricks
-   * @param {Event} evt
-   */
-  collapsedPartDidClick (bricks, evt) {
-    // make bricks in this collapsed group visible
-    bricks.forEach(brick => brick.setHidden(false))
-    evt.preventDefault()
   }
 
   /**

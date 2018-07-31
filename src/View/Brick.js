@@ -119,7 +119,7 @@ export default class BrickView extends View {
             draggable: false,
             onClick: evt => {
               evt.preventDefault()
-              this.menuItemDidClick(item.name)
+              this.getModel().viewMenuItemDidClick(this, item.name)
             }
           }, item.label)
         ])
@@ -255,24 +255,6 @@ export default class BrickView extends View {
 
       // remove listener
       window.removeEventListener('click', this._menuHideHandler)
-    }
-  }
-
-  /**
-   * Triggered when menu item has been clicked.
-   * @param {string} name Menu item name
-   */
-  menuItemDidClick (name) {
-    switch (name) {
-      case 'remove':
-        this.getModel().viewRemoveMenuItemDidClick(this)
-        break
-      case 'hide':
-        this.getModel().setHidden(true)
-        break
-      case 'randomize':
-        this.getModel().randomize()
-        break
     }
   }
 

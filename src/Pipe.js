@@ -4,6 +4,7 @@ import BrickFactory from './Factory/Brick'
 import ByteEncoder from './ByteEncoder'
 import Chain from './Chain'
 import Encoder from './Encoder'
+import EventManager from './EventManager'
 import InvalidInputError from './Error/InvalidInput'
 import LibraryModalView from './View/Modal/Library'
 import PipeView from './View/Pipe'
@@ -627,57 +628,6 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Triggered when view add button has been clicked.
-   * @protected
-   * @param {View} view
-   * @param {number} index
-   */
-  async viewAddButtonDidClick (view, index) {
-    const library = BrickFactory.getInstance().getLibrary()
-    const modalView = new LibraryModalView(library)
-
-    let name
-    try {
-      name = await modalView.prompt()
-    } catch (error) {
-      // stop here when user cancels the modal view
-      return
-    }
-
-    // create brick and add it to the pipe
-    const brick = BrickFactory.getInstance().create(name)
-    this.spliceBricks(index, 0, brick)
-  }
-
-  /**
-   * Triggered when a brick is dropped on given index.
-   * @param {View} view Pipe view
-   * @param {number} index Index at which the brick is dropped
-   * @param {Brick|object} brickOrData Brick or brick data being dropped
-   * @param {boolean} copy Wether to copy or move the brick
-   */
-  viewBrickDidDrop (view, index, brickOrData, copy = false) {
-    let brick = brickOrData
-    if (!(brickOrData instanceof Brick)) {
-      // consider this to be brick data
-      brick = Brick.extract(brickOrData, BrickFactory.getInstance())
-      copy = true
-    } else if (copy) {
-      // make a copy of the brick
-      brick = Brick.extract(brick.serialize(), BrickFactory.getInstance())
-    }
-
-    const fromIndex = this._bricks.indexOf(brick)
-    if (!copy && index > fromIndex) {
-      index--
-    }
-    if (copy || fromIndex !== index) {
-      !copy && this.spliceBricks(fromIndex, 1)
-      this.spliceBricks(index, 0, brick)
-    }
-  }
-
-  /**
    * Triggered when brick view replace button has been clicked.
    * @protected
    * @param {Brick} brick
@@ -698,6 +648,76 @@ export default class Pipe extends Viewable {
     if (name !== brick.getMeta().name) {
       this.replaceBrick(brick, name)
     }
+  }
+
+  /**
+   * Triggered when view add button has been clicked.
+   * @protected
+   * @param {PipeView} view
+   * @param {number} index
+   */
+  async viewAddButtonDidClick (view, index) {
+    // track action
+    EventManager.trigger('pipeAddButtonClick', { pipe: this, index })
+
+    // build modal
+    const library = BrickFactory.getInstance().getLibrary()
+    const modalView = new LibraryModalView(library)
+
+    let name
+    try {
+      name = await modalView.prompt()
+    } catch (error) {
+      // stop here when user cancels the modal view
+      return
+    }
+
+    // create brick and add it to the pipe
+    const brick = BrickFactory.getInstance().create(name)
+    this.spliceBricks(index, 0, brick)
+  }
+
+  /**
+   * Triggered when a brick is dropped on given index.
+   * @param {PipeView} view Sender
+   * @param {number} index Index at which the brick is dropped
+   * @param {Brick|object} brickOrData Brick or brick data being dropped
+   * @param {boolean} copy Wether to copy or move the brick
+   */
+  viewBrickDidDrop (view, index, brickOrData, copy = false) {
+    let brick = brickOrData
+    if (!(brickOrData instanceof Brick)) {
+      // consider this to be brick data
+      brick = Brick.extract(brickOrData, BrickFactory.getInstance())
+      copy = true
+    } else if (copy) {
+      // make a copy of the brick
+      brick = Brick.extract(brick.serialize(), BrickFactory.getInstance())
+    }
+
+    // track action
+    EventManager.trigger('pipeBrickDrop', { pipe: this, index, brick, copy })
+
+    const fromIndex = this._bricks.indexOf(brick)
+    if (!copy && index > fromIndex) {
+      index--
+    }
+    if (copy || fromIndex !== index) {
+      !copy && this.spliceBricks(fromIndex, 1)
+      this.spliceBricks(index, 0, brick)
+    }
+  }
+
+  /**
+   * Triggered when a hidden brick group has been clicked.
+   * @param {PipeView} view Sender
+   * @param {Brick[]} bricks Array of bricks in group
+   */
+  viewHiddenBrickGroupDidClick (view, bricks) {
+    // make bricks in this collapsed group visible
+    bricks.forEach(brick => brick.setHidden(false))
+    // track action
+    EventManager.trigger('pipeHiddenBrickGroupClick', { pipe: this, bricks })
   }
 
   /**

@@ -3,6 +3,7 @@ import BrickView from './View/Brick'
 import Setting from './Setting'
 import SettingFactory from './Factory/Setting'
 import Viewable from './Viewable'
+import EventManager from './EventManager'
 
 /**
  * Abstract element of the pipe
@@ -343,22 +344,38 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Triggered when remove menu item has been clicked.
-   * @protected
+   * Triggered when menu item has been clicked.
+   * @param {BrickView} view Sender
+   * @param {string} name Menu item name
    */
-  viewRemoveMenuItemDidClick (view) {
-    if (this.hasPipe()) {
-      // remove self from pipe
-      this.getPipe().removeBrick(this)
+  viewMenuItemDidClick (view, name) {
+    // track action
+    EventManager.trigger('brickMenuItemClick', { brick: this, menuItem: name })
+
+    // decide what to do
+    switch (name) {
+      case 'remove':
+        this.hasPipe() && this.getPipe().removeBrick(this)
+        break
+      case 'hide':
+        this.setHidden(true)
+        break
+      case 'randomize':
+        this.randomize()
+        break
     }
   }
 
   /**
    * Triggered when replace button has been clicked.
+   * @param {BrickView} view Sender
    * @protected
    */
-  viewReplaceButtonDidClick () {
+  viewReplaceButtonDidClick (view) {
     if (this.hasPipe()) {
+      // track action
+      EventManager.trigger('brickReplaceButtonClick', { brick: this })
+      // forward request to pipe
       this.getPipe().brickReplaceButtonDidClick(this)
     }
   }

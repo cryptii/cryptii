@@ -2,6 +2,7 @@
 import Brick from './Brick'
 import Chain from './Chain'
 import EncoderView from './View/Encoder'
+import EventManager from './EventManager'
 import InvalidInputError from './Error/InvalidInput'
 import MathUtil from './MathUtil'
 
@@ -266,5 +267,19 @@ export default class Encoder extends Brick {
    */
   didTranslate (content, isEncode) {
     return content
+  }
+
+  /**
+   * Triggered when the encoder has been reversed.
+   * @param {EncoderView} view Sender
+   */
+  viewDidReverse (view) {
+    // reverse self
+    this.setReverse(!this.isReverse())
+    // track action
+    EventManager.trigger('encoderReverse', {
+      encoder: this,
+      reverse: this.isReverse()
+    })
   }
 }

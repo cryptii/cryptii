@@ -77,7 +77,7 @@ export default class EncoderView extends BrickView {
     // check if encoder should be reversed
     const reverse = action === 'decode'
     if (this.getModel().isReverse() !== reverse) {
-      this.getModel().setReverse(reverse)
+      this.getModel().viewDidReverse(this)
     }
   }
 
