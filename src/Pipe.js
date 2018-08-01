@@ -153,6 +153,9 @@ export default class Pipe extends Viewable {
       if (brick instanceof Encoder) {
         bucketInsertCount++
       }
+
+      // track event
+      EventManager.trigger('pipeAddBrick', { pipe: this, brick })
     })
 
     removedBricks.forEach(brick => {
@@ -162,6 +165,9 @@ export default class Pipe extends Viewable {
       if (brick instanceof Encoder) {
         bucketRemoveCount++
       }
+
+      // track event
+      EventManager.trigger('pipeRemoveBrick', { pipe: this, brick })
     })
 
     // update buckets if needed
