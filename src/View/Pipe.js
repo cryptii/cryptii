@@ -259,7 +259,12 @@ export default class PipeView extends View {
    */
   isBrickDragEvent (evt) {
     // check if brick mime type is among the drop types
-    return evt.dataTransfer.types.indexOf(brickMimeType) !== -1
+    const types = evt.dataTransfer.types
+    if (types.contains !== undefined) {
+      // in Edge, types is a DOMStringList
+      return types.contains(brickMimeType)
+    }
+    return types.indexOf(brickMimeType) !== -1
   }
 
   /**
