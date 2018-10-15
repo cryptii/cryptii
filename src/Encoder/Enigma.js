@@ -21,10 +21,12 @@ const models = [
     characterGroupSize: 5,
     plugboard: true,
     reflectorThumbwheel: false,
+    entryRotors: ['ETW-ABCDEF'],
+    reflectorRotors: ['UKW-A', 'UKW-B', 'UKW-C'],
     slots: [
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['I', 'II', 'III', 'IV', 'V'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V'] }
     ]
   },
   {
@@ -33,10 +35,12 @@ const models = [
     characterGroupSize: 5,
     plugboard: true,
     reflectorThumbwheel: false,
+    entryRotors: ['ETW-ABCDEF'],
+    reflectorRotors: ['UKW-B', 'UKW-C'],
     slots: [
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] }
     ]
   },
   {
@@ -45,11 +49,13 @@ const models = [
     characterGroupSize: 4,
     plugboard: true,
     reflectorThumbwheel: false,
+    entryRotors: ['ETW-ABCDEF'],
+    reflectorRotors: ['UKW-B-thin', 'UKW-C-thin'],
     slots: [
-      { type: 'rotor-thin' },
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['beta', 'gamma'], rotating: false },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] }
     ]
   },
   {
@@ -58,10 +64,12 @@ const models = [
     characterGroupSize: 5,
     plugboard: false,
     reflectorThumbwheel: true,
+    entryRotors: ['ETW-QWERTZ'],
+    reflectorRotors: ['UKW-COM'],
     slots: [
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['I-D', 'II-D', 'III-D'] },
+      { rotors: ['I-D', 'II-D', 'III-D'] },
+      { rotors: ['I-D', 'II-D', 'III-D'] }
     ]
   },
   {
@@ -70,10 +78,18 @@ const models = [
     characterGroupSize: 5,
     plugboard: false,
     reflectorThumbwheel: true,
+    entryRotors: ['ETW-T'],
+    reflectorRotors: ['UKW-T'],
     slots: [
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: [
+        'I-T', 'II-T', 'III-T', 'IV-T',
+        'V-T', 'VI-T', 'VII-T', 'VIII-T'] },
+      { rotors: [
+        'I-T', 'II-T', 'III-T', 'IV-T',
+        'V-T', 'VI-T', 'VII-T', 'VIII-T'] },
+      { rotors: [
+        'I-T', 'II-T', 'III-T', 'IV-T',
+        'V-T', 'VI-T', 'VII-T', 'VIII-T'] }
     ]
   },
   {
@@ -82,10 +98,12 @@ const models = [
     characterGroupSize: 5,
     plugboard: false,
     reflectorThumbwheel: true,
+    entryRotors: ['ETW-QWERTZ'],
+    reflectorRotors: ['UKW-COM'],
     slots: [
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['I-KS', 'II-KS', 'III-KS'] },
+      { rotors: ['I-KS', 'II-KS', 'III-KS'] },
+      { rotors: ['I-KS', 'II-KS', 'III-KS'] }
     ]
   },
   {
@@ -94,10 +112,12 @@ const models = [
     characterGroupSize: 5,
     plugboard: false,
     reflectorThumbwheel: true,
+    entryRotors: ['ETW-QWERTZ'],
+    reflectorRotors: ['UKW-KR'],
     slots: [
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['I-KR', 'II-KR', 'III-KR'] },
+      { rotors: ['I-KR', 'II-KR', 'III-KR'] },
+      { rotors: ['I-KR', 'II-KR', 'III-KR'] }
     ]
   },
   {
@@ -106,355 +126,81 @@ const models = [
     characterGroupSize: 5,
     plugboard: true,
     reflectorThumbwheel: false,
+    entryRotors: ['ETW-ABCDEF'],
+    reflectorRotors: ['UKW-N'],
     slots: [
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['I-N', 'II-N', 'III-N', 'IV-N', 'V-N'] },
+      { rotors: ['I-N', 'II-N', 'III-N', 'IV-N', 'V-N'] },
+      { rotors: ['I-N', 'II-N', 'III-N', 'IV-N', 'V-N'] }
     ]
   }
 ]
 
-const rotors = [
-  {
-    name: 'I',
-    label: 'I',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'ekmflgdqvzntowyhxuspaibrcj',
-    turnovers: 'q'
-  },
-  {
-    name: 'II',
-    label: 'II',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'ajdksiruxblhwtmcqgznpyfvoe',
-    turnovers: 'e'
-  },
-  {
-    name: 'III',
-    label: 'III',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'bdfhjlcprtxvznyeiwgakmusqo',
-    turnovers: 'v'
-  },
-  {
-    name: 'IV',
-    label: 'IV',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'esovpzjayquirhxlnftgkdcmwb',
-    turnovers: 'j'
-  },
-  {
-    name: 'V',
-    label: 'V',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'vzbrgityupsdnhlxawmjqofeck',
-    turnovers: 'z'
-  },
-  {
-    name: 'VI',
-    label: 'VI',
-    type: 'rotor',
-    models: ['M3', 'M4'],
-    wiring: 'jpgvoumfyqbenhzrdkasxlictw',
-    turnovers: 'zm'
-  },
-  {
-    name: 'VII',
-    label: 'VII',
-    type: 'rotor',
-    models: ['M3', 'M4'],
-    wiring: 'nzjhgrcxmyswboufaivlpekqdt',
-    turnovers: 'zm'
-  },
-  {
-    name: 'VIII',
-    label: 'VIII',
-    type: 'rotor',
-    models: ['M3', 'M4'],
-    wiring: 'fkqhtlxocbjspdzramewniuygv',
-    turnovers: 'zm'
-  },
-  {
-    name: 'beta',
-    label: 'Beta',
-    type: 'rotor-thin',
-    models: ['M4'],
-    wiring: 'leyjvcnixwpbqmdrtakzgfuhos',
-    rotating: false
-  },
-  {
-    name: 'gamma',
-    label: 'Gamma',
-    type: 'rotor-thin',
-    models: ['M4'],
-    wiring: 'fsokanuerhmbtiycwlqpzxvgjd',
-    rotating: false
-  },
-  {
-    name: 'I-D',
-    label: 'I',
-    type: 'rotor',
-    models: ['D'],
-    wiring: 'lpgszmhaeoqkvxrfybutnicjdw',
-    turnovers: 'y'
-  },
-  {
-    name: 'II-D',
-    label: 'II',
-    type: 'rotor',
-    models: ['D'],
-    wiring: 'slvgbtfxjqohewirzyamkpcndu',
-    turnovers: 'e'
-  },
-  {
-    name: 'III-D',
-    label: 'III',
-    type: 'rotor',
-    models: ['D'],
-    wiring: 'cjgdpshkturawzxfmynqobvlie',
-    turnovers: 'n'
-  },
-  {
-    name: 'I-T',
-    label: 'I',
-    type: 'rotor',
-    models: ['T'],
-    wiring: 'kptyuelocvgrfqdanjmbswhzxi',
-    turnovers: 'wzekq'
-  },
-  {
-    name: 'II-T',
-    label: 'II',
-    type: 'rotor',
-    models: ['T'],
-    wiring: 'uphzlweqmtdjxcaksoigvbyfnr',
-    turnovers: 'wzflr'
-  },
-  {
-    name: 'III-T',
-    label: 'III',
-    type: 'rotor',
-    models: ['T'],
-    wiring: 'qudlyrfekonvzaxwhmgpjbsict',
-    turnovers: 'wzekq'
-  },
-  {
-    name: 'IV-T',
-    label: 'IV',
-    type: 'rotor',
-    models: ['T'],
-    wiring: 'ciwtbkxnrespflydagvhquojzm',
-    turnovers: 'wzflr'
-  },
-  {
-    name: 'V-T',
-    label: 'V',
-    type: 'rotor',
-    models: ['T'],
-    wiring: 'uaxgisnjbverdylfzwtpckohmq',
-    turnovers: 'ycfkr'
-  },
-  {
-    name: 'VI-T',
-    label: 'VI',
-    type: 'rotor',
-    models: ['T'],
-    wiring: 'xfuzgalvhcnysewqtdmrbkpioj',
-    turnovers: 'xeimq'
-  },
-  {
-    name: 'VII-T',
-    label: 'VII',
-    type: 'rotor',
-    models: ['T'],
-    wiring: 'bjvftxplnayozikwgdqeruchsm',
-    turnovers: 'ycfkr'
-  },
-  {
-    name: 'VIII-T',
-    label: 'VIII',
-    type: 'rotor',
-    models: ['T'],
-    wiring: 'ymtpnzhwkodajxeluqvgcbisfr',
-    turnovers: 'xeimq'
-  },
-  {
-    name: 'I-KS',
-    label: 'I',
-    type: 'rotor',
-    models: ['KS'],
-    wiring: 'pezuohxscvfmtbglrinqjwaydk',
-    turnovers: 'y'
-  },
-  {
-    name: 'II-KS',
-    label: 'II',
-    type: 'rotor',
-    models: ['KS'],
-    wiring: 'zouesydkfwpciqxhmvblgnjrat',
-    turnovers: 'e'
-  },
-  {
-    name: 'III-KS',
-    label: 'III',
-    type: 'rotor',
-    models: ['KS'],
-    wiring: 'ehrvxgaobqusimzflynwktpdjc',
-    turnovers: 'n'
-  },
-  {
-    name: 'I-KR',
-    label: 'I',
-    type: 'rotor',
-    models: ['KR'],
-    wiring: 'jgdqoxuscamifrvtpnewkblzyh',
-    turnovers: 'n'
-  },
-  {
-    name: 'II-KR',
-    label: 'II',
-    type: 'rotor',
-    models: ['KR'],
-    wiring: 'ntzpsfbokmwrcjdivlaeyuxhgq',
-    turnovers: 'e'
-  },
-  {
-    name: 'III-KR',
-    label: 'III',
-    type: 'rotor',
-    models: ['KR'],
-    wiring: 'jviubhtcdyakeqzposgxnrmwfl',
-    turnovers: 'y'
-  },
-  {
-    name: 'I-N',
-    label: 'I',
-    type: 'rotor',
-    models: ['N'],
-    wiring: 'wtokasuyvrbxjhqcpzefmdinlg',
-    turnovers: 'q'
-  },
-  {
-    name: 'II-N',
-    label: 'II',
-    type: 'rotor',
-    models: ['N'],
-    wiring: 'gjlpubswemctqvhxaofzdrkyni',
-    turnovers: 'e'
-  },
-  {
-    name: 'III-N',
-    label: 'III',
-    type: 'rotor',
-    models: ['N'],
-    wiring: 'jwfmhnbpusdytixvzgrqlaoekc',
-    turnovers: 'v'
-  },
-  {
-    name: 'IV-N',
-    label: 'IV',
-    type: 'rotor',
-    models: ['N'],
-    wiring: 'esovpzjayquirhxlnftgkdcmwb',
-    turnovers: 'j'
-  },
-  {
-    name: 'V-N',
-    label: 'V',
-    type: 'rotor',
-    models: ['N'],
-    wiring: 'hejxqotzbvfdascilwpgynmurk',
-    turnovers: 'z'
-  },
-  {
-    name: 'ETW-ABCDEF',
-    label: 'Wired in alphabetical order',
-    type: 'entry',
-    models: ['I', 'M3', 'M4', 'N'],
-    wiring: 'abcdefghijklmnopqrstuvwxyz'
-  },
-  {
-    name: 'ETW-QWERTZ',
-    label: 'Wired in keyboard order',
-    type: 'entry',
-    models: ['D', 'KS', 'KR'],
-    wiring: 'jwulcmnohpqzyxiradkegvbtsf'
-  },
-  {
-    name: 'ETW-T',
-    label: 'ETW Enigma T',
-    type: 'entry',
-    models: ['T'],
-    wiring: 'ilxrztkgjyamwvdufcpqeonshb'
-  },
-  {
-    name: 'UKW-A',
-    label: 'UKW A',
-    type: 'reflector',
-    models: ['I'],
-    wiring: 'ejmzalyxvbwfcrquontspikhgd'
-  },
-  {
-    name: 'UKW-B',
-    label: 'UKW B',
-    type: 'reflector',
-    models: ['I', 'M3'],
-    wiring: 'yruhqsldpxngokmiebfzcwvjat'
-  },
-  {
-    name: 'UKW-C',
-    label: 'UKW C',
-    type: 'reflector',
-    models: ['I', 'M3'],
-    wiring: 'fvpjiaoyedrzxwgctkuqsbnmhl'
-  },
-  {
-    name: 'UKW-B-thin',
-    label: 'UKW B thin',
-    type: 'reflector',
-    models: ['M4'],
-    wiring: 'enkqauywjicopblmdxzvfthrgs'
-  },
-  {
-    name: 'UKW-C-thin',
-    label: 'UKW C thin',
-    type: 'reflector',
-    models: ['M4'],
-    wiring: 'rdobjntkvehmlfcwzaxgyipsuq'
-  },
-  {
-    name: 'UKW-D',
-    label: 'UKW',
-    type: 'reflector',
-    models: ['D', 'KS'],
-    wiring: 'imetcgfraysqbzxwlhkdvupojn'
-  },
-  {
-    name: 'UKW-KR',
-    label: 'UKW',
-    type: 'reflector',
-    models: ['KR'],
-    wiring: 'qyhognecvpuztfdjaxwmkisrbl'
-  },
-  {
-    name: 'UKW-T',
-    label: 'UKW',
-    type: 'reflector',
-    models: ['T'],
-    wiring: 'gekpbtaumocniljdxzyfhwvqsr'
-  },
-  {
-    name: 'UKW-N',
-    label: 'UKW',
-    type: 'reflector',
-    models: ['N'],
-    wiring: 'mowjypuxndsraibfvlkzgqchet'
-  }
+const rotorTableColumns = ['name', 'label', 'wiring', 'turnovers']
+const rotorTable = [
+  /* eslint-disable no-multi-spaces */
+
+  // Enigma I, M3, M4
+  'I',          'I',          'ekmflgdqvzntowyhxuspaibrcj', 'q',
+  'II',         'II',         'ajdksiruxblhwtmcqgznpyfvoe', 'e',
+  'III',        'III',        'bdfhjlcprtxvznyeiwgakmusqo', 'v',
+  'IV',         'IV',         'esovpzjayquirhxlnftgkdcmwb', 'j',
+  'V',          'V',          'vzbrgityupsdnhlxawmjqofeck', 'z',
+  'VI',         'VI',         'jpgvoumfyqbenhzrdkasxlictw', 'zm',
+  'VII',        'VII',        'nzjhgrcxmyswboufaivlpekqdt', 'zm',
+  'VIII',       'VIII',       'fkqhtlxocbjspdzramewniuygv', 'zm',
+  'beta',       'Beta',       'leyjvcnixwpbqmdrtakzgfuhos', '',
+  'gamma',      'Gamma',      'fsokanuerhmbtiycwlqpzxvgjd', '',
+
+  // Enigma D
+  'I-D',        'I',          'lpgszmhaeoqkvxrfybutnicjdw', 'y',
+  'II-D',       'II',         'slvgbtfxjqohewirzyamkpcndu', 'e',
+  'III-D',      'III',        'cjgdpshkturawzxfmynqobvlie', 'n',
+
+  // Enigma T
+  'I-T',        'I',          'kptyuelocvgrfqdanjmbswhzxi', 'wzekq',
+  'II-T',       'II',         'uphzlweqmtdjxcaksoigvbyfnr', 'wzflr',
+  'III-T',      'III',        'qudlyrfekonvzaxwhmgpjbsict', 'wzekq',
+  'IV-T',       'IV',         'ciwtbkxnrespflydagvhquojzm', 'wzflr',
+  'V-T',        'V',          'uaxgisnjbverdylfzwtpckohmq', 'ycfkr',
+  'VI-T',       'VI',         'xfuzgalvhcnysewqtdmrbkpioj', 'xeimq',
+  'VII-T',      'VII',        'bjvftxplnayozikwgdqeruchsm', 'ycfkr',
+  'VIII-T',     'VIII',       'ymtpnzhwkodajxeluqvgcbisfr', 'xeimq',
+
+  // Enigma Swiss-K
+  'I-KS',       'I',          'pezuohxscvfmtbglrinqjwaydk', 'y',
+  'II-KS',      'II',         'zouesydkfwpciqxhmvblgnjrat', 'e',
+  'III-KS',     'III',        'ehrvxgaobqusimzflynwktpdjc', 'n',
+
+  // Railway
+  'I-KR',       'I',          'jgdqoxuscamifrvtpnewkblzyh', 'n',
+  'II-KR',      'II',         'ntzpsfbokmwrcjdivlaeyuxhgq', 'e',
+  'III-KR',     'III',        'jviubhtcdyakeqzposgxnrmwfl', 'y',
+
+  // Norenigma
+  'I-N',        'I',          'wtokasuyvrbxjhqcpzefmdinlg', 'q',
+  'II-N',       'II',         'gjlpubswemctqvhxaofzdrkyni', 'e',
+  'III-N',      'III',        'jwfmhnbpusdytixvzgrqlaoekc', 'v',
+  'IV-N',       'IV',         'esovpzjayquirhxlnftgkdcmwb', 'j',
+  'V-N',        'V',          'hejxqotzbvfdascilwpgynmurk', 'z',
+
+  // Entry rotors
+  'ETW-ABCDEF', 'Alphabet',   'abcdefghijklmnopqrstuvwxyz', '',
+  'ETW-QWERTZ', 'Keyboard',   'jwulcmnohpqzyxiradkegvbtsf', '',
+  'ETW-T',      'ETW',        'ilxrztkgjyamwvdufcpqeonshb', '',
+
+  // Reflector rotors
+  'UKW-A',      'UKW A',      'ejmzalyxvbwfcrquontspikhgd', '',
+  'UKW-B',      'UKW B',      'yruhqsldpxngokmiebfzcwvjat', '',
+  'UKW-C',      'UKW C',      'fvpjiaoyedrzxwgctkuqsbnmhl', '',
+  'UKW-B-thin', 'UKW B thin', 'enkqauywjicopblmdxzvfthrgs', '',
+  'UKW-C-thin', 'UKW C thin', 'rdobjntkvehmlfcwzaxgyipsuq', '',
+  'UKW-COM',    'UKW',        'imetcgfraysqbzxwlhkdvupojn', '',
+  'UKW-KR',     'UKW',        'qyhognecvpuztfdjaxwmkisrbl', '',
+  'UKW-T',      'UKW',        'gekpbtaumocniljdxzyfhwvqsr', '',
+  'UKW-N',      'UKW',        'mowjypuxndsraibfvlkzgqchet', ''
+
+  /* eslint-enable no-multi-spaces */
 ]
 
 // model and rotor map get created lazily
@@ -480,12 +226,12 @@ export default class EnigmaEncoder extends Encoder {
     super()
 
     // retrieve default model with its rotors
-    const model = EnigmaEncoder.findModel('M3')
-    const rotors = EnigmaEncoder.filterRotors(model.name, 'rotor')
+    const model = EnigmaEncoder.getModel('M3')
+    const rotors = EnigmaEncoder.getRotors(model.slots[0].rotors)
     const rotorNames = rotors.map(rotor => rotor.name)
     const rotorLabels = rotors.map(rotor => rotor.label)
-    const entries = EnigmaEncoder.filterRotors(model.name, 'entry')
-    const reflectors = EnigmaEncoder.filterRotors(model.name, 'reflector')
+    const entries = EnigmaEncoder.getRotors(model.entryRotors)
+    const reflectors = EnigmaEncoder.getRotors(model.reflectorRotors)
 
     // model setting
     this.registerSetting({
@@ -641,7 +387,7 @@ export default class EnigmaEncoder extends Encoder {
    * @return {EnigmaEncoder} Fluent interface
    */
   applyModel (modelName) {
-    const model = EnigmaEncoder.findModel(modelName)
+    const model = EnigmaEncoder.getModel(modelName)
     const maxSlotCount = EnigmaEncoder.getMaxSlotCount()
 
     // update setting options and layout for each slot
@@ -660,7 +406,7 @@ export default class EnigmaEncoder extends Encoder {
 
       if (slotVisible) {
         // configure rotor setting
-        const rotors = EnigmaEncoder.filterRotors(modelName, slot.type)
+        const rotors = EnigmaEncoder.getRotors(slot.rotors)
         rotorSetting.setElements(
           rotors.map(rotor => rotor.name),
           rotors.map(rotor => rotor.label),
@@ -675,18 +421,18 @@ export default class EnigmaEncoder extends Encoder {
     }
 
     // update reflector setting options
-    const reflectors = EnigmaEncoder.filterRotors(modelName, 'reflector')
+    const reflectorRotors = EnigmaEncoder.getRotors(model.reflectorRotors)
     const reflectorSetting = this.getSetting('reflector')
 
     reflectorSetting.setElements(
-      reflectors.map(rotor => rotor.name),
-      reflectors.map(rotor => rotor.label),
+      reflectorRotors.map(rotor => rotor.name),
+      reflectorRotors.map(rotor => rotor.label),
       null,
       false)
 
     // apply first rotor if current one is not available for this model
     if (reflectorSetting.validateValue(reflectorSetting.getValue()) !== true) {
-      reflectorSetting.setValue(reflectors[0].name)
+      reflectorSetting.setValue(reflectorRotors[0].name)
     }
 
     // make reflector position and ring visible when it has a thumbwheel
@@ -695,18 +441,18 @@ export default class EnigmaEncoder extends Encoder {
     this.getSetting('ringReflector').setVisible(model.reflectorThumbwheel)
 
     // update entry setting options
-    const entries = EnigmaEncoder.filterRotors(modelName, 'entry')
+    const entryRotors = EnigmaEncoder.getRotors(model.entryRotors)
     const entrySetting = this.getSetting('entry')
 
     entrySetting.setElements(
-      entries.map(rotor => rotor.name),
-      entries.map(rotor => rotor.label),
+      entryRotors.map(rotor => rotor.name),
+      entryRotors.map(rotor => rotor.label),
       null,
       false)
 
     // apply first rotor if current one is not available for this model
     if (entrySetting.validateValue(entrySetting.getValue()) !== true) {
-      entrySetting.setValue(entries[0].name)
+      entrySetting.setValue(entryRotors[0].name)
     }
 
     // only make plugboard visible when it is availabe for this model
@@ -722,28 +468,30 @@ export default class EnigmaEncoder extends Encoder {
    */
   performTranslate (content, isEncode) {
     const includeForeignChars = this.getSettingValue('includeForeignChars')
-    const model = EnigmaEncoder.findModel(this.getSettingValue('model'))
+    const model = EnigmaEncoder.getModel(this.getSettingValue('model'))
     let i = 0
 
-    // collect selected rotors, positions and ring settings
+    // collect slots, rotors, positions and rings for current translation
+    const slots = model.slots
     const rotors = []
     const positions = []
     const rings = []
 
-    for (i = 0; i < model.slots.length; i++) {
+    for (i = 0; i < slots.length; i++) {
       const rotorName = this.getSettingValue(`rotor${i + 1}`)
-      rotors.push(EnigmaEncoder.findRotor(rotorName))
+      rotors.push(EnigmaEncoder.getRotor(rotorName))
       positions.push(this.getSettingValue(`position${i + 1}`) - 1)
       rings.push(this.getSettingValue(`ring${i + 1}`) - 1)
     }
 
     // retrieve entry config
-    const entry = EnigmaEncoder.findRotor(this.getSettingValue('entry'))
+    const entryRotor = EnigmaEncoder.getRotor(this.getSettingValue('entry'))
     const entryPosition = 0
     const entryRing = 0
 
     // retrieve reflector config
-    const reflector = EnigmaEncoder.findRotor(this.getSettingValue('reflector'))
+    const reflectorRotor =
+      EnigmaEncoder.getRotor(this.getSettingValue('reflector'))
     const reflectorPosition =
       model.reflectorThumbwheel ? this.getSettingValue('positionReflector') : 0
     const reflectorRing =
@@ -778,15 +526,15 @@ export default class EnigmaEncoder extends Encoder {
       let rotorShifted = false
       i = 0
 
-      while (!rotorShifted && ++i < rotors.length) {
+      while (!rotorShifted && ++i < slots.length) {
         // check for turnovers
         if (EnigmaEncoder.rotorAtTurnover(rotors[i], positions[i])) {
           // shift current rotor, if it is not the last one (rotated later)
-          if (i !== rotors.length - 1) {
+          if (i !== slots.length - 1) {
             positions[i]++
           }
           // shift rotor on its left
-          if (rotors[i - 1].rotating !== false) {
+          if (slots[i - 1].rotating !== false) {
             positions[i - 1]++
           }
           // set shifted flag
@@ -803,7 +551,7 @@ export default class EnigmaEncoder extends Encoder {
       }
 
       // through the entry
-      char = map(char, entry, entryPosition, entryRing, false)
+      char = map(char, entryRotor, entryPosition, entryRing, false)
 
       // through the rotors (from right to left)
       for (i = rotors.length - 1; i >= 0; i--) {
@@ -811,7 +559,7 @@ export default class EnigmaEncoder extends Encoder {
       }
 
       // through the reflector
-      char = map(char, reflector, reflectorPosition, reflectorRing, false)
+      char = map(char, reflectorRotor, reflectorPosition, reflectorRing, false)
 
       // through the inverted rotors (from left to right)
       for (i = 0; i < rotors.length; i++) {
@@ -819,7 +567,7 @@ export default class EnigmaEncoder extends Encoder {
       }
 
       // through the inverted entry
-      char = map(char, entry, entryPosition, entryRing, true)
+      char = map(char, entryRotor, entryPosition, entryRing, true)
 
       // through the inverted plugboard, if any
       if (plugboard !== null) {
@@ -965,12 +713,12 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Finds model entry by given name.
+   * Returns model entry by given name.
    * @protected
    * @param {string} name Model name
    * @return {?object} Returns model entry or null if not found.
    */
-  static findModel (name) {
+  static getModel (name) {
     if (modelMap === null) {
       modelMap = {}
       models.forEach(model => {
@@ -990,32 +738,34 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Finds rotor entry by given name.
+   * Returns rotor entry by given name.
    * @protected
    * @param {string} name Rotor name
-   * @return {?object} Returns rotor entry or null if not found.
+   * @return {?object} Rotor entry or null if not found.
    */
-  static findRotor (name) {
+  static getRotor (name) {
     if (rotorMap === null) {
+      // read rotor table and build map lazily
       rotorMap = {}
-      rotors.forEach(rotor => {
+      let i, j, rotor
+      for (i = 0; i < rotorTable.length; i += rotorTableColumns.length) {
+        rotor = {}
+        for (j = 0; j < rotorTableColumns.length; j++) {
+          rotor[rotorTableColumns[j]] = rotorTable[i + j]
+        }
         rotorMap[rotor.name] = rotor
-      })
+      }
     }
     return rotorMap[name] || null
   }
 
   /**
-   * Filters rotors by model and type.
+   * Maps given names to rotor entries.
    * @protected
-   * @param {string} modelName Model name
-   * @param {string} [type='rotor'] Rotor type
-   * @return {object[]} Array of rotors
+   * @param {string[]} names Rotor names
+   * @return {object[]} Rotor entries
    */
-  static filterRotors (modelName, type = 'rotor') {
-    return rotors
-      .filter(rotor =>
-        rotor.type === type &&
-        rotor.models.indexOf(modelName) !== -1)
+  static getRotors (names) {
+    return names.map(name => EnigmaEncoder.getRotor(name))
   }
 }
