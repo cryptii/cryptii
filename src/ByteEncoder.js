@@ -216,37 +216,35 @@ export default class ByteEncoder {
       }
     }
 
-    // decode each pair of 4 characters
-    const bytes = []
-    let octet1, octet2, octet3, octet4
-    let byte2, byte3
-
-    for (let i = 0; i < octets.length; i += 4) {
-      // collect octets
-      octet1 = octets[i]
-      octet2 = i + 1 < octets.length ? octets[i + 1] : 0
-      octet3 = i + 2 < octets.length ? octets[i + 2] : 0
-      octet4 = i + 3 < octets.length ? octets[i + 3] : 0
-
-      // bits 1-6 from octet1 joined by bits 1-2 from octet2
-      bytes.push((octet1 << 2) | (octet2 >> 4))
-
-      // bits 3-6 from octet2 joined by bits 1-4 from octet3
-      byte2 = ((octet2 & 15) << 4) | (octet3 >> 2)
-
-      if (i + 2 < octets.length || byte2 !== 0) {
-        bytes.push(byte2)
-      }
-
-      // bits 1-2 from octet3 joined by bits 1-6 from octet4
-      byte3 = ((octet3 & 3) << 6) | octet4
-
-      if (i + 3 < octets.length || byte3 !== 0) {
-        bytes.push(byte3)
-      }
+    // calculate original padding and verify it
+    const padding = (4 - octets.length % 4) % 4
+    if (padding === 3) {
+      throw new ByteEncodingError(
+        `A single remaining encoded character in the last quadruple or a ` +
+        `padding of 3 characters is not allowed`)
     }
 
-    return new Uint8Array(bytes)
+    // fill up octets
+    for (i = 0; i < padding; i++) {
+      octets.push(0)
+    }
+
+    // map pairs of octets (4) to pairs of bytes (3)
+    const size = octets.length / 4 * 3
+    const bytes = new Uint8Array(size)
+    let j
+    for (i = 0; i < octets.length; i += 4) {
+      // calculate byte index
+      j = i / 4 * 3
+      // byte 1: bits 1-6 from octet 1 joined by bits 1-2 from octet 2
+      bytes[j] = (octets[i] << 2) | (octets[i + 1] >> 4)
+      // byte 2: bits 3-6 from octet 2 joined by bits 1-4 from octet 3
+      bytes[j + 1] = ((octets[i + 1] & 15) << 4) | (octets[i + 2] >> 2)
+      // byte 3: bits 1-2 from octet 3 joined by bits 1-6 from octet 4
+      bytes[j + 2] = ((octets[i + 2] & 3) << 6) | octets[i + 3]
+    }
+
+    return bytes.slice(0, size - padding)
   }
 
   /**

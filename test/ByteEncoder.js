@@ -28,13 +28,14 @@ const base64Tests = [
   },
   {
     variant: 'base64',
-    hex: '66',
-    base64: 'Zg=='
+    hex: '666f',
+    base64: 'Zm8='
   },
   {
     variant: 'base64',
-    hex: '666f',
-    base64: 'Zm8='
+    hex: '8985',
+    base64: 'iYW=',
+    direction: 'decode'
   },
   {
     variant: 'base64',
@@ -77,7 +78,7 @@ describe('ByteEncoder', () => {
   /** @test {ByteEncoder.base64StringFromBytes} */
   describe('base64StringFromBytes()', () => {
     it('should encode bytes to base64 string', () => {
-      base64Tests.forEach(test => {
+      base64Tests.filter(test => test.direction !== 'decode').forEach(test => {
         const bytes = ByteEncoder.bytesFromHexString(test.hex)
         const base64 = ByteEncoder.base64StringFromBytes(bytes, test.variant)
         assert.strictEqual(base64, test.base64)
@@ -87,7 +88,7 @@ describe('ByteEncoder', () => {
   /** @test {ByteEncoder.bytesFromBase64String} */
   describe('bytesFromBase64String()', () => {
     it('should decode base64 string to bytes', () => {
-      base64Tests.forEach(test => {
+      base64Tests.filter(test => test.direction !== 'encode').forEach(test => {
         const bytes = ByteEncoder.bytesFromBase64String(
           test.base64, test.variant)
         assert.deepStrictEqual(bytes, ByteEncoder.bytesFromHexString(test.hex))
