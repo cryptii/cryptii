@@ -18,12 +18,14 @@
     @extend %t-setting-label;
     color: $c-setting-label;
     align-self: flex-start;
+    user-select: auto;
   }
 
   &__field {
     position: relative;
     margin: $setting-field-padding-v $setting-padding-h;
     min-height: $setting-field-height - $setting-field-padding-v * 2;
+    user-select: auto;
   }
 
   &__message {

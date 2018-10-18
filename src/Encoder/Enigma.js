@@ -17,153 +17,190 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const models = [
   {
     name: 'I',
-    label: 'Enigma I (Army, Air Force)',
+    label: 'Enigma I (German Army & Air Force)',
     characterGroupSize: 5,
+    plugboard: true,
+    reflectorThumbwheel: false,
+    entryRotors: ['ETW-ABCDEF'],
+    reflectorRotors: ['UKW-A', 'UKW-B', 'UKW-C'],
     slots: [
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['I', 'II', 'III', 'IV', 'V'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V'] }
     ]
   },
   {
     name: 'M3',
-    label: 'Enigma M3 (Army, Navy)',
+    label: 'Enigma M3 (German Army & Navy)',
     characterGroupSize: 5,
+    plugboard: true,
+    reflectorThumbwheel: false,
+    entryRotors: ['ETW-ABCDEF'],
+    reflectorRotors: ['UKW-B', 'UKW-C'],
     slots: [
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] }
     ]
   },
   {
     name: 'M4',
-    label: 'Enigma M4 "Shark" (Submarines)',
+    label: 'Enigma M4 "Shark" (German Submarines)',
     characterGroupSize: 4,
+    plugboard: true,
+    reflectorThumbwheel: false,
+    entryRotors: ['ETW-ABCDEF'],
+    reflectorRotors: ['UKW-B-thin', 'UKW-C-thin'],
     slots: [
-      { type: 'rotor-thin' },
-      { type: 'rotor' },
-      { type: 'rotor' },
-      { type: 'rotor' }
+      { rotors: ['beta', 'gamma'], rotating: false },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] },
+      { rotors: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'] }
+    ]
+  },
+  {
+    name: 'D',
+    label: 'Enigma D (Commercial)',
+    characterGroupSize: 5,
+    plugboard: false,
+    reflectorThumbwheel: true,
+    entryRotors: ['ETW-QWERTZ'],
+    reflectorRotors: ['UKW-COM'],
+    slots: [
+      { rotors: ['I-D', 'II-D', 'III-D'] },
+      { rotors: ['I-D', 'II-D', 'III-D'] },
+      { rotors: ['I-D', 'II-D', 'III-D'] }
+    ]
+  },
+  {
+    name: 'T',
+    label: 'Enigma T "Tirpitz" (Japanese Army)',
+    characterGroupSize: 5,
+    plugboard: false,
+    reflectorThumbwheel: true,
+    entryRotors: ['ETW-T'],
+    reflectorRotors: ['UKW-T'],
+    slots: [
+      { rotors: [
+        'I-T', 'II-T', 'III-T', 'IV-T',
+        'V-T', 'VI-T', 'VII-T', 'VIII-T'] },
+      { rotors: [
+        'I-T', 'II-T', 'III-T', 'IV-T',
+        'V-T', 'VI-T', 'VII-T', 'VIII-T'] },
+      { rotors: [
+        'I-T', 'II-T', 'III-T', 'IV-T',
+        'V-T', 'VI-T', 'VII-T', 'VIII-T'] }
+    ]
+  },
+  {
+    name: 'KS',
+    label: 'Swiss-K (Swiss Army & Air Force)',
+    characterGroupSize: 5,
+    plugboard: false,
+    reflectorThumbwheel: true,
+    entryRotors: ['ETW-QWERTZ'],
+    reflectorRotors: ['UKW-COM'],
+    slots: [
+      { rotors: ['I-KS', 'II-KS', 'III-KS'] },
+      { rotors: ['I-KS', 'II-KS', 'III-KS'] },
+      { rotors: ['I-KS', 'II-KS', 'III-KS'] }
+    ]
+  },
+  {
+    name: 'KR',
+    label: 'Railway "Rocket" (German Railway)',
+    characterGroupSize: 5,
+    plugboard: false,
+    reflectorThumbwheel: true,
+    entryRotors: ['ETW-QWERTZ'],
+    reflectorRotors: ['UKW-KR'],
+    slots: [
+      { rotors: ['I-KR', 'II-KR', 'III-KR'] },
+      { rotors: ['I-KR', 'II-KR', 'III-KR'] },
+      { rotors: ['I-KR', 'II-KR', 'III-KR'] }
+    ]
+  },
+  {
+    name: 'N',
+    label: 'Norway Enigma "Norenigma" (Police Security Service)',
+    characterGroupSize: 5,
+    plugboard: true,
+    reflectorThumbwheel: false,
+    entryRotors: ['ETW-ABCDEF'],
+    reflectorRotors: ['UKW-N'],
+    slots: [
+      { rotors: ['I-N', 'II-N', 'III-N', 'IV-N', 'V-N'] },
+      { rotors: ['I-N', 'II-N', 'III-N', 'IV-N', 'V-N'] },
+      { rotors: ['I-N', 'II-N', 'III-N', 'IV-N', 'V-N'] }
     ]
   }
 ]
 
-const rotors = [
-  {
-    name: 'I',
-    label: 'I',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'ekmflgdqvzntowyhxuspaibrcj',
-    notches: 'q'
-  },
-  {
-    name: 'II',
-    label: 'II',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'ajdksiruxblhwtmcqgznpyfvoe',
-    notches: 'e'
-  },
-  {
-    name: 'III',
-    label: 'III',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'bdfhjlcprtxvznyeiwgakmusqo',
-    notches: 'v'
-  },
-  {
-    name: 'IV',
-    label: 'IV',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'esovpzjayquirhxlnftgkdcmwb',
-    notches: 'j'
-  },
-  {
-    name: 'V',
-    label: 'V',
-    type: 'rotor',
-    models: ['I', 'M3', 'M4'],
-    wiring: 'vzbrgityupsdnhlxawmjqofeck',
-    notches: 'z'
-  },
-  {
-    name: 'VI',
-    label: 'VI',
-    type: 'rotor',
-    models: ['M3', 'M4'],
-    wiring: 'jpgvoumfyqbenhzrdkasxlictw',
-    notches: 'zm'
-  },
-  {
-    name: 'VII',
-    label: 'VII',
-    type: 'rotor',
-    models: ['M3', 'M4'],
-    wiring: 'nzjhgrcxmyswboufaivlpekqdt',
-    notches: 'zm'
-  },
-  {
-    name: 'VIII',
-    label: 'VIII',
-    type: 'rotor',
-    models: ['M3', 'M4'],
-    wiring: 'fkqhtlxocbjspdzramewniuygv',
-    notches: 'zm'
-  },
-  {
-    name: 'beta',
-    label: 'Beta',
-    type: 'rotor-thin',
-    models: ['M4'],
-    wiring: 'leyjvcnixwpbqmdrtakzgfuhos',
-    rotating: false
-  },
-  {
-    name: 'gamma',
-    label: 'Gamma',
-    type: 'rotor-thin',
-    models: ['M4'],
-    wiring: 'fsokanuerhmbtiycwlqpzxvgjd',
-    rotating: false
-  },
-  {
-    name: 'UKW-A',
-    label: 'UKW A',
-    type: 'reflector',
-    models: ['I'],
-    wiring: 'ejmzalyxvbwfcrquontspikhgd'
-  },
-  {
-    name: 'UKW-B',
-    label: 'UKW B',
-    type: 'reflector',
-    models: ['I', 'M3'],
-    wiring: 'yruhqsldpxngokmiebfzcwvjat'
-  },
-  {
-    name: 'UKW-C',
-    label: 'UKW C',
-    type: 'reflector',
-    models: ['I', 'M3'],
-    wiring: 'fvpjiaoyedrzxwgctkuqsbnmhl'
-  },
-  {
-    name: 'UKW-B-thin',
-    label: 'UKW B thin',
-    type: 'reflector',
-    models: ['M4'],
-    wiring: 'enkqauywjicopblmdxzvfthrgs'
-  },
-  {
-    name: 'UKW-C-thin',
-    label: 'UKW C thin',
-    type: 'reflector',
-    models: ['M4'],
-    wiring: 'rdobjntkvehmlfcwzaxgyipsuq'
-  }
+const rotorTableColumns = ['name', 'label', 'wiring', 'turnovers']
+const rotorTable = [
+  /* eslint-disable no-multi-spaces */
+
+  // Enigma I, M3, M4
+  'I',          'I',          'ekmflgdqvzntowyhxuspaibrcj', 'q',
+  'II',         'II',         'ajdksiruxblhwtmcqgznpyfvoe', 'e',
+  'III',        'III',        'bdfhjlcprtxvznyeiwgakmusqo', 'v',
+  'IV',         'IV',         'esovpzjayquirhxlnftgkdcmwb', 'j',
+  'V',          'V',          'vzbrgityupsdnhlxawmjqofeck', 'z',
+  'VI',         'VI',         'jpgvoumfyqbenhzrdkasxlictw', 'zm',
+  'VII',        'VII',        'nzjhgrcxmyswboufaivlpekqdt', 'zm',
+  'VIII',       'VIII',       'fkqhtlxocbjspdzramewniuygv', 'zm',
+  'beta',       'Beta',       'leyjvcnixwpbqmdrtakzgfuhos', '',
+  'gamma',      'Gamma',      'fsokanuerhmbtiycwlqpzxvgjd', '',
+
+  // Enigma D
+  'I-D',        'I',          'lpgszmhaeoqkvxrfybutnicjdw', 'y',
+  'II-D',       'II',         'slvgbtfxjqohewirzyamkpcndu', 'e',
+  'III-D',      'III',        'cjgdpshkturawzxfmynqobvlie', 'n',
+
+  // Enigma T
+  'I-T',        'I',          'kptyuelocvgrfqdanjmbswhzxi', 'wzekq',
+  'II-T',       'II',         'uphzlweqmtdjxcaksoigvbyfnr', 'wzflr',
+  'III-T',      'III',        'qudlyrfekonvzaxwhmgpjbsict', 'wzekq',
+  'IV-T',       'IV',         'ciwtbkxnrespflydagvhquojzm', 'wzflr',
+  'V-T',        'V',          'uaxgisnjbverdylfzwtpckohmq', 'ycfkr',
+  'VI-T',       'VI',         'xfuzgalvhcnysewqtdmrbkpioj', 'xeimq',
+  'VII-T',      'VII',        'bjvftxplnayozikwgdqeruchsm', 'ycfkr',
+  'VIII-T',     'VIII',       'ymtpnzhwkodajxeluqvgcbisfr', 'xeimq',
+
+  // Enigma Swiss-K
+  'I-KS',       'I',          'pezuohxscvfmtbglrinqjwaydk', 'y',
+  'II-KS',      'II',         'zouesydkfwpciqxhmvblgnjrat', 'e',
+  'III-KS',     'III',        'ehrvxgaobqusimzflynwktpdjc', 'n',
+
+  // Railway
+  'I-KR',       'I',          'jgdqoxuscamifrvtpnewkblzyh', 'n',
+  'II-KR',      'II',         'ntzpsfbokmwrcjdivlaeyuxhgq', 'e',
+  'III-KR',     'III',        'jviubhtcdyakeqzposgxnrmwfl', 'y',
+
+  // Norenigma
+  'I-N',        'I',          'wtokasuyvrbxjhqcpzefmdinlg', 'q',
+  'II-N',       'II',         'gjlpubswemctqvhxaofzdrkyni', 'e',
+  'III-N',      'III',        'jwfmhnbpusdytixvzgrqlaoekc', 'v',
+  'IV-N',       'IV',         'esovpzjayquirhxlnftgkdcmwb', 'j',
+  'V-N',        'V',          'hejxqotzbvfdascilwpgynmurk', 'z',
+
+  // Entry rotors
+  'ETW-ABCDEF', 'Alphabet',   'abcdefghijklmnopqrstuvwxyz', '',
+  'ETW-QWERTZ', 'Keyboard',   'jwulcmnohpqzyxiradkegvbtsf', '',
+  'ETW-T',      'ETW',        'ilxrztkgjyamwvdufcpqeonshb', '',
+
+  // Reflector rotors
+  'UKW-A',      'UKW A',      'ejmzalyxvbwfcrquontspikhgd', '',
+  'UKW-B',      'UKW B',      'yruhqsldpxngokmiebfzcwvjat', '',
+  'UKW-C',      'UKW C',      'fvpjiaoyedrzxwgctkuqsbnmhl', '',
+  'UKW-B-thin', 'UKW B thin', 'enkqauywjicopblmdxzvfthrgs', '',
+  'UKW-C-thin', 'UKW C thin', 'rdobjntkvehmlfcwzaxgyipsuq', '',
+  'UKW-COM',    'UKW',        'imetcgfraysqbzxwlhkdvupojn', '',
+  'UKW-KR',     'UKW',        'qyhognecvpuztfdjaxwmkisrbl', '',
+  'UKW-T',      'UKW',        'gekpbtaumocniljdxzyfhwvqsr', '',
+  'UKW-N',      'UKW',        'mowjypuxndsraibfvlkzgqchet', ''
+
+  /* eslint-enable no-multi-spaces */
 ]
 
 // model and rotor map get created lazily
@@ -189,11 +226,12 @@ export default class EnigmaEncoder extends Encoder {
     super()
 
     // retrieve default model with its rotors
-    const model = EnigmaEncoder.findModel('M3')
-    const rotors = EnigmaEncoder.filterRotors(model.name, 'rotor')
+    const model = EnigmaEncoder.getModel('M3')
+    const rotors = EnigmaEncoder.getRotors(model.slots[0].rotors)
     const rotorNames = rotors.map(rotor => rotor.name)
     const rotorLabels = rotors.map(rotor => rotor.label)
-    const reflectors = EnigmaEncoder.filterRotors(model.name, 'reflector')
+    const entries = EnigmaEncoder.getRotors(model.entryRotors)
+    const reflectors = EnigmaEncoder.getRotors(model.reflectorRotors)
 
     // model setting
     this.registerSetting({
@@ -204,6 +242,46 @@ export default class EnigmaEncoder extends Encoder {
       options: {
         elements: models.map(model => model.name),
         labels: models.map(model => model.label)
+      }
+    })
+
+    // reflector setting
+    this.registerSetting({
+      name: 'reflector',
+      type: 'enum',
+      value: reflectors[0].name,
+      width: 4,
+      options: {
+        elements: reflectors.map(rotor => rotor.name),
+        labels: reflectors.map(rotor => rotor.label)
+      }
+    })
+
+    // reflector position setting
+    this.registerSetting({
+      name: `positionReflector`,
+      label: `Position`,
+      type: 'number',
+      value: 1,
+      width: 4,
+      options: {
+        integer: true,
+        min: 1,
+        max: 27
+      }
+    })
+
+    // reflector ring setting
+    this.registerSetting({
+      name: `ringReflector`,
+      label: `Ring`,
+      type: 'number',
+      value: 1,
+      width: 4,
+      options: {
+        integer: true,
+        min: 1,
+        max: 27
       }
     })
 
@@ -251,14 +329,14 @@ export default class EnigmaEncoder extends Encoder {
       })
     }
 
-    // reflector setting
+    // entry setting
     this.registerSetting({
-      name: 'reflector',
+      name: 'entry',
       type: 'enum',
-      value: reflectors[0].name,
+      value: entries[0].name,
       options: {
-        elements: reflectors.map(reflector => reflector.name),
-        labels: reflectors.map(reflector => reflector.label)
+        elements: entries.map(rotor => rotor.name),
+        labels: entries.map(rotor => rotor.label)
       }
     })
 
@@ -309,7 +387,7 @@ export default class EnigmaEncoder extends Encoder {
    * @return {EnigmaEncoder} Fluent interface
    */
   applyModel (modelName) {
-    const model = EnigmaEncoder.findModel(modelName)
+    const model = EnigmaEncoder.getModel(modelName)
     const maxSlotCount = EnigmaEncoder.getMaxSlotCount()
 
     // update setting options and layout for each slot
@@ -328,7 +406,7 @@ export default class EnigmaEncoder extends Encoder {
 
       if (slotVisible) {
         // configure rotor setting
-        const rotors = EnigmaEncoder.filterRotors(modelName, slot.type)
+        const rotors = EnigmaEncoder.getRotors(slot.rotors)
         rotorSetting.setElements(
           rotors.map(rotor => rotor.name),
           rotors.map(rotor => rotor.label),
@@ -343,19 +421,42 @@ export default class EnigmaEncoder extends Encoder {
     }
 
     // update reflector setting options
-    const reflectors = EnigmaEncoder.filterRotors(modelName, 'reflector')
+    const reflectorRotors = EnigmaEncoder.getRotors(model.reflectorRotors)
     const reflectorSetting = this.getSetting('reflector')
 
     reflectorSetting.setElements(
-      reflectors.map(reflector => reflector.name),
-      reflectors.map(reflector => reflector.label),
+      reflectorRotors.map(rotor => rotor.name),
+      reflectorRotors.map(rotor => rotor.label),
       null,
       false)
 
     // apply first rotor if current one is not available for this model
     if (reflectorSetting.validateValue(reflectorSetting.getValue()) !== true) {
-      reflectorSetting.setValue(reflectors[0].name)
+      reflectorSetting.setValue(reflectorRotors[0].name)
     }
+
+    // make reflector position and ring visible when it has a thumbwheel
+    reflectorSetting.setWidth(model.reflectorThumbwheel ? 4 : 12)
+    this.getSetting('positionReflector').setVisible(model.reflectorThumbwheel)
+    this.getSetting('ringReflector').setVisible(model.reflectorThumbwheel)
+
+    // update entry setting options
+    const entryRotors = EnigmaEncoder.getRotors(model.entryRotors)
+    const entrySetting = this.getSetting('entry')
+
+    entrySetting.setElements(
+      entryRotors.map(rotor => rotor.name),
+      entryRotors.map(rotor => rotor.label),
+      null,
+      false)
+
+    // apply first rotor if current one is not available for this model
+    if (entrySetting.validateValue(entrySetting.getValue()) !== true) {
+      entrySetting.setValue(entryRotors[0].name)
+    }
+
+    // only make plugboard visible when it is availabe for this model
+    this.getSetting('plugboard').setVisible(model.plugboard)
   }
 
   /**
@@ -367,41 +468,56 @@ export default class EnigmaEncoder extends Encoder {
    */
   performTranslate (content, isEncode) {
     const includeForeignChars = this.getSettingValue('includeForeignChars')
-    const model = EnigmaEncoder.findModel(this.getSettingValue('model'))
+    const model = EnigmaEncoder.getModel(this.getSettingValue('model'))
     let i = 0
 
-    // collect selected rotors, positions and ring settings
+    // collect slots, rotors, positions and rings for current translation
+    const slots = model.slots
     const rotors = []
     const positions = []
-    const ringSettings = []
+    const rings = []
 
-    for (i = 0; i < model.slots.length; i++) {
+    for (i = 0; i < slots.length; i++) {
       const rotorName = this.getSettingValue(`rotor${i + 1}`)
-      rotors.push(EnigmaEncoder.findRotor(rotorName))
+      rotors.push(EnigmaEncoder.getRotor(rotorName))
       positions.push(this.getSettingValue(`position${i + 1}`) - 1)
-      ringSettings.push(this.getSettingValue(`ring${i + 1}`) - 1)
+      rings.push(this.getSettingValue(`ring${i + 1}`) - 1)
     }
 
-    // retrieve reflector
-    const reflector = EnigmaEncoder.findRotor(this.getSettingValue('reflector'))
+    // retrieve entry config
+    const entryRotor = EnigmaEncoder.getRotor(this.getSettingValue('entry'))
+    const entryPosition = 0
+    const entryRing = 0
 
-    // compose plugboard wiring
-    const plugboard = this.getSettingValue('plugboard')
-    const plugboardWiring = this.wiringFromPlugboardValue(plugboard.toString())
+    // retrieve reflector config
+    const reflectorRotor =
+      EnigmaEncoder.getRotor(this.getSettingValue('reflector'))
+    const reflectorPosition =
+      model.reflectorThumbwheel ? this.getSettingValue('positionReflector') : 0
+    const reflectorRing =
+      model.reflectorThumbwheel ? this.getSettingValue('ringReflector') : 0
+
+    // compose plugboard wiring, if it is available for this model
+    let plugboard = null
+    if (model.plugboard) {
+      const plugboardSetting = this.getSettingValue('plugboard')
+      plugboard = this.wiringFromPlugboardValue(plugboardSetting.toString())
+    }
+
+    // use a short 'map' alias to call the static rotorMapChar method
+    const map = EnigmaEncoder.rotorMapChar
 
     // go through each content code point
     let encodedCodePoints = content.getCodePoints().map((codePoint, index) => {
-      let charIndex = null
+      let char = null
 
       if (codePoint >= 65 && codePoint <= 90) {
         // read uppercase character
-        charIndex = codePoint - 65
+        char = codePoint - 65
       } else if (codePoint >= 97 && codePoint <= 122) {
         // read lowercase character
-        charIndex = codePoint - 97
-      }
-
-      if (charIndex === null) {
+        char = codePoint - 97
+      } else {
         // this is a foreign character
         return includeForeignChars ? codePoint : false
       }
@@ -410,15 +526,15 @@ export default class EnigmaEncoder extends Encoder {
       let rotorShifted = false
       i = 0
 
-      while (!rotorShifted && ++i < rotors.length) {
-        // check for notches
-        if (EnigmaEncoder.rotorAtNotch(rotors[i], positions[i])) {
-          // shift current rotor, if it is not the last one
-          if (i !== rotors.length - 1) {
+      while (!rotorShifted && ++i < slots.length) {
+        // check for turnovers
+        if (EnigmaEncoder.rotorAtTurnover(rotors[i], positions[i])) {
+          // shift current rotor, if it is not the last one (rotated later)
+          if (i !== slots.length - 1) {
             positions[i]++
           }
           // shift rotor on its left
-          if (rotors[i - 1].rotating !== false) {
+          if (slots[i - 1].rotating !== false) {
             positions[i - 1]++
           }
           // set shifted flag
@@ -429,32 +545,37 @@ export default class EnigmaEncoder extends Encoder {
       // shift last rotor at every turn
       positions[positions.length - 1]++
 
-      // wire characters through the plugboard
-      charIndex = EnigmaEncoder.rotorMapChar(
-        charIndex, plugboardWiring, 0, 0, false)
+      // wire characters through the plugboard, if any
+      if (plugboard !== null) {
+        char = map(char, plugboard, 0, 0, false)
+      }
+
+      // through the entry
+      char = map(char, entryRotor, entryPosition, entryRing, false)
 
       // through the rotors (from right to left)
       for (i = rotors.length - 1; i >= 0; i--) {
-        charIndex = EnigmaEncoder.rotorMapChar(
-          charIndex, rotors[i], positions[i], ringSettings[i], false)
+        char = map(char, rotors[i], positions[i], rings[i], false)
       }
 
       // through the reflector
-      charIndex = EnigmaEncoder.rotorMapChar(
-        charIndex, reflector, 0, 0, false)
+      char = map(char, reflectorRotor, reflectorPosition, reflectorRing, false)
 
-      // through the rotors, again (from left to right)
+      // through the inverted rotors (from left to right)
       for (i = 0; i < rotors.length; i++) {
-        charIndex = EnigmaEncoder.rotorMapChar(
-          charIndex, rotors[i], positions[i], ringSettings[i], true)
+        char = map(char, rotors[i], positions[i], rings[i], true)
       }
 
-      // through the plugboard (inverted)
-      charIndex = EnigmaEncoder.rotorMapChar(
-        charIndex, plugboardWiring, 0, 0, true)
+      // through the inverted entry
+      char = map(char, entryRotor, entryPosition, entryRing, true)
+
+      // through the inverted plugboard, if any
+      if (plugboard !== null) {
+        char = map(char, plugboard, 0, 0, true)
+      }
 
       // translate char index back to code point and return it
-      return charIndex + 97
+      return char + 97
     })
 
     if (!includeForeignChars) {
@@ -482,18 +603,18 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Checks if given rotor has a notch at given position.
+   * Checks if given rotor has a turnover at given position.
    * @protected
    * @param {object} rotor Rotor entry
    * @param {number} position Rotor position
-   * @return {boolean} True, if rotor has a notch at given position
+   * @return {boolean} True, if rotor has a turnover at given position
    */
-  static rotorAtNotch (rotor, position) {
-    if (rotor.notches === undefined) {
+  static rotorAtTurnover (rotor, position) {
+    if (rotor.turnovers === undefined) {
       return false
     }
     const positionChar = String.fromCharCode(97 + MathUtil.mod(position, 26))
-    return rotor.notches.indexOf(positionChar) !== -1
+    return rotor.turnovers.indexOf(positionChar) !== -1
   }
 
   /**
@@ -592,12 +713,12 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Finds model entry by given name.
+   * Returns model entry by given name.
    * @protected
    * @param {string} name Model name
    * @return {?object} Returns model entry or null if not found.
    */
-  static findModel (name) {
+  static getModel (name) {
     if (modelMap === null) {
       modelMap = {}
       models.forEach(model => {
@@ -617,32 +738,34 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Finds rotor entry by given name.
+   * Returns rotor entry by given name.
    * @protected
    * @param {string} name Rotor name
-   * @return {?object} Returns rotor entry or null if not found.
+   * @return {?object} Rotor entry or null if not found.
    */
-  static findRotor (name) {
+  static getRotor (name) {
     if (rotorMap === null) {
+      // read rotor table and build map lazily
       rotorMap = {}
-      rotors.forEach(rotor => {
+      let i, j, rotor
+      for (i = 0; i < rotorTable.length; i += rotorTableColumns.length) {
+        rotor = {}
+        for (j = 0; j < rotorTableColumns.length; j++) {
+          rotor[rotorTableColumns[j]] = rotorTable[i + j]
+        }
         rotorMap[rotor.name] = rotor
-      })
+      }
     }
     return rotorMap[name] || null
   }
 
   /**
-   * Filters rotors by model and type.
+   * Maps given names to rotor entries.
    * @protected
-   * @param {string} modelName Model name
-   * @param {string} [type='rotor'] Rotor type
-   * @return {object[]} Array of rotors
+   * @param {string[]} names Rotor names
+   * @return {object[]} Rotor entries
    */
-  static filterRotors (modelName, type = 'rotor') {
-    return rotors
-      .filter(rotor =>
-        rotor.type === type &&
-        rotor.models.indexOf(modelName) !== -1)
+  static getRotors (names) {
+    return names.map(name => EnigmaEncoder.getRotor(name))
   }
 }

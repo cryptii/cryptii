@@ -4,6 +4,7 @@
   display: flex;
   position: relative;
   flex-direction: column;
+  user-select: none;
   @extend %s-sheet;
 
   @media screen and (max-width: 448px) {
@@ -163,6 +164,7 @@
   &__status-message {
     display: inline;
     color: $c-text-detail;
+    user-select: auto;
 
     #{$block}__status--error & {
       color: $c-text-error;
