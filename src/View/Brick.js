@@ -198,17 +198,16 @@ export default class BrickView extends View {
 
       this._$settings.insertBefore(view.getElement(), $referenceNode)
 
-      // set 'first' modifier on first setting in each row
+      // determine for each setting view wether it appears first in a row
       let columns = 0
       settingViews.forEach(settingView => {
         const width = settingView.getModel().getWidth()
-        const $setting = settingView.getElement()
         columns += width
         if (columns === width || columns > 12) {
           columns = width
-          $setting.classList.add('setting--first')
+          settingView.setFirst(true)
         } else {
-          $setting.classList.remove('setting--first')
+          settingView.setFirst(false)
         }
       })
 

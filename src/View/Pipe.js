@@ -283,8 +283,11 @@ export default class PipeView extends View {
    */
   brickDragWillStart (brickView, evt) {
     // prevent drag events originating from fields to
-    // allow trouble-free text selection & dragging
-    if (this.isFieldMouseEvent(evt)) {
+    //  allow trouble-free text selection & dragging
+    // prevent drag events on bricks with invalid settings
+    //  because they can't be serialized
+    if (this.isFieldMouseEvent(evt) ||
+        !brickView.getModel().areSettingsValid()) {
       // temporary disable dragging the brick's pipe part
       const $brickPart = brickView.getElement().parentNode
       if ($brickPart) {

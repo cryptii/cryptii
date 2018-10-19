@@ -1,24 +1,24 @@
 
-import autoprefixer from 'gulp-autoprefixer'
-import babel from 'rollup-plugin-babel'
-import cleanCSS from 'gulp-clean-css'
-import clone from 'gulp-clone'
-import commonJs from 'rollup-plugin-commonjs'
-import concat from 'gulp-concat'
-import del from 'del'
-import gulp from 'gulp'
-import header from 'gulp-header'
-import mocha from 'gulp-mocha'
-import nodeResolve from 'rollup-plugin-node-resolve'
-import rename from 'gulp-rename'
-import revision from 'git-rev-sync'
-import rollup from 'gulp-better-rollup'
-import sass from 'gulp-sass'
-import sassSVGInliner from 'sass-inline-svg'
-import sourcemaps from 'gulp-sourcemaps'
-import standard from 'gulp-standard'
-import streamQueue from 'streamqueue'
-import uglify from 'gulp-uglify'
+const autoprefixer = require('gulp-autoprefixer')
+const babel = require('rollup-plugin-babel')
+const cleanCSS = require('gulp-clean-css')
+const clone = require('gulp-clone')
+const commonJs = require('rollup-plugin-commonjs')
+const concat = require('gulp-concat')
+const del = require('del')
+const gulp = require('gulp')
+const header = require('gulp-header')
+const mocha = require('gulp-mocha')
+const nodeResolve = require('rollup-plugin-node-resolve')
+const rename = require('gulp-rename')
+const revision = require('git-rev-sync')
+const rollup = require('gulp-better-rollup')
+const sass = require('gulp-sass')
+const sassSVGInliner = require('sass-inline-svg')
+const sourcemaps = require('gulp-sourcemaps')
+const standard = require('gulp-standard')
+const streamQueue = require('streamqueue')
+const uglify = require('gulp-uglify')
 
 const meta = require('./package.json')
 const paths = {
@@ -34,7 +34,7 @@ const paths = {
 let distRevision
 try {
   distRevision = revision.long()
-} catch (evt) {
+} catch (err) {
   distRevision = 'unknown'
 }
 

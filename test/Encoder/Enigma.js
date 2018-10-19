@@ -4,6 +4,12 @@ import { describe } from 'mocha'
 import EncoderTester from '../Helper/EncoderTester'
 import EnigmaEncoder from '../../src/Encoder/Enigma'
 
+const plaintext =
+  'boot klar x bei j schnoor j etwa zwo siben x nov x sechs nul cbm x' +
+  ' proviant bis zwo nul x dez x benoetige glaeser y noch vier klar x' +
+  ' stehe marqu bruno bruno zwo funf x lage wie j schaefer j x nnn ww' +
+  'w funf y eins funf mb steigend y gute sicht vvv j rasch'
+
 /** @test {EnigmaEncoder} */
 describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
   {
@@ -147,5 +153,123 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       'odre ifun fzwo yuuf zwln reit bnfp oebt byua vzwo zrzi funf nyan yuur ' +
       'ofdd eeis efhs nulf uuzg wrdq eise chsd reiu nduu uzwo drei sech sfun ' +
       'fein scec hsuh rwar nemu onde ausn acze iglh l'
+  },
+  {
+    settings: {
+      model: 'D',
+      rotor1: 'III-D',
+      rotor2: 'II-D',
+      rotor3: 'I-D',
+      positionReflector: 7,
+      position1: 1,
+      position2: 17,
+      position3: 12,
+      ringReflector: 4,
+      ring1: 2,
+      ring2: 3,
+      ring3: 4,
+      includeForeignChars: false
+    },
+    direction: 'encode',
+    content: plaintext,
+    expectedResult:
+      'naddr epxco cfqvk vtibm zabnh qyapp vlsyv cgqtu rzfri uhzwc ftcrg ' +
+      'typgq bepkv valrn smdnr pahuk gehpp xgihu phtov pglog cekly bjarh ' +
+      'zcfyh xhgkj fxnmg ogtik wnfzj wjtuu kdptz qzfhh qjyku mywwf eijun ' +
+      'wkdmq phzci kwded agcsf msdzz eqpog z'
+  },
+  {
+    settings: {
+      model: 'KS',
+      rotor1: 'I-KS',
+      rotor2: 'III-KS',
+      rotor3: 'II-KS',
+      positionReflector: 7,
+      position1: 1,
+      position2: 6,
+      position3: 1,
+      ringReflector: 25,
+      ring1: 13,
+      ring2: 20,
+      ring3: 9,
+      includeForeignChars: false
+    },
+    direction: 'encode',
+    content: plaintext,
+    expectedResult:
+      'cpyxo ejays krqnd stlik ehsol eqglw pvjah tltks iahvd gktbc unxnn ' +
+      'ihfkl edhxa fmcpx kypmd uxajr vsrqz lyipd kdzrk tsezp oivyp pjtnu ' +
+      'dpkkk uzopl pvets pbfxh nhlgv whbzp nmohm sbbyf hmleb yembt djope ' +
+      'eugin rtvns hwuof jzcne exoyo vcsqq m'
+  },
+  {
+    settings: {
+      model: 'KR',
+      rotor1: 'II-KR',
+      rotor2: 'III-KR',
+      rotor3: 'I-KR',
+      positionReflector: 10,
+      position1: 22,
+      position2: 18,
+      position3: 16,
+      ringReflector: 16,
+      ring1: 8,
+      ring2: 22,
+      ring3: 21,
+      includeForeignChars: false
+    },
+    direction: 'encode',
+    content: plaintext,
+    expectedResult:
+      'cncno zbgcj tqmpw exdtm lkpxf abyib lbpmx bewro kdpqk xgqog oqjpo ' +
+      'gxoxs onyka yoepk jqmso fseve cvjml ubsae gljaa dpeuw vfbbg yoprs ' +
+      'xrvhx luuvz iydns kdlcm omfkn chlnh bqtvp frfqr gdmvq fhbzs gaxlw ' +
+      'tjyzo jvasq wghhm rtqae ouxgl whuqr c'
+  },
+  {
+    settings: {
+      model: 'T',
+      rotor1: 'V-T',
+      rotor2: 'VII-T',
+      rotor3: 'II-T',
+      positionReflector: 14,
+      position1: 22,
+      position2: 25,
+      position3: 15,
+      ringReflector: 1,
+      ring1: 8,
+      ring2: 25,
+      ring3: 25,
+      includeForeignChars: false
+    },
+    direction: 'encode',
+    content: plaintext,
+    expectedResult:
+      'ipppb cnkhd xezbe kzhjw zaysd jldlq jwmey theau pqaix pxuhq dorzu ' +
+      'uyepp xnuyo vskmr dczuo usgxo plfki wiwvc xwpqx gtfqp nzafp xfeta ' +
+      'obmma eemjc skaxj zdvjb euzyb cnpji nxtap gqisc qthhw zfkrf lddbl ' +
+      'qnpgy rxobd jcbre uteuf mxfek wlcgq m'
+  },
+  {
+    settings: {
+      model: 'N',
+      rotor1: 'II-N',
+      rotor2: 'III-N',
+      rotor3: 'I-N',
+      position1: 7,
+      position2: 18,
+      position3: 17,
+      ring1: 3,
+      ring2: 5,
+      ring3: 21,
+      includeForeignChars: false
+    },
+    direction: 'encode',
+    content: plaintext,
+    expectedResult:
+      'lxjyl vugix wxrfq ydfae yqhto dttxv mbglk vohmb uqffh iepve bpfly ' +
+      'gqduq ygujc oxuoc eynjt jwlzh tpjxu khhnx zhwcl gphui izwfu wsuzp ' +
+      'ollmh wrsll edwka letaa rtmfv uzxyg degtc huitb hgezb krpti xjeqt ' +
+      'bdcnl caydc psqrs nnyms xaepc gxldy x'
   }
 ]))

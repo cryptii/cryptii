@@ -14,6 +14,8 @@ export default class SettingView extends View {
     this._$message = null
     this._message = null
     this._id = StringUtil.uniqueId()
+    this._style = null
+    this._first = false
   }
 
   /**
@@ -33,6 +35,27 @@ export default class SettingView extends View {
     if (this._style !== style) {
       this._style = style
       this.refresh()
+    }
+    return this
+  }
+
+  /**
+   * Returns wether this setting is the first in a row.
+   * @return {boolean}
+   */
+  isFirst () {
+    return this._first
+  }
+
+  /**
+   * Sets wether this setting is the first in a row.
+   * @param {boolean}
+   * @return {Setting} Fluent interface
+   */
+  setFirst (first) {
+    if (this._first !== first) {
+      this._first = first
+      this.getElement().classList.toggle('setting--first', first)
     }
     return this
   }
@@ -81,7 +104,7 @@ export default class SettingView extends View {
    */
   render () {
     return View.createElement('div', {
-      className: 'setting'
+      className: 'setting' + (this._first ? ' setting--first' : '')
     }, [
       this.renderLabel(),
       this.renderField()
