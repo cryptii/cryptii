@@ -49,7 +49,7 @@ export default class Setting extends Viewable {
     this._randomizeValueCallback = spec.randomizeValue || null
 
     // view related properties
-    this._label = spec.label || StringUtil.camelCaseToRegular(name, ' ')
+    this._label = spec.label || StringUtil.camelCaseToRegular(name)
     this._visible = spec.visible !== false
     this._priority = spec.priority || 1
     this._style = spec.style || 'default'
