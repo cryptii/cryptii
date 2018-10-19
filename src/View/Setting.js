@@ -9,8 +9,8 @@ export default class SettingView extends View {
   /**
    * Constructor
    */
-  constructor (factory) {
-    super(factory)
+  constructor () {
+    super()
     this._$message = null
     this._message = null
     this._id = StringUtil.uniqueId()

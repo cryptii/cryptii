@@ -575,7 +575,7 @@ export default class Pipe extends Viewable {
     }
 
     // increase brick settings version
-    this.setBrickState(brick, this.getBrickState(brick, 'settingsVersion') + 1)
+    this.setBrickState(brick, 'settingsVersion', this.getBrickState(brick, 'settingsVersion') + 1)
 
     if (brick instanceof Encoder) {
       // trigger encode or decode depending on location of the selected bucket
