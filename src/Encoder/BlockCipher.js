@@ -152,6 +152,11 @@ export default class BlockCipherEncoder extends Encoder {
     const algorithmName = this.getSettingValue('algorithm')
     const modeName = this.getSettingValue('mode')
 
+    if (!Browser.isNode() && (modeName === 'ecb')) {
+      throw new InvalidInputError(
+        `Algorithm ${algorithmName}-${modeName} not supported by WebCrypto`)
+    }
+
     const keyLength = BlockCipherEncoder.getAlgorithmKeySize(algorithmName) / 8
     const blockLength = BlockCipherEncoder.getAlgorithmBlockSize(algorithmName) / 8
 
@@ -167,9 +172,8 @@ export default class BlockCipherEncoder extends Encoder {
         throw new InvalidInputError(
           `Algorithm ${algorithmName}-${modeName} requires an IV of '${blockLength}' bytes`)
       }
-      iv = Buffer.from(iv)
     } else {
-      iv = Buffer.from([])
+      iv = undefined
     }
 
     const cipherText = await this.createCipher(algorithmName, modeName, key, iv, false, isEncode, content.getBytes())
@@ -195,6 +199,9 @@ export default class BlockCipherEncoder extends Encoder {
 
     if (Browser.isNode()) {
       const cipherName = algorithm.nodeAlgorithm + '-' + mode
+
+      // Node v8.x - convert Uint8Array to Buffer - not needed for v10
+      iv = Buffer.from(iv || [])
 
       // create message cipher using Node Crypto async
       return new Promise((resolve, reject) => {
@@ -228,19 +235,22 @@ export default class BlockCipherEncoder extends Encoder {
         let blockLength = algorithm.blockSize / 8
 
         if (mode === 'ecb') {
+          // WebCrypto does not support AES-ECB
           return Promise.resolve(new Uint8Array(blockLength))
         }
 
-        return cryptoSubtle.encrypt(
-          {
-            name: cipherName,
-            iv: iv,
-            counter: iv,
-            length: blockLength
-          },
-          keyObj,
-          message
-        )
+        let algo = {
+          name: cipherName,
+          iv: iv,
+          counter: iv,
+          length: blockLength
+        }
+
+        let cipher = isEncode
+          ? cryptoSubtle.encrypt(algo, keyObj, message)
+          : cryptoSubtle.decrypt(algo, keyObj, message)
+
+        return cipher
       })
 
       // IE11 exception
