@@ -114,12 +114,12 @@ export default class BlockCipherEncoder extends Encoder {
           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
           0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F ]
         )
-      }/*,
+      } /*,
       {
         name: 'pad',
         type: 'boolean',
         value: false
-      }*/
+      } */
 
     ])
   }
@@ -134,9 +134,9 @@ export default class BlockCipherEncoder extends Encoder {
   settingValueDidChange (setting, value) {
     super.settingValueDidChange(setting, value)
 
-    if (setting.getName() == 'mode') {
+    if (setting.getName() === 'mode') {
       let ivSetting = this.getSetting('iv')
-      const isVisible = (value != 'ecb')
+      const isVisible = (value !== 'ecb')
       ivSetting && ivSetting.setVisible(isVisible)
     }
   }
@@ -156,14 +156,14 @@ export default class BlockCipherEncoder extends Encoder {
     const blockLength = BlockCipherEncoder.getAlgorithmBlockSize(algorithmName) / 8
 
     const key = this.getSettingValue('key')
-    if (key.length != keyLength) {
+    if (key.length !== keyLength) {
       throw new InvalidInputError(
         `Algorithm ${algorithmName} requires a key of '${keyLength}' bytes`)
     }
 
     let iv = this.getSettingValue('iv')
     if (BlockCipherEncoder.getModeNeedsIV(modeName)) {
-      if (iv.length != blockLength) {
+      if (iv.length !== blockLength) {
         throw new InvalidInputError(
           `Algorithm ${algorithmName}-${modeName} requires an IV of '${blockLength}' bytes`)
       }
@@ -224,9 +224,9 @@ export default class BlockCipherEncoder extends Encoder {
 
       // create message cipher using Web Crypto Api
       let result = cryptoKey.then((keyObj) => {
-        let blockLength = algorithm.blockSize / 8;
+        let blockLength = algorithm.blockSize / 8
 
-        if (mode == 'ecb') {
+        if (mode === 'ecb') {
           return Promise.resolve(new Uint8Array(blockLength))
         }
 
