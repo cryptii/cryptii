@@ -167,8 +167,9 @@ export default class BlockCipherEncoder extends Encoder {
         throw new InvalidInputError(
           `Algorithm ${algorithmName}-${modeName} requires an IV of '${blockLength}' bytes`)
       }
+      iv = Buffer.from(iv)
     } else {
-      iv = null
+      iv = Buffer.from([])
     }
 
     const cipherText = await this.createCipher(algorithmName, modeName, key, iv, false, isEncode, content.getBytes())
