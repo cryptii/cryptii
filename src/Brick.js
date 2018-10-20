@@ -469,7 +469,7 @@ export default class Brick extends Viewable {
 
     // apply setting values
     if (data.settings !== undefined) {
-      const settingValuePairs = data.settings;
+      const settingValuePairs = data.settings
 
       for (let name in settingValuePairs) {
         brick.extractSettingValue(name, settingValuePairs[name])
