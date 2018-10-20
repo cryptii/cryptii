@@ -271,5 +271,101 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       'gqduq ygujc oxuoc eynjt jwlzh tpjxu khhnx zhwcl gphui izwfu wsuzp ' +
       'ollmh wrsll edwka letaa rtmfv uzxyg degtc huitb hgezb krpti xjeqt ' +
       'bdcnl caydc psqrs nnyms xaepc gxldy x'
+  },
+  {
+    settings: {
+      model: 'Z',
+      rotor1: 'II-Z',
+      rotor2: 'III-Z',
+      rotor3: 'I-Z',
+      positionReflector: 14,
+      position1: 7,
+      position2: 18,
+      position3: 17,
+      ringReflector: 1,
+      ring1: 3,
+      ring2: 5,
+      ring3: 21,
+      includeForeignChars: false
+    },
+    direction: 'encode',
+    content: plaintext,
+    expectedResult:
+      'cssfs pfigp nczhl oznbo ckyqj yrmlh ulcfy amsjx hibgs wgiby xgcqb ' +
+      'mmssv cujkx svvvb hrotj eplxl qssmb usneo mgeff aptjb utari wbols ' +
+      'tiowi jgxps usosf ugvbs qiqqc olihq wrkgt ghkqk yrone chqti pqcig ' +
+      'enrvn knajx bzwss jgepi auspi iwjxf b'
+  },
+  {
+    settings: {
+      model: 'G111',
+      rotor1: 'II-G111',
+      rotor2: 'V-G111',
+      rotor3: 'I-G111',
+      positionReflector: 14,
+      position1: 7,
+      position2: 18,
+      position3: 17,
+      ringReflector: 1,
+      ring1: 3,
+      ring2: 5,
+      ring3: 21,
+      includeForeignChars: false
+    },
+    direction: 'encode',
+    content: plaintext,
+    expectedResult:
+      'rjucc xxsud uvzbr ivbef btplu omcxw mxoig lqywb isigt dkoqo lzjtc ' +
+      'zfihl mqjyy qjrrz vgahh gllot jcviq wcquj bdrpc jsxhc spdaf dlxfq ' +
+      'rfhpv ofeix jxtfm gnore bvjmb hamge pylrd hlaix hrmgy rokvp zabvx ' +
+      'dbxut qcglm mtvzt vhjap aedwy zmttm l'
+  },
+  {
+    settings: {
+      model: 'G312',
+      rotor1: 'II-G312',
+      rotor2: 'III-G312',
+      rotor3: 'I-G312',
+      positionReflector: 14,
+      position1: 7,
+      position2: 18,
+      position3: 17,
+      ringReflector: 1,
+      ring1: 3,
+      ring2: 5,
+      ring3: 21,
+      includeForeignChars: false
+    },
+    direction: 'encode',
+    content: plaintext,
+    expectedResult:
+      'utxpn hnade ffwwb lvwbh znszd eocte yokzm viiaa tynod efuys slwke ' +
+      'pqrav nbepu hyspa evhxq kydob qqqsd briie iqxhs mmchl sigan ngerd ' +
+      'ggwga yratn dqoez wmbif psnki hkobb uokef ubfiv lkyzy vhlkw cmbmz ' +
+      'gldug wnovd cbakz zlkrd qxfzw dmzix t'
+  },
+  {
+    settings: {
+      model: 'G260',
+      rotor1: 'II-G260',
+      rotor2: 'III-G260',
+      rotor3: 'I-G260',
+      positionReflector: 14,
+      position1: 7,
+      position2: 18,
+      position3: 17,
+      ringReflector: 1,
+      ring1: 3,
+      ring2: 5,
+      ring3: 21,
+      includeForeignChars: false
+    },
+    direction: 'encode',
+    content: plaintext,
+    expectedResult:
+      'plire qoovl koejf jdlrx huwlb sjbzs rzulk usozv zxmpi cdcfm qjwun ' +
+      'fuarh ijqll izgho qsgcv arzvw gxznt niwjw cuzsh tfcqj fnlxy vheqs ' +
+      'mijws kpgzd ybuck inhoh avzlq egugm ivqem nhzwu lpafq rympp yirax ' +
+      'qxpwv dxtmf swbdo oslti sejrn xuhpk q'
   }
 ]))
