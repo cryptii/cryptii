@@ -254,7 +254,7 @@ export default class BlockCipherEncoder extends Encoder {
 
       return result
         .then(buffer => new Uint8Array(buffer))
-        .catch(err => {
+        .catch(() => {
           if (!isEncode) {
             throw new InvalidInputError(`${name} decryption failed - check content`)
           } else {
