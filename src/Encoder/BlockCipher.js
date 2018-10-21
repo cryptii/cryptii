@@ -3,7 +3,6 @@ import Browser from '../Browser'
 import Chain from '../Chain'
 import Encoder from '../Encoder'
 import InvalidInputError from '../Error/InvalidInput'
-// import md5 from './Hash/md5'
 import nodeCrypto from 'crypto'
 
 const meta = {
@@ -45,17 +44,20 @@ const modes = [
   {
     name: 'ecb',
     label: 'ECB (Electronic Code Book)',
-    needsIV: false
+    needsIV: false,
+    nodeMode: true
   },
   {
     name: 'cbc',
     label: 'CBC (Cipher Block Chaining)',
-    needsIV: true
+    needsIV: true,
+    available: true
   },
   {
     name: 'ctr',
     label: 'CTR (Counter)',
-    needsIV: true
+    needsIV: true,
+    available: true
   }
 ]
 
@@ -78,6 +80,8 @@ export default class BlockCipherEncoder extends Encoder {
     super()
 
     const algorithms = BlockCipherEncoder.filterAvailableAlgorithms()
+    const modes = BlockCipherEncoder.filterAvailableModes()
+
     this.registerSetting([
       {
         name: 'algorithm',
@@ -87,7 +91,16 @@ export default class BlockCipherEncoder extends Encoder {
         options: {
           elements: algorithms.map(algorithm => algorithm.name),
           labels: algorithms.map(algorithm => algorithm.label)
-        }
+        },
+        width: 8
+      },
+      {
+        name: 'pad',
+        type: 'boolean',
+        value: false,
+        randomizable: false,
+        width: 4,
+        visible: Browser.isNode()
       },
       {
         name: 'mode',
@@ -109,18 +122,13 @@ export default class BlockCipherEncoder extends Encoder {
       },
       {
         name: 'iv',
+        label: 'IV',
         type: 'bytes',
         value: new Uint8Array([
           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
           0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F ]
         )
-      } /*,
-      {
-        name: 'pad',
-        type: 'boolean',
-        value: false
-      } */
-
+      }
     ])
   }
 
@@ -132,13 +140,31 @@ export default class BlockCipherEncoder extends Encoder {
    * @param {mixed} value Setting value
    */
   settingValueDidChange (setting, value) {
-    super.settingValueDidChange(setting, value)
+    switch (setting.getName()) {
+      case 'algorithm': {
+        const keyLength = BlockCipherEncoder.getAlgorithmKeySize(value) / 8
 
-    if (setting.getName() === 'mode') {
-      let ivSetting = this.getSetting('iv')
-      const isVisible = (value !== 'ecb')
-      ivSetting && ivSetting.setVisible(isVisible)
+        this.getSetting('key')
+          .setMinSize(keyLength, true)
+          .setMaxSize(keyLength, true)
+        break
+      }
+
+      case 'mode': {
+        const algorithm = this.getSettingValue('algorithm')
+        const blockLength = BlockCipherEncoder.getAlgorithmBlockSize(algorithm) / 8
+
+        const isVisible = BlockCipherEncoder.getModeNeedsIV(value)
+
+        this.getSetting('iv')
+          .setVisible(isVisible)
+          .setMinSize(blockLength, true)
+          .setMaxSize(blockLength, true)
+        break
+      }
     }
+
+    return super.settingValueDidChange(setting, value)
   }
 
   /**
@@ -152,31 +178,11 @@ export default class BlockCipherEncoder extends Encoder {
     const algorithmName = this.getSettingValue('algorithm')
     const modeName = this.getSettingValue('mode')
 
-    if (!Browser.isNode() && (modeName === 'ecb')) {
-      throw new InvalidInputError(
-        `Algorithm ${algorithmName}-${modeName} not supported by WebCrypto`)
-    }
-
-    const keyLength = BlockCipherEncoder.getAlgorithmKeySize(algorithmName) / 8
-    const blockLength = BlockCipherEncoder.getAlgorithmBlockSize(algorithmName) / 8
-
     const key = this.getSettingValue('key')
-    if (key.length !== keyLength) {
-      throw new InvalidInputError(
-        `Algorithm ${algorithmName} requires a key of '${keyLength}' bytes`)
-    }
-
-    let iv = this.getSettingValue('iv')
-    if (BlockCipherEncoder.getModeNeedsIV(modeName)) {
-      if (iv.length !== blockLength) {
-        throw new InvalidInputError(
-          `Algorithm ${algorithmName}-${modeName} requires an IV of '${blockLength}' bytes`)
-      }
-    } else {
-      iv = undefined
-    }
+    const iv = BlockCipherEncoder.getModeNeedsIV(modeName) && this.getSettingValue('iv')
 
     const cipherText = await this.createCipher(algorithmName, modeName, key, iv, false, isEncode, content.getBytes())
+
     return Chain.wrap(cipherText)
   }
 
@@ -187,15 +193,8 @@ export default class BlockCipherEncoder extends Encoder {
    * @param {Uint8Array} message Message bytes
    * @return {Promise}
    */
-  createCipher (name, mode, key, iv, padding, isEncode, message) {
+  async createCipher (name, mode, key, iv, padding, isEncode, message) {
     const algorithm = algorithms.find(algorithm => algorithm.name === name)
-
-    // console.log('ALGO: ' + name)
-    // console.log('MODE: ' + mode)
-    /* switch (name) {
-      case 'md5':
-        return new Promise(resolve => resolve(md5(message)))
-    } */
 
     if (Browser.isNode()) {
       const cipherName = algorithm.nodeAlgorithm + '-' + mode
@@ -220,7 +219,7 @@ export default class BlockCipherEncoder extends Encoder {
       const cryptoSubtle = crypto.subtle || crypto.webkitSubtle
 
       const cipherName = algorithm.browserAlgorithm + '-' + mode
-      const cryptoKey = cryptoSubtle.importKey(
+      const cryptoKey = await cryptoSubtle.importKey(
         'raw',
         key,
         {
@@ -231,27 +230,18 @@ export default class BlockCipherEncoder extends Encoder {
       )
 
       // create message cipher using Web Crypto Api
-      let result = cryptoKey.then((keyObj) => {
-        let blockLength = algorithm.blockSize / 8
+      const blockLength = algorithm.blockSize / 8
 
-        if (mode === 'ecb') {
-          // WebCrypto does not support AES-ECB
-          return Promise.resolve(new Uint8Array(blockLength))
-        }
+      const algo = {
+        name: cipherName,
+        iv: iv,
+        counter: iv,
+        length: blockLength
+      }
 
-        let algo = {
-          name: cipherName,
-          iv: iv,
-          counter: iv,
-          length: blockLength
-        }
-
-        let cipher = isEncode
-          ? cryptoSubtle.encrypt(algo, keyObj, message)
-          : cryptoSubtle.decrypt(algo, keyObj, message)
-
-        return cipher
-      })
+      let result = isEncode
+        ? cryptoSubtle.encrypt(algo, cryptoKey, message)
+        : cryptoSubtle.decrypt(algo, cryptoKey, message)
 
       // IE11 exception
       if (result.oncomplete !== undefined) {
@@ -262,7 +252,15 @@ export default class BlockCipherEncoder extends Encoder {
         })
       }
 
-      return result.then(buffer => new Uint8Array(buffer))
+      return result
+        .then(buffer => new Uint8Array(buffer))
+        .catch(err => {
+          if (!isEncode) {
+            throw new InvalidInputError(`${name} decryption failed - check content`)
+          } else {
+            throw new InvalidInputError(`${name} encryption failed`)
+          }
+        })
     }
   }
 
@@ -289,6 +287,37 @@ export default class BlockCipherEncoder extends Encoder {
 
       // node environment
       if (isNode && algorithm.nodeAlgorithm !== undefined) {
+        return true
+      }
+
+      return false
+    })
+  }
+
+  /**
+   * Returns mode objects available in the current environment.
+   * @protected
+   * @return {object[]}
+   */
+  static filterAvailableModes () {
+    const isNode = Browser.isNode()
+
+    return modes.filter(mode => {
+      // mode availability not bound to the environment
+      if (mode.available === true) {
+        return true
+      }
+
+      // browser environment
+      if (!isNode && mode.browserMode !== undefined) {
+        if (mode.browserExceptions !== undefined) {
+          return !Browser.match.apply(Browser, mode.browserExceptions)
+        }
+        return true
+      }
+
+      // node environment
+      if (isNode && mode.nodeMode !== undefined) {
         return true
       }
 
