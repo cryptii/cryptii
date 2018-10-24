@@ -8,11 +8,11 @@ import BlockCipherEncoder from '../../src/Encoder/BlockCipher'
 const bytes = ByteEncoder.bytesFromHexString
 
 /**
- * ECB test vectors extracted from ircmaxell/quality-checker
+ * AES test vectors extracted from ircmaxell/quality-checker
  * @see  https://github.com/ircmaxell/quality-checker/blob/master/tmp/gh_18/PHP-PasswordLib-master/test/Data/Vectors/aes-ecb.test-vectors
  * @see  https://github.com/ircmaxell/quality-checker/blob/master/tmp/gh_18/PHP-PasswordLib-master/test/Data/Vectors/aes-cbc.test-vectors
  * @see  https://github.com/ircmaxell/quality-checker/blob/master/tmp/gh_18/PHP-PasswordLib-master/test/Data/Vectors/aes-ctr.test-vectors
- * @test {HashEncoder}
+ * @test {BlockCipherEncoder}
  */
 describe('BlockCipherEncoder', () => EncoderTester.test(BlockCipherEncoder, [
   // AES-128
@@ -64,6 +64,17 @@ describe('BlockCipherEncoder', () => EncoderTester.test(BlockCipherEncoder, [
     },
     content: bytes('6bc1bee22e409f96e93d7e117393172a'),
     expectedResult: bytes('7649abac8119b246cee98e9b12e9197d')
+  },
+  {
+    settings: {
+      algorithm: 'aes-128',
+      mode: 'cbc',
+      key: bytes('2b7e151628aed2a6abf7158809cf4f3c'),
+      iv: bytes('000102030405060708090A0B0C0D0E0F'),
+      padding: true
+    },
+    content: bytes('6bc1bee22e409f96e93d7e117393172a'),
+    expectedResult: bytes('7649abac8119b246cee98e9b12e9197d8964e0b149c10b7b682e6e39aaeb731c')
   },
 
   // -CTR
@@ -127,6 +138,17 @@ describe('BlockCipherEncoder', () => EncoderTester.test(BlockCipherEncoder, [
     content: bytes('6bc1bee22e409f96e93d7e117393172a'),
     expectedResult: bytes('4f021db243bc633d7178183a9fa071e8')
   },
+  {
+    settings: {
+      algorithm: 'aes-192',
+      mode: 'cbc',
+      key: bytes('8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b'),
+      iv: bytes('000102030405060708090A0B0C0D0E0F'),
+      padding: true
+    },
+    content: bytes('6bc1bee22e409f96e93d7e117393172a'),
+    expectedResult: bytes('4f021db243bc633d7178183a9fa071e8a647f1643b94812a175a13c8fa2014b2')
+  },
 
   // -CTR
   {
@@ -189,6 +211,17 @@ describe('BlockCipherEncoder', () => EncoderTester.test(BlockCipherEncoder, [
     },
     content: bytes('6bc1bee22e409f96e93d7e117393172a'),
     expectedResult: bytes('f58c4c04d6e5f1ba779eabfb5f7bfbd6')
+  },
+  {
+    settings: {
+      algorithm: 'aes-256',
+      mode: 'cbc',
+      key: bytes('603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4'),
+      iv: bytes('000102030405060708090A0B0C0D0E0F'),
+      padding: true
+    },
+    content: bytes('6bc1bee22e409f96e93d7e117393172a'),
+    expectedResult: bytes('f58c4c04d6e5f1ba779eabfb5f7bfbd6485a5c81519cf378fa36d42b8547edc0')
   },
 
   // -CTR
