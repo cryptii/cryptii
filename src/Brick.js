@@ -469,9 +469,30 @@ export default class Brick extends Viewable {
 
     // apply setting values
     if (data.settings !== undefined) {
-      brick.setSettingValues(data.settings)
+      const settingValuePairs = data.settings
+
+      for (let name in settingValuePairs) {
+        brick.extractSettingValue(name, settingValuePairs[name])
+      }
     }
 
     return brick
+  }
+
+  /**
+   * Convenience method for finding a Setting and extracting its value from
+   * serialized data.
+   * @param {string} name Setting name to search for
+   * @param {mixed} value Setting value
+   * @throws Throws an error if Setting with given name does not exist.
+   * @return {Brick} Fluent interface
+   */
+  extractSettingValue (name, value) {
+    const setting = this.getSetting(name)
+    if (setting === null) {
+      throw new Error(`Unknown Setting with name '${name}'`)
+    }
+    setting.extractValue(value)
+    return this
   }
 }
