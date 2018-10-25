@@ -13,6 +13,14 @@ let emptyChain = null
  */
 export default class Chain {
   /**
+   * Class Instance Properties
+   */
+  _codePoints
+  _string
+  _bytes
+  _encoding
+
+  /**
    * Chains can be constructed given either a string, an array of code points
    * or an Uint8Array of bytes.
    * @example

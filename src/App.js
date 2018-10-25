@@ -12,11 +12,18 @@ let instance = null
  */
 export default class App extends Viewable {
   /**
+   * Class Instance Properties
+   */
+  _pipe
+
+  /**
    * Application constructor
    */
   constructor () {
     super()
+
     this._viewPrototype = AppView
+
     this._pipe = null
   }
 

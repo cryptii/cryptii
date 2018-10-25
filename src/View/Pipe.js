@@ -16,6 +16,32 @@ const brickMimeType = 'application/vnd.cryptii.brick+json'
  */
 export default class PipeView extends View {
   /**
+   * Class Instance Properties
+   */
+  _$scrollable
+  _$content
+
+  _draggingBrickView
+  _draggingTargetIndex
+
+  // parts
+  _$pipeParts
+  _pipePartPositions
+  _pipePartIndex
+
+  // scroll facts
+  _scrollMax
+  _scrollPosition
+
+  // scroll handle
+  _scrollHandleIndex
+  _scrollHandleStartPosition
+  _scrollHandleStartTime
+
+  _$scrollHandleLeft
+  _$scrollHandleRight
+
+  /**
    * Pipe view constructor
    */
   constructor () {

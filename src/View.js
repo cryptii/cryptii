@@ -53,6 +53,16 @@ export default class View {
   }
 
   /**
+   * Class Instance Properties
+   */
+  _$root
+  _superview
+  _model
+  _subviews
+  _focus
+  _needsUpdate
+
+  /**
    * View constructor
    */
   constructor () {

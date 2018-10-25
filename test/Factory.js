@@ -5,6 +5,9 @@ import { describe, it } from 'mocha'
 import Factory from '../src/Factory'
 
 class Cat {
+  name;
+  age;
+
   constructor (name = null, age = null) {
     this.name = name
     this.age = age

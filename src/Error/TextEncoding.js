@@ -6,6 +6,11 @@ import InvalidInputError from './InvalidInput'
  */
 export default class TextEncodingError extends InvalidInputError {
   /**
+   * Class Instance Properties
+   */
+  byteIndex;
+
+  /**
    * Constructor
    * @param {string} message
    * @param {number} [index=null] Index of invalid byte

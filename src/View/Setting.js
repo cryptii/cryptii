@@ -7,10 +7,21 @@ import View from '../View'
  */
 export default class SettingView extends View {
   /**
+   * Class Instance Properties
+   */
+  _$message
+  _message
+
+  _style
+  _first
+  _id
+
+  /**
    * Constructor
    */
   constructor () {
     super()
+
     this._$message = null
     this._message = null
     this._id = StringUtil.uniqueId()

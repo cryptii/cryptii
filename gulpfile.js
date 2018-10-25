@@ -61,8 +61,9 @@ gulp.task('script-test', () => {
     .pipe(mocha({
       reporter: 'dot',
       require: [
-        'babel-core/register',
-        'babel-polyfill'
+        '@babel/register',
+        '@babel/preset-env',
+        '@babel/polyfill'
       ]
     }))
 })
@@ -85,16 +86,16 @@ gulp.task('script', () => {
         babel({
           babelrc: false,
           presets: [
-            ['env', {
+            ['@babel/env', {
               loose: true,
               modules: false
             }]
           ],
           plugins: [
-            'external-helpers',
             ['babel-plugin-transform-builtin-extend', {
               globals: ['Error']
-            }]
+            }],
+            "@babel/plugin-proposal-class-properties"
           ],
           exclude: ['node_modules/**']
         }),
@@ -119,7 +120,7 @@ gulp.task('script', () => {
     .pipe(rename(`${meta.name}.js`))
 
     // minify code
-    .pipe(uglify())
+    // .pipe(uglify())
 
     // append header
     .pipe(header(distHeader))
@@ -127,7 +128,7 @@ gulp.task('script', () => {
   // create polyfill stream from existing files
   const polyfillStream = gulp.src([
     './node_modules/dom4/build/dom4.js',
-    './node_modules/babel-polyfill/dist/polyfill.min.js'
+    './node_modules/@babel/polyfill/dist/polyfill.min.js'
   ], { base: '.' })
     .pipe(sourcemaps.init())
 

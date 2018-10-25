@@ -13,6 +13,11 @@ const BlockToCharacterMode = 1
  */
 export default class CharacterBlockEncoder extends Encoder {
   /**
+   * Class Instance Properties
+   */
+  _mode;
+
+  /**
    * Constructor
    */
   constructor () {

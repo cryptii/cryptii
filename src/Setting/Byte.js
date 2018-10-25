@@ -8,6 +8,12 @@ import Setting from '../Setting'
  */
 export default class ByteSetting extends Setting {
   /**
+   * Class Instance Properties
+   */
+  _minSize
+  _maxSize
+
+  /**
    * Setting constructor
    * @param {string} name
    * @param {Object} [spec]
@@ -15,8 +21,9 @@ export default class ByteSetting extends Setting {
    * @param {?number} [spec.options.minSize=null] Minimum size in bytes
    * @param {?number} [spec.options.maxSize=null] Maximum size in bytes
    */
-  constructor (name, spec = {}) {
+  constructor (name, spec) {
     super(name, spec)
+
     this._viewPrototype = ByteSettingView
 
     this._value = spec.value || new Uint8Array()

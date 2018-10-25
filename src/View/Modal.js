@@ -6,20 +6,35 @@ import View from '../View'
  */
 export default class ModalView extends View {
   /**
+   * Class Instance Properties
+   */
+  _title
+
+  _visible
+  _value
+  _finishCallback
+  _cancelCallback
+
+  // handlers
+  _keyUpHandler
+
+  // elements
+  _$outer
+  _$dialog
+
+  /**
    * Modal constructor
    */
   constructor (title) {
     super()
+
     this._title = title
     this._visible = false
     this._value = null
     this._finishCallback = null
     this._cancelCallback = null
 
-    // handlers
     this._keyUpHandler = this.keyDidPress.bind(this)
-
-    // elements
     this._$outer = null
     this._$dialog = null
   }

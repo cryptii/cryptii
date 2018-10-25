@@ -7,10 +7,18 @@ import View from '../../View'
  */
 export default class TextViewerView extends ViewerView {
   /**
+   * Class Instance Properties
+   */
+  _text
+  _disabled
+  _$textarea
+
+  /**
    * Constructor
    */
   constructor () {
     super()
+
     this._text = ''
     this._disabled = false
     this._$textarea = null

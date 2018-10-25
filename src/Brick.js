@@ -20,14 +20,24 @@ export default class Brick extends Viewable {
   }
 
   /**
+   * Class Instance Properties
+   */
+  _settings
+  _alias
+  _hidden
+  _pipe
+
+  /**
    * Brick constructor
    */
   constructor () {
     super()
+
+    this._viewPrototype = BrickView
+
     this._settings = []
     this._alias = null
     this._hidden = false
-    this._viewPrototype = BrickView
     this._pipe = null
   }
 

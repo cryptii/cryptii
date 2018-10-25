@@ -5,6 +5,12 @@
  */
 export default class Factory {
   /**
+   * Class Instance Properties
+   */
+  _identifiers
+  _invokables
+
+  /**
    * Factory constructor
    */
   constructor () {

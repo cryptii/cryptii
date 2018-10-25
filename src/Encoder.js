@@ -12,11 +12,21 @@ import MathUtil from './MathUtil'
  */
 export default class Encoder extends Brick {
   /**
+   * Class Instance Properties
+   */
+  _reverse
+  _encodeOnly
+  _lastError
+  _lastTranslationMeta
+
+  /**
    * Brick constructor
    */
   constructor () {
     super()
+
     this._viewPrototype = EncoderView
+
     this._reverse = false
     this._encodeOnly = false
     this._lastError = null

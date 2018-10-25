@@ -8,10 +8,17 @@ import InvalidInputError from './Error/InvalidInput'
  */
 export default class Viewer extends Brick {
   /**
+   * Class Instance Properties
+   */
+  _queuedContent
+  _error
+
+  /**
    * Brick constructor
    */
   constructor () {
     super()
+
     this._queuedContent = null
     this._error = null
   }

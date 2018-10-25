@@ -23,6 +23,11 @@ export default class HMACEncoder extends Encoder {
   }
 
   /**
+   * Class Instance Properties
+   */
+  _hashEncoder;
+
+  /**
    * Constructor
    */
   constructor () {

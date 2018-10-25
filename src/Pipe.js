@@ -16,10 +16,21 @@ import Viewer from './Viewer'
  */
 export default class Pipe extends Viewable {
   /**
+   * Class Instance Properties
+   */
+  _bricks
+  _brickState
+
+  _bucketContent
+  _bucketListeners
+  _selectedBucket
+
+  /**
    * Constructor
    */
   constructor () {
     super()
+
     this._viewPrototype = PipeView
 
     // empty array of bricks and brick state objects
@@ -182,7 +193,7 @@ export default class Pipe extends Viewable {
 
       // create new empty buckets
       const insertBuckets = new Array(bucketInsertCount)
-        .fill().map(() => Chain.empty())
+        .fill(undefined).map(() => Chain.empty())
 
       if (bucketRemoveCount > 0) {
         insertBuckets[insertBuckets.length - 1] =

@@ -10,6 +10,14 @@ import TextSettingView from '../View/Setting/Text'
  */
 export default class TextSetting extends Setting {
   /**
+   * Class Instance Properties
+   */
+  _minLength
+  _maxLength
+  _allowedChars
+  _caseSensitivity
+
+  /**
    * Setting constructor
    * @param {string} name
    * @param {Object} [spec]
@@ -19,14 +27,14 @@ export default class TextSetting extends Setting {
    * @param {?number[]} [spec.options.allowedCodePoints=null]
    * Restricts text to given Unicode code points.
    * @param {boolean} [spec.options.caseSensitivity=false]
-   * Wether to respect case sensitivity
+   * Whether to respect case sensitivity
    */
-  constructor (name, spec = {}) {
+  constructor (name, spec) {
     super(name, spec)
+
     this._viewPrototype = TextSettingView
 
     this._value = Chain.wrap(spec.value || null)
-
     this._minLength = null
     this._maxLength = null
     this._allowedChars = null

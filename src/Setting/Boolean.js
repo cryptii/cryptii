@@ -10,6 +10,12 @@ const knownFalseValues = [false, 0, '0', 'false']
  */
 export default class BooleanSetting extends Setting {
   /**
+   * Class Instance Properties
+   */
+  _trueLabel
+  _falseLabel
+
+  /**
    * Setting constructor
    * @param {string} name
    * @param {Object} [spec] See {@link Setting.constructor}
@@ -17,8 +23,9 @@ export default class BooleanSetting extends Setting {
    * @param {string} [spec.options.trueLabel='Yes'] Label for 'true' choice
    * @param {string} [spec.options.falseLabel='No'] Label for 'false' choice
    */
-  constructor (name, spec = {}) {
+  constructor (name, spec) {
     super(name, spec)
+
     this._viewPrototype = BooleanSettingView
 
     const options = spec.options || {}

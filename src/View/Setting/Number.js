@@ -7,10 +7,16 @@ import View from '../../View'
  */
 export default class NumberSettingView extends SettingView {
   /**
+   * Class Instance Properties
+   */
+  _$input
+
+  /**
    * Constructor
    */
   constructor () {
     super()
+
     this._$input = null
   }
 

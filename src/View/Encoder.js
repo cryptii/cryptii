@@ -7,10 +7,17 @@ import View from '../View'
  */
 export default class EncoderView extends BrickView {
   /**
+   * Class Instance Properties
+   */
+  _$encodeAction
+  _$decodeAction
+
+  /**
    * Constructor
    */
   constructor () {
     super()
+
     this._$encodeAction = null
     this._$decodeAction = null
   }

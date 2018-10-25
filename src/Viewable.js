@@ -7,6 +7,12 @@ import View from './View'
  */
 export default class Viewable {
   /**
+   * Class Instance Properties
+   */
+  _view
+  _viewPrototype
+
+  /**
    * Constructor
    */
   constructor () {

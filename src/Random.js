@@ -4,6 +4,11 @@
  */
 export default class Random {
   /**
+   * Class Instance Properties
+   */
+  _seed
+
+  /**
    * Random generator constructor.
    * @param {string} [seed] Seed to be used during randomization.
    */

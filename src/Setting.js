@@ -10,6 +10,26 @@ import Viewable from './Viewable'
  */
 export default class Setting extends Viewable {
   /**
+   * Class Instance Properties
+   */
+  _name
+  _value
+  _randomizable
+  _valid
+  _message
+  _messageKey
+  _delegate
+  _label
+  _style
+  _priority
+  _width
+  _viewPrototype
+  _visible
+  _validateValueCallback
+  _filterValueCallback
+  _randomizeValueCallback
+
+  /**
    * Setting constructor. Override is required to call super.
    * @param {string} name
    * @param {Object} [spec]

@@ -7,20 +7,30 @@ import Setting from '../Setting'
  */
 export default class NumberSetting extends Setting {
   /**
+   * Class Instance Properties
+   */
+  _integer
+  _step
+  _min
+  _max
+  _rotate
+
+  /**
    * Constructor
    * @param {string} name
    * @param {object} spec
    * @param {mixed} [spec.options] Setting options
-   * @param {boolean} [spec.options.integer=false] Wether to use integer values
+   * @param {boolean} [spec.options.integer=false] Whether to use integer values
    * @param {?number} [spec.options.step=1] Step size
    * @param {?number} [spec.options.min=null] Minimum value (inclusive)
    * @param {?number} [spec.options.max=null] Maximum value (exclusive)
-   * @param {?boolean} [spec.options.rotate=true] Wether the value should rotate
+   * @param {?boolean} [spec.options.rotate=true] Whether the value should rotate
    * when stepping over limits. Rotation can only be enabled when both min and
    * max values are defined.
    */
   constructor (name, spec) {
     super(name, spec)
+
     this._viewPrototype = NumberSettingView
 
     const options = spec.options || {}

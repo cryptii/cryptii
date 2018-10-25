@@ -7,6 +7,20 @@ import View from '../View'
  */
 export default class BrickView extends View {
   /**
+   * Class Instance Properties
+   */
+  _$menu
+  _$body
+  _$settings
+  _$header
+  _$status
+  _$message
+
+  _menuVisible
+
+  _menuHideHandler
+
+  /**
    * Constructor
    */
   constructor () {

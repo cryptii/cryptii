@@ -7,6 +7,13 @@ import Setting from '../Setting'
  */
 export default class EnumSetting extends Setting {
   /**
+   * Class Instance Properties
+   */
+  _elements
+  _labels
+  _descriptions
+
+  /**
    * Setting constructor
    * @param {string} name
    * @param {Object} spec
@@ -17,6 +24,7 @@ export default class EnumSetting extends Setting {
    */
   constructor (name, spec) {
     super(name, spec)
+
     this._viewPrototype = EnumSettingView
 
     this._elements = []

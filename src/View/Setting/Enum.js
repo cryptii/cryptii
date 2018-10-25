@@ -7,10 +7,17 @@ import View from '../../View'
  */
 export default class EnumSettingView extends SettingView {
   /**
+   * Class Instance Properties
+   */
+  _$select
+  _$$radio
+
+  /**
    * Constructor
    */
   constructor () {
     super()
+
     this._$select = null
     this._$$radio = []
   }

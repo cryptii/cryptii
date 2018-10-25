@@ -97,6 +97,12 @@ export default class SpellingAlphabetEncoder extends Encoder {
   }
 
   /**
+   * Class Instance Properties
+   */
+  _characterMap;
+  _wordMap;
+
+  /**
    * Constructor
    */
   constructor () {
