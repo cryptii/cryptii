@@ -42,7 +42,7 @@ export default class Random {
    * @return {number} Pseudo-random integer
    */
   nextInteger (min, max) {
-    return parseInt(this.next() * (max - min)) + min
+    return Math.floor(this.next() * (max - min)) + min
   }
 
   /**

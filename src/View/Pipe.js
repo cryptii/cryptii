@@ -540,7 +540,7 @@ export default class PipeView extends View {
    */
   scrollTo (x = 0) {
     // remove decimal digits
-    x = parseInt(x)
+    x = Math.floor(x)
 
     // respect bounds
     x = Math.max(Math.min(x, this._scrollMax), 0)

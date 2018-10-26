@@ -145,6 +145,10 @@ export default class Brick extends Viewable {
       return this
     }
 
+    return this.registerSingleSetting(settingOrSpec)
+  }
+
+  registerSingleSetting (settingOrSpec) {
     // retrieve setting object
     let setting = settingOrSpec
     if (!(settingOrSpec instanceof Setting)) {

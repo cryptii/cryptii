@@ -207,7 +207,7 @@ export default class IntegerEncoder extends Encoder {
     const bytes = new Uint8Array(integers.length * bytesPerInteger)
     let integerByte
     for (i = 0; i < bytes.length; i++) {
-      integer = integers[parseInt(i / bytesPerInteger)]
+      integer = integers[Math.floor(i / bytesPerInteger)]
       integerByte = isBigEndian
         ? bytesPerInteger - i % bytesPerInteger - 1
         : i % bytesPerInteger

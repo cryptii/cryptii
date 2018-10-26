@@ -119,11 +119,11 @@ export default class EncoderView extends BrickView {
       }
 
       if (translation.duration < 10) {
-        message += `in ${parseInt(translation.duration * 100) / 100}ms`
+        message += `in ${Math.floor(translation.duration * 100) / 100}ms`
       } else if (translation.duration < 1000) {
-        message += `in ${parseInt(translation.duration)}ms`
+        message += `in ${Math.floor(translation.duration)}ms`
       } else {
-        message += `in ${parseInt(translation.duration / 1000)}s`
+        message += `in ${Math.floor(translation.duration / 1000)}s`
       }
       return this.updateStatus(status, message)
     }
