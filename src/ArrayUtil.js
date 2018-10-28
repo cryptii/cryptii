@@ -101,11 +101,11 @@ export default class ArrayUtil {
    * @return {array} Shuffled array
    */
   static shuffle (array, random = null) {
-    random = random || new Random()
+    random = random || Random.getInstance()
     const a = array.slice()
     let i, j
     for (i = a.length - 1; i > 0; i--) {
-      j = random.nextInteger(0, i + 1)
+      j = random.nextInteger(0, i)
       ;[a[i], a[j]] = [a[j], a[i]]
     }
     return a

@@ -94,7 +94,7 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
   randomizeShiftValue (random, setting) {
     const alphabetSetting = this.getSetting('alphabet')
     if (alphabetSetting.isValid()) {
-      return random.nextInteger(1, alphabetSetting.getValue().getLength())
+      return random.nextInteger(1, alphabetSetting.getValue().getLength() - 1)
     }
     return null
   }

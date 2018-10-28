@@ -324,7 +324,7 @@ export default class Setting extends Viewable {
     if (!this.isRandomizable()) {
       return this
     }
-    const value = this.randomizeValue(random || new Random())
+    const value = this.randomizeValue(random || Random.getInstance())
     if (value !== null) {
       return this.setValue(value)
     }

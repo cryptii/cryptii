@@ -241,7 +241,7 @@ export default class NumberSetting extends Setting {
     }
     if (this.getMin() !== null && this.getMax() !== null) {
       return this.isInteger()
-        ? random.nextInteger(this.getMin(), this.getMax())
+        ? random.nextInteger(this.getMin(), Math.ceil(this.getMax()) - 1)
         : random.nextFloat(this.getMin(), this.getMax())
     }
     return null

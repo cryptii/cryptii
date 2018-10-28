@@ -4,6 +4,7 @@ import Setting from './Setting'
 import SettingFactory from './Factory/Setting'
 import Viewable from './Viewable'
 import EventManager from './EventManager'
+import Random from './Random'
 
 /**
  * Abstract element of the pipe
@@ -212,14 +213,16 @@ export default class Brick extends Viewable {
   /**
    * Applies randomly chosen values to the brick.
    * Override to customize behaviour.
+   * @param {Random} [random] Random number generator
    * @return {Brick} Fluent interface
    */
-  randomize () {
+  randomize (random = null) {
     if (this.isRandomizable()) {
+      random = random || Random.getInstance()
       // randomize visible settings
       this._settings
         .filter(setting => setting.isVisible() && setting.isRandomizable())
-        .forEach(setting => setting.randomize())
+        .forEach(setting => setting.randomize(random))
     }
     return this
   }

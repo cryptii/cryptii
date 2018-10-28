@@ -118,7 +118,10 @@ export default class ByteSetting extends Setting {
     if (value !== null) {
       return value
     }
-    if (this.isValid()) {
+    if (this.getMinSize() !== null) {
+      // use the min size
+      return random.nextBytes(this.getMinSize())
+    } else if (this.isValid()) {
       // use the current value's size to
       // produce the same amount of random bytes
       return random.nextBytes(this.getValue().length)

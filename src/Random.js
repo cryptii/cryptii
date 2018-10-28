@@ -1,73 +1,99 @@
 
+// shared instance
+let instance = null
+
 /**
- * Pseudo-random number generator (PRNG).
+ * Class generating random values.
+ * @todo Implement pseudo-random number generator (PRNG).
  */
 export default class Random {
   /**
-   * Random generator constructor.
-   * @param {string} [seed] Seed to be used during randomization.
+   * Constructor
+   * @param {?string} [seed] PRNG seed (Reserved for future implementation)
    */
   constructor (seed = null) {
     this._seed = seed
+
+    // retrieve Web Crypto API's crypto object, if available
+    this._crypto = window.crypto || window.msCrypto || null
   }
 
   /**
-   * Returns next pseudo-random number between 0 (inclusive) and 1 (exclusive).
-   * @return {number} Pseudo-random number
+   * Returns next number between 0 (inclusive) and 1 (exclusive).
+   * @return {number}
    */
   next () {
-    // TODO implement actual PRNG
+    if (this._crypto) {
+      // create one random u32 integer and divide it by 2^32
+      const integers = new Uint32Array(1)
+      this._crypto.getRandomValues(integers)
+      return integers / 0x100000000
+    }
     return Math.random()
   }
 
   /**
-   * Returns next random float between min (inclusive) and max (exclusive).
+   * Returns next float in given range [min-max[.
    * @param {number} min Minimum float (inclusive)
    * @param {number} max Maximum float (exclusive)
-   * @return {number} Pseudo-random float
+   * @return {number}
    */
   nextFloat (min, max) {
     return this.next() * (max - min) + min
   }
 
   /**
-   * Returns next random integer between min (inclusive) and max (inclusive).
+   * Returns next integer in given range [min-max].
    * @param {number} min Minimum integer (inclusive)
-   * @param {number} max Maximum integer (exclusive)
-   * @return {number} Pseudo-random integer
+   * @param {number} max Maximum integer (inclusive)
+   * @return {number}
    */
   nextInteger (min, max) {
-    return parseInt(this.next() * (max - min)) + min
+    return Math.floor(this.next() * (max - min + 1)) + min
   }
 
   /**
-   * Returns next random bytes of given size.
+   * Returns next given number of bytes.
    * @param {number} size Amount of bytes to produce
-   * @return {Uint8Array} Pseudo-random bytes
+   * @return {Uint8Array}
    */
   nextBytes (size) {
     const bytes = new Uint8Array(size)
-    for (let i = 0; i < size; i++) {
-      bytes[i] = this.nextInteger(0, 256)
+    if (this._crypto) {
+      this._crypto.getRandomValues(bytes)
+    } else {
+      for (let i = 0; i < size; i++) {
+        bytes[i] = this.nextInteger(0, 0xFF)
+      }
     }
     return bytes
   }
 
   /**
-   * Returns next random boolean.
-   * @return {boolean} Pseudo-random boolean
+   * Returns next boolean value.
+   * @return {boolean}
    */
   nextBoolean () {
     return this.next() >= 0.5
   }
 
   /**
-   * Chooses random item from given array.
-   * @param {mixed[]} array Array of items to choose from
-   * @return {mixed} Pseudo-random chosen item
+   * Chooses element from given array.
+   * @param {mixed[]} array Elements to choose from
+   * @return {mixed}
    */
   nextChoice (array) {
-    const index = this.nextInteger(0, array.length - 1)
-    return array[index]
+    return array[this.nextInteger(0, array.length - 1)]
+  }
+
+  /**
+   * Returns shared instance.
+   * @return {Random}
+   */
+  static getInstance () {
+    if (instance === null) {
+      instance = new Random()
+    }
+    return instance
   }
 }

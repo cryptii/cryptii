@@ -219,7 +219,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
     const alphabetSetting = this.getSetting('alphabet')
     if (alphabetSetting.isValid()) {
       const m = this.getSetting('alphabet').getValue().getLength()
-      return random.nextInteger(1, m)
+      return random.nextInteger(1, m - 1)
     }
     return null
   }

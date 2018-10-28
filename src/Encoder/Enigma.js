@@ -407,6 +407,7 @@ export default class EnigmaEncoder extends Encoder {
       label: `Position`,
       type: 'number',
       value: 1,
+      randomizable: false,
       width: 4,
       options: {
         integer: true,
@@ -435,6 +436,7 @@ export default class EnigmaEncoder extends Encoder {
         label: `Rotor ${i + 1}`,
         type: 'enum',
         value: rotorNames[0],
+        randomizable: false,
         width: 4,
         options: {
           elements: rotorNames,
@@ -817,20 +819,6 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Generates a random plugboard setting value.
-   * @protected
-   * @param {Random} random Random instance
-   * @param {Setting} setting Plugboard setting
-   * @return {string} Randomized plugboard setting value
-   */
-  randomizePlugboardValue (random, setting) {
-    const shuffled =
-      ArrayUtil.shuffle(alphabet.split(''), random)
-        .join('').substr(0, 20)
-    return StringUtil.chunk(shuffled, 2).join(' ')
-  }
-
-  /**
    * Converts plugboard value to rotor wiring string.
    * @protected
    * @param {string} plugboard String with pairs of letters to be swapped
@@ -843,6 +831,71 @@ export default class EnigmaEncoder extends Encoder {
       wiring[pair.charCodeAt(1) - 97] = pair[0]
     })
     return wiring.join('')
+  }
+
+  /**
+   * Returns wether this brick is randomizable.
+   * @return {boolean}
+   */
+  isRandomizable () {
+    return true
+  }
+
+  /**
+   * Applies randomly chosen values to the brick.
+   * @return {Brick} Fluent interface
+   */
+  randomize () {
+    const model = EnigmaEncoder.getModel(this.getSettingValue('model'))
+    let i, index, rotor
+
+    // gather rotor collection available to current model
+    let rotors = model.reflectorRotors
+    for (i = 0; i < model.slots.length; i++) {
+      rotors = rotors.concat(model.slots[i].rotors)
+    }
+
+    // usually one set of rotors only contain a single rotor for each type
+    rotors = ArrayUtil.unique(rotors)
+
+    // randomize rotor collection
+    rotors = ArrayUtil.shuffle(rotors)
+
+    // pick a reflector
+    index = rotors.findIndex(rotor =>
+      model.reflectorRotors.indexOf(rotor) !== -1)
+    if (index !== -1) {
+      rotor = rotors.splice(index, 1)[0]
+      this.setSettingValue('reflector', rotor)
+    }
+
+    // pick a rotor for each slot
+    for (i = 0; i < model.slots.length; i++) {
+      index = rotors.findIndex(rotor =>
+        model.slots[i].rotors.indexOf(rotor) !== -1)
+      if (index !== -1) {
+        rotor = rotors.splice(index, 1)[0]
+        this.setSettingValue(`rotor${i + 1}`, rotor)
+      }
+    }
+
+    // randomize remainding settings
+    super.randomize()
+    return this
+  }
+
+  /**
+   * Generates a random plugboard setting value.
+   * @protected
+   * @param {Random} random Random instance
+   * @param {Setting} setting Plugboard setting
+   * @return {string} Randomized plugboard setting value
+   */
+  randomizePlugboardValue (random, setting) {
+    const shuffled =
+      ArrayUtil.shuffle(alphabet.split(''), random)
+        .join('').substr(0, 20)
+    return StringUtil.chunk(shuffled, 2).join(' ')
   }
 
   /**
