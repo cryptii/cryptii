@@ -7,6 +7,20 @@ import TextEncodingError from './Error/TextEncoding'
  */
 export default class TextEncoder {
   /**
+   * Validates singlecode point.
+   * @param {number} codePoint
+   * @return {boolean} True, if valid
+   */
+  static validateCodePoint (codePoint) {
+    return (
+      isFinite(codePoint) &&
+      codePoint >= 0 &&
+      codePoint <= 0x10FFFF &&
+      Math.floor(codePoint) === codePoint
+    )
+  }
+
+  /**
    * Validates given array of code points.
    * @param {number[]} codePoints
    * @return {boolean} True, if valid
@@ -14,14 +28,8 @@ export default class TextEncoder {
   static validateCodePoints (codePoints) {
     let valid = true
     let i = 0
-    let codePoint
     while (valid && i < codePoints.length) {
-      codePoint = codePoints[i]
-      valid =
-        isFinite(codePoint) &&
-        codePoint >= 0 &&
-        codePoint <= 0x10FFFF &&
-        Math.floor(codePoint) === codePoint
+      valid = TextEncoder.validateCodePoint(codePoints[i])
       i++
     }
     return valid
@@ -207,7 +215,7 @@ export default class TextEncoder {
         }
 
         // Append bits to current code point
-        codePoint = (codePoint << 6) | (byte & 0x3f)
+        codePoint = (codePoint << 6) | (byte & 0x3F)
 
         if (remainingBytes === 0) {
           // Completed a code point

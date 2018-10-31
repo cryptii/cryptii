@@ -1,5 +1,7 @@
 
 import CharacterBlockEncoder from './CharacterBlock'
+import InvalidInputError from '../Error/InvalidInput'
+import TextEncoder from '../TextEncoder'
 
 const meta = {
   name: 'unicode-code-points',
@@ -130,6 +132,10 @@ export default class UnicodeCodePointsEncoder extends CharacterBlockEncoder {
         break
     }
 
-    return !isNaN(codePoint) ? codePoint : 0
+    if (!TextEncoder.validateCodePoint(codePoint)) {
+      throw new InvalidInputError(`Invalid code point at index ${index}`)
+    }
+
+    return codePoint
   }
 }
