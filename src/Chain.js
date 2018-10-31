@@ -38,6 +38,11 @@ export default class Chain {
         this._bytes = new Uint8Array(0)
         break
       case '[object Array]':
+        // validate array of code points
+        if (!TextEncoder.validateCodePoints(value)) {
+          throw new Error(
+            `Chain constructor expects a valid array of code points.`)
+        }
         // initializes chain with code points
         this._codePoints = value
         break

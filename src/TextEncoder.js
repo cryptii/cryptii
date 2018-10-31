@@ -7,16 +7,24 @@ import TextEncodingError from './Error/TextEncoding'
  */
 export default class TextEncoder {
   /**
-   * Validates a single Unicode code point.
-   * @return {boolean} True, if code point is valid
+   * Validates given array of code points.
+   * @param {number[]} codePoints
+   * @return {boolean} True, if valid
    */
-  static validateCodePoint (codePoint) {
-    return (
-      !isFinite(codePoint) ||
-      codePoint < 0 ||
-      codePoint > 0x10FFFF ||
-      Math.floor(codePoint) !== codePoint
-    )
+  static validateCodePoints (codePoints) {
+    let valid = true
+    let i = 0
+    let codePoint
+    while (valid && i < codePoints.length) {
+      codePoint = codePoints[i]
+      valid =
+        isFinite(codePoint) &&
+        codePoint >= 0 &&
+        codePoint <= 0x10FFFF &&
+        Math.floor(codePoint) === codePoint
+      i++
+    }
+    return valid
   }
 
   /**
@@ -25,32 +33,33 @@ export default class TextEncoder {
    * @author Norbert Lindenberg
    * @see http://norbertlindenberg.com/2012/05/ecmascript-supplementary-characters/
    * @param {number[]} codePoints Array of Unicode code points
-   * @throws {Error} Throws an error when encountering an invalid code point.
    * @returns {String} String (UCS-2)
    */
   static stringFromCodePoints (codePoints) {
-    let chars = []
+    // In the worst case every code point needs to be translated to two
+    // surrogates each
+    // Create a fixed size array that gets sliced at the end
+    const codeUnits = new Array(codePoints.length * 2)
+    let j = 0
+    let i, codePoint
 
-    codePoints.forEach((codePoint, index) => {
-      if (TextEncoder.validateCodePoint(codePoint)) {
-        throw new TextEncodingError(
-          `Invalid code point '${codePoint}' at index ${index}`)
-      }
+    for (i = 0; i < codePoints.length; i++) {
+      codePoint = codePoints[i]
 
       if (codePoint < 0x10000) {
-        // BMP character
-        chars.push(codePoint)
+        // Basic Multilingual Plane (BMP) character
+        codeUnits[j++] = String.fromCharCode(codePoint)
       } else {
-        // character with surrogates
+        // Character with surrogates
         codePoint -= 0x10000
-        chars.push((codePoint >> 10) + 0xD800)
-        chars.push((codePoint % 0x400) + 0xDC00)
+        codeUnits[j++] = String.fromCharCode((codePoint >> 10) + 0xD800)
+        codeUnits[j++] = String.fromCharCode((codePoint % 0x400) + 0xDC00)
       }
-    })
+    }
 
-    // create string from char codes
-    // doing this in a way that does not cause a RangeError due to too many args
-    return chars.map(charCode => String.fromCharCode(charCode)).join('')
+    // Slice the fixed size array to the portion actually in use and concatenate
+    // it to a string
+    return codeUnits.slice(0, j).join('')
   }
 
   /**
@@ -65,32 +74,44 @@ export default class TextEncoder {
    * @returns {number[]} Array of Unicode code points
    */
   static codePointsFromString (string) {
-    const codePoints = []
+    // In the worst case every string code unit needs to be translated to
+    // a single code point each
+    // Create a fixed size array that gets sliced at the end
     const length = string.length
+    const codePoints = new Array(length)
+
+    let codeUnit, nextCodeUnit
+    let j = 0
     let i = 0
 
     while (i < length) {
-      const value = string.charCodeAt(i++)
+      codeUnit = string.charCodeAt(i++)
 
-      if (value >= 0xD800 && value <= 0xDBFF && i < length) {
-        // it's a high surrogate, and there is a next character
-        const extra = string.charCodeAt(i++)
+      if (codeUnit >= 0xD800 && codeUnit <= 0xDBFF && i < length) {
+        // Identified a high surrogate
+        nextCodeUnit = string.charCodeAt(i++)
 
-        if ((extra & 0xFC00) === 0xDC00) {
-          // low surrogate
-          codePoints.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000)
+        // There is a next character
+        if ((nextCodeUnit & 0xFC00) === 0xDC00) {
+          // Low surrogate
+          codePoints[j++] =
+            ((codeUnit & 0x3FF) << 10) +
+            (nextCodeUnit & 0x3FF) +
+            0x10000
         } else {
-          // it's an unmatched surrogate; only append this code unit, in case
+          // Unmatched surrogate; Only append this code unit, in case
           // the next code unit is the high surrogate of a surrogate pair
-          codePoints.push(value)
+          codePoints[j++] = codeUnit
           i--
         }
       } else {
-        codePoints.push(value)
+        // Identified BMP character
+        codePoints[j++] = codeUnit
       }
     }
 
-    return codePoints
+    // Slice the fixed size array to the portion actually in use
+    return codePoints.slice(0, j)
   }
 
   /**
@@ -98,7 +119,6 @@ export default class TextEncoder {
    * @param {number[]} codePoints
    * @param {String} [encoding='utf8']
    * @throws {Error} Throws an error if given encoding is not supported.
-   * @throws {Error} Throws an error when encountering an invalid code point.
    * @return {Uint8Array} Uint8Array of bytes
    */
   static bytesFromCodePoints (codePoints, encoding = 'utf8') {
@@ -130,63 +150,68 @@ export default class TextEncoder {
   }
 
   static _encodeCodePointsToUTF8Bytes (codePoints) {
-    const bytes = []
+    // In the worst case every code point needs to be represented by 4 bytes
+    // Create a fixed size array that gets sliced at the end
+    const bytes = new Uint8Array(codePoints.length * 4)
+    let j = 0
+    let i, codePoint
 
-    codePoints.forEach((codePoint, index) => {
-      if (TextEncoder.validateCodePoint(codePoint)) {
-        throw new TextEncodingError(
-          `Invalid code point '${codePoint}' at ${index}`)
-      }
-      // append code point bytes
+    for (i = 0; i < codePoints.length; i++) {
+      codePoint = codePoints[i]
+
       if (codePoint <= 0x7F) {
         // 1 byte: 0xxxxxxx
-        bytes.push(codePoint)
+        bytes[j++] = codePoint
       } else if (codePoint <= 0x7FF) {
         // 2 bytes: 110xxxxx 10xxxxxx
-        bytes.push(0b11000000 | (codePoint >> 6))
-        bytes.push(0b10000000 | (codePoint % 64))
+        bytes[j++] = 0b11000000 | (codePoint >> 6)
+        bytes[j++] = 0b10000000 | (codePoint & 0x3F)
       } else if (codePoint <= 0xFFFF) {
         // 3 bytes: 1110xxxx 10xxxxxx 10xxxxxx
-        bytes.push(0b11100000 | (codePoint >> 12))
-        bytes.push(0b10000000 | (codePoint % 4096 >> 6))
-        bytes.push(0b10000000 | (codePoint % 64))
+        bytes[j++] = 0b11100000 | (codePoint >> 12)
+        bytes[j++] = 0b10000000 | ((codePoint & 0xFFF) >> 6)
+        bytes[j++] = 0b10000000 | (codePoint & 0x3F)
       } else {
         // 4 bytes: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-        bytes.push(0b11110000 | (codePoint >> 18))
-        bytes.push(0b10000000 | (codePoint % 262144 >> 12))
-        bytes.push(0b10000000 | (codePoint % 4096 >> 6))
-        bytes.push(0b10000000 | (codePoint % 64))
+        bytes[j++] = 0b11110000 | (codePoint >> 18)
+        bytes[j++] = 0b10000000 | ((codePoint & 0x3FFFF) >> 12)
+        bytes[j++] = 0b10000000 | ((codePoint & 0xFFF) >> 6)
+        bytes[j++] = 0b10000000 | (codePoint & 0x3F)
       }
-    })
+    }
 
-    return new Uint8Array(bytes)
+    // Slice the fixed size array to the portion actually in use
+    return bytes.slice(0, j)
   }
 
   static _decodeCodePointsFromUTF8Bytes (bytes) {
-    const codePoints = []
+    // In the worst case byte needs to be represented by one code point
+    // Create a fixed size array that gets sliced at the end
     const size = bytes.length
+    const codePoints = new Array(size)
+
     let remainingBytes = 0
     let i = -1
-    let byte
-    let codePoint
+    let j = 0
+    let byte, codePoint
 
     while (++i < size) {
       byte = bytes[i]
 
       if (byte > 0b01111111 && byte <= 0b10111111) {
-        // this is a continuation byte
+        // Continuation byte identified
         if (--remainingBytes < 0) {
           throw new TextEncodingError(
             `Invalid UTF-8 encoded text: ` +
             `Unexpected continuation byte at 0x${i.toString(16)}`, i)
         }
 
-        // append bits to current code point
-        codePoint = (codePoint << 6) | (byte % 64)
+        // Append bits to current code point
+        codePoint = (codePoint << 6) | (byte & 0x3f)
 
         if (remainingBytes === 0) {
-          // completed a code point
-          codePoints.push(codePoint)
+          // Completed a code point
+          codePoints[j++] = codePoint
         }
       } else if (remainingBytes > 0) {
         // this must be a continuation byte
@@ -195,19 +220,18 @@ export default class TextEncoder {
           `Continuation byte expected at 0x${i.toString(16)}`, i)
       } else if (byte <= 0b01111111) {
         // 1 byte code point
-        // this already is a complete code point
-        codePoints.push(byte)
+        codePoints[j++] = byte
       } else if (byte <= 0b11011111) {
         // 2 byte code point
-        codePoint = byte % 32
+        codePoint = byte & 0b00011111
         remainingBytes = 1
       } else if (byte <= 0b11101111) {
         // 3 byte code point
-        codePoint = byte % 16
+        codePoint = byte & 0b00001111
         remainingBytes = 2
       } else if (byte <= 0b11110111) {
         // 4 byte code point
-        codePoint = byte % 8
+        codePoint = byte & 0b00000111
         remainingBytes = 3
       } else {
         throw new TextEncodingError(
@@ -221,6 +245,7 @@ export default class TextEncoder {
         `Invalid UTF-8 encoded text: Unexpected end of bytes`)
     }
 
-    return codePoints
+    // Slice the fixed size array to the portion actually in use
+    return codePoints.slice(0, j)
   }
 }
