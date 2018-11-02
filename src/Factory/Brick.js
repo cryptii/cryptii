@@ -7,11 +7,11 @@ import Ascii85Encoder from '../Encoder/Ascii85'
 import AtbashEncoder from '../Encoder/Atbash'
 import Base64Encoder from '../Encoder/Base64'
 import BitwiseOperationEncoder from '../Encoder/BitwiseOperation'
+import BlockCipherEncoder from '../Encoder/BlockCipher'
 import BytesViewer from '../Viewer/Bytes'
 import CaesarCipherEncoder from '../Encoder/CaesarCipher'
 import EnigmaEncoder from '../Encoder/Enigma'
 import HashEncoder from '../Encoder/Hash'
-import BlockCipherEncoder from '../Encoder/BlockCipher'
 import HMACEncoder from '../Encoder/HMAC'
 import IntegerEncoder from '../Encoder/Integer'
 import MorseCodeEncoder from '../Encoder/MorseCode'
@@ -57,9 +57,9 @@ export default class BrickFactory extends Factory {
       URLEncoder,
       UnicodeCodePointsEncoder,
       IntegerEncoder,
+      BlockCipherEncoder,
       HashEncoder,
-      HMACEncoder,
-      BlockCipherEncoder
+      HMACEncoder
     ]
 
     // register each brick
