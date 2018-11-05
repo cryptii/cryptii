@@ -1,6 +1,5 @@
 
 import ByteEncoder from '../ByteEncoder'
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import StringUtil from '../StringUtil'
 
@@ -24,7 +23,7 @@ export default class Base64Encoder extends Encoder {
   }
 
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
@@ -47,26 +46,23 @@ export default class Base64Encoder extends Encoder {
    * Performs encode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   performEncode (content) {
     const variant = this.getSettingValue('variant')
-    const string = ByteEncoder.base64StringFromBytes(
-      content.getBytes(), variant)
-    return Chain.wrap(string)
+    return ByteEncoder.base64StringFromBytes(content.getBytes(), variant)
   }
 
   /**
    * Performs decode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain} Decoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Decoded content
    */
   performDecode (content) {
-    // remove whitespaces before decoding
+    // Remove whitespaces before decoding
     const string = StringUtil.removeWhitespaces(content.getString())
     const variant = this.getSettingValue('variant')
-    const bytes = ByteEncoder.bytesFromBase64String(string, variant)
-    return Chain.wrap(bytes)
+    return ByteEncoder.bytesFromBase64String(string, variant)
   }
 }

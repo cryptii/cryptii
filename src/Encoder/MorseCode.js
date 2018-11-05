@@ -1,5 +1,4 @@
 
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import StringUtil from '../StringUtil'
 import InvalidInputError from '../Error/InvalidInput'
@@ -15,17 +14,17 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789.,?\'!/()&:;=+-_"$@'
 const codeAlphabet = [
   /* eslint-disable no-multi-spaces */
 
-  // letters: a-z
+  // Letters: a-z
   '.-',      '-...',    '-.-.',    '-..',     '.',       '..-.',    '--.',
   '....',    '..',      '.---',    '-.-',     '.-..',    '--',      '-.',
   '---',     '.--.',    '--.-',    '.-.',     '...',     '-',       '..-',
   '...-',    '.--',     '-..-',    '-.--',    '--..',
 
-  // numbers: 0-9
+  // Numbers: 0-9
   '-----',   '.----',   '..---',   '...--',   '....-',   '.....',   '-....',
   '--...',   '---..',   '----.',
 
-  // punctuation: .,?'!/()&:;=+-_"$@
+  // Punctuation: .,?'!/()&:;=+-_"$@
   '.-.-.-',  '--..--',  '..--..',  '.----.',  '-.-.--',  '-..-.',   '-.--.',
   '-.--.-',  '.-...',   '---...',  '-.-.-.',  '-...-',   '.-.-.',   '-....-',
   '..--.-',  '.-..-.',  '..._.._', '.--.-.'
@@ -46,7 +45,7 @@ export default class MorseCodeEncoder extends Encoder {
   }
 
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
@@ -153,8 +152,9 @@ export default class MorseCodeEncoder extends Encoder {
 
   /**
    * Performs encode on given content.
+   * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   performEncode (content) {
     const representation = this.getSettingValue('representation')
@@ -170,7 +170,7 @@ export default class MorseCodeEncoder extends Encoder {
     }
 
     let string = content.toLowerCase().getChars()
-      // encode each character
+      // Encode each character
       .map(char => {
         let code = MorseCodeEncoder.encodeCharacter(
           char, shortMark, longerMark, spaceMark)
@@ -181,11 +181,11 @@ export default class MorseCodeEncoder extends Encoder {
         }
         return code
       })
-      // glue it back together
+      // Glue it back together
       .join(' ')
 
     if (representation === 'timing') {
-      // translate to timing representation
+      // Translate to timing representation
       const signalOnMark = this.getSettingValue('signalOnMark').getString()
       const signalOffMark = this.getSettingValue('signalOffMark').getString()
 
@@ -193,29 +193,29 @@ export default class MorseCodeEncoder extends Encoder {
         .split('')
         .map(symbol => {
           switch (symbol) {
-            // dit
+            // Dit
             case '.':
               return signalOnMark
-            // dah
+            // Dah
             case '-':
               return signalOnMark.repeat(3)
-            // letter and word space
+            // Letter and word space
             default:
               return signalOffMark
           }
         })
-        // glue together and add symbol space
+        // Glue together and add symbol space
         .join(signalOffMark)
     }
 
-    return Chain.wrap(string)
+    return string
   }
 
   /**
    * Performs decode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Decoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Decoded content
    */
   performDecode (content) {
     const representation = this.getSettingValue('representation')
@@ -232,7 +232,7 @@ export default class MorseCodeEncoder extends Encoder {
     }
 
     if (representation === 'timing') {
-      // interpret timing code
+      // Interpret timing code
       const fromMarks = [
         this.getSettingValue('signalOnMark').getString(),
         this.getSettingValue('signalOffMark').getString()]
@@ -240,7 +240,7 @@ export default class MorseCodeEncoder extends Encoder {
       string = MorseCodeEncoder.translateMarks(
         string, fromMarks, ['=', '.'])
 
-      // translate timing code to morse code
+      // Translate timing code to morse code
       string = string
         .replace(/===/g, '-')
         .replace(/\.{7}/g, ' / ')
@@ -249,11 +249,11 @@ export default class MorseCodeEncoder extends Encoder {
         .replace(/=/g, '.')
     }
 
-    // translate morse code to string
+    // Translate morse code to string
     string = string
-      // split characters by space
+      // Split characters by space
       .split(' ')
-      // decode each character
+      // Decode each character
       .map(rawCode => {
         if (rawCode === '') {
           return null
@@ -268,12 +268,12 @@ export default class MorseCodeEncoder extends Encoder {
         }
         return char
       })
-      // leave out codes that are not defined
+      // Leave out codes that are not defined
       .filter(char => char !== null)
-      // glue it back together
+      // Glue it back together
       .join('')
 
-    return Chain.wrap(string)
+    return string
   }
 
   /**
@@ -287,7 +287,7 @@ export default class MorseCodeEncoder extends Encoder {
   validateCodeMarkSettingValue (rawValue, setting) {
     const mark = setting.filterValue(rawValue)
 
-    // because morse code letters are separated by whitespaces they
+    // Because morse code letters are separated by whitespaces they
     // are not allowed inside morse code marks
     if (mark.match(/\s/) !== null) {
       return {
@@ -348,20 +348,20 @@ export default class MorseCodeEncoder extends Encoder {
       case 'shortMark':
       case 'longerMark':
       case 'spaceMark':
-        // revalidate other settings
+        // Revalidate other settings
         ;['shortMark', 'longerMark', 'spaceMark']
           .filter(name => name !== setting.getName())
           .forEach(name => this.getSetting(name).revalidateValue())
         break
       case 'signalOnMark':
       case 'signalOffMark':
-        // revalidate other settings
+        // Revalidate other settings
         ;['signalOnMark', 'signalOffMark']
           .filter(name => name !== setting.getName())
           .forEach(name => this.getSetting(name).revalidateValue())
         break
       case 'representation':
-        // show & hide fields for given representation
+        // Show & hide fields for given representation
         this.getSetting('shortMark').setVisible(value === 'code')
         this.getSetting('longerMark').setVisible(value === 'code')
         this.getSetting('spaceMark').setVisible(value === 'code')
@@ -382,19 +382,19 @@ export default class MorseCodeEncoder extends Encoder {
    * @return {?string} Morse code representation or null, if not defined.
    */
   static encodeCharacter (char, shortMark, longerMark, spaceMark) {
-    // handle space
+    // Handle space
     if (StringUtil.isWhitespace(char)) {
       return spaceMark
     }
 
-    // find char in alphabet
+    // Find char in alphabet
     const index = alphabet.indexOf(char)
     if (index === -1) {
-      // char is not defined
+      // Char is not defined
       return null
     }
 
-    // translate marks
+    // Translate marks
     const code = codeAlphabet[index]
     return MorseCodeEncoder.translateMarks(
       code, ['.', '-'], [shortMark, longerMark])
@@ -410,16 +410,16 @@ export default class MorseCodeEncoder extends Encoder {
    * @return {?string} Character or null, if not defined.
    */
   static decodeCode (rawCode, shortMark, longerMark, spaceMark) {
-    // handle space
+    // Handle space
     if (rawCode === spaceMark) {
       return ' '
     }
 
-    // translate marks
+    // Translate marks
     const code = MorseCodeEncoder.translateMarks(
       rawCode, [shortMark, longerMark], ['.', '-'])
 
-    // find code in alphabet
+    // Find code in alphabet
     const index = codeAlphabet.indexOf(code)
     return index !== -1 ? alphabet[index] : null
   }
@@ -438,18 +438,18 @@ export default class MorseCodeEncoder extends Encoder {
     let i = -1
     let j, mark, markRecognized
 
-    // go through string
+    // Go through string
     while (++i < string.length) {
       markRecognized = false
       j = -1
 
-      // find a mark that needs replacement
+      // Find a mark that needs replacement
       while (!markRecognized && ++j < fromMarks.length) {
         mark = fromMarks[j]
         markRecognized = string.substr(i, mark.length) === mark
 
         if (markRecognized) {
-          // append replacement mark to haystack
+          // Append replacement mark to haystack
           result += toMarks[j]
           i += mark.length - 1
         }

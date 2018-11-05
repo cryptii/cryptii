@@ -104,26 +104,27 @@ export default class VigenereCipherEncoder extends Encoder {
 
   /**
    * Performs encode or decode on given content.
+   * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain|Promise} Resulting content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
     const { variant, alphabet, includeForeignChars } = this.getSettingValues()
 
-    // handle case sensitivity
+    // Handle case sensitivity
     if (!this.getSettingValue('caseSensitivity')) {
       content = content.toLowerCase()
     }
 
-    // choose key and key mode
+    // Choose key and key mode
     let { key, keyMode } = this.getSettingValues()
     if (variant === 'trithemius-cipher') {
       key = alphabet
       keyMode = 'repeat'
     }
 
-    // translate each character
+    // Translate each character
     let j = 0
     let resultCodePoints = []
     let charIndex, codePoint, resultCodePoint, keyCodePoint, keyIndex
@@ -133,11 +134,11 @@ export default class VigenereCipherEncoder extends Encoder {
       charIndex = alphabet.indexOfCodePoint(codePoint)
 
       if (charIndex !== -1) {
-        // calculate shift from key
+        // Calculate shift from key
         keyCodePoint = key.getCodePointAt(MathUtil.mod(j, key.getLength()))
         keyIndex = alphabet.indexOfCodePoint(keyCodePoint)
 
-        // shift char index depending on variant
+        // Shift char index depending on variant
         switch (variant) {
           case 'beaufort-cipher':
             charIndex = keyIndex - charIndex
@@ -153,12 +154,12 @@ export default class VigenereCipherEncoder extends Encoder {
               : charIndex - keyIndex
         }
 
-        // match code point to shifted char index and add it to result
+        // Match code point to shifted char index and add it to result
         charIndex = MathUtil.mod(charIndex, alphabet.getLength())
         resultCodePoint = alphabet.getCodePointAt(charIndex)
         resultCodePoints.push(resultCodePoint)
 
-        // extend the key with the current character, if requested
+        // Extend the key with the current character, if requested
         if (keyMode === 'autokey') {
           const nextKeyCodePoint = isEncode ? codePoint : resultCodePoint
           key = Chain.join([key, Chain.wrap([nextKeyCodePoint])], '')
@@ -166,12 +167,12 @@ export default class VigenereCipherEncoder extends Encoder {
 
         j++
       } else if (includeForeignChars) {
-        // add foreign character to result
+        // Add foreign character to result
         resultCodePoints.push(codePoint)
       }
     }
 
-    return Chain.wrap(resultCodePoints)
+    return resultCodePoints
   }
 
   /**
@@ -184,16 +185,16 @@ export default class VigenereCipherEncoder extends Encoder {
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
       case 'variant':
-        // key and keyMode setting visibility depend on the variant
+        // Key and keyMode setting visibility depend on the variant
         this.getSetting('key').setVisible(value !== 'trithemius-cipher')
         this.getSetting('keyMode').setVisible(value !== 'trithemius-cipher')
         break
       case 'alphabet':
-        // update allowed chars of key setting
+        // Update allowed chars of key setting
         this.getSetting('key').setAllowedChars(value)
         break
       case 'caseSensitivity':
-        // also set case sensitivity on alphabet and key setting
+        // Also set case sensitivity on alphabet and key setting
         this.getSetting('alphabet').setCaseSensitivity(value)
         this.getSetting('key').setCaseSensitivity(value)
         break

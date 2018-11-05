@@ -1,5 +1,4 @@
 
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 
 const meta = {
@@ -82,7 +81,7 @@ export default class BitwiseOperationEncoder extends Encoder {
    * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain}
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
     const bytes = content.getBytes()
@@ -90,16 +89,14 @@ export default class BitwiseOperationEncoder extends Encoder {
     let operation = this.getSettingValue('operation')
 
     if (!isEncode) {
-      // inverse operation
+      // Inverse operation
       operation = operationInverseMap[operation]
     }
 
-    // perform operation on each byte
-    const result = bytes.map((byte, index) =>
+    // Perform operation on each byte
+    return bytes.map((byte, index) =>
       this.performByteOperation(byte, operation,
         operandBytes[index % operandBytes.length]))
-
-    return Chain.wrap(result)
   }
 
   /**
@@ -140,7 +137,7 @@ export default class BitwiseOperationEncoder extends Encoder {
    */
   settingValueDidChange (setting, value) {
     if (setting.getName() === 'operation') {
-      // only make operand visible when necessary
+      // Only make operand visible when necessary
       this.getSetting('operand').setVisible(value !== 'NOT')
     }
     return super.settingValueDidChange(setting, value)

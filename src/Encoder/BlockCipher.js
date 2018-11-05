@@ -1,6 +1,5 @@
 
 import Browser from '../Browser'
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import InvalidInputError from '../Error/InvalidInput'
 import nodeCrypto from 'crypto'
@@ -26,7 +25,7 @@ const algorithms = [
     label: 'AES-192',
     blockSize: 16,
     keySize: 24,
-    // not widely supported in browsers
+    // Not widely supported in browsers
     browserAlgorithm: false,
     nodeAlgorithm: 'aes-192'
   },
@@ -184,19 +183,18 @@ export default class BlockCipherEncoder extends Encoder {
    * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain|Promise} Resulting content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
   async performTranslate (content, isEncode) {
     const message = content.getBytes()
     const { algorithm, mode, key, padding, iv } = this.getSettingValues()
 
     try {
-      // try to encrypt or decrypt
-      const result = await this.createCipher(
+      // Try to encrypt or decrypt
+      return await this.createCipher(
         algorithm, mode, key, iv, padding, isEncode, message)
-      return Chain.wrap(result)
     } catch (err) {
-      // catch invalid input errors
+      // Catch invalid input errors
       if (!isEncode) {
         throw new InvalidInputError(
           `${algorithm} decryption failed, ` +
@@ -229,7 +227,7 @@ export default class BlockCipherEncoder extends Encoder {
       iv = global.Buffer.from(iv)
       message = global.Buffer.from(message)
 
-      // create message cipher using Node Crypto async
+      // Create message cipher using Node Crypto async
       return new Promise((resolve, reject) => {
         const cipher = isEncode
           ? nodeCrypto.createCipheriv(cipherName, key, iv)
@@ -247,15 +245,15 @@ export default class BlockCipherEncoder extends Encoder {
     } else {
       const cipherName = algorithm.browserAlgorithm + '-' + mode
 
-      // get crypto subtle instance
+      // Get crypto subtle instance
       const crypto = window.crypto || window.msCrypto
       const cryptoSubtle = crypto.subtle || crypto.webkitSubtle
 
-      // create key instance
+      // Create key instance
       const cryptoKey = await cryptoSubtle.importKey(
         'raw', key, { name: cipherName }, false, ['encrypt', 'decrypt'])
 
-      // create message cipher using Web Crypto API
+      // Create message cipher using Web Crypto API
       const algo = {
         name: cipherName,
         iv,
@@ -269,7 +267,7 @@ export default class BlockCipherEncoder extends Encoder {
 
       // IE11 exception
       if (result.oncomplete !== undefined) {
-        // wrap IE11 CryptoOperation object in a promise
+        // Wrap IE11 CryptoOperation object in a promise
         result = new Promise((resolve, reject) => {
           result.oncomplete = resolve.bind(this, result.result)
           result.onerror = reject

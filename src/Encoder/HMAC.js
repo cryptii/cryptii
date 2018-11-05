@@ -1,5 +1,4 @@
 
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import HashEncoder from './Hash'
 
@@ -29,11 +28,11 @@ export default class HMACEncoder extends Encoder {
     super()
     this.setEncodeOnly(true)
 
-    // create internal hash encoder instance
+    // Create internal hash encoder instance
     this._hashEncoder = new HashEncoder()
     const hashAlgorithmSetting = this._hashEncoder.getSetting('algorithm')
 
-    // register settings
+    // Register settings
     this.registerSetting([
       {
         name: 'key',
@@ -56,25 +55,26 @@ export default class HMACEncoder extends Encoder {
 
   /**
    * Performs encode on given content.
+   * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   async performEncode (content) {
     const message = content.getBytes()
     const algorithm = this.getSettingValue('algorithm')
     const blockSize = HashEncoder.getAlgorithmBlockSize(algorithm)
 
-    // shorten keys longer than block size by sending it through the hash func
+    // Shorten keys longer than block size by sending it through the hash func
     let key = this.getSettingValue('key')
     if (key.length > blockSize) {
       key = await this.createDigest(algorithm, key)
     }
 
-    // keys shorter than block size are padded to block size
+    // Keys shorter than block size are padded to block size
     const outerKey = new Uint8Array(blockSize)
     outerKey.set(key, 0)
 
-    // compose inner message and prepare outer key
+    // Compose inner message and prepare outer key
     const innerMessage = new Uint8Array(blockSize + message.length)
     innerMessage.set(outerKey, 0)
     innerMessage.set(message, blockSize)
@@ -84,17 +84,16 @@ export default class HMACEncoder extends Encoder {
       outerKey[i] ^= 0x5C
     }
 
-    // calculate inner digest
+    // Calculate inner digest
     const innerDigest = await this.createDigest(algorithm, innerMessage)
 
-    // compose outer message
+    // Compose outer message
     const outerMessage = new Uint8Array(blockSize + innerDigest.length)
     outerMessage.set(outerKey, 0)
     outerMessage.set(innerDigest, blockSize)
 
-    // calculate hmac digest
-    const result = await this.createDigest(algorithm, outerMessage)
-    return Chain.wrap(result)
+    // Calculate hmac digest
+    return this.createDigest(algorithm, outerMessage)
   }
 
   /**
@@ -105,16 +104,16 @@ export default class HMACEncoder extends Encoder {
    * @return {Promise}
    */
   async createDigest (name, message) {
-    // lazily create internal hash encoder instance
+    // Lazily create internal hash encoder instance
     if (this._hashEncoder === null) {
       this._hashEncoder = new HashEncoder()
     }
 
-    // configure algorithm
+    // Configure algorithm
     this._hashEncoder.setSettingValue('algorithm', name)
 
-    // create digest using hash encoder
-    const digestChain = await this._hashEncoder.encode(Chain.wrap(message))
+    // Create digest using hash encoder
+    const digestChain = await this._hashEncoder.encode(message)
     return digestChain.getBytes()
   }
 }

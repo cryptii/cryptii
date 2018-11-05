@@ -24,12 +24,12 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   }
 
   /**
-   * Encoder constructor
+   * Constructor
    */
   constructor () {
     super()
 
-    // linear function
+    // Linear function
     // f(x) = ax + b
 
     this.registerSetting([
@@ -91,7 +91,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
    * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain} Filtered content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Filtered content
    */
   willTranslate (content, isEncode) {
     return !this.getSettingValue('caseSensitivity')
@@ -116,12 +116,12 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
     const x = alphabet.indexOfCodePoint(codePoint)
 
     if (x === -1) {
-      // character not in alphabet
+      // Character not in alphabet
       if (!this.getSettingValue('includeForeignChars')) {
-        // return null character
+        // Return null character
         return 0
       } else {
-        // leave it unchanged
+        // Leave it unchanged
         return codePoint
       }
     }
@@ -149,11 +149,11 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
       case 'alphabet':
-        // changing the alphabet setting value can invalidate the slope setting
+        // Changing the alphabet setting value can invalidate the slope setting
         this.getSetting('a').revalidateValue()
         break
       case 'caseSensitivity':
-        // also set case sensitivity on the alphabet setting
+        // Also set case sensitivity on the alphabet setting
         this.getSetting('alphabet').setCaseSensitivity(value)
         break
     }
@@ -168,11 +168,11 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   validateSlopeValue (a) {
     const alphabetSetting = this.getSetting('alphabet')
     if (!alphabetSetting.isValid()) {
-      // can't validate slope without valid alphabet setting
+      // Can't validate slope without valid alphabet setting
       return false
     }
 
-    // the value a must be chosen such that a and m are coprime
+    // The value a must be chosen such that a and m are coprime
     const m = alphabetSetting.getValue().getLength()
     if (!MathUtil.isCoprime(a, m)) {
       return {
@@ -199,8 +199,8 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
       const alphabet = alphabetSetting.getValue()
       const m = alphabet.getLength()
 
-      // create range based on alphabet and filter coprime values
-      // don't use caesar cipher slope (a=1) if possible
+      // Create range based on alphabet and filter coprime values
+      // Don't use caesar cipher slope (a=1) if possible
       const range = alphabet.getCodePoints().map((_, i) => i + 1)
       const coprimes = range.filter(a => a > 1 && MathUtil.isCoprime(a, m))
       return coprimes.length > 0 ? random.nextChoice(coprimes) : 1

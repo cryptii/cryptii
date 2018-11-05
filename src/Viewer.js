@@ -8,7 +8,7 @@ import InvalidInputError from './Error/InvalidInput'
  */
 export default class Viewer extends Brick {
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()

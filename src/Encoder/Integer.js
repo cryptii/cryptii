@@ -1,5 +1,4 @@
 
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import InvalidInputError from '../Error/InvalidInput'
 
@@ -96,8 +95,9 @@ export default class IntegerEncoder extends Encoder {
 
   /**
    * Performs encode on given content.
+   * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   performEncode (content) {
     const typeName = this.getSettingValue('type')
@@ -113,7 +113,7 @@ export default class IntegerEncoder extends Encoder {
     const bytes = new Uint8Array(size)
     bytes.set(content.getBytes())
 
-    // collect integers
+    // Collect integers
     const integers = this.createIntegerTypeArray(
       size / bytesPerInteger, typeName)
     let integer = 0
@@ -130,7 +130,7 @@ export default class IntegerEncoder extends Encoder {
       }
     }
 
-    // convert integers to strings
+    // Convert integers to strings
     const format = this.getSettingValue('format')
     const integerStrings = []
 
@@ -150,15 +150,14 @@ export default class IntegerEncoder extends Encoder {
       }
     }
 
-    const string = integerStrings.join(' ')
-    return Chain.wrap(string)
+    return integerStrings.join(' ')
   }
 
   /**
    * Performs decode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Decoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Decoded content
    */
   performDecode (content) {
     const typeName = this.getSettingValue('type')
@@ -166,7 +165,7 @@ export default class IntegerEncoder extends Encoder {
     const bytesPerInteger = typeBytes[typeIndex]
     const isBigEndian = this.getSettingValue('byteOrder') === 'big-endian'
 
-    // read integers from string
+    // Read integers from string
     const format = this.getSettingValue('format')
     const integerStrings = content.getString().split(/\s+/)
     const integers = this.createIntegerTypeArray(
@@ -174,13 +173,13 @@ export default class IntegerEncoder extends Encoder {
 
     let i, integer, integerString
     for (i = 0; i < integerStrings.length; i++) {
-      // interpret empty integer strings as empty integers
+      // Interpret empty integer strings as empty integers
       integerString = integerStrings[i]
       if (integerString === '') {
         integerString = '0'
       }
 
-      // read format
+      // Read format
       switch (format) {
         case 'binary':
           integer = parseInt(integerString, 2)
@@ -195,7 +194,7 @@ export default class IntegerEncoder extends Encoder {
           integer = parseInt(integerString, 16)
       }
 
-      // check if integer is valid
+      // Check if integer is valid
       if (isNaN(integer)) {
         throw new InvalidInputError(
           `Invalid integer '${integerString}' at index ${i}`)
@@ -203,7 +202,7 @@ export default class IntegerEncoder extends Encoder {
       integers[i] = integer
     }
 
-    // write bytes
+    // Write bytes
     const bytes = new Uint8Array(integers.length * bytesPerInteger)
     let integerByte
     for (i = 0; i < bytes.length; i++) {
@@ -214,7 +213,7 @@ export default class IntegerEncoder extends Encoder {
       bytes[i] = (integer >> (integerByte * 8)) & 0xff
     }
 
-    return Chain.wrap(bytes)
+    return bytes
   }
 
   /**

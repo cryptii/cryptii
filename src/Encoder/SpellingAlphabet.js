@@ -1,5 +1,4 @@
 
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import StringUtil from '../StringUtil'
 
@@ -123,13 +122,13 @@ export default class SpellingAlphabetEncoder extends Encoder {
    * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain|Promise} Resulting content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
-    // retrieve content string and normalize its whitespaces
+    // Retrieve content string and normalize its whitespaces
     const string = StringUtil.normalizeWhitespaces(content.getString())
 
-    // alphabet characters
+    // Alphabet characters
     const replacementMap = isEncode ? this._characterMap : this._wordMap
     const searchValues = Object.keys(replacementMap)
 
@@ -137,28 +136,27 @@ export default class SpellingAlphabetEncoder extends Encoder {
     const resultValues = []
 
     while (index < string.length) {
-      // find next occurance in string
+      // Find next occurance in string
       const searchValue = searchValues.find(char =>
         string.substr(index, char.length).toLowerCase() === char)
 
       if (searchValue !== undefined) {
-        // append word to result
+        // Append word to result
         resultValues.push(replacementMap[searchValue])
         index += searchValue.length
       } else {
         const char = string.substr(index, 1)
-        // omit whitespaces when decoding
+        // Omit whitespaces when decoding
         if (isEncode || char !== ' ') {
-          // append foreign character to result
+          // Append foreign character to result
           resultValues.push(char)
         }
         index++
       }
     }
 
-    // string together result
-    const result = resultValues.join(isEncode ? ' ' : '')
-    return Chain.wrap(result)
+    // String together result
+    return resultValues.join(isEncode ? ' ' : '')
   }
 
   /**
@@ -189,7 +187,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
       throw new Error(`Alphabet with name '${name}' is not defined`)
     }
 
-    // read spec
+    // Read spec
     const characters =
       typeof spec.characters === 'string'
         ? spec.characters.split('')
@@ -197,7 +195,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
 
     const words = spec.words
 
-    // build encode map
+    // Build encode map
     const characterMap = {}
     characters.forEach((character, index) => {
       if (characterMap[character] === undefined) {
@@ -205,7 +203,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
       }
     })
 
-    // build decode map
+    // Build decode map
     const wordMap = {}
     words.forEach((word, index) => {
       word = word.toLowerCase()
@@ -214,7 +212,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
       }
     })
 
-    // add space character
+    // Add space character
     characterMap[' '] = spaceWord
     wordMap[spaceWord] = ' '
 

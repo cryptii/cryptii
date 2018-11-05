@@ -12,7 +12,7 @@ import MathUtil from './MathUtil'
  */
 export default class Encoder extends Brick {
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
@@ -26,7 +26,7 @@ export default class Encoder extends Brick {
   /**
    * Prepares and performs encode on given content.
    * @param {number[]|string|Uint8Array|Chain} content
-   * @return {Promise} Encoded content
+   * @return {Promise} Resolves to encoded content
    */
   async encode (content) {
     return this.translate(content, true)
@@ -35,7 +35,7 @@ export default class Encoder extends Brick {
   /**
    * Prepares and performs decode on given content.
    * @param {number[]|string|Uint8Array|Chain} content
-   * @return {Promise} Decoded content
+   * @return {Promise} Resolves to decoded content
    */
   async decode (content) {
     return this.translate(content, false)
@@ -45,23 +45,20 @@ export default class Encoder extends Brick {
    * Prepares and performs translation on given content.
    * @param {number[]|string|Uint8Array|Chain} content
    * @param {boolean} isEncode True for encode, false for decode
-   * @return {Promise} Resulting content
+   * @return {Promise} Resolves to translation result
    */
   async translate (content, isEncode) {
     try {
-      // track translation start time
+      // Track translation start time
       const startTime = MathUtil.time()
 
-      // wrap content in Chain
-      content = Chain.wrap(content)
-
-      // check for encode only
+      // Check if translation direction is allowed
       if (isEncode === this._reverse && this.isEncodeOnly()) {
         throw new InvalidInputError(
           `Decoding step is not defined for '${this.getMeta().title}'`)
       }
 
-      // check for invalid settings
+      // Check for invalid settings
       const invalidSettings = this.getInvalidSettings()
       if (invalidSettings.length > 0) {
         throw new InvalidInputError(
@@ -69,20 +66,21 @@ export default class Encoder extends Brick {
           invalidSettings.map(setting => setting.getLabel()).join(', '))
       }
 
-      // perform actual translation
+      // Wrap content in Chain
+      content = Chain.wrap(content)
+
+      // Perform translation
       if (isEncode !== this._reverse) {
-        // perform encode
-        content = await this.willEncode(content)
-        content = await this.performEncode(content)
-        content = await this.didEncode(content)
+        content = Chain.wrap(await this.willEncode(content))
+        content = Chain.wrap(await this.performEncode(content))
+        content = Chain.wrap(await this.didEncode(content))
       } else {
-        // perform decode
-        content = await this.willDecode(content)
-        content = await this.performDecode(content)
-        content = await this.didDecode(content)
+        content = Chain.wrap(await this.willDecode(content))
+        content = Chain.wrap(await this.performDecode(content))
+        content = Chain.wrap(await this.didDecode(content))
       }
 
-      // track successful translation
+      // Track successful translation
       this._lastError = null
       this._lastTranslationMeta = {
         isEncode,
@@ -93,7 +91,7 @@ export default class Encoder extends Brick {
       this.updateView()
       return content
     } catch (error) {
-      // track failed translation
+      // Track failed translation
       this._lastError = error
       this._lastTranslationMeta = null
       this.updateView()
@@ -175,7 +173,7 @@ export default class Encoder extends Brick {
    * Calls {@link Encoder.willTranslate} by default.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Filtered content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Filtered content
    */
   willEncode (content) {
     return this.willTranslate(content, true)
@@ -186,7 +184,7 @@ export default class Encoder extends Brick {
    * Calls {@link Encoder.performTranslate} by default.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   performEncode (content) {
     return this.performTranslate(content, true)
@@ -197,7 +195,7 @@ export default class Encoder extends Brick {
    * Calls {@link Encoder.didTranslate} by default.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Filtered content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Filtered content
    */
   didEncode (content) {
     return this.didTranslate(content, true)
@@ -208,7 +206,7 @@ export default class Encoder extends Brick {
    * Calls {@link Encoder.willTranslate} by default.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Filtered content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Filtered content
    */
   willDecode (content) {
     return this.willTranslate(content, false)
@@ -219,7 +217,7 @@ export default class Encoder extends Brick {
    * Calls {@link Encoder.performTranslate} by default.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Decoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Decoded content
    */
   performDecode (content) {
     return this.performTranslate(content, false)
@@ -230,7 +228,7 @@ export default class Encoder extends Brick {
    * Calls {@link Encoder.didTranslate} by default.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Filtered content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Filtered content
    */
   didDecode (content) {
     return this.didTranslate(content, false)
@@ -241,7 +239,7 @@ export default class Encoder extends Brick {
    * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain|Promise} Filtered content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Filtered content
    */
   willTranslate (content, isEncode) {
     return content
@@ -252,7 +250,7 @@ export default class Encoder extends Brick {
    * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain|Promise} Resulting content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
     return content
@@ -263,7 +261,7 @@ export default class Encoder extends Brick {
    * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain|Promise} Filtered content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Filtered content
    */
   didTranslate (content, isEncode) {
     return content
@@ -274,9 +272,9 @@ export default class Encoder extends Brick {
    * @param {EncoderView} view Sender
    */
   viewDidReverse (view) {
-    // reverse self
+    // Reverse self
     this.setReverse(!this.isReverse())
-    // track action
+    // Track action
     EventManager.trigger('encoderReverse', {
       encoder: this,
       reverse: this.isReverse()

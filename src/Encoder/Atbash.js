@@ -25,7 +25,7 @@ export default class AtbashEncoder extends AffineCipherEncoder {
   }
 
   /**
-   * Encoder constructor
+   * Constructor
    */
   constructor () {
     super()

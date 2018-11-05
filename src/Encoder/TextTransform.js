@@ -22,7 +22,7 @@ export default class TextTransformEncoder extends Encoder {
   }
 
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
@@ -78,14 +78,14 @@ export default class TextTransformEncoder extends Encoder {
    * Performs encode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   performEncode (content) {
-    // transform case
+    // Transform case
     const caseTransform = this.getSettingValue('case')
     content = this._encodeCase(content, caseTransform)
 
-    // transform arrangement
+    // Transform arrangement
     const arrangementTransform = this.getSettingValue('arrangement')
     content = this._encodeArrangement(content, arrangementTransform)
 
@@ -96,14 +96,14 @@ export default class TextTransformEncoder extends Encoder {
    * Performs decode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain} Decoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Decoded content
    */
   performDecode (content) {
-    // transform arrangement
+    // Transform arrangement
     const arrangementTransform = this.getSettingValue('arrangement')
     content = this._decodeArrangement(content, arrangementTransform)
 
-    // transform case
+    // Transform case
     const caseTransform = this.getSettingValue('case')
     if (caseTransform === 'inverse') {
       content = this._decodeCase(content, caseTransform)
@@ -163,7 +163,7 @@ export default class TextTransformEncoder extends Encoder {
    * @return {Chain}
    */
   _decodeCase (content, transform) {
-    // not all case transformations can be undone
+    // Not all case transformations can be undone
     switch (transform) {
       case 'inverse':
         return this._encodeCase(content, transform)

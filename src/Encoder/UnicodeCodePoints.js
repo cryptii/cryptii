@@ -98,7 +98,7 @@ export default class UnicodeCodePointsEncoder extends CharacterBlockEncoder {
     let result
     switch (this.getSettingValue('format')) {
       case 'unicode':
-        // interpret unicode notation
+        // Interpret unicode notation
         result = block.match(/^U\+([0-9A-F]+)$/i)
         if (result !== null) {
           codePoint = parseInt(result[1], 16)

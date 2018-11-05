@@ -1,5 +1,4 @@
 
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import StringUtil from '../StringUtil'
 
@@ -53,7 +52,7 @@ export default class NumeralSystemEncoder extends Encoder {
   }
 
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
@@ -90,7 +89,7 @@ export default class NumeralSystemEncoder extends Encoder {
    * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain|Promise} Resulting content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
     const string = content.toString()
@@ -99,7 +98,7 @@ export default class NumeralSystemEncoder extends Encoder {
 
     const pattern = systemPatterns[systemNames.indexOf(from)]
 
-    // find numbers using pattern
+    // Find numbers using pattern
     const result = string.replace(pattern, (match, rawNumber, offset) => {
       const alone =
         (offset === 0 || StringUtil.isWhitespace(string, offset - 1)) &&
@@ -107,7 +106,7 @@ export default class NumeralSystemEncoder extends Encoder {
           StringUtil.isWhitespace(string, offset + rawNumber.length))
 
       if (!alone) {
-        // ignore numbers having adjacent characters
+        // Ignore numbers having adjacent characters
         return rawNumber
       }
 
@@ -118,7 +117,7 @@ export default class NumeralSystemEncoder extends Encoder {
       return encodedValue || rawNumber
     })
 
-    return Chain.wrap(result)
+    return result
   }
 
   /**
@@ -187,11 +186,11 @@ export default class NumeralSystemEncoder extends Encoder {
     let numeral
 
     while (remainder > 0) {
-      // find highest roman numeral less or equal to the decimal
+      // Find highest roman numeral less or equal to the decimal
       numeral = romanNumeralValues.findIndex(value => remainder >= value)
-      // add digit
+      // Add digit
       romanNumerals += romanNumeralSymbols[numeral]
-      // substract roman mumeral from remainder
+      // Substract roman mumeral from remainder
       remainder -= romanNumeralValues[numeral]
     }
 
@@ -215,19 +214,19 @@ export default class NumeralSystemEncoder extends Encoder {
     let numeral
 
     while (!error && index < romanNumerals.length) {
-      // find first roman numeral with the highest value
+      // Find first roman numeral with the highest value
       numeral = romanNumeralSymbols.findIndex(symbol =>
         romanNumerals.substr(index, symbol.length) === symbol)
 
       if (numeral !== -1 && numeral >= previousNumeral) {
-        // append roman numeral
+        // Append roman numeral
         decimal += romanNumeralValues[numeral]
-        // move cursor
+        // Move cursor
         index += romanNumeralSymbols[numeral].length
-        // track previous numeral
+        // Track previous numeral
         previousNumeral = numeral
       } else {
-        // unexpected numeral
+        // Unexpected numeral
         error = true
       }
     }

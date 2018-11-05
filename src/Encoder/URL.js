@@ -1,5 +1,4 @@
 
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import InvalidInputError from '../Error/InvalidInput'
 import TextEncodingError from '../Error/TextEncoding'
@@ -31,11 +30,11 @@ export default class URLEncoder extends Encoder {
    * Performs encode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   performEncode (content) {
     try {
-      // try to URL encode string representation of content
+      // Try to URL encode string representation of content
       const chars = content.getChars()
       let string = ''
       let char
@@ -45,12 +44,12 @@ export default class URLEncoder extends Encoder {
           ? this.encodeBytes(content.getCharBytesAt(i))
           : char
       }
-      return Chain.wrap(string)
+      return string
     } catch (error) {
-      // retrieving the string representation of the content may throw an error
+      // Retrieving the string representation of the content may throw an error
       // due to bad UTF-8 encoded text
       if (error instanceof TextEncodingError) {
-        // encode raw bytes (which do not need to be valid UTF-8)
+        // Encode raw bytes (which do not need to be valid UTF-8)
         return this.encodeBytes(content.getBytes())
       } else {
         throw error
@@ -75,45 +74,45 @@ export default class URLEncoder extends Encoder {
    * Performs decode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain} Decoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Decoded content
    */
   performDecode (content) {
     const string = content.getString()
     const bytes = []
     let i = 0
 
-    // go through string and collect bytes
+    // Go through string and collect bytes
     let char, byteString
     while (i < string.length) {
       char = string[i]
 
       if (char === '%') {
-        // check if byte is a valid 2-digit hex string
+        // Check if byte is a valid 2-digit hex string
         byteString = string.substr(i + 1, 2)
         if (byteString.match(/[0-9a-f]{2}/i) === null) {
           throw new InvalidInputError(
             `Invalid percent-encoded byte '%${byteString}' at index ${i}`)
         }
 
-        // decode byte
+        // Decode byte
         bytes.push(parseInt(byteString, 16))
         i += 3
       } else if (char === '+') {
-        // handle spaces (defined in early versions of percent-encoding)
+        // Handle spaces (defined in early versions of percent-encoding)
         bytes.push(32)
         i++
       } else if (unreservedURLCharacters.indexOf(char) !== -1) {
-        // append unreserved character
+        // Append unreserved character
         bytes.push(char.charCodeAt(0))
         i++
       } else {
-        // invalid character met
+        // Invalid character met
         throw new InvalidInputError(
           `Invalid character '${char}' at index ${i}`)
       }
     }
 
-    // this may fail due to invalid UTF-8 encoding
-    return Chain.wrap(new Uint8Array(bytes))
+    // This may fail due to invalid UTF-8 encoding
+    return new Uint8Array(bytes)
   }
 }

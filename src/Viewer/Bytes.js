@@ -80,7 +80,7 @@ export default class BytesViewer extends Viewer {
     const bytes = content.getBytes()
     const format = this.getSettingValue('format')
 
-    // encode bytes to string
+    // Encode bytes to string
     let string, charBits
     switch (format) {
       case 'hexadecimal':
@@ -92,14 +92,14 @@ export default class BytesViewer extends Viewer {
         charBits = 1
     }
 
-    // group result
+    // Group result
     const groupBits = this.getSettingValue('groupBits')
     if (groupBits !== null) {
       const groupChars = groupBits / charBits
       string = StringUtil.chunk(string, groupChars).join(' ')
     }
 
-    // show it
+    // Show it
     this.getView().setText(string)
   }
 
@@ -114,10 +114,10 @@ export default class BytesViewer extends Viewer {
       const format = this.getSettingValue('format')
       let string = text
 
-      // ignore whitespaces
+      // Ignore whitespaces
       string = string.replace(/\s/g, '')
 
-      // decode string to bytes
+      // Decode string to bytes
       let bytes
       switch (format) {
         case 'hexadecimal':

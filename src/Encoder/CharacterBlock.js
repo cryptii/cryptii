@@ -72,8 +72,9 @@ export default class CharacterBlockEncoder extends Encoder {
 
   /**
    * Performs encode on given content.
+   * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   performEncode (content) {
     switch (this._mode) {
@@ -84,25 +85,24 @@ export default class CharacterBlockEncoder extends Encoder {
         return Chain.join(blocks, this.getSeparator())
 
       case BlockToCharacterMode:
-        const codePoints = content.split(this.getSeparator())
+        return content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockEncodeToChar(block, index, blocks, content))
-        return Chain.wrap(codePoints)
     }
   }
 
   /**
    * Performs decode on given content.
+   * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Decoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Decoded content
    */
   performDecode (content) {
     switch (this._mode) {
       case CharacterToBlockMode:
-        const codePoints = content.split(this.getSeparator())
+        return content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockDecodeToChar(block, index, blocks, content))
-        return Chain.wrap(codePoints)
 
       case BlockToCharacterMode:
         const blocks = content.getCodePoints()

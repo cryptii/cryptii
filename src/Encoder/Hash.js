@@ -1,6 +1,5 @@
 
 import Browser from '../Browser'
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import md5 from './Hash/md5'
 import nodeCrypto from 'crypto'
@@ -88,13 +87,13 @@ export default class HashEncoder extends Encoder {
 
   /**
    * Performs encode on given content.
+   * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
-  async performEncode (content) {
+  performEncode (content) {
     const algorithmName = this.getSettingValue('algorithm')
-    const digest = await this.createDigest(algorithmName, content.getBytes())
-    return Chain.wrap(digest)
+    return this.createDigest(algorithmName, content.getBytes())
   }
 
   /**
@@ -113,7 +112,7 @@ export default class HashEncoder extends Encoder {
     }
 
     if (Browser.isNode()) {
-      // create message digest using Node Crypto async
+      // Create message digest using Node Crypto async
       return new Promise((resolve, reject) => {
         const resultBuffer =
           nodeCrypto.createHash(algorithm.nodeAlgorithm)
@@ -122,16 +121,16 @@ export default class HashEncoder extends Encoder {
         resolve(new Uint8Array(resultBuffer))
       })
     } else {
-      // get crypto subtle instance
+      // Get crypto subtle instance
       const crypto = window.crypto || window.msCrypto
       const cryptoSubtle = crypto.subtle || crypto.webkitSubtle
 
-      // create message digest using Web Crypto Api
+      // Create message digest using Web Crypto Api
       let result = cryptoSubtle.digest(algorithm.browserAlgorithm, message)
 
       // IE11 exception
       if (result.oncomplete !== undefined) {
-        // wrap IE11 CryptoOperation object in a promise
+        // Wrap IE11 CryptoOperation object in a promise
         result = new Promise((resolve, reject) => {
           result.oncomplete = resolve.bind(this, result.result)
           result.onerror = reject
@@ -150,12 +149,12 @@ export default class HashEncoder extends Encoder {
   static filterAvailableAlgorithms () {
     const isNode = Browser.isNode()
     return algorithms.filter(algorithm => {
-      // algorithm availability not bound to the environment
+      // Algorithm availability not bound to the environment
       if (algorithm.available === true) {
         return true
       }
 
-      // browser environment
+      // Browser environment
       if (!isNode && algorithm.browserAlgorithm !== undefined) {
         if (algorithm.browserExceptions !== undefined) {
           return !Browser.match.apply(Browser, algorithm.browserExceptions)
@@ -163,7 +162,7 @@ export default class HashEncoder extends Encoder {
         return true
       }
 
-      // node environment
+      // Node environment
       if (isNode && algorithm.nodeAlgorithm !== undefined) {
         return true
       }

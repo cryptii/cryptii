@@ -1,6 +1,5 @@
 
 import ArrayUtil from '../ArrayUtil'
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import MathUtil from '../MathUtil'
 import StringUtil from '../StringUtil'
@@ -372,7 +371,7 @@ export default class EnigmaEncoder extends Encoder {
   constructor () {
     super()
 
-    // retrieve default model with its rotors
+    // Retrieve default model with its rotors
     const model = EnigmaEncoder.getModel('M3')
     const rotors = EnigmaEncoder.getRotors(model.slots[0].rotors)
     const rotorNames = rotors.map(rotor => rotor.name)
@@ -429,7 +428,7 @@ export default class EnigmaEncoder extends Encoder {
       }
     })
 
-    // register settings for each possible slot
+    // Register settings for each possible slot
     for (let i = 0; i < EnigmaEncoder.getMaxSlotCount(); i++) {
       this.registerSetting({
         name: `rotor${i + 1}`,
@@ -476,7 +475,7 @@ export default class EnigmaEncoder extends Encoder {
       type: 'text',
       value: '',
       validateValue: this.validatePlugboardValue.bind(this),
-      filterValue: value => Chain.wrap(value.getString().trim().toLowerCase()),
+      filterValue: value => value.getString().trim().toLowerCase(),
       randomizeValue: this.randomizePlugboardValue.bind(this)
     })
 
@@ -492,7 +491,7 @@ export default class EnigmaEncoder extends Encoder {
       }
     })
 
-    // apply options and layout for given model
+    // Apply options and layout for given model
     this.applyModel(model.name)
   }
 
@@ -519,7 +518,7 @@ export default class EnigmaEncoder extends Encoder {
     const model = EnigmaEncoder.getModel(modelName)
     const maxSlotCount = EnigmaEncoder.getMaxSlotCount()
 
-    // update setting options and layout for each slot
+    // Update setting options and layout for each slot
     for (let i = 0; i < maxSlotCount; i++) {
       const slot = i < model.slots.length ? model.slots[i] : null
       const slotVisible = slot !== null
@@ -528,13 +527,13 @@ export default class EnigmaEncoder extends Encoder {
       const ringSetting = this.getSetting(`ring${i + 1}`)
       const positionSetting = this.getSetting(`position${i + 1}`)
 
-      // hide or show slot settings depending on model
+      // Hide or show slot settings depending on model
       rotorSetting.setVisible(slotVisible)
       ringSetting.setVisible(slotVisible)
       positionSetting.setVisible(slotVisible)
 
       if (slotVisible) {
-        // configure rotor setting
+        // Configure rotor setting
         const rotors = EnigmaEncoder.getRotors(slot.rotors)
         rotorSetting.setElements(
           rotors.map(rotor => rotor.name),
@@ -542,14 +541,14 @@ export default class EnigmaEncoder extends Encoder {
           null,
           false)
 
-        // apply slot default if current value is not available for this model
+        // Apply slot default if current value is not available for this model
         if (rotorSetting.validateValue(rotorSetting.getValue()) !== true) {
           rotorSetting.setValue(rotors[0].name)
         }
       }
     }
 
-    // update reflector setting options
+    // Update reflector setting options
     const reflectorRotors = EnigmaEncoder.getRotors(model.reflectorRotors)
     const reflectorSetting = this.getSetting('reflector')
 
@@ -559,12 +558,12 @@ export default class EnigmaEncoder extends Encoder {
       null,
       false)
 
-    // apply first rotor if current one is not available for this model
+    // Apply first rotor if current one is not available for this model
     if (reflectorSetting.validateValue(reflectorSetting.getValue()) !== true) {
       reflectorSetting.setValue(reflectorRotors[0].name)
     }
 
-    // make reflector position and ring visible when it has a thumbwheel
+    // Make reflector position and ring visible when it has a thumbwheel
     reflectorSetting.setWidth(model.reflectorThumbwheel ? 4 : 12)
     reflectorSetting.setVisible(
       model.reflectorThumbwheel || reflectorRotors.length > 1)
@@ -572,7 +571,7 @@ export default class EnigmaEncoder extends Encoder {
     this.getSetting('positionReflector').setVisible(model.reflectorThumbwheel)
     this.getSetting('ringReflector').setVisible(model.reflectorThumbwheel)
 
-    // only make plugboard visible when it is availabe for this model
+    // Only make plugboard visible when it is availabe for this model
     this.getSetting('plugboard').setVisible(model.plugboard)
   }
 
@@ -588,7 +587,7 @@ export default class EnigmaEncoder extends Encoder {
     const model = EnigmaEncoder.getModel(this.getSettingValue('model'))
     let i = 0
 
-    // collect slots, rotors, positions and rings for current translation
+    // Collect slots, rotors, positions and rings for current translation
     const slots = model.slots
     const rotors = []
     const positions = []
@@ -601,12 +600,12 @@ export default class EnigmaEncoder extends Encoder {
       rings.push(this.getSettingValue(`ring${i + 1}`) - 1)
     }
 
-    // retrieve entry config
+    // Retrieve entry config
     const entryRotor = EnigmaEncoder.getRotor(model.entryRotor)
     const entryPosition = 0
     const entryRing = 0
 
-    // retrieve reflector config
+    // Retrieve reflector config
     const reflectorRotor =
       EnigmaEncoder.getRotor(this.getSettingValue('reflector'))
     let reflectorPosition = model.reflectorThumbwheel
@@ -616,33 +615,33 @@ export default class EnigmaEncoder extends Encoder {
       ? this.getSettingValue('ringReflector')
       : 0
 
-    // compose plugboard wiring, if it is available for this model
+    // Compose plugboard wiring, if it is available for this model
     let plugboard = null
     if (model.plugboard) {
       const plugboardSetting = this.getSettingValue('plugboard')
       plugboard = this.wiringFromPlugboardValue(plugboardSetting.toString())
     }
 
-    // use a short 'map' alias to call the static rotorMapChar method
+    // Use a short 'map' alias to call the static rotorMapChar method
     const map = EnigmaEncoder.rotorMapChar
 
-    // go through each content code point
+    // Go through each content code point
     let encodedCodePoints = content.getCodePoints().map((codePoint, index) => {
       let char = null
 
       if (codePoint >= 65 && codePoint <= 90) {
-        // read uppercase character
+        // Read uppercase character
         char = codePoint - 65
       } else if (codePoint >= 97 && codePoint <= 122) {
-        // read lowercase character
+        // Read lowercase character
         char = codePoint - 97
       } else {
-        // this is a foreign character
+        // This is a foreign character
         return includeForeignChars ? codePoint : false
       }
 
       if (model.turnoverMechanism === 'cog') {
-        // engage cog-wheel driven wheel-turnover mechanism
+        // Engage cog-wheel driven wheel-turnover mechanism
         let turnover = true
         i = slots.length - 1
 
@@ -656,23 +655,23 @@ export default class EnigmaEncoder extends Encoder {
           i--
         }
 
-        // step reflector if it is rotating
+        // Step reflector if it is rotating
         if (turnover && model.reflectorRotating === true) {
           reflectorPosition++
         }
       } else {
-        // engage lever driven wheel-turnover mechanism
+        // Engage lever driven wheel-turnover mechanism
         let stepped = false
         i = 1
 
         while (!stepped && i < slots.length) {
           stepped = EnigmaEncoder.rotorAtTurnover(rotors[i], positions[i])
           if (stepped) {
-            // shift current rotor, if it is not the last one (rotated later)
+            // Shift current rotor, if it is not the last one (rotated later)
             if (i !== slots.length - 1) {
               positions[i]++
             }
-            // shift rotor on its left
+            // Shift rotor on its left
             if (slots[i - 1].rotating !== false) {
               positions[i - 1]++
             }
@@ -680,61 +679,61 @@ export default class EnigmaEncoder extends Encoder {
           i++
         }
 
-        // shift fast rotor at every turn
+        // Shift fast rotor at every turn
         positions[positions.length - 1]++
       }
 
-      // wire characters through the plugboard, if any
+      // Wire characters through the plugboard, if any
       if (plugboard !== null) {
         char = map(char, plugboard, 0, 0, false)
       }
 
-      // through the entry
+      // Through the entry
       char = map(char, entryRotor, entryPosition, entryRing, false)
 
-      // through the rotors (from right to left)
+      // Through the rotors (from right to left)
       for (i = rotors.length - 1; i >= 0; i--) {
         char = map(char, rotors[i], positions[i], rings[i], false)
       }
 
-      // through the reflector
+      // Through the reflector
       char = map(char, reflectorRotor, reflectorPosition, reflectorRing, false)
 
-      // through the inverted rotors (from left to right)
+      // Through the inverted rotors (from left to right)
       for (i = 0; i < rotors.length; i++) {
         char = map(char, rotors[i], positions[i], rings[i], true)
       }
 
-      // through the inverted entry
+      // Through the inverted entry
       char = map(char, entryRotor, entryPosition, entryRing, true)
 
-      // through the inverted plugboard, if any
+      // Through the inverted plugboard, if any
       if (plugboard !== null) {
         char = map(char, plugboard, 0, 0, true)
       }
 
-      // translate char index back to code point and return it
+      // Translate char index back to code point and return it
       return char + 97
     })
 
     if (!includeForeignChars) {
       const codePoints = []
       encodedCodePoints.forEach(codePoint => {
-        // filter foreign characters
+        // Filter foreign characters
         if (codePoint === false) {
           return
         }
-        // append a space after each character group
+        // Append a space after each character group
         if ((codePoints.length + 1) % (model.characterGroupSize + 1) === 0) {
           codePoints.push(32)
         }
-        // append code point
+        // Append code point
         codePoints.push(codePoint)
       })
       encodedCodePoints = codePoints
     }
 
-    return Chain.wrap(encodedCodePoints)
+    return encodedCodePoints
   }
 
   /**
@@ -769,10 +768,10 @@ export default class EnigmaEncoder extends Encoder {
       ? rotorOrWiring
       : rotorOrWiring.wiring
 
-    // apply ring setting
+    // Apply ring setting
     position = MathUtil.mod(position - ringSetting, 26)
 
-    // map character
+    // Map character
     charIndex = MathUtil.mod(charIndex + position, 26)
     charIndex = !inverted
       ? wiring.charCodeAt(charIndex) - 97
@@ -789,15 +788,15 @@ export default class EnigmaEncoder extends Encoder {
    * @return {boolean} Returns true, if value is valid.
    */
   validatePlugboardValue (rawValue, setting) {
-    // filter raw value
+    // Filter raw value
     const plugboard = setting.filterValue(rawValue).getString()
 
-    // empty plugboard is valid
+    // Empty plugboard is valid
     if (plugboard === '') {
       return true
     }
 
-    // check format (ab cd ef)
+    // Check format (ab cd ef)
     if (plugboard.match(/^([a-z]{2}\s)*([a-z]{2})$/) === null) {
       return {
         key: 'enigmaPlugboardInvalidFormat',
@@ -807,7 +806,7 @@ export default class EnigmaEncoder extends Encoder {
       }
     }
 
-    // check if character pairs are unique
+    // Check if character pairs are unique
     if (!ArrayUtil.isUnique(plugboard.replace(/\s/g, '').split(''))) {
       return {
         key: 'enigmaPlugboardPairsNotUnique',
@@ -849,19 +848,19 @@ export default class EnigmaEncoder extends Encoder {
     const model = EnigmaEncoder.getModel(this.getSettingValue('model'))
     let i, index, rotor
 
-    // gather rotor collection available to current model
+    // Gather rotor collection available to current model
     let rotors = model.reflectorRotors
     for (i = 0; i < model.slots.length; i++) {
       rotors = rotors.concat(model.slots[i].rotors)
     }
 
-    // usually one set of rotors only contain a single rotor for each type
+    // Usually one set of rotors only contain a single rotor for each type
     rotors = ArrayUtil.unique(rotors)
 
-    // randomize rotor collection
+    // Randomize rotor collection
     rotors = ArrayUtil.shuffle(rotors)
 
-    // pick a reflector
+    // Pick a reflector
     index = rotors.findIndex(rotor =>
       model.reflectorRotors.indexOf(rotor) !== -1)
     if (index !== -1) {
@@ -869,7 +868,7 @@ export default class EnigmaEncoder extends Encoder {
       this.setSettingValue('reflector', rotor)
     }
 
-    // pick a rotor for each slot
+    // Pick a rotor for each slot
     for (i = 0; i < model.slots.length; i++) {
       index = rotors.findIndex(rotor =>
         model.slots[i].rotors.indexOf(rotor) !== -1)
@@ -879,7 +878,7 @@ export default class EnigmaEncoder extends Encoder {
       }
     }
 
-    // randomize remainding settings
+    // Randomize remainding settings
     super.randomize()
     return this
   }
@@ -906,7 +905,7 @@ export default class EnigmaEncoder extends Encoder {
    */
   static getModel (name) {
     if (modelMap === null) {
-      // build model map lazily
+      // Build model map lazily
       modelMap = {}
       models.forEach(model => {
         modelMap[model.name] = model
@@ -932,7 +931,7 @@ export default class EnigmaEncoder extends Encoder {
    */
   static getRotor (name) {
     if (rotorMap === null) {
-      // read rotor table and build map lazily
+      // Read rotor table and build map lazily
       rotorMap = {}
       let i, j, rotor
       for (i = 0; i < rotorTable.length; i += rotorTableColumns.length) {

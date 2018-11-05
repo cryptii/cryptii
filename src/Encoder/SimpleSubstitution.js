@@ -1,5 +1,4 @@
 
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 
 /**
@@ -12,20 +11,16 @@ export default class SimpleSubstitutionEncoder extends Encoder {
    * @protected
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {Chain|Promise}
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
-    // encode or decode each code point
+    // Encode or decode each code point
     // TODO reduce calls to performCharEncode or performCharDecode
     // to a minimum (e.g. caching)
-    const resultingCodePoints =
-      content.getCodePoints().map((codePoint, index) =>
-        isEncode
-          ? this.performCharEncode(codePoint, index, content)
-          : this.performCharDecode(codePoint, index, content))
-
-    // create new chain from resulting code points
-    return Chain.wrap(resultingCodePoints)
+    return content.getCodePoints().map((codePoint, index) =>
+      isEncode
+        ? this.performCharEncode(codePoint, index, content)
+        : this.performCharDecode(codePoint, index, content))
   }
 
   /**

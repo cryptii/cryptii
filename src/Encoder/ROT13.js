@@ -21,7 +21,7 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
   }
 
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
@@ -61,19 +61,19 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
     const variant = this.getSettingValue('variant')
 
     if (variant === 'rot5' || variant === 'rot18') {
-      // rotate numbers 0-9
+      // Rotate numbers 0-9
       codePoint = this._rotateCodePoint(codePoint, 48, 57)
     }
 
     if (variant === 'rot13' || variant === 'rot18') {
-      // rotate lowercase letters a-z
+      // Rotate lowercase letters a-z
       codePoint = this._rotateCodePoint(codePoint, 97, 122)
-      // rotate uppercase letters A-Z
+      // Rotate uppercase letters A-Z
       codePoint = this._rotateCodePoint(codePoint, 65, 90)
     }
 
     if (variant === 'rot47') {
-      // rotate characters !-~
+      // Rotate characters !-~
       codePoint = this._rotateCodePoint(codePoint, 33, 126)
     }
 
@@ -88,7 +88,7 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
    * @return {number} Rotated Unicode code point
    */
   _rotateCodePoint (codePoint, start, end) {
-    // only rotate if code point is inside bounds
+    // Only rotate if code point is inside bounds
     if (codePoint >= start && codePoint <= end) {
       const count = end - start + 1
       codePoint += count / 2

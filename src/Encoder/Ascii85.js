@@ -1,5 +1,4 @@
 
-import Chain from '../Chain'
 import Encoder from '../Encoder'
 import InvalidInputError from '../Error/InvalidInput'
 import StringUtil from '../StringUtil'
@@ -41,7 +40,7 @@ export default class Ascii85Encoder extends Encoder {
   }
 
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
@@ -62,7 +61,7 @@ export default class Ascii85Encoder extends Encoder {
    * Performs encode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain} Encoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   performEncode (content) {
     const bytes = content.getBytes()
@@ -112,21 +111,21 @@ export default class Ascii85Encoder extends Encoder {
       }
     }
 
-    return Chain.wrap(string)
+    return string
   }
 
   /**
    * Triggered before performing decode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Filtered content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Filtered content
    */
   willDecode (content) {
     // check for <~ ~> wrappers often used to wrap ascii85 encoded data
     const wrapperMatches = content.getString().match(/<~(.+?)~>/)
     if (wrapperMatches !== null) {
       // decode wrapped data only
-      return Chain.wrap(wrapperMatches[1])
+      return wrapperMatches[1]
     }
     return content
   }
@@ -135,7 +134,7 @@ export default class Ascii85Encoder extends Encoder {
    * Performs decode on given content.
    * @protected
    * @param {Chain} content
-   * @return {Chain|Promise} Decoded content
+   * @return {number[]|string|Uint8Array|Chain|Promise} Decoded content
    */
   performDecode (content) {
     const string = StringUtil.removeWhitespaces(content.getString())
@@ -197,6 +196,6 @@ export default class Ascii85Encoder extends Encoder {
       }
     }
 
-    return Chain.wrap(new Uint8Array(bytes))
+    return new Uint8Array(bytes)
   }
 }

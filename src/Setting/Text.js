@@ -202,7 +202,7 @@ export default class TextSetting extends Setting {
     if (this._caseSensitivity === false) {
       rawValue = rawValue.toLowerCase()
     }
-    return super.filterValue(rawValue)
+    return Chain.wrap(super.filterValue(rawValue))
   }
 
   /**

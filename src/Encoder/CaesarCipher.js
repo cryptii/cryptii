@@ -24,22 +24,22 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
   }
 
   /**
-   * Encoder constructor
+   * Constructor
    */
   constructor () {
     super()
 
-    // set a setting to 1 and hide it
+    // Set a setting to 1 and hide it
     this.getSetting('a')
       .setValue(1)
       .setVisible(false)
 
-    // set b setting to shift value and hide it
+    // Set b setting to shift value and hide it
     this.getSetting('b')
       .setValue(defaultShift)
       .setVisible(false)
 
-    // add shift setting
+    // Add shift setting
     this.registerSetting({
       name: 'caesarCipherShift',
       type: 'number',
@@ -67,16 +67,16 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
         const shiftSetting = this.getSetting('caesarCipherShift')
         const alphabetSetting = this.getSetting('alphabet')
 
-        // needs valid alphabet and shift setting to set
+        // Needs valid alphabet and shift setting to set
         // affine cipher's b setting
         if (alphabetSetting.isValid() && shiftSetting.isValid()) {
           let shift = shiftSetting.getValue()
 
-          // handle negative shift values
+          // Handle negative shift values
           const m = alphabetSetting.getValue().getLength()
           shift = MathUtil.mod(shift, m)
 
-          // changing the shift setting changes the hidden b setting
+          // Changing the shift setting changes the hidden b setting
           this.setSettingValue('b', shift)
         }
         break
