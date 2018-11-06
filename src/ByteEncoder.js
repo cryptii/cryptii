@@ -66,12 +66,12 @@ export default class ByteEncoder {
    * @return {Uint8Array} Bytes
    */
   static bytesFromHexString (string) {
-    // fill up leading zero
+    // Fill up leading zero
     if (string.length % 2 === 1) {
       string = '0' + string
     }
 
-    // decode each byte
+    // Decode each byte
     const bytes = StringUtil.chunk(string, 2).map((byteString, index) => {
       const byte = parseInt(byteString, 16)
       if (byteString.match(/[0-9a-f]{2}/i) === null || isNaN(byte)) {
@@ -101,12 +101,12 @@ export default class ByteEncoder {
    * @return {Uint8Array} Bytes
    */
   static bytesFromBinaryString (string) {
-    // fill up leading zero digits
+    // Fill up leading zero digits
     if (string.length % 8 > 0) {
       string = ('0000000' + string).substr(string.length % 8 - 1)
     }
 
-    // decode each byte
+    // Decode each byte
     const bytes = StringUtil.chunk(string, 8).map((byteString, index) => {
       const byte = parseInt(byteString, 2)
       if (byteString.match(/[0-1]{8}/) === null || isNaN(byte)) {
@@ -131,30 +131,30 @@ export default class ByteEncoder {
     const padCharacter = !options.padCharacterOptional && options.padCharacter
       ? options.padCharacter : ''
 
-    // encode each 3-byte-pair
+    // Encode each 3-byte-pair
     let string = ''
     let byte1, byte2, byte3
     let octet1, octet2, octet3, octet4
 
     for (let i = 0; i < bytes.length; i += 3) {
-      // collect pair bytes
+      // Collect pair bytes
       byte1 = bytes[i]
       byte2 = i + 1 < bytes.length ? bytes[i + 1] : NaN
       byte3 = i + 2 < bytes.length ? bytes[i + 2] : NaN
 
-      // bits 1-6 from byte 1
+      // Bits 1-6 from byte 1
       octet1 = byte1 >> 2
 
-      // bits 7-8 from byte 1 joined by bits 1-4 from byte 2
+      // Bits 7-8 from byte 1 joined by bits 1-4 from byte 2
       octet2 = ((byte1 & 3) << 4) | (byte2 >> 4)
 
-      // bits 4-8 from byte 2 joined by bits 1-2 from byte 3
+      // Bits 4-8 from byte 2 joined by bits 1-2 from byte 3
       octet3 = ((byte2 & 15) << 2) | (byte3 >> 6)
 
-      // bits 3-8 from byte 3
+      // Bits 3-8 from byte 3
       octet4 = byte3 & 63
 
-      // map octets to characters
+      // Map octets to characters
       string +=
         alphabet[octet1] +
         alphabet[octet2] +
@@ -163,7 +163,7 @@ export default class ByteEncoder {
     }
 
     if (options.maxLineLength) {
-      // limit text line length, insert line separators
+      // Limit text line length, insert line separators
       let limitedString = ''
       for (let i = 0; i < string.length; i += options.maxLineLength) {
         limitedString +=
@@ -186,13 +186,13 @@ export default class ByteEncoder {
     const options = base64Variants[variant]
     const alphabet = options.alphabet
 
-    // translate each character into an octet
+    // Translate each character into an octet
     const length = string.length
     const octets = []
     let character, octet
     let i = -1
 
-    // go through each character
+    // Go through each character
     while (++i < length) {
       character = string[i]
 
@@ -200,12 +200,12 @@ export default class ByteEncoder {
           character === options.lineSeparator[0] &&
           string.substr(i, options.lineSeparator.length) ===
             options.lineSeparator) {
-        // this is a line separator, skip it
+        // This is a line separator, skip it
         i = i + options.lineSeparator.length - 1
       } else if (character === options.padCharacter) {
-        // this is a pad character, ignore it
+        // This is a pad character, ignore it
       } else {
-        // this is an octet or a foreign character
+        // This is an octet or a foreign character
         octet = alphabet.indexOf(character)
         if (octet !== -1) {
           octets.push(octet)
@@ -216,7 +216,7 @@ export default class ByteEncoder {
       }
     }
 
-    // calculate original padding and verify it
+    // Calculate original padding and verify it
     const padding = (4 - octets.length % 4) % 4
     if (padding === 3) {
       throw new ByteEncodingError(
@@ -224,24 +224,24 @@ export default class ByteEncoder {
         `padding of 3 characters is not allowed`)
     }
 
-    // fill up octets
+    // Fill up octets
     for (i = 0; i < padding; i++) {
       octets.push(0)
     }
 
-    // map pairs of octets (4) to pairs of bytes (3)
+    // Map pairs of octets (4) to pairs of bytes (3)
     const size = octets.length / 4 * 3
     const bytes = new Uint8Array(size)
     let j
     for (i = 0; i < octets.length; i += 4) {
-      // calculate byte index
+      // Calculate byte index
       j = i / 4 * 3
-      // byte 1: bits 1-6 from octet 1 joined by bits 1-2 from octet 2
+      // Byte 1: bits 1-6 from octet 1 joined by bits 1-2 from octet 2
       bytes[j] = (octets[i] << 2) | (octets[i + 1] >> 4)
-      // byte 2: bits 3-6 from octet 2 joined by bits 1-4 from octet 3
-      bytes[j + 1] = ((octets[i + 1] & 15) << 4) | (octets[i + 2] >> 2)
-      // byte 3: bits 1-2 from octet 3 joined by bits 1-6 from octet 4
-      bytes[j + 2] = ((octets[i + 2] & 3) << 6) | octets[i + 3]
+      // Byte 2: bits 3-6 from octet 2 joined by bits 1-4 from octet 3
+      bytes[j + 1] = ((octets[i + 1] & 0b001111) << 4) | (octets[i + 2] >> 2)
+      // Byte 3: bits 5-6 from octet 3 joined by bits 1-6 from octet 4
+      bytes[j + 2] = ((octets[i + 2] & 0b000011) << 6) | octets[i + 3]
     }
 
     return bytes.slice(0, size - padding)
