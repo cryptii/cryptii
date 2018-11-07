@@ -173,7 +173,7 @@ describe('Pipe', () => {
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'uryyb jbeyq')
       // Replace both encoders, only the last bucket should update
-      pipe.spliceBricks(0, 2, 'rot13', 'atbash')
+      pipe.spliceBricks(1, 3, 'rot13', 'text', 'atbash')
       const c = await pipe.getContent(0)
       assert.strictEqual(c.getString(), 'ahiib rbuis')
       const d = await pipe.getContent(2)
@@ -195,11 +195,35 @@ describe('Pipe', () => {
       const a = await pipe.getContent(0)
       assert.strictEqual(a.getString(), 'drdmf iqtkl')
       // Replace first encoder by two new ones, the first bucket should update
-      pipe.spliceBricks(1, 1, 'rot13', 'vigenere-cipher')
+      pipe.spliceBricks(1, 1, 'rot13', 'text', 'vigenere-cipher')
       const b = await pipe.getContent(3)
       assert.strictEqual(b.getString(), 'jvjah ewtcb')
       const c = await pipe.getContent(0)
       assert.strictEqual(c.getString(), 'hello world')
+    })
+    it('should keep propagation from last bucket when replacing the two first encoders by a single new one (case 4)', async () => {
+      const pipe = Pipe.extract({
+        bricks: [
+          { name: 'text' },
+          { name: 'rot13' },
+          { name: 'text' },
+          { name: 'vigenere-cipher' },
+          { name: 'text' },
+          { name: 'rot13' },
+          { name: 'text' }
+        ],
+        content: 'jvjah ewtcb',
+        contentBucket: 3
+      })
+      // Let content propagate backwards
+      const a = await pipe.getContent(0)
+      assert.strictEqual(a.getString(), 'hello world')
+      // Replace first two encoders by a single new one
+      pipe.spliceBricks(1, 3, 'atbash')
+      const b = await pipe.getContent(2)
+      assert.strictEqual(b.getString(), 'jvjah ewtcb')
+      const c = await pipe.getContent(0)
+      assert.strictEqual(c.getString(), 'drdmf iqtkl')
     })
   })
 })
