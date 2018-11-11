@@ -8,12 +8,15 @@ Web app and framework offering modular conversion, encoding and encryption. Tran
 
 ## Getting started
 
+Several quick start options are available:
+
+- Use the [latest live version](https://cryptii.com) or [download the latest release](https://github.com/cryptii/cryptii/releases/latest).
+- Clone the repo: `git clone git@github.com:cryptii/cryptii.git`
 - Install the [node](https://nodejs.org/) version specified in `.nvmrc`.
-- Clone the repository: `git clone git@github.com:cryptii/cryptii.git`
-- Install dependencies: `npm install`
-- Build into the `dist/` folder: `npm run-script build`
-- Test source code: `npm run-script test`
-- Watch files: `npm run-script watch`
+- Run `npm install` to install the dependencies.
+- Run `npm run-script build` to build into the `dist/` folder.
+- Run `npm run-script test` to test the source code.
+- Run `npm run-script watch` to watch for changes.
 
 ## Concepts
 
@@ -21,7 +24,7 @@ This framework and web app tries to reflect a wide variety of ciphers, formats, 
 
 ### Encoders
 
-Encoders manipulate content by encoding or decoding it in a specific way and settings.
+Encoders manipulate content by encoding or decoding it in a specific way and using specific settings.
 
 | Name | Category | Description |
 | ---- | -------- | ----------- |
@@ -45,12 +48,13 @@ Encoders manipulate content by encoding or decoding it in a specific way and set
 | `hash` | Modern cryptography | Creating a [message digest](https://en.wikipedia.org/wiki/Cryptographic_hash_function) |
 | `hmac` | Modern cryptography | Creating a [Hash-based message authentication code](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code) |
 
-Example usage in code:
+Example usage:
 
 ```javascript
-let encoder = new ROT13Encoder()
+const bricks = cryptii.BrickFactory.getInstance()
+const encoder = bricks.create('rot13')
 encoder.setSettingValue('variant', 'rot47')
-let result = encoder.encode('Hello World') // returns a Chain object
+const result = encoder.encode('Hello World') // returns a Chain object
 result.getString() // returns 'w6==@ (@C=5'
 ```
 
@@ -70,10 +74,10 @@ Chain objects encapsulate the actual content used and returned by encoders and v
 Chains are immutable. You define its content by passing one of these representations as first argument to the constructor.
 
 ```javascript
-const a = new Chain('🦊🚀')
-const b = new Chain([129418, 128640])
-const c = new Chain(new Uint8Array([240, 159, 166, 138, 240, 159, 154, 128]))
-Chain.isEqual(a, b, c) // returns true
+const a = new cryptii.Chain('🦊🚀')
+const b = new cryptii.Chain([129418, 128640])
+const c = new cryptii.Chain(new Uint8Array([240, 159, 166, 138, 240, 159, 154, 128]))
+cryptii.Chain.isEqual(a, b, c) // returns true
 ```
 
 The object handles the translation between these representations lazily for you. You can access any of these through getter and additional convenience methods.
@@ -83,3 +87,7 @@ const string = chain.getString()
 const codePoints = chain.getCodePoints()
 const bytes = chain.getBytes()
 ```
+
+## Changelog
+
+See [the Releases section of the GitHub repository](https://github.com/cryptii/cryptii/releases) for changelogs for each release version of cryptii.
