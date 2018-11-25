@@ -1,5 +1,6 @@
 
 import AppView from './View/App'
+import BrickFactory from './Factory/Brick'
 import Browser from './Browser'
 import Pipe from './Pipe'
 import Viewable from './Viewable'
@@ -31,7 +32,7 @@ export default class App extends Viewable {
     // read pipe data
     const $pipeData = document.querySelector('.app .app__pipe .pipe__data')
     const pipeData = JSON.parse($pipeData.innerHTML)
-    this._pipe = Pipe.extract(pipeData)
+    this._pipe = Pipe.extract(pipeData, BrickFactory.getInstance())
 
     // trigger view creation and initial layout
     const view = this.getView()

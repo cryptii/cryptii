@@ -4,6 +4,7 @@ import { describe, it } from 'mocha'
 
 import AffineCipherEncoder from '../src/Encoder/AffineCipher'
 import AtbashEncoder from '../src/Encoder/Atbash'
+import BrickFactory from '../src/Factory/Brick'
 import Pipe from '../src/Pipe'
 import ROT13Encoder from '../src/Encoder/ROT13'
 import TextViewer from '../src/Viewer/Text'
@@ -24,7 +25,8 @@ describe('Pipe', () => {
   /** @test {Pipe.extract} */
   describe('extract()', () => {
     it('should extract pipe from structured data', () => {
-      const pipe = Pipe.extract(examplePipeData)
+      const factory = new BrickFactory()
+      const pipe = Pipe.extract(examplePipeData, factory)
       // Pipe bricks
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 3)
@@ -56,7 +58,8 @@ describe('Pipe', () => {
       assert.strictEqual(pipe.hasView(), false)
     })
     it('should add brick to the end of a pipe', () => {
-      const pipe = Pipe.extract(examplePipeData)
+      const factory = new BrickFactory()
+      const pipe = Pipe.extract(examplePipeData, factory)
       const viewer = new TextViewer()
       pipe.addBrick(viewer)
       assert.strictEqual(pipe.getBricks()[3], viewer)
@@ -65,7 +68,8 @@ describe('Pipe', () => {
   /** @test {Pipe.removeBrick} */
   describe('removeBrick()', () => {
     it('should remove first brick from a pipe', () => {
-      const pipe = Pipe.extract(examplePipeData)
+      const factory = new BrickFactory()
+      const pipe = Pipe.extract(examplePipeData, factory)
       pipe.removeBrick(0)
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 2)
@@ -74,7 +78,8 @@ describe('Pipe', () => {
       assert.strictEqual(pipe.hasView(), false)
     })
     it('should remove middle brick from a pipe', () => {
-      const pipe = Pipe.extract(examplePipeData)
+      const factory = new BrickFactory()
+      const pipe = Pipe.extract(examplePipeData, factory)
       pipe.removeBrick(1)
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 2)
@@ -82,7 +87,8 @@ describe('Pipe', () => {
       assert.strictEqual(pipeBricks[1] instanceof TextViewer, true)
     })
     it('should remove last brick from a pipe', () => {
-      const pipe = Pipe.extract(examplePipeData)
+      const factory = new BrickFactory()
+      const pipe = Pipe.extract(examplePipeData, factory)
       pipe.removeBrick(2)
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 2)
@@ -90,15 +96,10 @@ describe('Pipe', () => {
       assert.strictEqual(pipeBricks[1] instanceof AffineCipherEncoder, true)
     })
   })
-  /** @test {Pipe.spliceBricks} */
-  describe('spliceBricks()', () => {
-    it('should return removed bricks', () => {
-      const pipe = Pipe.extract(examplePipeData)
-      const removingBrick = pipe.getBricks()[1]
-      const removedBricks = pipe.spliceBricks(1, 1)
-      assert.strictEqual(removedBricks[0], removingBrick)
-    })
+  /** @test {Pipe.replaceBrick} */
+  describe('replaceBrick()', () => {
     it('should replace a single encoder whilst maintaining result and direction (case 1 & 2)', async () => {
+      const factory = new BrickFactory()
       const pipe = Pipe.extract({
         bricks: [
           { name: 'text' },
@@ -107,12 +108,12 @@ describe('Pipe', () => {
         ],
         content: 'kej prlvz owbfu qbm srnid byjw 13 ghat cbxd.',
         contentBucket: 1
-      })
+      }, factory)
       // Let content propagate backward
       const a = await pipe.getContent(0)
       assert.strictEqual(a.getString(), 'the quick brown fox jumps over 13 lazy dogs.')
       // Replace encoder, the first bucket should update
-      pipe.spliceBricks(1, 1, 'vigenere-cipher')
+      pipe.replaceBrick(pipe.getBrick(1), { name: 'vigenere-cipher' })
       assert.strictEqual(pipe.getBricks()[1] instanceof VigenereCipherEncoder, true)
       const b = await pipe.getContent(0)
       assert.strictEqual(b.getString(), 'inl aydnx xymmm izv ucuav zhlh 13 nzsr ldik.')
@@ -121,12 +122,23 @@ describe('Pipe', () => {
       const c = await pipe.getContent(1)
       assert.strictEqual(c.getString(), 'wiwnu rjgpo')
       // Replace encoder, the second bucket should update
-      pipe.spliceBricks(1, 1, 'rot13')
+      pipe.replaceBrick(pipe.getBrick(1), { name: 'rot13' })
       assert.strictEqual(pipe.getBricks()[1] instanceof ROT13Encoder, true)
       const d = await pipe.getContent(1)
       assert.strictEqual(d.getString(), 'hello world')
     })
+  })
+  /** @test {Pipe.spliceBricks} */
+  describe('spliceBricks()', () => {
+    it('should return removed bricks', () => {
+      const factory = new BrickFactory()
+      const pipe = Pipe.extract(examplePipeData, factory)
+      const removingBrick = pipe.getBricks()[1]
+      const removedBricks = pipe.spliceBricks(1, 1)
+      assert.strictEqual(removedBricks[0], removingBrick)
+    })
     it('should replace the second encoder whilst maintaining result and direction (case 1 & 2)', async () => {
+      const factory = new BrickFactory()
       const pipe = Pipe.extract({
         bricks: [
           { name: 'text' },
@@ -136,12 +148,12 @@ describe('Pipe', () => {
         ],
         content: 'the quick brown fox jumps over 13 lazy dogs',
         contentBucket: 0
-      })
+      }, factory)
       // Let content propagate forward through both encoders
       const a = await pipe.getContent(2)
       assert.strictEqual(a.getString(), 'xrw ceyim bjosh doz feavq olwj 13 tung pokq')
       // Replace second encoder, the last bucket should update
-      pipe.spliceBricks(2, 1, 'atbash')
+      pipe.spliceBricks(2, 1, [{ name: 'atbash' }])
       assert.strictEqual(pipe.getBricks()[2] instanceof AtbashEncoder, true)
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'pvq kioea ldyuf jyn himrw ybqd 13 tszg xycw')
@@ -150,12 +162,13 @@ describe('Pipe', () => {
       const c = await pipe.getContent(0)
       assert.strictEqual(c.getString(), 'pslli aiflt')
       // Replace second encoder, the first bucket should update
-      pipe.spliceBricks(2, 1, 'rot13')
+      pipe.spliceBricks(2, 1, [{ name: 'rot13' }])
       assert.strictEqual(pipe.getBricks()[2] instanceof ROT13Encoder, true)
       const d = await pipe.getContent(0)
       assert.strictEqual(d.getString(), 'hello world')
     })
     it('should select the first bucket when replacing both encoders (case 3)', async () => {
+      const factory = new BrickFactory()
       const pipe = Pipe.extract({
         bricks: [
           { name: 'text' },
@@ -166,20 +179,21 @@ describe('Pipe', () => {
         ],
         content: 'hello world',
         contentBucket: 1
-      })
+      }, factory)
       // Let content propagate in both directions
       const a = await pipe.getContent(0)
       assert.strictEqual(a.getString(), 'ahiib rbuis')
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'uryyb jbeyq')
       // Replace both encoders, only the last bucket should update
-      pipe.spliceBricks(1, 3, 'rot13', 'text', 'atbash')
+      pipe.spliceBricks(1, 3, [{ name: 'rot13' }, { name: 'text' }, { name: 'atbash' }])
       const c = await pipe.getContent(0)
       assert.strictEqual(c.getString(), 'ahiib rbuis')
       const d = await pipe.getContent(2)
       assert.strictEqual(d.getString(), 'mfeel vlseu')
     })
     it('should keep propagation from last bucket when replacing the first encoder by two new ones (case 4)', async () => {
+      const factory = new BrickFactory()
       const pipe = Pipe.extract({
         bricks: [
           { name: 'text' },
@@ -190,18 +204,19 @@ describe('Pipe', () => {
         ],
         content: 'jvjah ewtcb',
         contentBucket: 2
-      })
+      }, factory)
       // Let content propagate backwards
       const a = await pipe.getContent(0)
       assert.strictEqual(a.getString(), 'drdmf iqtkl')
       // Replace first encoder by two new ones, the first bucket should update
-      pipe.spliceBricks(1, 1, 'rot13', 'text', 'vigenere-cipher')
+      pipe.spliceBricks(1, 1, [{ name: 'rot13' }, { name: 'text' }, { name: 'vigenere-cipher' }])
       const b = await pipe.getContent(3)
       assert.strictEqual(b.getString(), 'jvjah ewtcb')
       const c = await pipe.getContent(0)
       assert.strictEqual(c.getString(), 'hello world')
     })
     it('should keep propagation from last bucket when replacing the two first encoders by a single new one (case 4)', async () => {
+      const factory = new BrickFactory()
       const pipe = Pipe.extract({
         bricks: [
           { name: 'text' },
@@ -214,12 +229,12 @@ describe('Pipe', () => {
         ],
         content: 'jvjah ewtcb',
         contentBucket: 3
-      })
+      }, factory)
       // Let content propagate backwards
       const a = await pipe.getContent(0)
       assert.strictEqual(a.getString(), 'hello world')
       // Replace first two encoders by a single new one
-      pipe.spliceBricks(1, 3, 'atbash')
+      pipe.spliceBricks(1, 3, [{ name: 'atbash' }])
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'jvjah ewtcb')
       const c = await pipe.getContent(0)
