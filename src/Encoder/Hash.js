@@ -70,19 +70,17 @@ export default class HashEncoder extends Encoder {
     this.setEncodeOnly(true)
 
     const algorithms = HashEncoder.filterAvailableAlgorithms()
-    this.registerSetting([
-      {
-        name: 'algorithm',
-        type: 'enum',
-        value: 'sha256',
-        randomizable: false,
-        style: 'radio',
-        options: {
-          elements: algorithms.map(algorithm => algorithm.name),
-          labels: algorithms.map(algorithm => algorithm.label)
-        }
+    this.addSetting({
+      name: 'algorithm',
+      type: 'enum',
+      value: 'sha256',
+      randomizable: false,
+      style: 'radio',
+      options: {
+        elements: algorithms.map(algorithm => algorithm.name),
+        labels: algorithms.map(algorithm => algorithm.label)
       }
-    ])
+    })
   }
 
   /**

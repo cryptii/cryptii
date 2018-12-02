@@ -56,7 +56,7 @@ export default class NumeralSystemEncoder extends Encoder {
    */
   constructor () {
     super()
-    this.registerSetting([
+    this.addSettings([
       {
         name: 'from',
         label: 'Read',

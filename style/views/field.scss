@@ -1,5 +1,5 @@
 
-.setting {
+.field {
   $block: &;
   display: flex;
   position: relative;
@@ -12,19 +12,19 @@
   &__label {
     display: block;
     padding:
-      $setting-label-padding-v $setting-label-padding-v
-      0 $setting-padding-h;
+      $field-label-padding-v $field-label-padding-v
+      0 $field-padding-h;
     border-right: 1px solid $c-line;
-    @extend %t-setting-label;
-    color: $c-setting-label;
+    @extend %t-field-label;
+    color: $c-field-label;
     align-self: flex-start;
     user-select: auto;
   }
 
   &__field {
     position: relative;
-    margin: $setting-field-padding-v $setting-padding-h;
-    min-height: $setting-field-height - $setting-field-padding-v * 2;
+    margin: $field-field-padding-v $field-padding-h;
+    min-height: $field-field-height - $field-field-padding-v * 2;
     user-select: auto;
   }
 
@@ -37,7 +37,7 @@
     padding: 9px 12px 8px;
     border-radius: $default-border-radius;
     transform: translate(-50%, 100%);
-    z-index: $z-index-setting-message;
+    z-index: $z-index-field-message;
     background: $c-red;
     border-color: $c-red;
     @extend %s-sheet;
@@ -69,13 +69,13 @@
     }
   }
 
-  // width modifier
+  // Width modifier
   @for $cols from 1 through 11 {
     &[data-width="#{$cols}"] {
       width: 100% * ($cols / 12);
 
       @if $cols < 8 {
-        // remove label border for small setting cells
+        // Remove label border for small field cells
         #{$block}__label {
           border: none;
         }
@@ -85,7 +85,7 @@
 
   &--first {
 
-    // modifier applied on first setting in each row
+    // Modifier applied on first field in each row
     border-left: none;
   }
 

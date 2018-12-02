@@ -29,8 +29,7 @@ export default class UnicodeCodePointsEncoder extends CharacterBlockEncoder {
   constructor () {
     super()
     this.setCharacterToBlockMode()
-
-    this.registerSetting({
+    this.addSetting({
       name: 'format',
       type: 'enum',
       value: 'unicode',

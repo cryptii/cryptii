@@ -38,7 +38,7 @@ export default class IntegerEncoder extends Encoder {
    */
   constructor () {
     super()
-    this.registerSetting([
+    this.addSettings([
       {
         name: 'format',
         type: 'enum',
@@ -241,11 +241,10 @@ export default class IntegerEncoder extends Encoder {
   }
 
   /**
-   * Triggered when a setting value has changed.
+   * Triggered when a setting field has changed.
    * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
@@ -253,6 +252,6 @@ export default class IntegerEncoder extends Encoder {
         const typeIndex = typeNames.indexOf(this.getSettingValue('type'))
         this.getSetting('byteOrder').setVisible(typeBytes[typeIndex] > 1)
     }
-    return super.settingValueDidChange(setting, value)
+    super.settingValueDidChange(setting, value)
   }
 }

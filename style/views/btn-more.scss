@@ -6,8 +6,8 @@
   margin: 0 2px;
   background-image: inline-svg('icons/more.svg', (
     rect: (
-      fill: $c-setting-control-background,
-      stroke: $c-setting-control-background
+      fill: $c-field-control-background,
+      stroke: $c-field-control-background
     ),
     path: (fill: $c-text)
   ));

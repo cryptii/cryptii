@@ -1,80 +1,79 @@
 
 import Chain from './Chain'
+import FieldView from './View/Field'
 import Random from './Random'
-import SettingView from './View/Setting'
 import StringUtil from './StringUtil'
 import Viewable from './Viewable'
 
 /**
- * Abstract setting
+ * Abstract field
  */
-export default class Setting extends Viewable {
+export default class Field extends Viewable {
   /**
-   * Setting constructor. Override is required to call super.
-   * @param {string} name
-   * @param {Object} [spec]
-   * @param {string} [spec.label] Setting label, defaults to setting name
-   * @param {mixed} [spec.value] Default Setting value
-   * @param {boolean} [spec.randomizable=true] Wether setting is randomizable
-   * @param {boolean} [spec.visible=true] Wether setting is visible
-   * @param {number} [spec.priority=1] Settings will be ordered by
-   * priority (descending).
-   * @param {string} [spec.style="default"] Setting appearance
-   * @param {number} [spec.width=12] Setting width in columns (1-12)
-   * @param {function(rawValue: mixed, setting: Setting): boolean|object}
+   * Constructor
+   * @param {string} name Field name
+   * @param {object} [spec] Field spec
+   * @param {string} [spec.label] Field label, defaults to title cased name
+   * @param {mixed} [spec.value] Default field value
+   * @param {boolean} [spec.randomizable=true] Wether field is randomizable
+   * @param {boolean} [spec.visible=true] Wether field is visible
+   * @param {number} [spec.priority=0] Fields will be ordered by
+   * priority in descending order.
+   * @param {number} [spec.width=12] Field width in columns (1-12)
+   * @param {function(rawValue: mixed, field: Field): boolean|object}
    * [spec.validateValue] Function to execute whenever a value
    * gets validated, returns true if valid.
-   * @param {function(rawValue: mixed, setting: Setting): mixed}
+   * @param {function(rawValue: mixed, field: Field): mixed}
    * [spec.filterValue] Function to execute whenever a value
    * gets filtered, returns filtered value.
-   * @param {function(random: Random, setting: Setting): mixed}
-   * [spec.randomizeValue] Function to execute whenever a random Setting value
+   * @param {function(random: Random, field: Field): mixed}
+   * [spec.randomizeValue] Function to execute whenever a random Field value
    * gets requested, returns randomly chosen value.
    */
   constructor (name, spec = {}) {
     super()
+    this._viewPrototype = FieldView
 
     this._name = name
     this._value = spec.value !== undefined ? spec.value : null
     this._randomizable = spec.randomizable !== false
+    this._delegate = null
 
+    // Validation
     this._valid = true
     this._message = null
     this._messageKey = null
 
-    this._delegate = null
-
+    // Custom validate, filter and randomize functions
     this._validateValueCallback = spec.validateValue || null
     this._filterValueCallback = spec.filterValue || null
     this._randomizeValueCallback = spec.randomizeValue || null
 
-    // view related properties
+    // View related properties
     this._label = spec.label || StringUtil.camelCaseToRegular(name)
     this._visible = spec.visible !== false
-    this._priority = spec.priority || 1
-    this._style = spec.style || 'default'
+    this._priority = spec.priority !== undefined ? spec.priority : 0
     this._width = spec.width || 12
-    this._viewPrototype = SettingView
   }
 
   /**
-   * Returns name.
-   * @return {string} Setting name
+   * Returns field name.
+   * @return {string} Field name
    */
   getName () {
     return this._name
   }
 
   /**
-   * Returns label.
-   * @return {string} Setting label
+   * Returns field label.
+   * @return {string} Field label
    */
   getLabel () {
     return this._label
   }
 
   /**
-   * Returns wether Setting is visible.
+   * Returns wether the field is visible.
    * @return {boolean} True, if visible
    */
   isVisible () {
@@ -82,56 +81,37 @@ export default class Setting extends Viewable {
   }
 
   /**
-   * Sets wether Setting is visible.
+   * Sets wether the field is visible.
    * @param {boolean} visible
-   * @return {Setting} Fluent interface
+   * @return {Field} Fluent interface
    */
   setVisible (visible) {
     this._visible = visible
-    this.hasDelegate() && this.getDelegate().settingNeedsLayout(this)
+    this.hasDelegate() && this.getDelegate().fieldNeedsLayout(this)
     return this
   }
 
   /**
-   * Returns priority of Setting.
-   * @return {number} Setting priority
+   * Returns the field priority that determines the field order.
+   * @return {number} Field priority
    */
   getPriority () {
     return this._priority
   }
 
   /**
-   * Sets the priority of Setting.
-   * @param {number} priority Setting priority
-   * @return {Setting} Fluent interface
+   * Sets the field priority that determines the field order.
+   * @param {number} priority Field priority
+   * @return {Field} Fluent interface
    */
   setPriority (priority) {
     this._priority = priority
-    this.hasDelegate() && this.getDelegate().settingNeedsLayout(this)
+    this.hasDelegate() && this.getDelegate().fieldNeedsLayout(this)
     return this
   }
 
   /**
-   * Returns the setting appearance.
-   * @return {string}
-   */
-  getStyle () {
-    return this._style
-  }
-
-  /**
-   * Sets the setting appearance.
-   * @param {string} style
-   * @return {Setting} Fluent interface
-   */
-  setStyle (style) {
-    this._style = style
-    this.hasView() && this.getView().setStyle(style)
-    return this
-  }
-
-  /**
-   * Returns width as number of columns (1-12).
+   * Returns the field width.
    * @return {number} Number of columns (1-12)
    */
   getWidth () {
@@ -139,9 +119,9 @@ export default class Setting extends Viewable {
   }
 
   /**
-   * Sets width as number of columns (1-12).
+   * Sets the field with.
    * @param {number} width Number of columns (1-12)
-   * @return {Setting} Fluent interface
+   * @return {Field} Fluent interface
    */
   setWidth (width) {
     this._width = width
@@ -151,14 +131,14 @@ export default class Setting extends Viewable {
 
   /**
    * Returns the delegate.
-   * @return {?Object}
+   * @return {?object}
    */
   getDelegate () {
     return this._delegate
   }
 
   /**
-   * Returns true, if delegate is set.
+   * Returns true, if the delegate is set.
    * @return {boolean} True, if delegate is set
    */
   hasDelegate () {
@@ -167,8 +147,8 @@ export default class Setting extends Viewable {
 
   /**
    * Sets the delegate.
-   * @param {?Object} delegate
-   * @return {Setting} Fluent interface
+   * @param {?object} delegate
+   * @return {Field} Fluent interface
    */
   setDelegate (delegate) {
     this._delegate = delegate
@@ -176,7 +156,7 @@ export default class Setting extends Viewable {
   }
 
   /**
-   * Returns true, if value is valid.
+   * Returns true, if the value is valid.
    * @return {boolean} True, if valid
    */
   isValid () {
@@ -185,7 +165,7 @@ export default class Setting extends Viewable {
 
   /**
    * Returns a message that explains why the current value is invalid.
-   * @return {null|string}
+   * @return {?string}
    */
   getMessage () {
     return this._message
@@ -193,14 +173,14 @@ export default class Setting extends Viewable {
 
   /**
    * Returns a message key identifying the reason the current value is invalid.
-   * @return {null|string}
+   * @return {?string}
    */
   getMessageKey () {
     return this._messageKey
   }
 
   /**
-   * Returns value.
+   * Returns the current value.
    * @return {mixed}
    */
   getValue () {
@@ -208,18 +188,18 @@ export default class Setting extends Viewable {
   }
 
   /**
-   * Sets value, validates it, filters it and notifies delegate.
-   * @param {mixed} rawValue Setting value.
-   * @param {?Object} [sender] Sender object of this request.
-   * Delegate will only be notified if it differs from given sender.
-   * @return {Setting} Fluent interface
+   * Sets the value. Filters and validates value and updates the valid flag.
+   * @param {mixed} rawValue Field value
+   * @param {?object} [sender] Sender object. Only delegates that are not equal
+   * to the sender will be notified.
+   * @return {Field} Fluent interface
    */
   setValue (rawValue, sender = null) {
-    // validate value
+    // Validate value
     const validationResult = this.validateValue(rawValue)
     this._valid = validationResult === true
 
-    // update message
+    // Update message
     if (!this._valid) {
       if (typeof validationResult === 'object') {
         this._message = validationResult.message
@@ -233,7 +213,7 @@ export default class Setting extends Viewable {
       this._messageKey = null
     }
 
-    // update message on view
+    // Update message on view
     this.hasView() && this.getView().setMessage(this.getMessage())
 
     if (!this._valid) {
@@ -241,10 +221,10 @@ export default class Setting extends Viewable {
       return this
     }
 
-    // filter value
+    // Filter value
     const value = this.filterValue(rawValue)
 
-    // check if value changed
+    // Check if value has changed
     const equal = value instanceof Chain
       ? value.isEqualTo(this._value)
       : this._value === value
@@ -252,14 +232,17 @@ export default class Setting extends Viewable {
     if (!equal) {
       this._value = value
 
-      // update value in view
+      // Update the value in view
       if (this.hasView() && this.getView() !== sender) {
         this.getView().updateValue()
       }
 
-      // notify delegate only if setting value is valid
-      if (this.hasDelegate() && this.getDelegate() !== sender) {
-        this.getDelegate().settingValueDidChange(this, value)
+      // Notify delegate, if it is interested
+      const delegate = this.getDelegate()
+      if (delegate &&
+          delegate !== sender &&
+          delegate.fieldValueDidChange !== undefined) {
+        this.getDelegate().fieldValueDidChange(this, value)
       }
     }
 
@@ -267,17 +250,16 @@ export default class Setting extends Viewable {
   }
 
   /**
-   * Revalidates current value, sets {@link Setting.isValid} flag to
+   * Revalidates the current value, sets {@link Field.isValid} flag to
    * false if not valid.
-   * @return {Setting} Fluent interface
+   * @return {Field} Fluent interface
    */
   revalidateValue () {
     return this.setValue(this.getValue())
   }
 
   /**
-   * Validates given raw value. Called whenever a value gets set
-   * using {@link Setting.setValue}. Override is required to call super.
+   * Validates given raw value. Override is required to call super.
    * @override
    * @param {mixed} rawValue Value to be validated
    * @return {boolean|object} True if valid, message object or false if invalid
@@ -286,13 +268,13 @@ export default class Setting extends Viewable {
     if (this._validateValueCallback !== null) {
       return this._validateValueCallback(rawValue, this)
     }
-    // generic Setting objects accept any value
+    // Generic field objects accept any value
     return true
   }
 
   /**
    * Filters given raw value. Called whenever a value gets set
-   * using {@link Setting.setValue}. Override is required to call super.
+   * using {@link Field.setValue}. Override is required to call super.
    * @override
    * @param {mixed} rawValue Value to be filtered
    * @return {mixed} Filtered value
@@ -301,12 +283,12 @@ export default class Setting extends Viewable {
     if (this._filterValueCallback !== null) {
       return this._filterValueCallback(rawValue, this)
     }
-    // generic Setting objects don't filter
+    // Generic field objects don't filter
     return rawValue
   }
 
   /**
-   * Returns true, if setting is randomizable.
+   * Returns true, if the field is randomizable.
    * @return {boolean}
    */
   isRandomizable () {
@@ -315,16 +297,16 @@ export default class Setting extends Viewable {
 
   /**
    * Applies a randomly chosen value.
-   * Uses {@link Setting.randomizeValue} internally.
+   * Uses {@link Field.randomizeValue} internally.
    * Does nothing when randomizable is set to false.
    * @param {Random} [random] Random number generator
-   * @return {Setting} Fluent interface
+   * @return {Field} Fluent interface
    */
   randomize (random = null) {
     if (!this.isRandomizable()) {
       return this
     }
-    const value = this.randomizeValue(random || Random.getInstance())
+    const value = this.randomizeValue(random || new Random())
     if (value !== null) {
       return this.setValue(value)
     }
@@ -341,19 +323,17 @@ export default class Setting extends Viewable {
     if (this._randomizeValueCallback !== null) {
       return this._randomizeValueCallback(random, this)
     }
-    // generic settings don't know how to choose a random value
+    // Generic fields don't know how to choose a random value
     return null
   }
 
   /**
-   * Serializes Setting value to make it JSON serializable.
+   * Serializes the value to a JSON serializable object.
    * @override
-   * @throws Throws an error if safe serialization not possible.
+   * @throws {Error} If serialization is not possible.
    * @return {mixed} Serialized data
    */
   serializeValue () {
-    // generic settings can only serialize boolean,
-    // number and string values safely
     const value = this.getValue()
     if (
       typeof value !== 'boolean' &&
@@ -362,22 +342,32 @@ export default class Setting extends Viewable {
       value !== null
     ) {
       throw new Error(
-        `Value of setting '${this.getName()}' is expected to be a boolean, ` +
-        `number, string or null. Found value type '${typeof value}'.`)
+        `Field value serialization is not possible. Generic fields can ` +
+        `only serialize boolean, number, string or null values safely. ` +
+        `Received value type '${typeof value}'.`)
     }
     return value
   }
 
   /**
-   * Extracts value from {@link Setting.serializeValue} serialized data
-   * and applies it to this Setting.
+   * Extracts value serialized by {@link Field.serializeValue} and applies
+   * it on the field. Calls {@link Field.extractValue} internally.
+   * @param {mixed} data Serialized data
+   * @return {Field} Fluent interface
+   */
+  extract (data) {
+    this.setValue(this.extractValue(data))
+    return this
+  }
+
+  /**
+   * Extracts a value serialized by {@link Field.serializeValue} and returns it.
    * @override
    * @param {mixed} data Serialized data
-   * @return {Setting} Fluent interface
+   * @return {mixed} Extracted value
    */
   extractValue (data) {
-    this.setValue(data)
-    return this
+    return data
   }
 
   /**
@@ -386,8 +376,6 @@ export default class Setting extends Viewable {
    * @param {View} view
    */
   didCreateView (view) {
-    this.getView()
-      .setStyle(this.getStyle())
-      .setMessage(this.getMessage())
+    this.getView().setMessage(this.getMessage())
   }
 }

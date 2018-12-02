@@ -25,7 +25,7 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
    */
   constructor () {
     super()
-    this.registerSetting({
+    this.addSetting({
       name: 'variant',
       type: 'enum',
       value: 'rot13',

@@ -49,7 +49,7 @@ export default class MorseCodeEncoder extends Encoder {
    */
   constructor () {
     super()
-    this.registerSetting([
+    this.addSettings([
       {
         name: 'variant',
         type: 'enum',
@@ -337,11 +337,10 @@ export default class MorseCodeEncoder extends Encoder {
   }
 
   /**
-   * Triggered when a setting value has changed.
+   * Triggered when a setting field has changed.
    * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
@@ -369,7 +368,7 @@ export default class MorseCodeEncoder extends Encoder {
         this.getSetting('signalOffMark').setVisible(value === 'timing')
         break
     }
-    return super.settingValueDidChange(setting, value)
+    super.settingValueDidChange(setting, value)
   }
 
   /**

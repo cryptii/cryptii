@@ -26,8 +26,7 @@ export default class TextTransformEncoder extends Encoder {
    */
   constructor () {
     super()
-
-    this.registerSetting([
+    this.addSettings([
       {
         name: 'case',
         type: 'enum',

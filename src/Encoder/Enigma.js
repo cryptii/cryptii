@@ -378,7 +378,7 @@ export default class EnigmaEncoder extends Encoder {
     const rotorLabels = rotors.map(rotor => rotor.label)
     const reflectorRotors = EnigmaEncoder.getRotors(model.reflectorRotors)
 
-    this.registerSetting({
+    this.addSetting({
       name: 'model',
       type: 'enum',
       value: model.name,
@@ -390,7 +390,7 @@ export default class EnigmaEncoder extends Encoder {
       }
     })
 
-    this.registerSetting({
+    this.addSetting({
       name: 'reflector',
       type: 'enum',
       value: reflectorRotors[0].name,
@@ -401,7 +401,7 @@ export default class EnigmaEncoder extends Encoder {
       }
     })
 
-    this.registerSetting({
+    this.addSetting({
       name: `positionReflector`,
       label: `Position`,
       type: 'number',
@@ -415,7 +415,7 @@ export default class EnigmaEncoder extends Encoder {
       }
     })
 
-    this.registerSetting({
+    this.addSetting({
       name: `ringReflector`,
       label: `Ring`,
       type: 'number',
@@ -430,7 +430,7 @@ export default class EnigmaEncoder extends Encoder {
 
     // Register settings for each possible slot
     for (let i = 0; i < EnigmaEncoder.getMaxSlotCount(); i++) {
-      this.registerSetting({
+      this.addSetting({
         name: `rotor${i + 1}`,
         label: `Rotor ${i + 1}`,
         type: 'enum',
@@ -443,7 +443,7 @@ export default class EnigmaEncoder extends Encoder {
         }
       })
 
-      this.registerSetting({
+      this.addSetting({
         name: `position${i + 1}`,
         label: `Position`,
         type: 'number',
@@ -456,7 +456,7 @@ export default class EnigmaEncoder extends Encoder {
         }
       })
 
-      this.registerSetting({
+      this.addSetting({
         name: `ring${i + 1}`,
         label: `Ring`,
         type: 'number',
@@ -470,7 +470,7 @@ export default class EnigmaEncoder extends Encoder {
       })
     }
 
-    this.registerSetting({
+    this.addSetting({
       name: 'plugboard',
       type: 'text',
       value: '',
@@ -479,7 +479,7 @@ export default class EnigmaEncoder extends Encoder {
       randomizeValue: this.randomizePlugboardValue.bind(this)
     })
 
-    this.registerSetting({
+    this.addSetting({
       name: 'includeForeignChars',
       type: 'boolean',
       label: 'Foreign Chars',
@@ -496,10 +496,10 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Triggered when a setting value has changed.
+   * Triggered when a setting field has changed.
    * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     super.settingValueDidChange(setting, value)
@@ -833,7 +833,7 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Returns wether this brick is randomizable.
+   * Returns true, if the brick input is randomizable.
    * @return {boolean}
    */
   isRandomizable () {
@@ -841,7 +841,7 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   /**
-   * Applies randomly chosen values to the brick.
+   * Randomizes the brick input.
    * @return {Brick} Fluent interface
    */
   randomize () {

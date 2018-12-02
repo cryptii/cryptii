@@ -1,10 +1,8 @@
 
 import BrickView from './View/Brick'
-import Setting from './Setting'
-import SettingFactory from './Factory/Setting'
-import Viewable from './Viewable'
 import EventManager from './EventManager'
-import Random from './Random'
+import Form from './Form'
+import Viewable from './Viewable'
 
 /**
  * Abstract element of the pipe
@@ -21,15 +19,44 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Brick constructor
+   * Constructor
    */
   constructor () {
     super()
-    this._settings = []
+    this._pipe = null
+    this._viewPrototype = BrickView
+
+    this._settingsForm = new Form()
+    this._settingsForm.setDelegate(this)
+
     this._alias = null
     this._hidden = false
-    this._viewPrototype = BrickView
-    this._pipe = null
+  }
+
+  /**
+   * Returns the pipe this brick is part of.
+   * @return {?Pipe} Pipe instance or null, if brick isn't part of a pipe
+   */
+  getPipe () {
+    return this._pipe
+  }
+
+  /**
+   * Returns true, if this brick is part of a pipe.
+   * @return {boolean}
+   */
+  hasPipe () {
+    return this._pipe !== null
+  }
+
+  /**
+   * Sets the pipe this brick is part of.
+   * @param {?Pipe} pipe Pipe instance this brick is part of
+   * @return {Brick} Fluent interface
+   */
+  setPipe (pipe) {
+    this._pipe = pipe
+    return this
   }
 
   /**
@@ -41,227 +68,17 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Returns Setting objects registered to this Brick.
-   * @return {Setting[]}
+   * Returns the brick alias or the title if alias is not set.
+   * @return {string} Brick title
    */
-  getSettings () {
-    return this._settings
+  getTitle () {
+    return this._alias === null
+      ? this.getMeta().title
+      : this._alias
   }
 
   /**
-   * Finds Setting with given name.
-   * @param {string} name Setting name to search for
-   * @return {?Setting} Returns Setting or null if not found.
-   */
-  getSetting (name) {
-    return this._settings.find(setting => setting.getName() === name) || null
-  }
-
-  /**
-   * Convenience method for finding a Setting and returning its value.
-   * @param {string} name Setting name to search for
-   * @throws Throws an error if Setting with given name does not exist.
-   * @return {mixed} Setting value.
-   */
-  getSettingValue (name) {
-    const setting = this.getSetting(name)
-    if (setting === null) {
-      throw new Error(`Unknown Setting with name '${name}'`)
-    }
-    return setting.getValue()
-  }
-
-  /**
-   * Returns an object mapping setting names to their values.
-   * @return {object}
-   */
-  getSettingValues () {
-    const settingValues = {}
-    this.getSettings()
-      .filter(setting => setting.isVisible())
-      .forEach(setting => {
-        settingValues[setting.getName()] = setting.getValue()
-      })
-    return settingValues
-  }
-
-  /**
-   * Returns an array of invalid Setting objects.
-   * @return {Setting[]}
-   */
-  getInvalidSettings () {
-    return this._settings.filter(setting => !setting.isValid())
-  }
-
-  /**
-   * Returns true if this Brick's Settings are valid.
-   * @return {boolean}
-   */
-  areSettingsValid () {
-    return this.getInvalidSettings().length === 0
-  }
-
-  /**
-   * Registers a single or multiple Settings.
-   * @example
-   * // register number setting inside brick constructor
-   * constructor () {
-   *   super()
-   *   this.registerSetting({
-   *     name: 'a',
-   *     type: 'number',
-   *     value: 5,
-   *     options: { integer: true, min: 1 }
-   *   })
-   * }
-   * @protected
-   * @param {...Setting|Object|Setting[]|Object[]} settingOrSpec
-   * Single or array of Setting objects or Setting specifications described
-   * at {@link SettingFactory.create}.
-   * @throws Throws an error if specification is malformed.
-   * @throws Throws an error if Setting type has not been registered.
-   * @throws Throws an error if Setting with given name is already registered.
-   * @return {Brick} Fluent interface
-   */
-  registerSetting (...settingOrSpec) {
-    // resolve single arg (preventing infinite loop)
-    if (settingOrSpec.length === 1) {
-      settingOrSpec = settingOrSpec[0]
-    }
-
-    // handle multiple settings or specifications
-    if (Array.isArray(settingOrSpec)) {
-      settingOrSpec.forEach(settingOrSpec =>
-        this.registerSetting(settingOrSpec))
-      return this
-    }
-
-    // retrieve setting object
-    let setting = settingOrSpec
-    if (!(settingOrSpec instanceof Setting)) {
-      // apply default priority
-      if (settingOrSpec.priority === undefined) {
-        settingOrSpec.priority = -this._settings.length
-      }
-      // create setting instance
-      setting = SettingFactory.getInstance().create(settingOrSpec)
-    }
-
-    // check if name already exists
-    if (this.getSetting(setting.getName()) !== null) {
-      throw new Error(
-        `Setting with name '${setting.getName()}' has already ` +
-        `been registered to Brick.`)
-    }
-
-    // register setting
-    this._settings.push(setting)
-    setting.setDelegate(this)
-
-    // add setting as subview
-    if (setting.isVisible()) {
-      this.hasView() && this.getView().addSubview(setting.getView())
-    }
-
-    return this
-  }
-
-  /**
-   * Convenience method for finding a Setting and setting its value.
-   * @param {string} name Setting name to search for
-   * @param {mixed} value Setting value
-   * @throws Throws an error if Setting with given name does not exist.
-   * @return {Brick} Fluent interface
-   */
-  setSettingValue (name, value) {
-    const setting = this.getSetting(name)
-    if (setting === null) {
-      throw new Error(`Unknown Setting with name '${name}'`)
-    }
-    setting.setValue(value)
-    return this
-  }
-
-  /**
-   * Sets multiple Setting values by Object.
-   * @param {Object} nameValuePairs Object mapping Setting names to values
-   * @throws Throws an error if Setting with given name does not exist.
-   * @return {Brick} Fluent interface
-   */
-  setSettingValues (nameValuePairs) {
-    for (let name in nameValuePairs) {
-      this.setSettingValue(name, nameValuePairs[name])
-    }
-    return this
-  }
-
-  /**
-   * Returns wether this brick is randomizable.
-   * @return {boolean}
-   */
-  isRandomizable () {
-    let randomizable = false
-    let i = -1
-    let setting
-    while (!randomizable && ++i < this._settings.length) {
-      setting = this._settings[i]
-      randomizable = setting.isRandomizable()
-    }
-    return randomizable
-  }
-
-  /**
-   * Applies randomly chosen values to the brick.
-   * Override to customize behaviour.
-   * @param {Random} [random] Random number generator
-   * @return {Brick} Fluent interface
-   */
-  randomize (random = null) {
-    if (this.isRandomizable()) {
-      random = random || Random.getInstance()
-      // randomize visible settings
-      this._settings
-        .filter(setting => setting.isVisible() && setting.isRandomizable())
-        .forEach(setting => setting.randomize(random))
-    }
-    return this
-  }
-
-  /**
-   * Triggered when a setting value has changed.
-   * Override is required to call super.
-   * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   */
-  settingValueDidChange (setting, value) {
-    // notify delegate
-    this.hasPipe() && this.getPipe().brickSettingDidChange(this)
-  }
-
-  /**
-   * Triggered when a setting layout property has changed.
-   * @protected
-   * @param {Setting} setting
-   * @return {Encoder} Fluent interface
-   */
-  settingNeedsLayout (setting) {
-    if (!this.hasView()) {
-      // nothing to do
-      return
-    }
-
-    // remove setting from superview
-    setting.getView() && setting.getView().removeFromSuperview()
-
-    if (setting.isVisible()) {
-      // add setting back to view
-      this.getView().addSubview(setting.getView())
-    }
-  }
-
-  /**
-   * Returns brick alias, if any.
+   * Returns the brick alias, if any.
    * @return {?string} Brick alias or null
    */
   getAlias () {
@@ -276,16 +93,6 @@ export default class Brick extends Viewable {
   setAlias (alias) {
     this._alias = alias
     return this
-  }
-
-  /**
-   * Returns brick title.
-   * @return {string} Brick title
-   */
-  getTitle () {
-    return this._alias === null
-      ? this.getMeta().title
-      : this._alias
   }
 
   /**
@@ -310,29 +117,142 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Returns the pipe.
-   * @return {?Pipe}
+   * Returns the brick settings form.
+   * @return {Form} Settings form
    */
-  getPipe () {
-    return this._pipe
+  getSettingsForm () {
+    return this._settingsForm
   }
 
   /**
-   * Returns true, if pipe is set.
-   * @return {boolean} True, if pipe is set
+   * Convenience method for returning the fields of the setting form.
+   * @return {Field[]}
    */
-  hasPipe () {
-    return this._pipe !== null
+  getSettings () {
+    return this._settingsForm.getFields()
   }
 
   /**
-   * Sets the pipe.
-   * @param {?Pipe} pipe
+   * Adds multiple setting fields to the brick.
+   * @param {Field[]|object[]} fieldsOrSpecs Array of field instances or
+   * spec objects
    * @return {Brick} Fluent interface
    */
-  setPipe (pipe) {
-    this._pipe = pipe
+  addSettings (fieldsOrSpecs) {
+    this._settingsForm.addFields(fieldsOrSpecs)
     return this
+  }
+
+  /**
+   * Convenience method for returning the setting field for given name.
+   * @param {string} name Setting name
+   * @return {?Setting} Setting field or null, if it does not exist
+   */
+  getSetting (name) {
+    return this._settingsForm.getField(name)
+  }
+
+  /**
+   * Convenience method for adding a setting field to the brick.
+   * @param {Field|object} fieldOrSpec Field instance or spec object
+   * @throws {Error} If field name is already assigned.
+   * @return {Brick} Fluent interface
+   */
+  addSetting (fieldOrSpec) {
+    this._settingsForm.addField(fieldOrSpec)
+    return this
+  }
+
+  /**
+   * Convenience method for returning a named setting value.
+   * @param {string} name Setting name
+   * @throws {Error} If no setting is assigned to given setting name.
+   * @return {mixed} Setting value
+   */
+  getSettingValue (name) {
+    return this._settingsForm.getFieldValue(name)
+  }
+
+  /**
+   * Convenience method for setting a named setting.
+   * @param {string} name Setting name
+   * @param {mixed} value Setting value
+   * @throws {Error} If no setting is assigned to given setting name.
+   * @return {Brick} Fluent interface
+   */
+  setSettingValue (name, value) {
+    this._settingsForm.setFieldValue(name, value)
+    return this
+  }
+
+  /**
+   * Convenience method for returning the current setting value for each visible
+   * setting field.
+   * @return {object} Object mapping names to setting values
+   */
+  getSettingValues () {
+    return this._settingsForm.getFieldValues()
+  }
+
+  /**
+   * Applies each setting value in given map.
+   * @param {object} namedValues Map of names pointing to setting values
+   * @throws {Error} If no setting is assigned to given setting name.
+   * @return {Brick} Fluent interface
+   */
+  setSettingValues (namedValues) {
+    this._settingsForm.setFieldValues(namedValues)
+    return this
+  }
+
+  /**
+   * Returns true, if the brick is valid.
+   * @return {boolean} True, if valid
+   */
+  isValid () {
+    return this._settingsForm.isValid()
+  }
+
+  /**
+   * Returns true, if the brick input is randomizable.
+   * @return {boolean}
+   */
+  isRandomizable () {
+    return this._settingsForm.isRandomizable()
+  }
+
+  /**
+   * Randomizes the brick input.
+   * @return {Brick} Fluent interface
+   */
+  randomize () {
+    this._settingsForm.randomize()
+    return this
+  }
+
+  /**
+   * Triggered when a settings form field value has changed.
+   * @param {Form} form Sender form
+   * @param {Field} field Field instance that has been changed
+   * @param {mixed} value New field value
+   */
+  formValueDidChange (form, field, value) {
+    if (form === this._settingsForm) {
+      // Trigger settings change event
+      this.settingValueDidChange(field, value)
+      // Notify pipe, if any
+      this.hasPipe() && this.getPipe().brickSettingDidChange(this)
+    }
+  }
+
+  /**
+   * Triggered when a setting field has changed.
+   * @protected
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
+   */
+  settingValueDidChange (setting, value) {
+    // Override method
   }
 
   /**
@@ -340,10 +260,8 @@ export default class Brick extends Viewable {
    * @protected
    */
   didCreateView (view) {
-    // add each setting as subview
-    this._settings
-      .filter(setting => setting.isVisible())
-      .forEach(setting => view.addSubview(setting.getView()))
+    // Add settings form as a subview
+    view.addSubview(this._settingsForm.getView())
   }
 
   /**
@@ -352,10 +270,10 @@ export default class Brick extends Viewable {
    * @param {string} name Menu item name
    */
   viewMenuItemDidClick (view, name) {
-    // track action
+    // Track action
     EventManager.trigger('brickMenuItemClick', { brick: this, menuItem: name })
 
-    // decide what to do
+    // Decide what to do
     switch (name) {
       case 'remove':
         this.hasPipe() && this.getPipe().removeBrick(this)
@@ -376,9 +294,9 @@ export default class Brick extends Viewable {
    */
   viewReplaceButtonDidClick (view) {
     if (this.hasPipe()) {
-      // track action
+      // Track action
       EventManager.trigger('brickReplaceButtonClick', { brick: this })
-      // forward request to pipe
+      // Forward request to pipe
       this.getPipe().brickReplaceButtonDidClick(this)
     }
   }
@@ -388,32 +306,34 @@ export default class Brick extends Viewable {
    * @return {mixed} Serialized data
    */
   serialize () {
-    const data = { name: this.getMeta().name }
+    const data = {}
 
-    // serialize setting values, if any
-    if (this.getSettings().length > 0) {
-      data.settings = {}
-      this.getSettings().forEach(setting => {
-        data.settings[setting.getName()] = setting.serializeValue()
-      })
+    // Brick name
+    data.name = this.getMeta().name
+
+    // Settings, if any
+    const settingsData = this._settingsForm.serializeValues()
+    if (Object.keys(settingsData)) {
+      data.settings = settingsData
     }
 
-    // serialize hidden state
+    // Hidden state, if hidden
     if (this.isHidden()) {
       data.hidden = true
     }
+
     return data
   }
 
   /**
    * Extracts brick from serialized data.
    * @param {mixed} data Serialized data
-   * @param {BrickFactory} brickFactory brick factory instance
-   * @throws {Error} Throws an error if data is malformed.
+   * @param {BrickFactory} brickFactory Brick factory instance
+   * @throws {Error} If data is malformed.
    * @return {Brick} Extracted brick
    */
   static extract (data, brickFactory) {
-    // read brick name
+    // Read brick name
     if (typeof data.name !== 'string') {
       throw new Error(
         `Malformed brick data: Attribute 'name' is expected to be a string`)
@@ -421,16 +341,16 @@ export default class Brick extends Viewable {
 
     const name = data.name
 
-    // check if brick name exists
+    // Check if this is a known brick type
     if (!brickFactory.exists(name)) {
       throw new Error(
         `Malformed brick data: Unknown brick with name '${name}'`)
     }
 
-    // create brick instance
+    // Create brick instance
     const brick = brickFactory.create(name)
 
-    // read and apply alias
+    // Read and apply alias
     if (typeof data.alias !== 'undefined' &&
         typeof data.alias !== 'string') {
       throw new Error(
@@ -442,7 +362,7 @@ export default class Brick extends Viewable {
       brick.setAlias(data.alias)
     }
 
-    // read and apply visibility
+    // Read and apply hidden state
     if (typeof data.hidden !== 'undefined' &&
         typeof data.hidden !== 'boolean') {
       throw new Error(
@@ -454,7 +374,7 @@ export default class Brick extends Viewable {
       brick.setHidden(true)
     }
 
-    // read and apply reverse
+    // Read and apply reverse state
     if (typeof data.reverse !== 'undefined' &&
         typeof data.reverse !== 'boolean') {
       throw new Error(
@@ -470,32 +390,11 @@ export default class Brick extends Viewable {
       brick.setReverse(true)
     }
 
-    // apply setting values
+    // Apply setting values
     if (data.settings !== undefined) {
-      const settingValuePairs = data.settings
-
-      for (let name in settingValuePairs) {
-        brick.extractSettingValue(name, settingValuePairs[name])
-      }
+      brick.getSettingsForm().extract(data.settings)
     }
 
     return brick
-  }
-
-  /**
-   * Convenience method for finding a Setting and extracting its value from
-   * serialized data.
-   * @param {string} name Setting name to search for
-   * @param {mixed} value Setting value
-   * @throws Throws an error if Setting with given name does not exist.
-   * @return {Brick} Fluent interface
-   */
-  extractSettingValue (name, value) {
-    const setting = this.getSetting(name)
-    if (setting === null) {
-      throw new Error(`Unknown Setting with name '${name}'`)
-    }
-    setting.extractValue(value)
-    return this
   }
 }

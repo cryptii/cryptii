@@ -30,8 +30,7 @@ export default class BytesViewer extends Viewer {
   constructor () {
     super()
     this._viewPrototype = TextViewerView
-
-    this.registerSetting([
+    this.addSettings([
       {
         name: 'format',
         type: 'enum',

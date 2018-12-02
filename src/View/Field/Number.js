@@ -1,11 +1,11 @@
 
-import SettingView from '../Setting'
+import FieldView from '../Field'
 import View from '../../View'
 
 /**
- * Number setting view
+ * Number field view
  */
-export default class NumberSettingView extends SettingView {
+export default class NumberFieldView extends FieldView {
   /**
    * Constructor
    */
@@ -16,7 +16,7 @@ export default class NumberSettingView extends SettingView {
 
   /**
    * Retrieves value from model and updates it in view.
-   * @return {SettingView} Fluent interface
+   * @return {FieldView} Fluent interface
    */
   updateValue () {
     this._$input.value = this.getModel().getValue()
@@ -30,7 +30,7 @@ export default class NumberSettingView extends SettingView {
    */
   render () {
     const $root = super.render()
-    $root.classList.add('setting-number')
+    $root.classList.add('field-number')
     return $root
   }
 
@@ -41,7 +41,7 @@ export default class NumberSettingView extends SettingView {
    */
   renderField () {
     this._$input = View.createElement('input', {
-      className: 'setting-number__input',
+      className: 'field-number__input',
       id: this.getId(),
       type: 'number',
       onInput: this.inputValueDidChange.bind(this),
@@ -50,26 +50,26 @@ export default class NumberSettingView extends SettingView {
     })
 
     const $stepDown = View.createElement('a', {
-      className: 'setting-number__btn-step-down',
+      className: 'field-number__btn-step-down',
       href: '#',
       draggable: false,
       onClick: this.stepDownButtonDidClick.bind(this)
     }, 'Step Down')
 
     const $value = View.createElement('div', {
-      className: 'setting-number__value'
+      className: 'field-number__value'
     }, this._$input)
 
     const $stepUp = View.createElement('a', {
-      className: 'setting-number__btn-step-up',
+      className: 'field-number__btn-step-up',
       href: '#',
       draggable: false,
       onClick: this.stepUpButtonDidClick.bind(this)
     }, 'Step Up')
 
     const $field = super.renderField()
-    $field.classList.remove('setting__field')
-    $field.classList.add('setting-number__field')
+    $field.classList.remove('field__field')
+    $field.classList.add('field-number__field')
     $field.appendChild($stepDown)
     $field.appendChild($value)
     $field.appendChild($stepUp)
@@ -81,7 +81,7 @@ export default class NumberSettingView extends SettingView {
    * @param {Event} evt
    */
   inputValueDidChange (evt) {
-    // notify model
+    // Notify model
     this.getModel().viewValueDidChange(this, this._$input.value)
   }
 

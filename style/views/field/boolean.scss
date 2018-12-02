@@ -1,5 +1,5 @@
 
-.setting-boolean {
+.field-boolean {
 
   &__input {
     position: absolute;
@@ -13,8 +13,8 @@
     display: block;
     user-select: none;
     cursor: pointer;
-    @extend %t-setting-value;
-    line-height: $setting-field-height - $setting-field-padding-v * 2;
+    @extend %t-field-value;
+    line-height: $field-field-height - $field-field-padding-v * 2;
     color: $c-text-detail;
   }
 

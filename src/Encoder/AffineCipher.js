@@ -32,7 +32,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
     // Linear function
     // f(x) = ax + b
 
-    this.registerSetting([
+    this.addSettings([
       {
         name: 'a',
         type: 'number',
@@ -140,11 +140,10 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   }
 
   /**
-   * Triggered when a setting value has changed.
+   * Triggered when a setting field has changed.
    * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
@@ -157,7 +156,7 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
         this.getSetting('alphabet').setCaseSensitivity(value)
         break
     }
-    return super.settingValueDidChange(setting, value)
+    super.settingValueDidChange(setting, value)
   }
 
   /**

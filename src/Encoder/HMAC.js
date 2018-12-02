@@ -32,8 +32,7 @@ export default class HMACEncoder extends Encoder {
     this._hashEncoder = new HashEncoder()
     const hashAlgorithmSetting = this._hashEncoder.getSetting('algorithm')
 
-    // Register settings
-    this.registerSetting([
+    this.addSettings([
       {
         name: 'key',
         type: 'bytes',

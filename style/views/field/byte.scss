@@ -1,0 +1,10 @@
+
+.field-byte {
+
+  &__input[type='text'] {
+    height: $field-field-height;
+    padding: $field-field-padding-v $field-padding-h;
+    border: none;
+    @extend %t-field-value;
+  }
+}

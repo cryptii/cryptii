@@ -24,7 +24,7 @@ export default class Viewer extends Brick {
   async view (content) {
     try {
       // check for invalid settings
-      let invalidSettings = this.getInvalidSettings()
+      let invalidSettings = this.getSettingsForm().getInvalidFields()
       if (invalidSettings.length > 0) {
         throw new InvalidInputError(
           `Can't view content with invalid settings: ` +

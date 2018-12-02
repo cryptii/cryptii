@@ -30,8 +30,8 @@ export default class AtbashEncoder extends AffineCipherEncoder {
   constructor () {
     super()
 
-    // add variant setting
-    this.registerSetting({
+    // Add variant setting
+    this.addSetting({
       name: 'atbashAlphabet',
       type: 'enum',
       label: 'Alphabet',
@@ -50,17 +50,17 @@ export default class AtbashEncoder extends AffineCipherEncoder {
       }
     })
 
-    // make some settings private
+    // Make some settings private
     this.getSetting('a').setVisible(false)
     this.getSetting('b').setVisible(false)
     this.getSetting('caseSensitivity').setVisible(false)
     this.getSetting('includeForeignChars').setVisible(false)
     this.getSetting('alphabet').setVisible(false)
 
-    // apply default alphabet
+    // Apply default alphabet
     this.getSetting('alphabet').setValue(latinAlphabet)
 
-    // apply inital encryption function
+    // Apply inital encryption function
     this.applyEncryptionFunctionByAlphabet(latinAlphabet)
   }
 
@@ -73,24 +73,23 @@ export default class AtbashEncoder extends AffineCipherEncoder {
   }
 
   /**
-   * Triggered when a setting value has changed.
+   * Triggered when a setting field has changed.
    * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
       case 'atbashAlphabet':
-        // this causes changes to the alphabet setting
+        // This causes changes to the alphabet setting
         return this.setSettingValue('alphabet',
           value === 'latin' ? latinAlphabet : hebrewAlphabet)
       case 'alphabet':
-        // this causes changes to settings a and b
+        // This causes changes to settings a and b
         this.applyEncryptionFunctionByAlphabet(value)
         break
     }
-    return super.settingValueDidChange(setting, value)
+    super.settingValueDidChange(setting, value)
   }
 
   /**

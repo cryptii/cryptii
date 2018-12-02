@@ -40,7 +40,7 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
       .setVisible(false)
 
     // Add shift setting
-    this.registerSetting({
+    this.addSetting({
       name: 'caesarCipherShift',
       type: 'number',
       label: 'Shift',
@@ -54,11 +54,10 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
   }
 
   /**
-   * Triggered when a setting value has changed.
+   * Triggered when a setting field has changed.
    * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
@@ -81,7 +80,7 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
         }
         break
     }
-    return super.settingValueDidChange(setting, value)
+    super.settingValueDidChange(setting, value)
   }
 
   /**

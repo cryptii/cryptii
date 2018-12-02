@@ -1,23 +1,23 @@
 
 import ByteEncoder from '../ByteEncoder'
-import ByteSettingView from '../View/Setting/Byte'
-import Setting from '../Setting'
+import ByteFieldView from '../View/Field/Byte'
+import Field from '../Field'
 
 /**
  * Byte setting
  */
-export default class ByteSetting extends Setting {
+export default class ByteField extends Field {
   /**
-   * Setting constructor
-   * @param {string} name
-   * @param {Object} [spec]
-   * @param {mixed} [spec.options] Setting options
+   * Field constructor
+   * @param {string} name Field name
+   * @param {Object} [spec] Field spec
+   * @param {mixed} [spec.options] Field options
    * @param {?number} [spec.options.minSize=null] Minimum size in bytes
    * @param {?number} [spec.options.maxSize=null] Maximum size in bytes
    */
   constructor (name, spec = {}) {
     super(name, spec)
-    this._viewPrototype = ByteSettingView
+    this._viewPrototype = ByteFieldView
 
     this._value = spec.value || new Uint8Array()
     this._minSize = null
@@ -40,7 +40,7 @@ export default class ByteSetting extends Setting {
    * Sets min size in bytes.
    * @param {?number} minSize Minimum size in bytes
    * @param {boolean} [revalidate=true] Wether to revalidate current value.
-   * @return {ByteSetting} Fluent interface
+   * @return {ByteField} Fluent interface
    */
   setMinSize (minSize, revalidate = true) {
     if (this._minSize === minSize) {
@@ -62,7 +62,7 @@ export default class ByteSetting extends Setting {
    * Sets max size in bytes.
    * @param {?number} maxSize Maximum size in bytes
    * @param {boolean} [revalidate=true] Wether to revalidate current value.
-   * @return {ByteSetting} Fluent interface
+   * @return {ByteField} Fluent interface
    */
   setMaxSize (maxSize, revalidate = true) {
     if (this._maxSize === maxSize) {
@@ -78,6 +78,7 @@ export default class ByteSetting extends Setting {
    * @return {boolean|object} True if valid, message object or false if invalid.
    */
   validateValue (rawValue) {
+    // Validate type
     if (!(rawValue instanceof Uint8Array)) {
       return {
         key: 'byteUnexpectedType',
@@ -85,23 +86,25 @@ export default class ByteSetting extends Setting {
       }
     }
 
-    // validate min size
+    // Validate min size
     if (this._minSize !== null && rawValue.length < this._minSize) {
       return {
         key: 'byteSizeTooShort',
         message:
           `The value must be at least ${this._minSize} ` +
-          `${this._minSize === 1 ? 'byte' : 'bytes'} long`
+          `${this._minSize === 1 ? 'byte' : 'bytes'} long, ` +
+          `found ${rawValue.length} ${rawValue.length === 1 ? 'byte' : 'bytes'}`
       }
     }
 
-    // validate max size
+    // Validate max size
     if (this._maxSize !== null && rawValue.length > this._maxSize) {
       return {
         key: 'byteSizeTooLong',
         message:
           `The value must not exceed ${this._maxSize} ` +
-          `${this._maxSize === 1 ? 'byte' : 'bytes'} in length`
+          `${this._maxSize === 1 ? 'byte' : 'bytes'} in length, ` +
+          `found ${rawValue.length} ${rawValue.length === 1 ? 'byte' : 'bytes'}`
       }
     }
 
@@ -119,10 +122,10 @@ export default class ByteSetting extends Setting {
       return value
     }
     if (this.getMinSize() !== null) {
-      // use the min size
+      // Use the min size
       return random.nextBytes(this.getMinSize())
     } else if (this.isValid()) {
-      // use the current value's size to
+      // Use the current value's size to
       // produce the same amount of random bytes
       return random.nextBytes(this.getValue().length)
     }
@@ -130,7 +133,7 @@ export default class ByteSetting extends Setting {
   }
 
   /**
-   * Serializes Setting value to make it JSON serializable.
+   * Serializes Field value to make it JSON serializable.
    * @throws Throws an error if safe serialization not possible.
    * @return {mixed} Serialized data
    */
@@ -139,26 +142,25 @@ export default class ByteSetting extends Setting {
   }
 
   /**
-   * Extracts value from {@link Setting.serializeValue} serialized data
-   * and applies it to this Setting.
+   * Extracts a value serialized by {@link Field.serializeValue} and returns it.
    * @param {mixed} data Serialized data
-   * @return {Setting} Fluent interface
+   * @return {mixed} Extracted value
    */
   extractValue (data) {
     if (typeof data !== 'string') {
       throw new Error(
-        `Value of setting '${this.getName()}' is expected to be a valid ` +
+        `Value of field '${this.getName()}' is expected to be a valid ` +
         `base64 string.`)
     }
-    return this.setValue(ByteEncoder.bytesFromBase64String(data))
+    return ByteEncoder.bytesFromBase64String(data)
   }
 
   /**
    * Triggered when value has been changed inside the view.
    * @protected
-   * @param {TextSettingView} view
+   * @param {TextFieldView} view
    * @param {mixed} value
-   * @return {TextSetting} Fluent interface
+   * @return {TextField} Fluent interface
    */
   viewValueDidChange (view, value) {
     return this.setValue(value, view)

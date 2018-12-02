@@ -1,7 +1,7 @@
 
 import Factory from '../Factory'
 
-// package bricks
+// Package bricks
 import AffineCipherEncoder from '../Encoder/AffineCipher'
 import Ascii85Encoder from '../Encoder/Ascii85'
 import AtbashEncoder from '../Encoder/Atbash'
@@ -24,7 +24,7 @@ import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import URLEncoder from '../Encoder/URL'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
 
-// singleton instance
+// Singleton instance
 let instance = null
 
 /**
@@ -37,7 +37,7 @@ export default class BrickFactory extends Factory {
   constructor () {
     super()
 
-    // gather package brick classes
+    // Gather package brick classes
     const invokables = [
       TextViewer,
       BytesViewer,
@@ -62,14 +62,14 @@ export default class BrickFactory extends Factory {
       HMACEncoder
     ]
 
-    // register each brick
+    // Register each brick
     invokables.forEach(this.register.bind(this))
   }
 
   /**
    * Registers brick invokable.
    * @param {class} invokable
-   * @throws Throws an error if identifier already exists.
+   * @throws If identifier already exists.
    * @return {BrickFactory} Fluent interface
    */
   register (invokable) {
@@ -79,7 +79,7 @@ export default class BrickFactory extends Factory {
 
   /**
    * Returns brick meta for given identifier.
-   * @throws Throws an error if identifier does not exist.
+   * @throws If identifier does not exist.
    * @param {string} identifier
    * @return {object} Brick meta
    */

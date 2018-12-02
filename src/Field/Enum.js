@@ -1,33 +1,36 @@
 
-import EnumSettingView from '../View/Setting/Enum'
-import Setting from '../Setting'
+import EnumFieldView from '../View/Field/Enum'
+import Field from '../Field'
 
 /**
- * Enum setting
+ * Enum field
  */
-export default class EnumSetting extends Setting {
+export default class EnumField extends Field {
   /**
-   * Setting constructor
-   * @param {string} name
-   * @param {Object} spec
-   * @param {mixed} spec.options Setting options
+   * Constructor
+   * @param {string} name Field name
+   * @param {Object} spec Field spec
+   * @param {mixed} spec.options Field options
    * @param {mixed[]} spec.options.elements Possible enum values
    * @param {string[]} [spec.options.labels] Value labels
    * @param {string[]} [spec.options.descriptions] Value descriptions
+   * @param {string} [spec.style="default"] Field appearance
    */
   constructor (name, spec) {
     super(name, spec)
-    this._viewPrototype = EnumSettingView
+    this._viewPrototype = EnumFieldView
 
     this._elements = []
     this._labels = []
     this._descriptions = []
+    this._style = spec.style || 'default'
 
     this.setElements(
       spec.options.elements,
       spec.options.labels || null,
       spec.options.descriptions || null,
-      false)
+      false
+    )
   }
 
   /**
@@ -60,12 +63,13 @@ export default class EnumSetting extends Setting {
    * @param {string[]} [labels=elements]
    * @param {string[]} [descriptions]
    * @param {boolean} [revalidate=true] Wether to revalidate current value
-   * @throws Throws an error if array of elements is empty.
-   * @throws Throws an error if element and label arrays have different lengths.
-   * @return {EnumSetting} Fluent interface
+   * @throws If given array of elements is empty.
+   * @throws If element and label arrays have different lengths.
+   * @return {EnumField} Fluent interface
    */
   setElements (
-    elements, labels = null, descriptions = null, revalidate = true) {
+    elements, labels = null, descriptions = null, revalidate = true
+  ) {
     if (elements.length === 0) {
       throw new Error(`Array of elements can't be empty.`)
     }
@@ -80,9 +84,10 @@ export default class EnumSetting extends Setting {
 
     this._elements = elements
     this._labels = labels !== null ? labels : elements
-    this._descriptions = descriptions !== null
-      ? descriptions
-      : elements.map(() => null)
+    this._descriptions =
+      descriptions !== null
+        ? descriptions
+        : elements.map(() => null)
 
     // if no value is selected, select first element
     if (this._value === null) {
@@ -97,8 +102,8 @@ export default class EnumSetting extends Setting {
 
   /**
    * Returns element at given index.
-   * @param {number} index
-   * @return {?EnumSetting}
+   * @param {number} index Element index
+   * @return {?EnumField}
    */
   getElementAt (index) {
     return index < this._elements.length
@@ -107,7 +112,7 @@ export default class EnumSetting extends Setting {
   }
 
   /**
-   * Returns selected element index.
+   * Returns the selected element index.
    * @return {number}
    */
   getSelectedIndex () {
@@ -115,13 +120,33 @@ export default class EnumSetting extends Setting {
   }
 
   /**
-   * Sets selected element index. Triggers {@link Setting.setValue} internally.
-   * @param {number} index
-   * @return {EnumSetting} Fluent interface
+   * Sets the selected element index.
+   * Triggers {@link Field.setValue} internally.
+   * @param {number} index Element index
+   * @return {EnumField} Fluent interface
    */
   setSelectedIndex (index) {
     const value = this._elements[index]
     return this.setValue(value)
+  }
+
+  /**
+   * Returns the field appearance.
+   * @return {string}
+   */
+  getStyle () {
+    return this._style
+  }
+
+  /**
+   * Sets the field appearance.
+   * @param {string} style
+   * @return {EnumField} Fluent interface
+   */
+  setStyle (style) {
+    this._style = style
+    this.hasView() && this.getView().setStyle(style)
+    return this
   }
 
   /**
@@ -155,11 +180,21 @@ export default class EnumSetting extends Setting {
   /**
    * Triggered when value has been changed inside the view.
    * @protected
-   * @param {EnumSettingView} view
+   * @param {EnumFieldView} view
    * @param {mixed} value
-   * @return {EnumSetting} Fluent interface
+   * @return {EnumField} Fluent interface
    */
   viewValueDidChange (view, value) {
     return this.setValue(value, view)
+  }
+
+  /**
+   * Triggered when view has been created.
+   * @protected
+   * @param {View} view
+   */
+  didCreateView (view) {
+    super.didCreateView(view)
+    this.getView().setStyle(this.getStyle())
   }
 }

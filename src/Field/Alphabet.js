@@ -1,21 +1,19 @@
 
 import ArrayUtil from '../ArrayUtil'
-import TextSetting from './Text'
+import TextField from './Text'
 
 /**
- * Alphabet setting allowing the selection of Unicode characters.
+ * Alphabet field allowing the selection of Unicode characters.
  */
-export default class AlphabetSetting extends TextSetting {
+export default class AlphabetField extends TextField {
   /**
-   * Setting constructor
+   * Constructor
    * @param {string} name
-   * @param {Object} [spec]
-   * @param {mixed} [spec.options] Setting options
+   * @param {object} [spec]
+   * @param {mixed} [spec.options] Field options
    */
   constructor (name, spec = {}) {
     super(name, spec)
-
-    // an alphabet with less than 2 characters makes no sense
     this.setMinLength(2, false)
   }
 

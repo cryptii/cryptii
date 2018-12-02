@@ -1,13 +1,13 @@
 
 import ByteEncoder from '../../ByteEncoder'
-import SettingView from '../Setting'
+import FieldView from '../Field'
 import StringUtil from '../../StringUtil'
 import View from '../../View'
 
 /**
- * Byte setting view
+ * Byte field view
  */
-export default class ByteSettingView extends SettingView {
+export default class ByteFieldView extends FieldView {
   /**
    * Constructor
    */
@@ -18,7 +18,7 @@ export default class ByteSettingView extends SettingView {
 
   /**
    * Retrieves value from model and updates it in view.
-   * @return {SettingView} Fluent interface
+   * @return {FieldView} Fluent interface
    */
   updateValue () {
     const bytes = this.getModel().getValue()
@@ -35,7 +35,7 @@ export default class ByteSettingView extends SettingView {
    */
   render () {
     const $root = super.render()
-    $root.classList.add('setting-byte')
+    $root.classList.add('field-byte')
     return $root
   }
 
@@ -46,7 +46,7 @@ export default class ByteSettingView extends SettingView {
    */
   renderField () {
     this._$input = View.createElement('input', {
-      className: 'setting-byte__input',
+      className: 'field-byte__input',
       id: this.getId(),
       type: 'text',
       spellcheck: false,
@@ -56,8 +56,8 @@ export default class ByteSettingView extends SettingView {
     })
 
     const $field = super.renderField()
-    $field.classList.remove('setting__field')
-    $field.classList.add('setting-byte__field')
+    $field.classList.remove('field__field')
+    $field.classList.add('field-byte__field')
     $field.appendChild(this._$input)
     return $field
   }
@@ -69,15 +69,15 @@ export default class ByteSettingView extends SettingView {
   inputValueDidChange (evt) {
     const string = StringUtil.removeWhitespaces(this._$input.value)
 
-    // verify hexadecimal format
+    // Verify hexadecimal format
     if (string.match(/^[0-9a-f]+$/gi) === null) {
       return this.setMessage(`The value contains non-hexadecimal characters`)
     }
 
-    // clear message
+    // Clear message
     this.clearMessage()
 
-    // interpret bytes
+    // Interpret bytes
     const bytes = ByteEncoder.bytesFromHexString(string)
     this.getModel().viewValueDidChange(this, bytes)
   }

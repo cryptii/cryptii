@@ -1,19 +1,19 @@
 
 import ArrayUtil from '../ArrayUtil'
 import Chain from '../Chain'
-import Setting from '../Setting'
+import Field from '../Field'
 import TextEncoder from '../TextEncoder'
-import TextSettingView from '../View/Setting/Text'
+import TextFieldView from '../View/Field/Text'
 
 /**
- * Text setting
+ * Text field
  */
-export default class TextSetting extends Setting {
+export default class TextField extends Field {
   /**
-   * Setting constructor
-   * @param {string} name
-   * @param {Object} [spec]
-   * @param {mixed} [spec.options] Setting options
+   * Constructor
+   * @param {string} name Field name
+   * @param {object} [spec] Field spec
+   * @param {mixed} [spec.options] Field options
    * @param {?number} [spec.options.minLength=null] Minimum amount of characters
    * @param {?number} [spec.options.maxLength=null] Maximum amount of characters
    * @param {?number[]} [spec.options.allowedCodePoints=null]
@@ -23,10 +23,9 @@ export default class TextSetting extends Setting {
    */
   constructor (name, spec = {}) {
     super(name, spec)
-    this._viewPrototype = TextSettingView
+    this._viewPrototype = TextFieldView
 
     this._value = Chain.wrap(spec.value || null)
-
     this._minLength = null
     this._maxLength = null
     this._allowedChars = null
@@ -51,7 +50,7 @@ export default class TextSetting extends Setting {
    * Sets min text length.
    * @param {?number} minLength Min text length
    * @param {boolean} [revalidate=true] Wether to revalidate current value
-   * @return {TextSetting} Fluent interface
+   * @return {TextField} Fluent interface
    */
   setMinLength (minLength, revalidate = true) {
     if (this._minLength === minLength) {
@@ -73,7 +72,7 @@ export default class TextSetting extends Setting {
    * Sets max text length.
    * @param {?number} maxLength Max text length
    * @param {boolean} [revalidate=true] Wether to revalidate current value
-   * @return {TextSetting} Fluent interface
+   * @return {TextField} Fluent interface
    */
   setMaxLength (maxLength, revalidate = true) {
     if (this._maxLength === maxLength) {
@@ -95,7 +94,7 @@ export default class TextSetting extends Setting {
    * Restricts text to given Unicode code points.
    * @param {?number[]|string|Chain} allowedChars
    * @param {boolean} [revalidate=true] Wether to revalidate current value
-   * @return {TextSetting} Fluent interface
+   * @return {TextField} Fluent interface
    */
   setAllowedChars (allowedChars, revalidate = true) {
     if (this._allowedChars === allowedChars) {
@@ -124,7 +123,7 @@ export default class TextSetting extends Setting {
    * Sets wether to respect case sensitivity.
    * @param {boolean} caseSensitivity
    * @param {boolean} [revalidate=true] Wether to revalidate current value
-   * @return {TextSetting} Fluent interface
+   * @return {TextField} Fluent interface
    */
   setCaseSensitivity (caseSensitivity, revalidate = true) {
     if (this._caseSensitivity === caseSensitivity) {
@@ -149,7 +148,7 @@ export default class TextSetting extends Setting {
 
     const value = this.filterValue(rawValue)
 
-    // validate min text length
+    // Validate min text length
     if (this._minLength !== null && value.getLength() < this._minLength) {
       return {
         key: 'textLengthTooShort',
@@ -159,7 +158,7 @@ export default class TextSetting extends Setting {
       }
     }
 
-    // validate max text length
+    // Validate max text length
     if (this._maxLength !== null && value.getLength() > this._maxLength) {
       return {
         key: 'textLengthTooLong',
@@ -169,7 +168,7 @@ export default class TextSetting extends Setting {
       }
     }
 
-    // validate allowed chars
+    // Validate allowed chars
     if (this._allowedChars !== null) {
       let invalidCharacters = []
       for (let i = 0; i < value.getLength(); i++) {
@@ -216,7 +215,7 @@ export default class TextSetting extends Setting {
       return value
     }
     if (this.isValid() && this.getAllowedChars() !== null) {
-      // use the current value's length to
+      // Use the current value's length to
       // produce the same amount of random chars
       const length = this.getValue().getLength()
       const codePoints = []
@@ -229,8 +228,8 @@ export default class TextSetting extends Setting {
   }
 
   /**
-   * Serializes Setting value to make it JSON serializable.
-   * @throws Throws an error if safe serialization not possible.
+   * Serializes the value to a JSON serializable object.
+   * @throws {Error} If serialization is not possible.
    * @return {mixed} Serialized data
    */
   serializeValue () {
@@ -238,25 +237,24 @@ export default class TextSetting extends Setting {
   }
 
   /**
-   * Extracts value from {@link Setting.serializeValue} serialized data
-   * and applies it to this Setting.
+   * Extracts a value serialized by {@link Field.serializeValue} and returns it.
    * @param {mixed} data Serialized data
-   * @return {Setting} Fluent interface
+   * @return {mixed} Extracted value
    */
   extractValue (data) {
     if (typeof data !== 'string') {
       throw new Error(
-        `Value of setting '${this.getName()}' is expected to be a string.`)
+        `Value of field '${this.getName()}' is expected to be a string.`)
     }
-    return this.setValue(Chain.wrap(data))
+    return Chain.wrap(data)
   }
 
   /**
    * Triggered when value has been changed inside the view.
    * @protected
-   * @param {TextSettingView} view
+   * @param {TextFieldView} view
    * @param {mixed} value
-   * @return {TextSetting} Fluent interface
+   * @return {TextField} Fluent interface
    */
   viewValueDidChange (view, value) {
     return this.setValue(value, view)

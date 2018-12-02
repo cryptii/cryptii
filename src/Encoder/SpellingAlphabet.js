@@ -103,7 +103,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
     this._characterMap = {}
     this._wordMap = {}
 
-    this.registerSetting({
+    this.addSetting({
       name: 'alphabet',
       type: 'enum',
       randomizable: false,
@@ -160,11 +160,10 @@ export default class SpellingAlphabetEncoder extends Encoder {
   }
 
   /**
-   * Triggered when a setting value has changed.
+   * Triggered when a setting field has changed.
    * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
@@ -172,7 +171,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
         this.buildTranslationMap()
         break
     }
-    return super.settingValueDidChange(setting, value)
+    super.settingValueDidChange(setting, value)
   }
 
   /**

@@ -1,5 +1,5 @@
 
-import SettingView from './Setting'
+import FormView from './Form'
 import View from '../View'
 
 /**
@@ -178,39 +178,9 @@ export default class BrickView extends View {
    * @return {View} Fluent interface
    */
   appendSubviewElement (view) {
-    if (view instanceof SettingView) {
+    if (view instanceof FormView) {
       this.getElement()
-
-      // get setting subviews
-      const settingViews = this.getSubviews()
-        .filter(view => view instanceof SettingView)
-
-      // integrate new setting view
-      settingViews.push(view)
-      settingViews.sort((a, b) =>
-        b.getModel().getPriority() - a.getModel().getPriority())
-
-      // retrieve position of setting view we are integrating
-      const index = settingViews.indexOf(view)
-      const $referenceNode = index < settingViews.length - 1
-        ? settingViews[index + 1].getElement()
-        : null
-
-      this._$settings.insertBefore(view.getElement(), $referenceNode)
-
-      // determine for each setting view wether it appears first in a row
-      let columns = 0
-      settingViews.forEach(settingView => {
-        const width = settingView.getModel().getWidth()
-        columns += width
-        if (columns === width || columns > 12) {
-          columns = width
-          settingView.setFirst(true)
-        } else {
-          settingView.setFirst(false)
-        }
-      })
-
+      this._$settings.appendChild(view.getElement())
       return this
     }
     return super.appendSubviewElement(view)

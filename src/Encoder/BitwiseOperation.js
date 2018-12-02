@@ -35,7 +35,7 @@ export default class BitwiseOperationEncoder extends Encoder {
    */
   constructor () {
     super()
-    this.registerSetting([
+    this.addSettings([
       {
         name: 'operation',
         type: 'enum',
@@ -129,17 +129,16 @@ export default class BitwiseOperationEncoder extends Encoder {
   }
 
   /**
-   * Triggered when a setting value has changed.
+   * Triggered when a setting field has changed.
    * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
-   * @return {Encoder} Fluent interface
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     if (setting.getName() === 'operation') {
       // Only make operand visible when necessary
       this.getSetting('operand').setVisible(value !== 'NOT')
     }
-    return super.settingValueDidChange(setting, value)
+    super.settingValueDidChange(setting, value)
   }
 }

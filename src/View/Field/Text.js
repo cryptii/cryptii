@@ -1,11 +1,11 @@
 
-import SettingView from '../Setting'
+import FieldView from '../Field'
 import View from '../../View'
 
 /**
- * Text setting view
+ * Text field view
  */
-export default class TextSettingView extends SettingView {
+export default class TextFieldView extends FieldView {
   /**
    * Constructor
    */
@@ -16,7 +16,7 @@ export default class TextSettingView extends SettingView {
 
   /**
    * Retrieves value from model and updates it in view.
-   * @return {SettingView} Fluent interface
+   * @return {FieldView} Fluent interface
    */
   updateValue () {
     this._$input.value = this.getModel().getValue().getString()
@@ -30,7 +30,7 @@ export default class TextSettingView extends SettingView {
    */
   render () {
     const $root = super.render()
-    $root.classList.add('setting-text')
+    $root.classList.add('field-text')
     return $root
   }
 
@@ -41,7 +41,7 @@ export default class TextSettingView extends SettingView {
    */
   renderField () {
     this._$input = View.createElement('input', {
-      className: 'setting-text__input',
+      className: 'field-text__input',
       id: this.getId(),
       type: 'text',
       spellcheck: false,
@@ -51,8 +51,8 @@ export default class TextSettingView extends SettingView {
     })
 
     const $field = super.renderField()
-    $field.classList.remove('setting__field')
-    $field.classList.add('setting-text__field')
+    $field.classList.remove('field__field')
+    $field.classList.add('field-text__field')
     $field.appendChild(this._$input)
     return $field
   }
@@ -62,7 +62,7 @@ export default class TextSettingView extends SettingView {
    * @param {Event} evt
    */
   inputValueDidChange (evt) {
-    // notify model
+    // Notify model
     this.getModel().viewValueDidChange(this, this._$input.value)
   }
 }

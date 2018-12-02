@@ -28,7 +28,7 @@ export default class Base64Encoder extends Encoder {
   constructor () {
     super()
     const variants = ByteEncoder.getBase64Variants()
-    this.registerSetting({
+    this.addSetting({
       name: 'variant',
       type: 'enum',
       label: 'Variant',

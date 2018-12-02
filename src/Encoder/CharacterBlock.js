@@ -48,7 +48,7 @@ export default class CharacterBlockEncoder extends Encoder {
    * @return {CharacterBlockEncoder} Fluent interface
    */
   registerSeparatorSetting () {
-    return this.registerSetting({
+    return this.addSetting({
       name: 'separator',
       type: 'text',
       value: ' ',
@@ -122,7 +122,7 @@ export default class CharacterBlockEncoder extends Encoder {
    * @return {string|Chain} Encoded block
    */
   performCharEncodeToBlock (codePoint, index, content) {
-    // abstract method
+    // Abstract method
   }
 
   /**
@@ -136,7 +136,7 @@ export default class CharacterBlockEncoder extends Encoder {
    * @return {number} Encoded code point
    */
   performBlockEncodeToChar (block, index, blocks, content) {
-    // abstract method
+    // Abstract method
   }
 
   /**
@@ -149,7 +149,7 @@ export default class CharacterBlockEncoder extends Encoder {
    * @return {string|Chain} Decoded block
    */
   performCharDecodeToBlock (codePoint, index, content) {
-    // abstract method
+    // Abstract method
   }
 
   /**
@@ -163,6 +163,6 @@ export default class CharacterBlockEncoder extends Encoder {
    * @return {number} Decoded code point
    */
   performBlockDecodeToChar (block, index, blocks, content) {
-    // abstract method
+    // Abstract method
   }
 }

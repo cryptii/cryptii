@@ -59,11 +59,11 @@ export default class Encoder extends Brick {
       }
 
       // Check for invalid settings
-      const invalidSettings = this.getInvalidSettings()
+      const invalidSettings = this.getSettingsForm().getInvalidFields()
       if (invalidSettings.length > 0) {
         throw new InvalidInputError(
           `Can't ${isEncode ? 'encode' : 'decode'} with invalid settings: ` +
-          invalidSettings.map(setting => setting.getLabel()).join(', '))
+          invalidSettings.map(setting => setting.getLabel() + ' (' + (setting.getMessage() || 'none') + ')').join(', '))
       }
 
       // Wrap content in Chain

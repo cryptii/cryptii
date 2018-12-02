@@ -287,7 +287,7 @@ export default class PipeView extends View {
     // prevent drag events on bricks with invalid settings
     //  because they can't be serialized
     if (this.isFieldMouseEvent(evt) ||
-        !brickView.getModel().areSettingsValid()) {
+        !brickView.getModel().isValid()) {
       // temporary disable dragging the brick's pipe part
       const $brickPart = brickView.getElement().parentNode
       if ($brickPart) {

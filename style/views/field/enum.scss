@@ -1,5 +1,5 @@
 
-.setting-enum {
+.field-enum {
   $block: &;
 
   &--default {
@@ -30,10 +30,10 @@
     #{$block}__select {
       border: none;
       padding:
-        $setting-field-padding-v ($setting-padding-h + 16px)
-        $setting-field-padding-v $setting-padding-h;
-      line-height: $setting-field-height - $setting-field-padding-v * 2;
-      @extend %t-setting-value;
+        $field-field-padding-v ($field-padding-h + 16px)
+        $field-field-padding-v $field-padding-h;
+      line-height: $field-field-height - $field-field-padding-v * 2;
+      @extend %t-field-value;
       background: transparent;
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -51,7 +51,7 @@
   &--radio {
 
     #{$block}__field {
-      @extend .setting__field;
+      @extend .field__field;
     }
 
     #{$block}__option {
@@ -101,7 +101,7 @@
     }
 
     #{$block}__option-radio:checked + #{$block}__option-label {
-      @extend %t-setting-value;
+      @extend %t-field-value;
       color: $c-text;
 
       &::before {

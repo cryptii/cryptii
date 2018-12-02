@@ -1,16 +1,16 @@
 
-import NumberSettingView from '../View/Setting/Number'
-import Setting from '../Setting'
+import Field from '../Field'
+import NumberFieldView from '../View/Field/Number'
 
 /**
- * Number setting
+ * Number field
  */
-export default class NumberSetting extends Setting {
+export default class NumberField extends Field {
   /**
    * Constructor
-   * @param {string} name
-   * @param {object} spec
-   * @param {mixed} [spec.options] Setting options
+   * @param {string} name Field name
+   * @param {object} spec Field spec
+   * @param {mixed} [spec.options] Field options
    * @param {boolean} [spec.options.integer=false] Wether to use integer values
    * @param {?number} [spec.options.step=1] Step size
    * @param {?number} [spec.options.min=null] Minimum value (inclusive)
@@ -21,7 +21,7 @@ export default class NumberSetting extends Setting {
    */
   constructor (name, spec) {
     super(name, spec)
-    this._viewPrototype = NumberSettingView
+    this._viewPrototype = NumberFieldView
 
     const options = spec.options || {}
     this._integer = options.integer || false
@@ -43,7 +43,7 @@ export default class NumberSetting extends Setting {
   /**
    * Sets wether to use integer values.
    * @param {boolean} integer
-   * @return {NumberSetting} Fluent interface
+   * @return {NumberField} Fluent interface
    */
   setInteger (integer) {
     this._integer = integer
@@ -60,8 +60,8 @@ export default class NumberSetting extends Setting {
 
   /**
    * Sets step size.
-   * @param {?number} step
-   * @return {NumberSetting} Fluent interface
+   * @param {?number} step Step size
+   * @return {NumberField} Fluent interface
    */
   setStep (step) {
     this._step = step
@@ -71,7 +71,7 @@ export default class NumberSetting extends Setting {
   /**
    * Step up or down value and repeat the process until finding a valid one.
    * @param {number} step Relative step size
-   * @param {number} [maxTries=100] Max number of tries to find a valid value
+   * @param {number} [maxTries=100] Number of max tries to find a valid value
    * @return {?number} Resulting value or null if unable to find
    */
   stepValue (step, maxTries = 100) {
@@ -80,27 +80,27 @@ export default class NumberSetting extends Setting {
     let valueFound = false
 
     while (
-      // step value until a valid one is found or until max tries is reached
+      // Step value until a valid one is found or until max tries is reached
       !valueFound &&
       tries++ < maxTries &&
-      // stop when reaching limits with rotation disabled
+      // Stop when reaching limits with rotation disabled
       // eslint-disable-next-line no-unmodified-loop-condition
       (this._rotate || step > 0 || value !== this._min) &&
       // eslint-disable-next-line no-unmodified-loop-condition
       (this._rotate || step < 0 || value !== this._max)
     ) {
-      // add step to value
+      // Add step to value
       value += step
 
-      // rotate to min or max value when reaching limits
+      // Rotate to min or max value when reaching limits
       if (this._rotate && value > this._max && this._rotate) {
         value = this._min
       } else if (this._rotate && value < this._min && this._rotate) {
-        // step is added during rotation due to max being defined exclusive
+        // Step is added during rotation due to max being defined exclusive
         value = this._max + step
       }
 
-      // validate value
+      // Validate value
       valueFound = this.validateValue(value) === true
     }
 
@@ -109,7 +109,7 @@ export default class NumberSetting extends Setting {
 
   /**
    * Step up value.
-   * @return {NumberSetting} Fluent interface
+   * @return {NumberField} Fluent interface
    */
   stepUp () {
     const value = this.stepValue(this._step)
@@ -118,7 +118,7 @@ export default class NumberSetting extends Setting {
 
   /**
    * Step down value.
-   * @return {NumberSetting} Fluent interface
+   * @return {NumberField} Fluent interface
    */
   stepDown () {
     const value = this.stepValue(-this._step)
@@ -136,7 +136,7 @@ export default class NumberSetting extends Setting {
   /**
    * Sets minimum value (inclusive).
    * @param {?number} min Minimum value
-   * @return {NumberSetting} Fluent interface
+   * @return {NumberField} Fluent interface
    */
   setMin (min) {
     this._min = min
@@ -154,7 +154,7 @@ export default class NumberSetting extends Setting {
   /**
    * Sets maximum value (exclusive).
    * @param {?number} max Maximum value
-   * @return {NumberSetting} Fluent interface
+   * @return {NumberField} Fluent interface
    */
   setMax (max) {
     this._max = max
@@ -173,7 +173,7 @@ export default class NumberSetting extends Setting {
    * Sets wether the value should rotate when stepping over limits. Rotation can
    * only be enabled when both min and max values are defined.
    * @param {boolean} rotate Wether rotation is enabled
-   * @return {NumberSetting} Fluent interface
+   * @return {NumberField} Fluent interface
    */
   setRotate (rotate) {
     this._rotate = rotate && this._min !== null && this._max !== null
@@ -250,7 +250,7 @@ export default class NumberSetting extends Setting {
   /**
    * Triggered when value has been changed inside the view.
    * @protected
-   * @param {NumberSettingView} view
+   * @param {NumberFieldView} view
    * @param {number} value
    */
   viewValueDidChange (view, value) {

@@ -1,31 +1,31 @@
 
-// global variables, config switches
+// Global variables, config switches
 @import 'variables/variables';
 @import 'variables/breakpoints';
 @import 'variables/colors';
 
-// tools
+// Tools
 @import 'tools/breakpoint';
 @import 'tools/each-breakpoint';
 @import 'tools/browser';
 
-// symbols
+// Symbols
 @import 'symbols/typography';
 @import 'symbols/icons';
 @import 'symbols/shapes';
 
-// ground-zero styles
+// Ground-zero styles
 @import 'normalize-scss/sass/normalize/import-now';
 
-// unclassed HTML elements
+// Unclassed HTML elements
 @import 'generic';
 
-// views
+// Views
 @import 'views/container';
 @import 'views/link-list';
 @import 'views/btn-more';
 
-// app views
+// App views
 @import 'views/app';
 @import 'views/header';
 @import 'views/modal';
@@ -35,19 +35,20 @@
 @import 'views/footer';
 @import 'views/pipe';
 
-// modal views
+// Modal views
 @import 'views/modal/library';
 
-// brick views
+// Brick views
+@import 'views/form';
 @import 'views/brick';
 @import 'views/viewer';
 @import 'views/encoder';
 @import 'views/viewer/text';
 
-// setting views
-@import 'views/setting';
-@import 'views/setting/boolean';
-@import 'views/setting/enum';
-@import 'views/setting/number';
-@import 'views/setting/text';
-@import 'views/setting/byte';
+// Field views
+@import 'views/field';
+@import 'views/field/boolean';
+@import 'views/field/enum';
+@import 'views/field/number';
+@import 'views/field/text';
+@import 'views/field/byte';

@@ -1,11 +1,11 @@
 
-import SettingView from '../Setting'
+import FieldView from '../Field'
 import View from '../../View'
 
 /**
- * Boolean setting view
+ * Boolean field view
  */
-export default class BooleanSettingView extends SettingView {
+export default class BooleanFieldView extends FieldView {
   /**
    * Constructor
    */
@@ -16,7 +16,7 @@ export default class BooleanSettingView extends SettingView {
 
   /**
    * Retrieves value from model and updates it in view.
-   * @return {SettingView} Fluent interface
+   * @return {FieldView} Fluent interface
    */
   updateValue () {
     this._$input.checked = this.getModel().getValue()
@@ -30,7 +30,7 @@ export default class BooleanSettingView extends SettingView {
    */
   render () {
     const $root = super.render()
-    $root.classList.add('setting-boolean')
+    $root.classList.add('field-boolean')
     return $root
   }
 
@@ -41,7 +41,7 @@ export default class BooleanSettingView extends SettingView {
    */
   renderField () {
     this._$input = View.createElement('input', {
-      className: 'setting-boolean__input',
+      className: 'field-boolean__input',
       type: 'checkbox',
       id: this.getId(),
       onChange: this.inputValueDidChange.bind(this),
@@ -51,14 +51,14 @@ export default class BooleanSettingView extends SettingView {
     })
 
     const $toggle = View.createElement('label', {
-      className: 'setting-boolean__toggle',
+      className: 'field-boolean__toggle',
       htmlFor: this.getId()
     }, [
       View.createElement('span', {
-        className: 'setting-boolean__choice'
+        className: 'field-boolean__choice'
       }, this.getModel().getTrueLabel()),
       View.createElement('span', {
-        className: 'setting-boolean__choice'
+        className: 'field-boolean__choice'
       }, this.getModel().getFalseLabel())
     ])
 
@@ -73,7 +73,7 @@ export default class BooleanSettingView extends SettingView {
    * @param {Event} evt
    */
   inputValueDidChange (evt) {
-    // notify model
+    // Notify model
     this.getModel().viewValueDidChange(this, this._$input.checked)
   }
 }

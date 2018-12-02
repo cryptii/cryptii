@@ -713,7 +713,7 @@ export default class Pipe extends Viewable {
    * @param {Brick} brick
    */
   async brickReplaceButtonDidClick (brick) {
-    const factory = this.getBrickFactory().getLibrary()
+    const factory = this.getBrickFactory()
     const modalView = new LibraryModalView(factory.getLibrary())
 
     let name = brick.getMeta().name
@@ -727,8 +727,10 @@ export default class Pipe extends Viewable {
     // Replace brick only if a different one is selected
     if (name !== brick.getMeta().name) {
       const replacement = factory.create(name)
-      // Apply the same reverse state on the replacement brick
-      replacement.setReverse(brick.isReverse())
+      if ((brick instanceof Encoder) && (replacement instanceof Encoder)) {
+        // Apply the same reverse state on the replacement brick
+        replacement.setReverse(brick.isReverse())
+      }
       this.replaceBrick(brick, replacement)
     }
   }
@@ -744,8 +746,8 @@ export default class Pipe extends Viewable {
     EventManager.trigger('pipeAddButtonClick', { pipe: this, index })
 
     // Build modal
-    const library = this.getBrickFactory().getLibrary()
-    const modalView = new LibraryModalView(library)
+    const factory = this.getBrickFactory()
+    const modalView = new LibraryModalView(factory.getLibrary())
 
     let name
     try {
@@ -756,7 +758,7 @@ export default class Pipe extends Viewable {
     }
 
     // Create brick and add it to the pipe
-    const brick = this.getBrickFactory().create(name)
+    const brick = factory.create(name)
     this.spliceBricks(index, 0, [brick])
   }
 

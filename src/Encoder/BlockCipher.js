@@ -86,7 +86,7 @@ export default class BlockCipherEncoder extends Encoder {
     const modes = BlockCipherEncoder.getModes()
     const paddingAvailable = BlockCipherEncoder.isPaddingAvailable()
 
-    this.registerSetting([
+    this.addSettings([
       {
         name: 'algorithm',
         type: 'enum',
@@ -145,11 +145,10 @@ export default class BlockCipherEncoder extends Encoder {
   }
 
   /**
-   * Triggered when a setting value has changed.
-   * Override is required to call super.
+   * Triggered when a setting field has changed.
    * @protected
-   * @param {Setting} setting
-   * @param {mixed} value Setting value
+   * @param {Field} setting Sender setting field
+   * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
@@ -175,7 +174,7 @@ export default class BlockCipherEncoder extends Encoder {
       }
     }
 
-    return super.settingValueDidChange(setting, value)
+    super.settingValueDidChange(setting, value)
   }
 
   /**

@@ -9,14 +9,14 @@ $header-height: 96px;
 $pipe-size: 96px;
 $modal-library-brick-size: 24px;
 
-$setting-padding-h: 16px;
-$setting-field-height: 46px;
-$setting-label-padding-v: 12px;
-$setting-field-padding-v: 12px;
+$field-padding-h: 16px;
+$field-field-height: 46px;
+$field-label-padding-v: 12px;
+$field-field-padding-v: 12px;
 
 // depth
 $z-index-modal: 100;
 $z-index-pipe-scroll-handle: 50;
 $z-index-header: 10;
 $z-index-menu: 10;
-$z-index-setting-message: 10;
+$z-index-field-message: 10;

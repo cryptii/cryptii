@@ -1,25 +1,25 @@
 
-import BooleanSettingView from '../View/Setting/Boolean'
-import Setting from '../Setting'
+import BooleanFieldView from '../View/Field/Boolean'
+import Field from '../Field'
 
 const knownTrueValues = [true, 1, '1', 'true']
 const knownFalseValues = [false, 0, '0', 'false']
 
 /**
- * Boolean setting
+ * Boolean field
  */
-export default class BooleanSetting extends Setting {
+export default class BooleanField extends Field {
   /**
-   * Setting constructor
-   * @param {string} name
-   * @param {Object} [spec] See {@link Setting.constructor}
-   * @param {mixed} [spec.options] Setting options
+   * Constructor
+   * @param {string} name Field name
+   * @param {object} [spec] Field spec
+   * @param {mixed} [spec.options] Field options
    * @param {string} [spec.options.trueLabel='Yes'] Label for 'true' choice
    * @param {string} [spec.options.falseLabel='No'] Label for 'false' choice
    */
   constructor (name, spec = {}) {
     super(name, spec)
-    this._viewPrototype = BooleanSettingView
+    this._viewPrototype = BooleanFieldView
 
     const options = spec.options || {}
     this._trueLabel = options.trueLabel || 'Yes'
@@ -83,9 +83,9 @@ export default class BooleanSetting extends Setting {
   /**
    * Triggered when value has been changed inside the view.
    * @protected
-   * @param {BooleanSettingView} view
+   * @param {BooleanFieldView} view
    * @param {mixed} value
-   * @return {BooleanSetting} Fluent interface
+   * @return {BooleanField} Fluent interface
    */
   viewValueDidChange (view, value) {
     return this.setValue(value, view)

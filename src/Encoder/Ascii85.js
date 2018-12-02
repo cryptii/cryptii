@@ -44,7 +44,7 @@ export default class Ascii85Encoder extends Encoder {
    */
   constructor () {
     super()
-    this.registerSetting({
+    this.addSetting({
       name: 'variant',
       type: 'enum',
       label: 'Variant',
@@ -69,11 +69,11 @@ export default class Ascii85Encoder extends Encoder {
       variant.name === this.getSettingValue('variant'))
     const n = bytes.length
 
-    // encode each tuple of 4 bytes
+    // Encode each tuple of 4 bytes
     let string = ''
     let digits, j, tuple
     for (let i = 0; i < n; i += 4) {
-      // read 32-bit unsigned integer from bytes following the
+      // Read 32-bit unsigned integer from bytes following the
       // big-endian convention (most significant byte first)
       tuple = (
         ((bytes[i]) << 24) +
@@ -83,7 +83,7 @@ export default class Ascii85Encoder extends Encoder {
       ) >>> 0
 
       if (variant.zeroTupleChar === null || tuple > 0) {
-        // calculate 5 digits by repeatedly dividing
+        // Calculate 5 digits by repeatedly dividing
         // by 85 and taking the remainder
         digits = []
         for (j = 0; j < 5; j++) {
@@ -91,22 +91,22 @@ export default class Ascii85Encoder extends Encoder {
           tuple = Math.floor(tuple / 85)
         }
 
-        // take most significant digit first
+        // Take most significant digit first
         digits = digits.reverse()
 
         if (n < i + 4) {
-          // omit final characters added due to bytes of padding
+          // Omit final characters added due to bytes of padding
           digits.splice(n - (i + 4), 4)
         }
 
-        // convert digits to characters and glue them together
+        // Convert digits to characters and glue them together
         string += digits.map(digit =>
           variant.alphabet === null
             ? String.fromCharCode(digit + 33)
             : variant.alphabet[digit]
         ).join('')
       } else {
-        // an all-zero tuple is encoded as a single character
+        // An all-zero tuple is encoded as a single character
         string += variant.zeroTupleChar
       }
     }
@@ -121,10 +121,10 @@ export default class Ascii85Encoder extends Encoder {
    * @return {number[]|string|Uint8Array|Chain|Promise} Filtered content
    */
   willDecode (content) {
-    // check for <~ ~> wrappers often used to wrap ascii85 encoded data
+    // Check for <~ ~> wrappers often used to wrap ascii85 encoded data
     const wrapperMatches = content.getString().match(/<~(.+?)~>/)
     if (wrapperMatches !== null) {
-      // decode wrapped data only
+      // Decode wrapped data only
       return wrapperMatches[1]
     }
     return content
@@ -142,17 +142,17 @@ export default class Ascii85Encoder extends Encoder {
       variant.name === this.getSettingValue('variant'))
     const n = string.length
 
-    // decode each tuple of 5 characters
+    // Decode each tuple of 5 characters
     const bytes = []
     let i = 0
     let digits, tuple, tupleBytes
     while (i < n) {
       if (string[i] === variant.zeroTupleChar) {
-        // a single character encodes an all-zero tuple
+        // A single character encodes an all-zero tuple
         bytes.push(0, 0, 0, 0)
         i++
       } else {
-        // retrieve radix-85 digits of tuple
+        // Retrieve radix-85 digits of tuple
         digits = string
           .substr(i, 5)
           .split('')
@@ -168,7 +168,7 @@ export default class Ascii85Encoder extends Encoder {
             return digit
           })
 
-        // create 32-bit binary number from digits and handle padding
+        // Create 32-bit binary number from digits and handle padding
         // tuple = a * 85^4 + b * 85^3 + c * 85^2 + d * 85 + e
         tuple =
           digits[0] * 52200625 +
@@ -177,7 +177,7 @@ export default class Ascii85Encoder extends Encoder {
           (i + 3 < n ? digits[3] : 84) * 85 +
           (i + 4 < n ? digits[4] : 84)
 
-        // get bytes from tuple
+        // Get bytes from tuple
         tupleBytes = [
           (tuple >> 24) & 0xff,
           (tuple >> 16) & 0xff,
@@ -185,12 +185,12 @@ export default class Ascii85Encoder extends Encoder {
           tuple & 0xff
         ]
 
-        // remove bytes of padding
+        // Remove bytes of padding
         if (n < i + 5) {
           tupleBytes.splice(n - (i + 5), 5)
         }
 
-        // append bytes to result
+        // Append bytes to result
         bytes.push.apply(bytes, tupleBytes)
         i += 5
       }

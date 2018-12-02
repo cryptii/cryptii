@@ -3,9 +3,9 @@ import StringUtil from '../StringUtil'
 import View from '../View'
 
 /**
- * Setting view
+ * Field view
  */
-export default class SettingView extends View {
+export default class FieldView extends View {
   /**
    * Constructor
    */
@@ -14,33 +14,11 @@ export default class SettingView extends View {
     this._$message = null
     this._message = null
     this._id = StringUtil.uniqueId()
-    this._style = null
     this._first = false
   }
 
   /**
-   * Returns setting appearance.
-   * @return {string}
-   */
-  getStyle () {
-    return this._style
-  }
-
-  /**
-   * Sets the setting appearance.
-   * @param {string} style
-   * @return {Setting} Fluent interface
-   */
-  setStyle (style) {
-    if (this._style !== style) {
-      this._style = style
-      this.refresh()
-    }
-    return this
-  }
-
-  /**
-   * Returns wether this setting is the first in a row.
+   * Returns wether this field is the first in a row.
    * @return {boolean}
    */
   isFirst () {
@@ -48,14 +26,14 @@ export default class SettingView extends View {
   }
 
   /**
-   * Sets wether this setting is the first in a row.
+   * Sets wether this field is the first in a row.
    * @param {boolean}
-   * @return {Setting} Fluent interface
+   * @return {Field} Fluent interface
    */
   setFirst (first) {
     if (this._first !== first) {
       this._first = first
-      this.getElement().classList.toggle('setting--first', first)
+      this.getElement().classList.toggle('field--first', first)
     }
     return this
   }
@@ -73,7 +51,7 @@ export default class SettingView extends View {
    * Sets the message.
    * @protected
    * @param {?string} message
-   * @return {SettingView} Fluent interface
+   * @return {FieldView} Fluent interface
    */
   setMessage (message) {
     this._message = message
@@ -83,14 +61,14 @@ export default class SettingView extends View {
   /**
    * Clears the message.
    * @protected
-   * @return {SettingView} Fluent interface
+   * @return {FieldView} Fluent interface
    */
   clearMessage () {
     return this.setMessage(null)
   }
 
   /**
-   * Returns setting id.
+   * Returns field id.
    * @return {string}
    */
   getId () {
@@ -104,7 +82,7 @@ export default class SettingView extends View {
    */
   render () {
     return View.createElement('div', {
-      className: 'setting' + (this._first ? ' setting--first' : '')
+      className: 'field' + (this._first ? ' field--first' : '')
     }, [
       this.renderLabel(),
       this.renderField()
@@ -118,7 +96,7 @@ export default class SettingView extends View {
    */
   renderLabel () {
     return View.createElement('label', {
-      className: 'setting__label',
+      className: 'field__label',
       htmlFor: this.getId()
     }, this.getModel().getLabel())
   }
@@ -130,7 +108,7 @@ export default class SettingView extends View {
    */
   renderField () {
     return View.createElement('div', {
-      className: 'setting__field'
+      className: 'field__field'
     })
   }
 
@@ -142,7 +120,7 @@ export default class SettingView extends View {
   renderMessage () {
     if (this.getMessage() !== null) {
       return View.createElement('div', {
-        className: 'setting__message'
+        className: 'field__message'
       }, this.getMessage())
     }
     return null
@@ -153,34 +131,34 @@ export default class SettingView extends View {
    */
   didRender () {
     super.didRender()
-    // update value initially
+    // Update value initially
     this.updateValue()
   }
 
   /**
    * Updates view on model change.
-   * @return {SettingView} Fluent interface
+   * @return {FieldView} Fluent interface
    */
   update () {
-    const $setting = this.getElement()
+    const $field = this.getElement()
 
-    // set width attr
-    $setting.dataset.width = this.getModel().getWidth()
+    // Set width attr
+    $field.dataset.width = this.getModel().getWidth()
 
-    // set focus modifier
-    $setting.classList.toggle('setting--focus', this.hasFocus())
+    // Set focus modifier
+    $field.classList.toggle('field--focus', this.hasFocus())
 
-    // add invalid modifier
-    $setting.classList.toggle('setting--invalid',
+    // Add invalid modifier
+    $field.classList.toggle('field--invalid',
       !this.getModel().isValid() || this.getMessage() !== null)
 
-    // remove old message, if any
+    // Remove old message, if any
     if (this._$message !== null) {
       this._$message.remove()
       this._$message = null
     }
 
-    // create new message, if any
+    // Create new message, if any
     this._$message = this.renderMessage()
     if (this._$message !== null) {
       this.getElement().appendChild(this._$message)
@@ -193,23 +171,23 @@ export default class SettingView extends View {
    * Triggered when view receives focus.
    */
   didFocus () {
-    this.getElement().classList.add('setting--focus')
+    this.getElement().classList.add('field--focus')
   }
 
   /**
    * Triggered when view loses focus.
    */
   didBlur () {
-    this.getElement().classList.remove('setting--focus')
+    this.getElement().classList.remove('field--focus')
   }
 
   /**
    * Retrieves value from model and updates it in view.
    * @override
-   * @return {SettingView} Fluent interface
+   * @return {FieldView} Fluent interface
    */
   updateValue () {
-    // nothing to do
+    // Nothing to do
     return this
   }
 }
