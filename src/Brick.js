@@ -276,10 +276,13 @@ export default class Brick extends Viewable {
     // Decide what to do
     switch (name) {
       case 'remove':
-        this.hasPipe() && this.getPipe().removeBrick(this)
+        this.getPipe().removeBrick(this)
         break
       case 'hide':
         this.setHidden(true)
+        break
+      case 'duplicate':
+        this.getPipe().duplicateBrick(this)
         break
       case 'randomize':
         this.randomize()
@@ -323,6 +326,18 @@ export default class Brick extends Viewable {
     }
 
     return data
+  }
+
+  /**
+   * Creates a copy of this brick.
+   * @return {Brick} Brick copy instance
+   */
+  copy () {
+    const copy = new this.constructor()
+    copy.setAlias(this.getAlias())
+    copy.setHidden(this.isHidden())
+    copy.setSettingValues(this.getSettingValues())
+    return copy
   }
 
   /**

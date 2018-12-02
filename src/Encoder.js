@@ -169,6 +169,16 @@ export default class Encoder extends Brick {
   }
 
   /**
+   * Creates a copy of this brick.
+   * @return {Brick} Brick copy instance
+   */
+  copy () {
+    const copy = super.copy()
+    copy.setReverse(this.isReverse())
+    return copy
+  }
+
+  /**
    * Triggered before performing encode on given content.
    * Calls {@link Encoder.willTranslate} by default.
    * @protected

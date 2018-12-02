@@ -106,6 +106,43 @@ export default class Pipe extends Viewable {
   }
 
   /**
+   * Inserts a copy of given brick into the pipe.
+   * @param {Brick} brick Pipe brick to be copied
+   * @param {number} index Index at which the copy should be inserted, inserts
+   * the copy after the original brick if omitted
+   * @return {Pipe} Fluent interface
+   */
+  duplicateBrick (brick, index = null) {
+    if (!this.containsBrick(brick)) {
+      throw new Error(`Brick is not part of the pipe.`)
+    }
+    if (index === null) {
+      index = this._bricks.indexOf(brick)
+    }
+    this.spliceBricks(index, 0, [brick.copy()])
+    return this
+  }
+
+  /**
+   * Moves brick to given index.
+   * @param {Brick} brick Pipe brick to be moved
+   * @param {number} index Index the brick should be moved to
+   * @return {Pipe} Fluent interface
+   */
+  moveBrick (brick, index) {
+    const fromIndex = this._bricks.indexOf(brick)
+    if (fromIndex === -1) {
+      throw new Error(`Brick is not part of the pipe.`)
+    }
+    if (index > fromIndex) {
+      index--
+    }
+    this.spliceBricks(fromIndex, 1)
+    this.spliceBricks(index, 0, [brick])
+    return this
+  }
+
+  /**
    * Removes single brick from the pipe.
    * Convenience method calling {@link Pipe.spliceBricks} internally.
    * @param {Brick|number} brickOrIndex Brick or index to be removed
@@ -770,25 +807,17 @@ export default class Pipe extends Viewable {
    * @param {boolean} copy Wether to copy or move the brick
    */
   viewBrickDidDrop (view, index, brick, copy = false) {
-    if (!(brick instanceof Brick)) {
-      // Only brick instances can be moved
-      copy = true
-    } else if (copy) {
-      // Serialize brick instance to create a new brick from it
-      brick = brick.serialize()
-    }
-
-    // Track action
-    EventManager.trigger('pipeBrickDrop', { pipe: this, index, brick, copy })
-
-    const fromIndex = this._bricks.indexOf(brick)
-    if (!copy && index > fromIndex) {
-      index--
-    }
-    if (copy || fromIndex !== index) {
-      !copy && this.spliceBricks(fromIndex, 1)
+    if (brick instanceof Brick) {
+      if (copy) {
+        this.duplicateBrick(brick, index)
+      } else {
+        this.moveBrick(brick, index)
+      }
+    } else {
       this.spliceBricks(index, 0, [brick])
     }
+    // Track action
+    EventManager.trigger('pipeBrickDrop', { pipe: this, index, brick, copy })
   }
 
   /**

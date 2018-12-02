@@ -86,16 +86,22 @@ export default class BrickView extends View {
    * @return {HTMLElement}
    */
   renderMenu () {
-    const items = [
-      {
+    const items = []
+
+    if (this.getModel().hasPipe()) {
+      items.push({
         label: 'Remove',
         name: 'remove'
-      },
-      {
+      })
+      items.push({
         label: 'Hide',
         name: 'hide'
-      }
-    ]
+      })
+      items.push({
+        label: 'Duplicate',
+        name: 'duplicate'
+      })
+    }
 
     if (this.getModel().isRandomizable()) {
       items.push({
