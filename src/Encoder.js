@@ -157,7 +157,7 @@ export default class Encoder extends Brick {
   }
 
   /**
-   * Serializes Brick to a JSON serializable object.
+   * Serializes brick to a JSON serializable value.
    * @return {mixed} Serialized data
    */
   serialize () {

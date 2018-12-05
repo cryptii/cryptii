@@ -133,8 +133,10 @@ export default class ByteField extends Field {
   }
 
   /**
-   * Serializes Field value to make it JSON serializable.
-   * @throws Throws an error if safe serialization not possible.
+   * Serializes the field value to a JSON serializable value.
+   * @override
+   * @throws {Error} If field value is invalid.
+   * @throws {Error} If serialization is not possible.
    * @return {mixed} Serialized data
    */
   serializeValue () {

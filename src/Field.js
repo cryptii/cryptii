@@ -328,12 +328,16 @@ export default class Field extends Viewable {
   }
 
   /**
-   * Serializes the value to a JSON serializable object.
+   * Serializes the field value to a JSON serializable value.
    * @override
+   * @throws {Error} If field value is invalid.
    * @throws {Error} If serialization is not possible.
    * @return {mixed} Serialized data
    */
   serializeValue () {
+    if (!this.isValid()) {
+      throw new Error(`Invalid field values can't be serialized.`)
+    }
     const value = this.getValue()
     if (
       typeof value !== 'boolean' &&

@@ -282,7 +282,11 @@ export default class Brick extends Viewable {
         this.setHidden(true)
         break
       case 'duplicate':
-        this.getPipe().duplicateBrick(this)
+        // TODO Create a UI to communicate that brick duplication is not
+        // possible with invalid settings.
+        if (this.isValid()) {
+          this.getPipe().duplicateBrick(this)
+        }
         break
       case 'randomize':
         this.randomize()
@@ -305,7 +309,7 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Serializes brick to a JSON serializable object.
+   * Serializes brick to a JSON serializable value.
    * @return {mixed} Serialized data
    */
   serialize () {
@@ -330,9 +334,13 @@ export default class Brick extends Viewable {
 
   /**
    * Creates a copy of this brick.
+   * @throws {Error} If brick is invalid and thus can't be copied.
    * @return {Brick} Brick copy instance
    */
   copy () {
+    if (!this.isValid()) {
+      throw new Error(`Invalid bricks can't be copied.`)
+    }
     const copy = new this.constructor()
     copy.setAlias(this.getAlias())
     copy.setHidden(this.isHidden())
