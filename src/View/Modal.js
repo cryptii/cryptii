@@ -6,22 +6,31 @@ import View from '../View'
  */
 export default class ModalView extends View {
   /**
-   * Modal constructor
+   * Constructor
    */
   constructor (title) {
     super()
     this._title = title
+    this._$trigger = null
     this._visible = false
     this._value = null
     this._finishCallback = null
     this._cancelCallback = null
 
-    // handlers
+    // Handlers
     this._keyUpHandler = this.keyDidPress.bind(this)
 
-    // elements
+    // Elements
     this._$outer = null
     this._$dialog = null
+  }
+
+  /**
+   * Returns wether this modal view is currently visible.
+   * @return {boolean} True, if visible
+   */
+  isVisible () {
+    return this._visible
   }
 
   /**
@@ -34,53 +43,56 @@ export default class ModalView extends View {
     if (this._visible !== visible) {
       this._visible = visible
 
-      // make sure modal is rendered
+      // Make sure modal is rendered
       const $element = this.getElement()
 
       if (visible) {
-        // add modal view to dom
+        // Add modal view to dom
         document.body.appendChild($element)
+        // Store the trigger element to move the focus back to it
+        // when being dismissed
+        this._$trigger = document.activeElement
       }
 
-      // measure dialog height
+      // Measure dialog height
       const dialogHeight = this._$dialog.getBoundingClientRect().height
 
-      // set dialog height to transition from
+      // Set dialog height to transition from
       if (visible) {
         this._$dialog.style.height = '0px'
       } else {
         this._$dialog.style.height = `${dialogHeight}px`
 
-        // setting the outer height explicitly prevents it from scrolling to the
+        // Setting the outer height explicitly prevents it from scrolling to the
         // top when the dialog height is set to zero
         this._$outer.style.height = `${dialogHeight}px`
       }
 
-      // trigger browser layout
+      // Trigger browser layout
       $element.getBoundingClientRect()
 
-      // listen to the transition end event; add a short delay to let the
+      // Listen to the transition end event; add a short delay to let the
       // transition finish without cutting off frames at the end
       $element.addEventListener('transitionend', () => {
         setTimeout(this.visibilityDidChange.bind(this, visible, cancelled), 100)
       }, { once: true })
 
-      // trigger modal transition
+      // Trigger modal transition
       document.body.classList.toggle('modal-visible', visible)
       $element.classList.toggle('modal--visible', visible)
 
       if (visible) {
-        // set dialog height to transition to
+        // Set dialog height to transition to
         this._$dialog.style.height = `${dialogHeight}px`
 
-        // listen to key press events to close the modal when hitting escape
+        // Listen to key press events to close the modal when hitting escape
         this._keyUpHandler &&
           document.addEventListener('keyup', this._keyUpHandler)
       } else {
-        // set dialog height to transition to
+        // Set dialog height to transition to
         this._$dialog.style.height = '0px'
 
-        // remove key press listener
+        // Remove key press listener
         this._keyUpHandler &&
           document.removeEventListener('keyup', this._keyUpHandler)
       }
@@ -96,27 +108,35 @@ export default class ModalView extends View {
   visibilityDidChange (visible, cancelled) {
     if (visible) {
       this._$dialog.removeAttribute('style')
+      // Focus the modal view
+      this.getElement().focus()
     } else {
       setTimeout(() => {
-        // clean up
+        // Clean up
         this._$dialog.removeAttribute('style')
         this._$outer.removeAttribute('style')
 
-        // remove element from dom
+        // Remove element from dom
         const $element = this.getElement()
         if ($element.parentNode !== null) {
           $element.parentNode.removeChild($element)
         }
       }, 100)
 
-      // trigger finish or cancel callback
+      // Trigger finish or cancel callback
       if (cancelled === false && this._finishCallback !== null) {
         this._finishCallback(this._value)
       } else if (cancelled === true && this._cancelCallback !== null) {
         this._cancelCallback()
       }
 
-      // clear handlers
+      // Move focus back to the trigger element, if any
+      if (this._$trigger) {
+        this._$trigger.focus()
+        this._$trigger = null
+      }
+
+      // Clear handlers
       this._finishCallback = null
       this._cancelCallback = null
     }
@@ -147,7 +167,7 @@ export default class ModalView extends View {
    * @param {mixed} value
    */
   valueDidChange (value) {
-    // override
+    // Override
   }
 
   /**
@@ -211,7 +231,8 @@ export default class ModalView extends View {
     return View.createElement('div', {
       className: 'modal',
       role: 'dialog',
-      tabindex: -1
+      // Makes element focusable but not reachable via keyboard
+      tabIndex: -1
     }, [
       View.createElement('div', {
         className: 'modal__backdrop'
@@ -274,7 +295,7 @@ export default class ModalView extends View {
    * @return {HTMLElement}
    */
   renderContent () {
-    // override
+    // Override
   }
 
   /**
@@ -282,7 +303,7 @@ export default class ModalView extends View {
    * @param {Event} evt
    */
   keyDidPress (evt) {
-    // has the escape key been pressed
+    // Has the escape key been pressed
     if (evt.keyCode === 27) {
       evt.preventDefault()
       this.cancel()

@@ -30,6 +30,9 @@ export default class Pipe extends Viewable {
     this._bucketContent = [Chain.empty()]
     this._bucketListeners = [[]]
     this._selectedBucket = 0
+
+    // Lazily instantiated library modal view
+    this._libraryModalView = null
   }
 
   /**
@@ -48,6 +51,18 @@ export default class Pipe extends Viewable {
   setBrickFactory (brickFactory) {
     this._brickFactory = brickFactory
     return this
+  }
+
+  /**
+   * Returns a lazily instantiated library modal view instance.
+   * @return {ModalView} Library modal view
+   */
+  getLibraryModalView () {
+    if (this._libraryModalView === null) {
+      const library = this.getBrickFactory().getLibrary()
+      this._libraryModalView = new LibraryModalView(library)
+    }
+    return this._libraryModalView
   }
 
   /**
@@ -748,8 +763,12 @@ export default class Pipe extends Viewable {
    * @param {Brick} brick
    */
   async brickReplaceButtonDidClick (brick) {
-    const factory = this.getBrickFactory()
-    const modalView = new LibraryModalView(factory.getLibrary())
+    const modalView = this.getLibraryModalView()
+
+    // Ignore event when library modal view is already visible
+    if (modalView.isVisible()) {
+      return
+    }
 
     let name = brick.getMeta().name
     try {
@@ -761,7 +780,7 @@ export default class Pipe extends Viewable {
 
     // Replace brick only if a different one is selected
     if (name !== brick.getMeta().name) {
-      const replacement = factory.create(name)
+      const replacement = this.getBrickFactory().create(name)
       if ((brick instanceof Encoder) && (replacement instanceof Encoder)) {
         // Apply the same reverse state on the replacement brick
         replacement.setReverse(brick.isReverse())
