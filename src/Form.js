@@ -15,8 +15,10 @@ export default class Form extends Viewable {
   constructor () {
     super()
     this._viewPrototype = FormView
-    this._fields = []
     this._delegate = null
+
+    this._fields = []
+    this._fieldFactory = null
   }
 
   /**
@@ -80,7 +82,7 @@ export default class Form extends Viewable {
         spec.priority = this._calculateDefaultPriority()
       }
       // Let the factory create an instance from given spec
-      field = FieldFactory.getInstance().create(spec)
+      field = this.getFieldFactory().create(spec)
     }
 
     // Verify that given field name is not already assigned
@@ -153,6 +155,27 @@ export default class Form extends Viewable {
     for (let name in namedValues) {
       this.setFieldValue(name, namedValues[name])
     }
+    return this
+  }
+
+  /**
+   * Returns the field factory used upon field creation inside the form.
+   * @return {Factory} Factory
+   */
+  getFieldFactory () {
+    if (this._fieldFactory === null) {
+      this._fieldFactory = FieldFactory.getInstance()
+    }
+    return this._fieldFactory
+  }
+
+  /**
+   * Sets the field factory used upon field creation inside the form.
+   * @param {Factory} fieldFactory Factory
+   * @return {Pipe} Fluent interface
+   */
+  setFieldFactory (fieldFactory) {
+    this._fieldFactory = fieldFactory
     return this
   }
 

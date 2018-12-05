@@ -20,8 +20,6 @@ export default class Pipe extends Viewable {
   constructor () {
     super()
     this._viewPrototype = PipeView
-
-    // Brick factory used for brick creation inside the pipe
     this._brickFactory = null
 
     // Empty array of bricks and brick state objects
@@ -35,7 +33,7 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Returns the brick factory used for brick creation inside the pipe.
+   * Returns the brick factory used upon brick creation inside the pipe.
    * @return {Factory} Factory
    */
   getBrickFactory () {
@@ -43,7 +41,7 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Sets the brick factory used for brick creation inside the pipe.
+   * Sets the brick factory used upon brick creation inside the pipe.
    * @param {Factory} brickFactory Factory
    * @return {Pipe} Fluent interface
    */
