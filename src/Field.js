@@ -87,7 +87,9 @@ export default class Field extends Viewable {
    */
   setVisible (visible) {
     this._visible = visible
-    this.hasDelegate() && this.getDelegate().fieldNeedsLayout(this)
+    if (this._delegate && this._delegate.fieldNeedsLayout) {
+      this._delegate.fieldNeedsLayout(this)
+    }
     return this
   }
 
@@ -106,7 +108,12 @@ export default class Field extends Viewable {
    */
   setPriority (priority) {
     this._priority = priority
-    this.hasDelegate() && this.getDelegate().fieldNeedsLayout(this)
+    if (this._delegate && this._delegate.fieldPriorityDidChange) {
+      this._delegate.fieldPriorityDidChange(this, priority)
+    }
+    if (this._delegate && this._delegate.fieldNeedsLayout) {
+      this._delegate.fieldNeedsLayout(this)
+    }
     return this
   }
 
@@ -238,10 +245,9 @@ export default class Field extends Viewable {
       }
 
       // Notify delegate, if it is interested
-      const delegate = this.getDelegate()
-      if (delegate &&
-          delegate !== sender &&
-          delegate.fieldValueDidChange !== undefined) {
+      if (this._delegate &&
+          this._delegate !== sender &&
+          this._delegate.fieldValueDidChange !== undefined) {
         this.getDelegate().fieldValueDidChange(this, value)
       }
     }

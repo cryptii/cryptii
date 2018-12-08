@@ -48,6 +48,16 @@ describe('Pipe', () => {
       assert.strictEqual(pipe.hasView(), false)
     })
   })
+  /** @test {Pipe.getBricks} */
+  describe('getBricks()', () => {
+    it('should return a shallow copy of the containing bricks', () => {
+      const pipe = Pipe.extract(examplePipeData, new BrickFactory())
+      // Expect strictly the same array elements
+      assert.deepStrictEqual(pipe.getBricks(), pipe.getBricks())
+      // Expect a shallow copy of the array
+      assert.notStrictEqual(pipe.getBricks(), pipe.getBricks())
+    })
+  })
   /** @test {Pipe.addBrick} */
   describe('addBrick()', () => {
     it('should add first brick to an empty pipe', () => {

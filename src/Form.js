@@ -11,14 +11,18 @@ import Viewable from './Viewable'
 export default class Form extends Viewable {
   /**
    * Constructor
+   * @param {Field[]|object[]} fieldsOrSpecs Array of field instances or
+   * spec objects
+   * @param {Factory} fieldFactory Factory
    */
-  constructor () {
+  constructor (fieldsOrSpecs = [], fieldFactory = null) {
     super()
     this._viewPrototype = FormView
     this._delegate = null
 
+    this._fieldFactory = fieldFactory
     this._fields = []
-    this._fieldFactory = null
+    this.addFields(fieldsOrSpecs)
   }
 
   /**
@@ -94,6 +98,7 @@ export default class Form extends Viewable {
     // Add field instance to the form
     this._fields.push(field)
     field.setDelegate(this)
+    this._sortFields()
 
     // Add field subview
     if (field.isVisible() && this.hasView()) {
@@ -240,11 +245,9 @@ export default class Form extends Viewable {
    */
   serializeValues () {
     const data = {}
-    this._fields
-      .filter(field => field.isVisible())
-      .forEach(field => {
-        data[field.getName()] = field.serializeValue()
-      })
+    this.getVisibleFields().forEach(field => {
+      data[field.getName()] = field.serializeValue()
+    })
     return data
   }
 
@@ -262,6 +265,8 @@ export default class Form extends Viewable {
    * Extracts field values serialized by {@link Form.serializeValues} and
    * returns them as an object.
    * @param {mixed} data Serialized data
+   * @throws {Error} If serialized data is not an object.
+   * @throws {Error} If one of the field names is not assigned.
    * @return {object} Extracted named values
    */
   extractValues (data) {
@@ -305,6 +310,13 @@ export default class Form extends Viewable {
   }
 
   /**
+   * Sorts the fields array by descending field priority.
+   */
+  _sortFields () {
+    this._fields.sort((a, b) => b.getPriority() - a.getPriority())
+  }
+
+  /**
    * Triggered when view has been created.
    * @protected
    */
@@ -313,10 +325,20 @@ export default class Form extends Viewable {
   }
 
   /**
+   * Triggered when a field priority did change.
+   * @protected
+   * @param {Field} field Sender field
+   * @param {number} priority New priority
+   */
+  fieldPriorityDidChange (field, priority) {
+    // Maintain sorted fields array
+    this._sortFields()
+  }
+
+  /**
    * Triggered when a field layout property has changed.
    * @protected
    * @param {Field} field Sender field
-   * @return {Form} Fluent interface
    */
   fieldNeedsLayout (field) {
     if (this.hasView()) {

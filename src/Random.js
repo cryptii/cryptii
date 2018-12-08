@@ -14,8 +14,11 @@ export default class Random {
   constructor (seed = null) {
     this._seed = seed
 
-    // retrieve Web Crypto API's crypto object, if available
-    this._crypto = window.crypto || window.msCrypto || null
+    // Retrieve Web Crypto API's crypto object, if available
+    this._crypto =
+      typeof window !== 'undefined'
+        ? window.crypto || window.msCrypto || null
+        : null
   }
 
   /**
@@ -24,7 +27,7 @@ export default class Random {
    */
   next () {
     if (this._crypto) {
-      // create one random u32 integer and divide it by 2^32
+      // Create one random u32 integer and divide it by 2^32
       const integers = new Uint32Array(1)
       this._crypto.getRandomValues(integers)
       return integers / 0x100000000

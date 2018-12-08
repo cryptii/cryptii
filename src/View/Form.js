@@ -33,8 +33,11 @@ export default class FormView extends View {
 
       // Integrate new setting view
       fieldViews.push(view)
+
+      // Maintain the order of fields set in the form model
+      const fields = this.getModel().getFields()
       fieldViews.sort((a, b) =>
-        b.getModel().getPriority() - a.getModel().getPriority())
+        fields.indexOf(a.getModel()) - fields.indexOf(b.getModel()))
 
       // Retrieve position of setting view we are integrating
       const index = fieldViews.indexOf(view)
