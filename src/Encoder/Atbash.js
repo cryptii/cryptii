@@ -1,6 +1,7 @@
 
 import AffineCipherEncoder from './AffineCipher'
 import Chain from '../Chain'
+import Encoder from '../Encoder'
 
 const meta = {
   name: 'atbash',
@@ -15,7 +16,7 @@ const hebrewAlphabet = Chain.wrap('תשרקצפעסנמלכיטחזוהדגבא'
 /**
  * Encoder brick for Atbash encoding and decoding
  */
-export default class AtbashEncoder extends AffineCipherEncoder {
+export default class AtbashEncoder extends Encoder {
   /**
    * Returns brick meta.
    * @return {object}
@@ -29,10 +30,8 @@ export default class AtbashEncoder extends AffineCipherEncoder {
    */
   constructor () {
     super()
-
-    // Add variant setting
     this.addSetting({
-      name: 'atbashAlphabet',
+      name: 'alphabet',
       type: 'enum',
       label: 'Alphabet',
       priority: 10,
@@ -50,26 +49,23 @@ export default class AtbashEncoder extends AffineCipherEncoder {
       }
     })
 
-    // Make some settings private
-    this.getSetting('a').setVisible(false)
-    this.getSetting('b').setVisible(false)
-    this.getSetting('caseSensitivity').setVisible(false)
-    this.getSetting('includeForeignChars').setVisible(false)
-    this.getSetting('alphabet').setVisible(false)
-
-    // Apply default alphabet
-    this.getSetting('alphabet').setValue(latinAlphabet)
-
-    // Apply inital encryption function
-    this.applyEncryptionFunctionByAlphabet(latinAlphabet)
+    // Define internal affine cipher
+    this._affineCipher = new AffineCipherEncoder()
+    this._affineCipher.setSettingValues({
+      alphabet: latinAlphabet,
+      a: latinAlphabet.getLength() - 1,
+      b: latinAlphabet.getLength() - 1
+    })
   }
 
   /**
-   * Returns wether this brick is randomizable.
-   * @return {boolean}
+   * Performs encode or decode on given content.
+   * @param {Chain} content
+   * @param {boolean} isEncode True for encoding, false for decoding
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
-  isRandomizable () {
-    return false
+  performTranslate (content, isEncode) {
+    return this._affineCipher.translate(content, isEncode)
   }
 
   /**
@@ -80,28 +76,14 @@ export default class AtbashEncoder extends AffineCipherEncoder {
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
-      case 'atbashAlphabet':
-        // This causes changes to the alphabet setting
-        return this.setSettingValue('alphabet',
-          value === 'latin' ? latinAlphabet : hebrewAlphabet)
       case 'alphabet':
-        // This causes changes to settings a and b
-        this.applyEncryptionFunctionByAlphabet(value)
-        break
+        const alphabet = value === 'latin' ? latinAlphabet : hebrewAlphabet
+        this._affineCipher.setSettingValues({
+          alphabet,
+          a: alphabet.getLength() - 1,
+          b: alphabet.getLength() - 1
+        })
     }
     super.settingValueDidChange(setting, value)
-  }
-
-  /**
-   * Applies affine cipher function by given alphabet.
-   * @protected
-   * @param {Chain} alphabet
-   * @return {Atbash} Fluent interface
-   */
-  applyEncryptionFunctionByAlphabet (alphabet) {
-    const m = alphabet.getLength()
-    this.setSettingValue('a', m - 1)
-    this.setSettingValue('b', m - 1)
-    return this
   }
 }

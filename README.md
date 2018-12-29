@@ -33,12 +33,12 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `bitwise-operation` | Transform | [Bitwise operations](https://en.wikipedia.org/wiki/Bitwise_operation) (NOT, AND, OR, …) |
 | `morse-code` | Alphabets | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
 | `spelling-alphabet` | Alphabets | Several [spelling alphabets](https://en.wikipedia.org/wiki/Spelling_alphabet) |
-| `rot13` | Simple Substitution | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
-| `affine-cipher` | Simple Substitution | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
-| `caesar-cipher` | Simple Substitution | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
-| `atbash` | Simple Substitution | [Atbash](https://en.wikipedia.org/wiki/Atbash) using latin or hebrew alphabet |
-| `vigenere-cipher` | Simple Substitution | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
-| `enigma` | Simple Substitution | [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) incl. 13 models |
+| `rot13` | Substitution cipher | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
+| `affine-cipher` | Substitution cipher | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
+| `caesar-cipher` | Substitution cipher | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
+| `atbash` | Substitution cipher | [Atbash](https://en.wikipedia.org/wiki/Atbash) using latin or hebrew alphabet |
+| `vigenere-cipher` | Substitution cipher | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
+| `enigma` | Substitution cipher | [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) incl. 13 models |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
 | `ascii85` | Encoding | [Ascii85 / Base85](https://en.wikipedia.org/wiki/Ascii85) incl. variant [Z85](https://rfc.zeromq.org/spec:32/Z85/) |
 | `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |

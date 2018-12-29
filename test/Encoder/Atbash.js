@@ -7,12 +7,12 @@ import AtbashEncoder from '../../src/Encoder/Atbash'
 /** @test {AtbashEncoder} */
 describe('AtbashEncoder', () => EncoderTester.test(AtbashEncoder, [
   {
-    settings: { atbashAlphabet: 'latin' },
+    settings: { alphabet: 'latin' },
     content: 'abcdefghijklmnopqrstuvwxyz',
     expectedResult: 'zyxwvutsrqponmlkjihgfedcba'
   },
   {
-    settings: { atbashAlphabet: 'hebrew' },
+    settings: { alphabet: 'hebrew' },
     content: 'אבגדהוזחטיכלמנסעפצקרשת',
     expectedResult: 'תשרקצפעסנמלכיטחזוהדגבא'
   }

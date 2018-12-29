@@ -1,6 +1,6 @@
 
 import MathUtil from '../MathUtil'
-import SimpleSubstitutionEncoder from './SimpleSubstitution'
+import Encoder from '../Encoder'
 
 const meta = {
   name: 'affine-cipher',
@@ -14,7 +14,7 @@ const defaultAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 /**
  * Encoder brick for Affine Cipher encoding and decoding
  */
-export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
+export default class AffineCipherEncoder extends Encoder {
   /**
    * Returns brick meta.
    * @return {object}
@@ -100,43 +100,43 @@ export default class AffineCipherEncoder extends SimpleSubstitutionEncoder {
   }
 
   /**
-   * Performs encode or decode on given character, index and content.
-   * @protected
-   * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content
-   * @param {Chain} content Content to be translated
+   * Performs encode or decode on given content.
+   * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {number} Resulting Unicode code point
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
-  performCharTranslate (codePoint, index, content, isEncode) {
-    const a = this.getSettingValue('a')
-    const b = this.getSettingValue('b')
-    const alphabet = this.getSettingValue('alphabet')
-    const m = alphabet.getLength()
-    const x = alphabet.indexOfCodePoint(codePoint)
+  performTranslate (content, isEncode) {
+    const { a, b, alphabet, includeForeignChars } = this.getSettingValues()
 
-    if (x === -1) {
-      // Character not in alphabet
-      if (!this.getSettingValue('includeForeignChars')) {
-        // Return null character
-        return 0
+    const m = alphabet.getLength()
+    const n = content.getLength()
+    const result = new Array(n).fill(0)
+
+    let codePoint, i, c, x, y
+    for (i = 0; i < n; i++) {
+      codePoint = content.getCodePointAt(i)
+
+      x = alphabet.indexOfCodePoint(codePoint)
+      if (x === -1) {
+        // Character not in alphabet
+        if (includeForeignChars) {
+          // Take over character unchanged
+          result[i] = codePoint
+        }
       } else {
-        // Leave it unchanged
-        return codePoint
+        if (isEncode) {
+          // E(x) = (ax + b) mod m
+          y = MathUtil.mod(a * x + b, m)
+        } else {
+          // D(x) = (a^-1(x - b)) mod m
+          c = MathUtil.xgcd(a, m)[0]
+          y = MathUtil.mod(c * (x - b), m)
+        }
+        result[i] = alphabet.getCodePointAt(y)
       }
     }
 
-    let y
-    if (isEncode) {
-      // E(x) = (ax + b) mod m
-      y = MathUtil.mod(a * x + b, m)
-    } else {
-      // D(x) = (a^-1(x - b)) mod m
-      let [c] = MathUtil.xgcd(a, m)
-      y = MathUtil.mod(c * (x - b), m)
-    }
-
-    return alphabet.getCodePointAt(y)
+    return result
   }
 
   /**

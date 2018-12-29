@@ -1,5 +1,6 @@
 
 import AffineCipherEncoder from './AffineCipher'
+import Encoder from '../Encoder'
 import MathUtil from '../MathUtil'
 
 const meta = {
@@ -9,12 +10,13 @@ const meta = {
   type: 'encoder'
 }
 
+const defaultAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 const defaultShift = 7
 
 /**
  * Encoder brick for Caesar Cipher encoding and decoding
  */
-export default class CaesarCipherEncoder extends AffineCipherEncoder {
+export default class CaesarCipherEncoder extends Encoder {
   /**
    * Returns brick meta.
    * @return {object}
@@ -28,56 +30,98 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
    */
   constructor () {
     super()
-
-    // Set a setting to 1 and hide it
-    this.getSetting('a')
-      .setValue(1)
-      .setVisible(false)
-
-    // Set b setting to shift value and hide it
-    this.getSetting('b')
-      .setValue(defaultShift)
-      .setVisible(false)
-
-    // Add shift setting
-    this.addSetting({
-      name: 'caesarCipherShift',
-      type: 'number',
-      label: 'Shift',
-      priority: 10,
-      value: defaultShift,
-      randomizeValue: this.randomizeShiftValue.bind(this),
-      options: {
-        integer: true
+    this.addSettings([
+      {
+        name: 'shift',
+        type: 'number',
+        label: 'Shift',
+        priority: 10,
+        value: defaultShift,
+        randomizeValue: this.randomizeShiftValue.bind(this),
+        options: {
+          integer: true
+        }
+      },
+      {
+        name: 'alphabet',
+        type: 'alphabet',
+        value: defaultAlphabet,
+        randomizable: false
+      },
+      {
+        name: 'caseSensitivity',
+        type: 'boolean',
+        width: 6,
+        value: false,
+        randomizable: false
+      },
+      {
+        name: 'includeForeignChars',
+        type: 'boolean',
+        label: 'Foreign Chars',
+        width: 6,
+        value: true,
+        randomizable: false,
+        options: {
+          trueLabel: 'Include',
+          falseLabel: 'Ignore'
+        }
       }
+    ])
+
+    // Define internal affine cipher
+    this._affineCipher = new AffineCipherEncoder()
+    this._affineCipher.setSettingValues({
+      alphabet: defaultAlphabet,
+      a: 1,
+      b: defaultShift
     })
   }
 
   /**
+   * Performs encode or decode on given content.
+   * @param {Chain} content
+   * @param {boolean} isEncode True for encoding, false for decoding
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
+   */
+  performTranslate (content, isEncode) {
+    return this._affineCipher.translate(content, isEncode)
+  }
+
+  /**
    * Triggered when a setting field has changed.
-   * @protected
    * @param {Field} setting Sender setting field
    * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
-      case 'caesarCipherShift':
       case 'alphabet':
-        const shiftSetting = this.getSetting('caesarCipherShift')
+      case 'shift':
+        const shiftSetting = this.getSetting('shift')
         const alphabetSetting = this.getSetting('alphabet')
 
-        // Needs valid alphabet and shift setting to set
+        // Needs valid alphabet and shift setting to calculate
         // affine cipher's b setting
         if (alphabetSetting.isValid() && shiftSetting.isValid()) {
-          let shift = shiftSetting.getValue()
+          const alphabet = alphabetSetting.getValue()
 
           // Handle negative shift values
-          const m = alphabetSetting.getValue().getLength()
-          shift = MathUtil.mod(shift, m)
+          const shift = MathUtil.mod(
+            shiftSetting.getValue(),
+            alphabet.getLength())
 
-          // Changing the shift setting changes the hidden b setting
-          this.setSettingValue('b', shift)
+          // Update settings of internal affine cipher
+          this._affineCipher.setSettingValue('alphabet', alphabet)
+          this._affineCipher.setSettingValue('b', shift)
         }
+        break
+
+      case 'caseSensitivity':
+        this._affineCipher.setSettingValue('caseSensitivity', value)
+        break
+
+      case 'includeForeignChars':
+        this._affineCipher.setSettingValue('includeForeignChars', value)
         break
     }
     super.settingValueDidChange(setting, value)
@@ -85,7 +129,6 @@ export default class CaesarCipherEncoder extends AffineCipherEncoder {
 
   /**
    * Generates a random shift setting value.
-   * @protected
    * @param {Random} random Random instance
    * @param {Setting} setting Plugboard setting
    * @return {string} Randomized plugboard setting value

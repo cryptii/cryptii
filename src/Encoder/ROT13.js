@@ -1,5 +1,5 @@
 
-import SimpleSubstitutionEncoder from './SimpleSubstitution'
+import Encoder from '../Encoder'
 
 const meta = {
   name: 'rot13',
@@ -11,7 +11,7 @@ const meta = {
 /**
  * Encoder brick for ROT13 encoding and decoding
  */
-export default class ROT13Encoder extends SimpleSubstitutionEncoder {
+export default class ROT13Encoder extends Encoder {
   /**
    * Returns brick meta.
    * @return {object}
@@ -49,35 +49,32 @@ export default class ROT13Encoder extends SimpleSubstitutionEncoder {
   }
 
   /**
-   * Performs encode or decode on given character, index and content.
-   * @protected
-   * @param {number} codePoint Unicode code point
-   * @param {number} index Unicode code point index inside content
-   * @param {Chain} content Content to be translated.
+   * Performs encode or decode on given content.
+   * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {number} Resulting Unicode code point
+   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
-  performCharTranslate (codePoint, index, content, isEncode) {
+  performTranslate (content, isEncode) {
     const variant = this.getSettingValue('variant')
-
-    if (variant === 'rot5' || variant === 'rot18') {
+    return content.getCodePoints().map(codePoint => {
       // Rotate numbers 0-9
-      codePoint = this._rotateCodePoint(codePoint, 48, 57)
-    }
+      if (variant === 'rot5' || variant === 'rot18') {
+        codePoint = this._rotateCodePoint(codePoint, 48, 57)
+      }
 
-    if (variant === 'rot13' || variant === 'rot18') {
-      // Rotate lowercase letters a-z
-      codePoint = this._rotateCodePoint(codePoint, 97, 122)
-      // Rotate uppercase letters A-Z
-      codePoint = this._rotateCodePoint(codePoint, 65, 90)
-    }
+      // Rotate lowercase letters a-z, A-Z
+      if (variant === 'rot13' || variant === 'rot18') {
+        codePoint = this._rotateCodePoint(codePoint, 97, 122)
+        codePoint = this._rotateCodePoint(codePoint, 65, 90)
+      }
 
-    if (variant === 'rot47') {
       // Rotate characters !-~
-      codePoint = this._rotateCodePoint(codePoint, 33, 126)
-    }
+      if (variant === 'rot47') {
+        codePoint = this._rotateCodePoint(codePoint, 33, 126)
+      }
 
-    return codePoint
+      return codePoint
+    })
   }
 
   /**
