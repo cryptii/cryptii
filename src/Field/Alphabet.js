@@ -23,24 +23,17 @@ export default class AlphabetField extends TextField {
    * @return {boolean|object} True if valid, message object or false if invalid
    */
   validateValue (rawValue) {
-    const result = super.validateValue(rawValue)
-    if (result !== true) {
-      return result
-    }
-
-    // filter value
+    // Filter value before validating it
     const value = this.filterValue(rawValue)
 
-    // check if alphabet only contains unique characters
-    // while respecting case sensitivity
-    const alphabet = this.isCaseSensitive() ? value : value.toLowerCase()
-    if (!ArrayUtil.isUnique(alphabet.getCodePoints())) {
+    // Check if alphabet only contains unique characters
+    if (!ArrayUtil.isUnique(value.getCodePoints())) {
       return {
         key: 'alphabetCharactersNotUnique',
         message: `The value must not contain duplicate characters`
       }
     }
 
-    return true
+    return super.validateValue(rawValue)
   }
 }

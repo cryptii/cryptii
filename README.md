@@ -34,6 +34,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `morse-code` | Alphabets | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
 | `spelling-alphabet` | Alphabets | Several [spelling alphabets](https://en.wikipedia.org/wiki/Spelling_alphabet) |
 | `rot13` | Substitution cipher | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
+| `simple-substitution` | Substitution cipher | [Simple substitution](https://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution) |
 | `affine-cipher` | Substitution cipher | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
 | `caesar-cipher` | Substitution cipher | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
 | `atbash` | Substitution cipher | [Atbash](https://en.wikipedia.org/wiki/Atbash) using latin or hebrew alphabet |

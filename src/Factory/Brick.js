@@ -17,6 +17,7 @@ import IntegerEncoder from '../Encoder/Integer'
 import MorseCodeEncoder from '../Encoder/MorseCode'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import ROT13Encoder from '../Encoder/ROT13'
+import SimpleSubstitutionEncoder from '../Encoder/SimpleSubstitution'
 import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
 import TextTransformEncoder from '../Encoder/TextTransform'
 import TextViewer from '../Viewer/Text'
@@ -46,6 +47,7 @@ export default class BrickFactory extends Factory {
       BitwiseOperationEncoder,
       MorseCodeEncoder,
       SpellingAlphabetEncoder,
+      SimpleSubstitutionEncoder,
       ROT13Encoder,
       AffineCipherEncoder,
       CaesarCipherEncoder,
