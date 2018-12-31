@@ -11,7 +11,7 @@ const meta = {
 }
 
 const defaultPlaintextAlphabet = 'abcdefghijklmnopqrstuvwxyz'
-const defaultCiphertextAlphabet = 'crypti'
+const defaultCiphertextAlphabet = 'zyxwvutsrqponmlkjihgfedcba'
 
 /**
  * Encoder brick for alphabetical substitution
