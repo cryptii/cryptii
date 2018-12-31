@@ -2,10 +2,10 @@
 import { describe } from 'mocha'
 
 import EncoderTester from '../Helper/EncoderTester'
-import SimpleSubstitutionEncoder from '../../src/Encoder/SimpleSubstitution'
+import AlphabeticalSubstitutionEncoder from '../../src/Encoder/AlphabeticalSubstitution'
 
-/** @test {SimpleSubstitutionEncoder} */
-describe('SimpleSubstitutionEncoder', () => EncoderTester.test(SimpleSubstitutionEncoder, [
+/** @test {AlphabeticalSubstitutionEncoder} */
+describe('AlphabeticalSubstitutionEncoder', () => EncoderTester.test(AlphabeticalSubstitutionEncoder, [
   {
     // Atbash example
     settings: {

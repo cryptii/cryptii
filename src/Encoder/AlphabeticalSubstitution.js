@@ -4,8 +4,8 @@ import Encoder from '../Encoder'
 import ArrayUtil from '../ArrayUtil'
 
 const meta = {
-  name: 'simple-substitution',
-  title: 'Simple substitution',
+  name: 'alphabetical-substitution',
+  title: 'Alphabetical substitution',
   category: 'Substitution cipher',
   type: 'encoder'
 }
@@ -14,9 +14,9 @@ const defaultPlaintextAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 const defaultCiphertextAlphabet = 'crypti'
 
 /**
- * Encoder brick for simple substitution encoding and decoding
+ * Encoder brick for alphabetical substitution
  */
-export default class SimpleSubstitutionEncoder extends Encoder {
+export default class AlphabeticalSubstitutionEncoder extends Encoder {
   /**
    * Returns brick meta.
    * @return {object}
