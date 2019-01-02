@@ -11,10 +11,11 @@ import Viewable from './Viewable'
 export default class Field extends Viewable {
   /**
    * Constructor
-   * @param {string} name Field name
+   * @param {string} name Field name; expected to be camel cased
    * @param {object} [spec] Field spec
    * @param {string} [spec.label] Field label, defaults to title cased name
    * @param {mixed} [spec.value] Default field value
+   * @param {object} [spec.delegate] Field delegate
    * @param {boolean} [spec.randomizable=true] Wether field is randomizable
    * @param {boolean} [spec.visible=true] Wether field is visible
    * @param {number} [spec.priority=0] Fields will be ordered by
@@ -36,8 +37,8 @@ export default class Field extends Viewable {
 
     this._name = name
     this._value = spec.value !== undefined ? spec.value : null
+    this._delegate = spec.delegate || null
     this._randomizable = spec.randomizable !== false
-    this._delegate = null
 
     // Validation
     this._valid = true
@@ -82,7 +83,7 @@ export default class Field extends Viewable {
 
   /**
    * Sets wether the field is visible.
-   * @param {boolean} visible
+   * @param {boolean} visible Field visibility
    * @return {Field} Fluent interface
    */
   setVisible (visible) {
@@ -133,6 +134,9 @@ export default class Field extends Viewable {
   setWidth (width) {
     this._width = width
     this.updateView()
+    if (this._delegate && this._delegate.fieldNeedsLayout) {
+      this._delegate.fieldNeedsLayout(this)
+    }
     return this
   }
 
@@ -142,14 +146,6 @@ export default class Field extends Viewable {
    */
   getDelegate () {
     return this._delegate
-  }
-
-  /**
-   * Returns true, if the delegate is set.
-   * @return {boolean} True, if delegate is set
-   */
-  hasDelegate () {
-    return this._delegate !== null
   }
 
   /**
@@ -232,6 +228,7 @@ export default class Field extends Viewable {
     const value = this.filterValue(rawValue)
 
     // Check if value has changed
+    // Use the special comparison method when dealing with chain instances
     const equal = value instanceof Chain
       ? value.isEqualTo(this._value)
       : this._value === value

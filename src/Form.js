@@ -221,14 +221,6 @@ export default class Form extends Viewable {
   }
 
   /**
-   * Returns true, if the delegate is set.
-   * @return {boolean} True, if delegate is set
-   */
-  hasDelegate () {
-    return this._delegate !== null
-  }
-
-  /**
    * Sets the delegate.
    * @param {?object} delegate
    * @return {Form} Fluent interface
@@ -359,7 +351,8 @@ export default class Form extends Viewable {
    */
   fieldValueDidChange (field, value) {
     // Notify delegate, if any
-    this.hasDelegate() &&
+    if (this._delegate && this._delegate.formValueDidChange) {
       this.getDelegate().formValueDidChange(this, field, value)
+    }
   }
 }
