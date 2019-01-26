@@ -119,7 +119,13 @@ gulp.task('script', () => {
     .pipe(rename(`${meta.name}.js`))
 
     // minify code
-    .pipe(uglify())
+    .pipe(uglify({
+      // Compression in Uglify 3.4.9 breaks execution order:
+      // https://github.com/mishoo/UglifyJS2/issues/3278
+      compress: {
+        conditionals: false
+      }
+    }))
 
     // append header
     .pipe(header(distHeader))
