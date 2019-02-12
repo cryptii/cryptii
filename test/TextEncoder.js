@@ -56,7 +56,7 @@ describe('TextEncoder', () => {
     })
     it('should UTF-8 encode ASCII characters to the same byte values', () => {
       const bytes = TextEncoder.bytesFromCodePoints(exampleASCII.codePoints, 'utf8')
-      assert.deepEqual(bytes, exampleASCII.codePoints)
+      assert.deepStrictEqual(bytes, new Uint8Array(exampleASCII.codePoints))
     })
     it('should UTF-8 encode first possible code points of certain byte lengths', () => {
       assert.deepStrictEqual(
@@ -97,7 +97,7 @@ describe('TextEncoder', () => {
     it('should UTF-8 decode byte values to the same ASCII characters', () => {
       const bytes = new Uint8Array(exampleASCII.codePoints)
       const codePoints = TextEncoder.codePointsFromBytes(bytes, 'utf8')
-      assert.deepEqual(exampleASCII.codePoints, codePoints)
+      assert.deepStrictEqual(exampleASCII.codePoints, codePoints)
     })
     it('should UTF-8 decode first possible code points of certain byte lengths', () => {
       assert.deepStrictEqual(

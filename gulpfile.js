@@ -30,7 +30,7 @@ const paths = {
   test: './test'
 }
 
-// try to retrieve current commit hash
+// Try to retrieve current commit hash
 let distRevision
 try {
   distRevision = revision.long()
@@ -38,7 +38,7 @@ try {
   distRevision = 'unknown'
 }
 
-// compose dist header
+// Compose dist header
 const distHeader =
   `/*! ${meta.name} v${meta.version} (commit ${distRevision})` +
   ` - (c) ${meta.author} */\n`
@@ -61,8 +61,8 @@ gulp.task('script-test', () => {
     .pipe(mocha({
       reporter: 'dot',
       require: [
-        'babel-core/register',
-        'babel-polyfill'
+        '@babel/polyfill',
+        '@babel/register'
       ]
     }))
 })
@@ -85,17 +85,12 @@ gulp.task('script', () => {
         babel({
           babelrc: false,
           presets: [
-            ['env', {
+            ['@babel/preset-env', {
               loose: true,
               modules: false
             }]
           ],
-          plugins: [
-            'external-helpers',
-            ['babel-plugin-transform-builtin-extend', {
-              globals: ['Error']
-            }]
-          ],
+          plugins: [],
           exclude: ['node_modules/**']
         }),
         nodeResolve({
@@ -115,10 +110,10 @@ gulp.task('script', () => {
       }
     }))
 
-    // set output filename
+    // Set output filename
     .pipe(rename(`${meta.name}.js`))
 
-    // minify code
+    // Minify code
     .pipe(uglify({
       // Compression in Uglify 3.4.9 breaks execution order:
       // https://github.com/mishoo/UglifyJS2/issues/3278
@@ -127,30 +122,30 @@ gulp.task('script', () => {
       }
     }))
 
-    // append header
+    // Append header
     .pipe(header(distHeader))
 
-  // create polyfill stream from existing files
+  // Create polyfill stream from existing files
   const polyfillStream = gulp.src([
     './node_modules/dom4/build/dom4.js',
-    './node_modules/babel-polyfill/dist/polyfill.min.js'
+    './node_modules/@babel/polyfill/dist/polyfill.min.js'
   ], { base: '.' })
     .pipe(sourcemaps.init())
 
-  // compose library bundle
+  // Compose library bundle
   const libraryBundleStream = appStream.pipe(clone())
-    // render sourcemaps
+    // Render sourcemaps
     .pipe(sourcemaps.write('.'))
 
-  // compose browser bundle
+  // Compose browser bundle
   const browserBundleStream =
     streamQueue({ objectMode: true }, polyfillStream, appStream)
-      // concat polyfill and library
+      // Concat polyfill and library
       .pipe(concat(`${meta.name}-browser.js`))
-      // render sourcemaps
+      // Render sourcemaps
       .pipe(sourcemaps.write('.'))
 
-  // save bundles and sourcemaps
+  // Save bundles and sourcemaps
   const projectStream =
     streamQueue({ objectMode: true }, libraryBundleStream, browserBundleStream)
       .pipe(gulp.dest(paths.scriptDist))
@@ -165,10 +160,10 @@ gulp.task('style-clean', () => {
 gulp.task('style', () => {
   return gulp.src(paths.style + '/main.scss')
 
-    // init sourcemaps
+    // Init sourcemaps
     .pipe(sourcemaps.init())
 
-    // compile sass to css
+    // Compile sass to css
     .pipe(
       sass({
         includePaths: ['node_modules'],
@@ -180,16 +175,16 @@ gulp.task('style', () => {
         .on('error', sass.logError)
     )
 
-    // autoprefix css
+    // Autoprefix css
     .pipe(autoprefixer('last 2 version', 'ie 11', '> 1%'))
 
-    // minify
+    // Minify
     .pipe(cleanCSS({ processImport: false }))
 
-    // append header
+    // Append header
     .pipe(header(distHeader))
 
-    // save result
+    // Save result
     .pipe(rename(meta.name + '.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.styleDist))
