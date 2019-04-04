@@ -283,7 +283,7 @@ const rotorTable = [
   // Enigma I "Sondermaschine"
   'I-S',        'I',          'veosirzujdqckgwypnxaflthmb', 'q',
   'II-S',       'II',         'uemoatqlshpkcyfwjzbgvxindr', 'e',
-  'III-S',      'III',        'tzhxmmbsipnurjfdeqvcwglaoy', 'v',
+  'III-S',      'III',        'tzhxmbsipnurjfdkeqvcwglaoy', 'v',
   'UKW-S',      'UKW',        'ciagsndrbytpzfulvhekoqxwjm', '',
 
   // Enigma D
@@ -782,6 +782,12 @@ export default class EnigmaEncoder extends Encoder {
     return charIndex
   }
 
+  /**
+   * Function describing the given position value in a human-readable way.
+   * @param {number} value Field value
+   * @param {Field} setting Sender
+   * @return {?string} Shift label
+   */
   describePositionValue (value, setting) {
     return alphabet[value - 1].toUpperCase()
   }
