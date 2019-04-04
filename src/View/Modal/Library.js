@@ -85,9 +85,8 @@ export default class LibraryModalView extends ModalView {
   renderBrick (brick) {
     return View.createElement('li', {
     }, [
-      View.createElement('a', {
+      View.createElement('button', {
         className: 'modal-library__brick modal-library__brick--' + brick.type,
-        href: '#',
         onClick: evt => {
           evt.preventDefault()
           this.finish(brick.name)

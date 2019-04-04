@@ -92,10 +92,8 @@ export default class NumberFieldView extends FieldView {
       className: 'field-number__display'
     }, [this._$displayValue, this._$displayDescription])
 
-    const $stepDown = View.createElement('a', {
+    const $stepDown = View.createElement('button', {
       className: 'field-number__btn-step-down',
-      href: '#',
-      draggable: false,
       onClick: this.stepDownButtonDidClick.bind(this)
     }, 'Step Down')
 
@@ -103,10 +101,8 @@ export default class NumberFieldView extends FieldView {
       className: 'field-number__value'
     }, [this._$input, this._$display])
 
-    const $stepUp = View.createElement('a', {
+    const $stepUp = View.createElement('button', {
       className: 'field-number__btn-step-up',
-      href: '#',
-      draggable: false,
       onClick: this.stepUpButtonDidClick.bind(this)
     }, 'Step Up')
 

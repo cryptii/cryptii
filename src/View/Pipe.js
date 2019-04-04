@@ -198,14 +198,12 @@ export default class PipeView extends View {
    * @return {HTMLElement}
    */
   _createPipePart (index) {
-    return View.createElement('a', {
+    return View.createElement('button', {
       className: 'pipe__part-pipe',
       onClick: evt => {
         this.getModel().viewAddButtonDidClick(this, index)
         evt.preventDefault()
-      },
-      href: '#',
-      draggable: false
+      }
     }, [
       View.createElement('div', {
         className: 'pipe__btn-add'
@@ -237,14 +235,12 @@ export default class PipeView extends View {
    * @return {HTMLElement}
    */
   _createCollapsedPart (bricks) {
-    return View.createElement('a', {
+    return View.createElement('button', {
       className: `pipe__part-collapsed`,
       onClick: evt => {
         this.getModel().viewHiddenBrickGroupDidClick(this, bricks)
         evt.preventDefault()
-      },
-      href: '#',
-      draggable: false
+      }
     }, bricks.map(() =>
       View.createElement('div', {
         className: `pipe__part-collapsed-fold`

@@ -278,9 +278,8 @@ export default class ModalView extends View {
       View.createElement('span', {
         className: 'modal__title'
       }, this._title),
-      View.createElement('a', {
+      View.createElement('button', {
         className: 'modal__btn-close',
-        href: '#',
         onClick: evt => {
           evt.preventDefault()
           this.cancel()

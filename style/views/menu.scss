@@ -19,6 +19,7 @@
   &__button {
     display: block;
     padding: 8px 16px;
+    width: 100%;
     @extend %t-text;
     line-height: 24px;
     color: $c-text;

@@ -58,20 +58,16 @@ export default class BrickView extends View {
       View.createElement('h3', {
         className: 'brick__title'
       }, [
-        View.createElement('a', {
+        View.createElement('button', {
           className: 'brick__btn-toggle',
-          href: '#',
-          draggable: false,
           onClick: evt => {
             evt.preventDefault()
             this.getModel().viewReplaceButtonDidClick(this)
           }
         }, this.getModel().getTitle())
       ]),
-      View.createElement('a', {
+      View.createElement('button', {
         className: 'brick__btn-menu',
-        href: '#',
-        draggable: false,
         onClick: evt => {
           evt.preventDefault()
           this.toggleMenu()
@@ -119,10 +115,8 @@ export default class BrickView extends View {
         View.createElement('li', {
           className: 'menu__item'
         }, [
-          View.createElement('a', {
+          View.createElement('button', {
             className: 'menu__button',
-            href: '#',
-            draggable: false,
             onClick: evt => {
               evt.preventDefault()
               this.getModel().viewMenuItemDidClick(this, item.name)

@@ -49,6 +49,16 @@ textarea:disabled {
   -webkit-text-fill-color: $c-text;
 }
 
+button {
+  padding: 0;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+
 input[type='text'],
 select,
 textarea {
