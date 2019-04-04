@@ -1,5 +1,4 @@
 
-import AffineCipherEncoder from './AffineCipher'
 import Encoder from '../Encoder'
 import MathUtil from '../MathUtil'
 
@@ -46,7 +45,8 @@ export default class CaesarCipherEncoder extends Encoder {
         name: 'alphabet',
         type: 'alphabet',
         value: defaultAlphabet,
-        randomizable: false
+        randomizable: false,
+        caseSensitivity: false
       },
       {
         name: 'caseSensitivity',
@@ -68,14 +68,6 @@ export default class CaesarCipherEncoder extends Encoder {
         }
       }
     ])
-
-    // Define internal affine cipher
-    this._affineCipher = new AffineCipherEncoder()
-    this._affineCipher.setSettingValues({
-      alphabet: defaultAlphabet,
-      a: 1,
-      b: defaultShift
-    })
   }
 
   /**
@@ -85,7 +77,38 @@ export default class CaesarCipherEncoder extends Encoder {
    * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
   performTranslate (content, isEncode) {
-    return this._affineCipher.translate(content, isEncode)
+    const { alphabet, shift, caseSensitivity, includeForeignChars } =
+      this.getSettingValues()
+
+    // Lowercase content if translation is not case sensitive
+    if (!caseSensitivity) {
+      content = content.toLowerCase()
+    }
+
+    const m = alphabet.getLength()
+    const n = content.getLength()
+    const result = new Array(n)
+
+    let codePoint, x, y
+    let j = 0
+
+    // Go through each character in content
+    for (let i = 0; i < n; i++) {
+      codePoint = content.getCodePointAt(i)
+      x = alphabet.indexOfCodePoint(codePoint)
+      if (x === -1) {
+        // Character is not in the alphabet
+        if (includeForeignChars) {
+          result[j++] = codePoint
+        }
+      } else {
+        // Shift character
+        y = MathUtil.mod(x + shift * (isEncode ? 1 : -1), m)
+        result[j++] = alphabet.getCodePointAt(y)
+      }
+    }
+
+    return result.slice(0, j)
   }
 
   /**
@@ -95,33 +118,9 @@ export default class CaesarCipherEncoder extends Encoder {
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
-      case 'alphabet':
-      case 'shift':
-        const shiftSetting = this.getSetting('shift')
-        const alphabetSetting = this.getSetting('alphabet')
-
-        // Needs valid alphabet and shift setting to calculate
-        // affine cipher's b setting
-        if (alphabetSetting.isValid() && shiftSetting.isValid()) {
-          const alphabet = alphabetSetting.getValue()
-
-          // Handle negative shift values
-          const shift = MathUtil.mod(
-            shiftSetting.getValue(),
-            alphabet.getLength())
-
-          // Update settings of internal affine cipher
-          this._affineCipher.setSettingValue('alphabet', alphabet)
-          this._affineCipher.setSettingValue('b', shift)
-        }
-        break
-
       case 'caseSensitivity':
-        this._affineCipher.setSettingValue('caseSensitivity', value)
-        break
-
-      case 'includeForeignChars':
-        this._affineCipher.setSettingValue('includeForeignChars', value)
+        // Apply case sensitivity on the alphabet setting
+        this.getSetting('alphabet').setCaseSensitivity(value)
         break
     }
     super.settingValueDidChange(setting, value)
