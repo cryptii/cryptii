@@ -452,7 +452,8 @@ export default class EnigmaEncoder extends Encoder {
         options: {
           integer: true,
           min: 1,
-          max: 27
+          max: 27,
+          describeValue: this.describePositionValue.bind(this)
         }
       })
 
@@ -465,7 +466,8 @@ export default class EnigmaEncoder extends Encoder {
         options: {
           integer: true,
           min: 1,
-          max: 27
+          max: 27,
+          describeValue: this.describePositionValue.bind(this)
         }
       })
     }
@@ -778,6 +780,10 @@ export default class EnigmaEncoder extends Encoder {
       : wiring.indexOf(String.fromCharCode(97 + charIndex))
     charIndex = MathUtil.mod(charIndex - position, 26)
     return charIndex
+  }
+
+  describePositionValue (value, setting) {
+    return alphabet[value - 1].toUpperCase()
   }
 
   /**

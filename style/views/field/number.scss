@@ -1,5 +1,6 @@
 
 .field-number {
+  $block: &;
 
   &__field {
     display: flex;
@@ -15,13 +16,15 @@
     flex-grow: 1;
   }
 
-  &__input {
+  &__input,
+  &__display {
     border: none;
     width: 100%;
     height: $field-field-height;
     padding: 0;
     text-align: center;
     @extend %t-field-value;
+    color: $c-text;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -32,6 +35,41 @@
     // remove number input spinners
     -webkit-appearance: none;
     margin: 0;
+  }
+
+  &__display {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: $c-white;
+    pointer-events: none;
+    visibility: hidden;
+    white-space: nowrap;
+
+    &--enabled {
+      visibility: visible;
+    }
+
+    #{$block}__input:focus + & {
+      visibility: hidden;
+    }
+  }
+
+  &__display-description {
+    display: block;
+    margin-left: 8px;
+    color: $c-text-detail;
+
+    // The description may overflow
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__btn-step-down,

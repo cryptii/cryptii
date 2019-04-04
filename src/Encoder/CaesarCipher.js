@@ -38,7 +38,8 @@ export default class CaesarCipherEncoder extends Encoder {
         value: defaultShift,
         randomizeValue: this.randomizeShiftValue.bind(this),
         options: {
-          integer: true
+          integer: true,
+          describeValue: this.describeShiftValue.bind(this)
         }
       },
       {
@@ -122,6 +123,11 @@ export default class CaesarCipherEncoder extends Encoder {
         // Apply case sensitivity on the alphabet setting
         this.getSetting('alphabet').setCaseSensitivity(value)
         break
+      case 'alphabet':
+        // The shift value description depends on the alphabet and thus needs
+        // to be updated when the alphabet changes
+        this.getSetting('shift').setNeedsValueDescriptionUpdate()
+        break
     }
     super.settingValueDidChange(setting, value)
   }
@@ -129,7 +135,7 @@ export default class CaesarCipherEncoder extends Encoder {
   /**
    * Generates a random shift setting value.
    * @param {Random} random Random instance
-   * @param {Setting} setting Plugboard setting
+   * @param {Field} setting Shift setting
    * @return {string} Randomized plugboard setting value
    */
   randomizeShiftValue (random, setting) {
@@ -138,5 +144,25 @@ export default class CaesarCipherEncoder extends Encoder {
       return random.nextInteger(1, alphabetSetting.getValue().getLength() - 1)
     }
     return null
+  }
+
+  /**
+   * Function describing the given shift value in a human-readable way.
+   * @param {number} value Field value
+   * @param {Field} setting Sender
+   * @return {?string} Shift label
+   */
+  describeShiftValue (value, setting) {
+    // The shift value description depends on the alphabet setting
+    if (!this.getSetting('alphabet').isValid()) {
+      return null
+    }
+
+    // Shift the first character of the alphabet to describe the translation
+    const { alphabet, shift } = this.getSettingValues()
+    const plain = alphabet.getCharAt(0)
+    const index = MathUtil.mod(shift, alphabet.getLength())
+    const encoded = alphabet.getCharAt(index)
+    return `${plain}→${encoded}`
   }
 }

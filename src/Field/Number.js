@@ -18,6 +18,9 @@ export default class NumberField extends Field {
    * @param {?boolean} [spec.options.rotate=true] Wether the value should rotate
    * when stepping over limits. Rotation can only be enabled when both min and
    * max values are defined.
+   * @param {function(value: number, field: Field): ?string}
+   * [spec.options.describeValue] Function describing the given numeric value in
+   * a context-based human-readable way. It only gets called with valid values.
    */
   constructor (name, spec) {
     super(name, spec)
@@ -30,6 +33,9 @@ export default class NumberField extends Field {
     this._max = options.max || null
     this._rotate =
       (options.rotate || true) && this._min !== null && this._max !== null
+
+    // Describe value function
+    this._describeValueCallback = options.describeValue || null
   }
 
   /**
@@ -178,6 +184,29 @@ export default class NumberField extends Field {
   setRotate (rotate) {
     this._rotate = rotate && this._min !== null && this._max !== null
     return this
+  }
+
+  /**
+   * Returns a string describing the current numeric field value in a
+   * context-based human-readable way. If no description is available, `null`
+   * is returned.
+   * @return {?string} Value description, if any
+   */
+  getValueDescription () {
+    if (!this.isValid() || this._describeValueCallback === null) {
+      return null
+    }
+    return this._describeValueCallback(this.getValue(), this)
+  }
+
+  /**
+   * Requests an update to the value description in the current view that is not
+   * related to a value change (e.g. when the description is depending on other
+   * field value).
+   * @return {NumberField} Fluent interface
+   */
+  setNeedsValueDescriptionUpdate () {
+    this.hasView() && this.getView().updateValue()
   }
 
   /**

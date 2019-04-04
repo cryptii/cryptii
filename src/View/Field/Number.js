@@ -12,6 +12,12 @@ export default class NumberFieldView extends FieldView {
   constructor () {
     super()
     this._$input = null
+
+    // Field display elements enriching the value with a description, if any
+    this._displayEnabled = false
+    this._$display = null
+    this._$displayValue = null
+    this._$displayDescription = null
   }
 
   /**
@@ -19,7 +25,32 @@ export default class NumberFieldView extends FieldView {
    * @return {FieldView} Fluent interface
    */
   updateValue () {
-    this._$input.value = this.getModel().getValue()
+    const value = this.getModel().getValue()
+    const valueDescription = this.getModel().getValueDescription()
+    const displayEnabled = valueDescription !== null
+
+    // Update input value
+    this._$input.value = value
+
+    // Check if display enable state has changed
+    if (this._displayEnabled !== displayEnabled) {
+      this._displayEnabled = displayEnabled
+      this._$display.classList.toggle(
+        'field-number__display--enabled', displayEnabled)
+
+      if (!displayEnabled) {
+        // Clean up display values
+        this._$displayValue.innerText = ''
+        this._$displayDescription.innerText = ''
+      }
+    }
+
+    if (displayEnabled) {
+      // Update display value and description
+      this._$displayValue.innerText = value
+      this._$displayDescription.innerText = valueDescription
+    }
+
     return this
   }
 
@@ -49,6 +80,18 @@ export default class NumberFieldView extends FieldView {
       onBlur: evt => this.blur()
     })
 
+    this._$displayValue = View.createElement('span', {
+      className: 'field-number__display-value'
+    })
+
+    this._$displayDescription = View.createElement('span', {
+      className: 'field-number__display-description'
+    })
+
+    this._$display = View.createElement('div', {
+      className: 'field-number__display'
+    }, [this._$displayValue, this._$displayDescription])
+
     const $stepDown = View.createElement('a', {
       className: 'field-number__btn-step-down',
       href: '#',
@@ -58,7 +101,7 @@ export default class NumberFieldView extends FieldView {
 
     const $value = View.createElement('div', {
       className: 'field-number__value'
-    }, this._$input)
+    }, [this._$input, this._$display])
 
     const $stepUp = View.createElement('a', {
       className: 'field-number__btn-step-up',
