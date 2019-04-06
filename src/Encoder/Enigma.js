@@ -406,7 +406,6 @@ export default class EnigmaEncoder extends Encoder {
       label: `Position`,
       type: 'number',
       value: 1,
-      randomizable: false,
       width: 4,
       options: {
         integer: true,
