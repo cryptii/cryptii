@@ -21,6 +21,11 @@ export default class Pipe extends Viewable {
     super()
     this._viewPrototype = PipeView
     this._brickFactory = null
+    this._service = null
+
+    // Meta
+    this._title = null
+    this._description = null
 
     // Empty array of bricks and brick state objects
     this._bricks = []
@@ -33,6 +38,42 @@ export default class Pipe extends Viewable {
 
     // Lazily instantiated library modal view
     this._libraryModalView = null
+  }
+
+  /**
+   * Returns the title.
+   * @return {string|null}
+   */
+  getTitle () {
+    return this._title
+  }
+
+  /**
+   * Sets the title.
+   * @param {string|null} title Pipe title
+   * @return {Pipe} Fluent interface
+   */
+  setTitle (title) {
+    this._title = title
+    return this
+  }
+
+  /**
+   * Returns the description.
+   * @return {string|null}
+   */
+  getDescription () {
+    return this._description
+  }
+
+  /**
+   * Sets the description.
+   * @param {string|null} description Pipe description
+   * @return {Pipe} Fluent interface
+   */
+  setDescription (description) {
+    this._description = description
+    return this
   }
 
   /**
@@ -50,6 +91,23 @@ export default class Pipe extends Viewable {
    */
   setBrickFactory (brickFactory) {
     this._brickFactory = brickFactory
+    return this
+  }
+
+  /**
+   * Returns the service instance.
+   * @return {Service|null}
+   */
+  getService () {
+    return this._service
+  }
+
+  /**
+   * Sets the service instance.
+   * @param {Service} service Service instance
+   */
+  setService (service) {
+    this._service = service
     return this
   }
 
@@ -857,6 +915,15 @@ export default class Pipe extends Viewable {
   didCreateView (view) {
     // Add each brick as subview
     this._bricks.forEach(brick => view.addSubview(brick.getView()))
+  }
+
+  /**
+   * Stores this pipe using the backend service.
+   * @return {string} Pipe URL
+   */
+  async store () {
+    const data = await this.getService().storePipe(this)
+    return data.url
   }
 
   /**

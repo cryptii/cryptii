@@ -7,9 +7,46 @@
 
     <title>The Enigma machine: Encrypt and decrypt online — Cryptii</title>
 
-    <!-- style -->
+    <!-- Style -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500%7CSource+Code+Pro:400&amp;subset=latin-ext">
     <link rel="stylesheet" href="dist/style/cryptii.css">
+
+    <!-- Script -->
+    <script async src="dist/script/cryptii-browser.js" data-cryptii-init></script>
+    <script type="application/json" data-cryptii-config>
+      {
+        "serviceEndpoint": "https://cryptii.com/api"
+      }
+    </script>
+    <script type="application/vnd.cryptii.pipe+json" data-cryptii-pipe>
+      {
+        "bricks": [
+          {
+            "name": "text",
+            "alias": "Plaintext"
+          },
+          {
+            "name": "enigma",
+            "settings": {
+              "model": "M3",
+              "rotor1": "VI",
+              "rotor2": "I",
+              "rotor3": "III",
+              "position1": 1,
+              "position2": 17,
+              "position3": 12,
+              "reflector": "UKW-B",
+              "plugboard": "bq cr di ej kw mt os px uz gh"
+            }
+          },
+          {
+            "name": "text",
+            "alias": "Ciphertext"
+          }
+        ],
+        "content": "The quick brown fox jumps over 13 lazy dogs."
+      }
+    </script>
 
   </head>
   <body>
@@ -22,7 +59,7 @@
             <a class="header__brand" href="index.html">Cryptii</a>
           </div>
           <div class="header__item">
-            <span class="header__badge">dev</span>
+            <span class="header__badge">local</span>
           </div>
         </div>
       </header>
@@ -38,36 +75,6 @@
           </div>
         </header>
         <div class="pipe__scrollable"></div>
-        <script class="pipe__data" type="application/json">
-        {
-          "version": 1,
-          "bricks": [
-            {
-              "name": "text",
-              "alias": "Plaintext"
-            },
-            {
-              "name": "enigma",
-              "settings": {
-                "model": "M3",
-                "rotor1": "VI",
-                "rotor2": "I",
-                "rotor3": "III",
-                "position1": 1,
-                "position2": 17,
-                "position3": 12,
-                "reflector": "UKW-B",
-                "plugboard": "bq cr di ej kw mt os px uz gh"
-              }
-            },
-            {
-              "name": "text",
-              "alias": "Ciphertext"
-            }
-          ],
-          "content": "The quick brown fox jumps over 13 lazy dogs."
-        }
-        </script>
       </article>
 
       <footer class="app__footer footer">
@@ -102,15 +109,6 @@
       </footer>
 
     </div>
-
-    <!-- script -->
-    <script src="dist/script/cryptii-browser.js"></script>
-    <script>
-    (function () {
-      'use strict';
-      cryptii.App.getInstance().run();
-    })();
-    </script>
 
   </body>
 </html>

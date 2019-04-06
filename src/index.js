@@ -1,5 +1,7 @@
 
-export { default as App } from './App'
+import App from './App'
+
+export { App }
 export { default as ArrayUtil } from './ArrayUtil'
 export { default as Brick } from './Brick'
 export { default as BrickFactory } from './Factory/Brick'
@@ -26,3 +28,21 @@ export { default as TextEncodingError } from './Error/TextEncoding'
 export { default as View } from './View'
 export { default as Viewable } from './Viewable'
 export { default as Viewer } from './Viewer'
+
+// Check if we are running in the browser
+if (typeof window !== 'undefined') {
+  // Check if the init flag is set before initializing the app
+  if (document.querySelector('script[data-cryptii-init]') !== null) {
+    // Read optional pipe content
+    const $pipeData = document.querySelector('script[data-cryptii-pipe]')
+    const pipeData = $pipeData !== null ? JSON.parse($pipeData.innerHTML) : null
+
+    // Read optional app config
+    const $config = document.querySelector('script[data-cryptii-config]')
+    const config = $config !== null ? JSON.parse($config.innerHTML) : {}
+
+    // Configure app and bootstrap it
+    const app = new App(config)
+    app.run(pipeData)
+  }
+}
