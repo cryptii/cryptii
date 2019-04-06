@@ -42,7 +42,7 @@ export default class VigenereCipherEncoder extends Encoder {
             'trithemius-cipher'
           ],
           labels: [
-            'Standard',
+            'Standard Vigenère cipher',
             'Beaufort cipher',
             'Variant Beaufort cipher',
             'Trithemius cipher'

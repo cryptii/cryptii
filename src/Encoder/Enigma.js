@@ -411,7 +411,8 @@ export default class EnigmaEncoder extends Encoder {
       options: {
         integer: true,
         min: 1,
-        max: 27
+        max: 27,
+        describeValue: this.describePositionValue.bind(this)
       }
     })
 
@@ -424,7 +425,8 @@ export default class EnigmaEncoder extends Encoder {
       options: {
         integer: true,
         min: 1,
-        max: 27
+        max: 27,
+        describeValue: this.describePositionValue.bind(this)
       }
     })
 
