@@ -29,10 +29,13 @@ export default class NumberField extends Field {
     const options = spec.options || {}
     this._integer = options.integer || false
     this._step = options.step || 1
-    this._min = options.min || null
-    this._max = options.max || null
+    this._min = options.min !== undefined ? options.min : null
+    this._max = options.max !== undefined ? options.max : null
+
     this._rotate =
-      (options.rotate || true) && this._min !== null && this._max !== null
+      options.rotate !== undefined
+        ? options.rotate
+        : (this._min !== null && this._max !== null)
 
     // Describe value function
     this._describeValueCallback = options.describeValue || null
@@ -217,7 +220,7 @@ export default class NumberField extends Field {
   validateValue (rawValue) {
     const value = this.filterValue(rawValue)
 
-    // is numeric
+    // Validate wether the value is a finite number
     if (isNaN(value) || !isFinite(value)) {
       return {
         key: 'numberNotNumeric',
@@ -225,7 +228,7 @@ export default class NumberField extends Field {
       }
     }
 
-    // validate min value
+    // Validate min value
     if (this._min !== null && value < this._min) {
       return {
         key: 'numberTooSmall',
@@ -233,7 +236,7 @@ export default class NumberField extends Field {
       }
     }
 
-    // validate max value
+    // Validate max value
     if (this._max !== null && value >= this._max) {
       return {
         key: 'numberTooLarge',

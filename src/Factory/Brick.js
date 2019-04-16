@@ -24,6 +24,7 @@ import TextViewer from '../Viewer/Text'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import URLEncoder from '../Encoder/URL'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
+import BootstringEncoder from '../Encoder/Bootstring'
 
 // Singleton instance
 let instance = null
@@ -57,6 +58,7 @@ export default class BrickFactory extends Factory {
       Base64Encoder,
       Ascii85Encoder,
       URLEncoder,
+      BootstringEncoder,
       UnicodeCodePointsEncoder,
       IntegerEncoder,
       BlockCipherEncoder,

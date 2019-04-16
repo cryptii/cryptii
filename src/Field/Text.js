@@ -188,7 +188,7 @@ export default class TextField extends Field {
       }
     }
 
-    return super.validateValue(rawValue)
+    return super.validateValue(value)
   }
 
   /**
