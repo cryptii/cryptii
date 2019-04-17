@@ -204,7 +204,8 @@ export default class BootstringEncoder extends Encoder {
         nonBasicInput.push(codePoint)
       } else {
         throw new InvalidInputError(
-          `Unexpected code point '${codePoint}' at ${i}`)
+          `Unexpected code point at index ${i}, consider changing initial n ` +
+          `to include this code point`)
       }
     }
 
@@ -455,10 +456,12 @@ export default class BootstringEncoder extends Encoder {
       case 'basicRangeStart':
         this.getSetting('basicRangeEnd').setMin(setting.getValue() + minBase)
         this.getSetting('digitMapping').revalidateValue()
+        this.getSetting('delimiter').revalidateValue()
         break
       case 'basicRangeEnd':
         this.getSetting('basicRangeStart').setMax(setting.getValue() - minBase)
         this.getSetting('digitMapping').revalidateValue()
+        this.getSetting('delimiter').revalidateValue()
         break
       case 'digitMapping':
         this.getSetting('tmax').setMax(setting.getValue().getLength())
@@ -466,10 +469,6 @@ export default class BootstringEncoder extends Encoder {
       case 'tmax':
         this.getSetting('tmin').setMax(setting.getValue())
         break
-    }
-
-    if (setting.getName() === 'model') {
-      this.applyModel(value)
     }
   }
 
@@ -533,8 +532,8 @@ export default class BootstringEncoder extends Encoder {
       return {
         key: 'bootstringDelimiterInvalid',
         message:
-          `The delimiter must be in the basic code point range with no ` +
-          `digit mapped to it`
+          `The value must be part of the basic code point range while ` +
+          `not having a digit mapped to it`
       }
     }
 
@@ -564,7 +563,7 @@ export default class BootstringEncoder extends Encoder {
         key: 'bootstringInitialBiasInvalid',
         message:
           'The value must be chosen such that ' +
-          'initial_bias mod base <= base - tmin.'
+          'initial_bias mod base <= base - tmin'
       }
     }
 
