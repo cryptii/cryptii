@@ -44,10 +44,12 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `ascii85` | Encoding | [Ascii85 / Base85](https://en.wikipedia.org/wiki/Ascii85) incl. variant [Z85](https://rfc.zeromq.org/spec:32/Z85/) |
 | `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
 | `url-encoding` | Encoding | [URL encoding / Percent-encoding](https://en.wikipedia.org/wiki/Percent-encoding) |
+| `bootstring` | Encoding | [Bootstring](https://tools.ietf.org/html/rfc3492) |
+| ↳ `punycode` | Encoding | [Punycode](https://tools.ietf.org/html/rfc3492) |
 | `integer` | Encoding | Translates between bytes and [integers](https://en.wikipedia.org/wiki/Integer_(computer_science)) |
 | `block-cipher` | Modern cryptography | [Block ciphers](https://en.wikipedia.org/wiki/Block_cipher) incl. [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) |
 | `hash` | Modern cryptography | Creating a [message digest](https://en.wikipedia.org/wiki/Cryptographic_hash_function) |
-| `hmac` | Modern cryptography | Creating a [Hash-based message authentication code](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code) |
+| ↳ `hmac` | Modern cryptography | Creating a [Hash-based message authentication code](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code) |
 
 Example usage:
 
