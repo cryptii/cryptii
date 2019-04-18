@@ -185,32 +185,23 @@ export default class BootstringEncoder extends Encoder {
     }
 
     // Initialize the state
+    const input = content.getCodePoints()
+    const inputLength = input.length
     let n = initialN
     let bias = initialBias
     let delta = 0
 
     // Copy basic code points in the input to the output in order
-    const input = content.getCodePoints()
-    const inputLength = input.length
     const output = []
-    const nonBasicInput = []
-    let codePoint
-
     for (let i = 0; i < input.length; i++) {
-      codePoint = input[i]
-      if (this._isBasic(codePoint)) {
-        output.push(codePoint)
-      } else if (codePoint >= n) {
-        nonBasicInput.push(codePoint)
-      } else {
+      if (this._isBasic(input[i])) {
+        output.push(input[i])
+      } else if (input[i] < n) {
         throw new InvalidInputError(
           `Unexpected code point at index ${i}, consider changing initial n ` +
           `to include this code point`)
       }
     }
-
-    // Sort non-basic input code points in ascending order
-    nonBasicInput.sort()
 
     let h = output.length
     let b = output.length
@@ -218,27 +209,32 @@ export default class BootstringEncoder extends Encoder {
       output.push(delimiter)
     }
 
-    let m, q, k, t, j
+    let m, q, k, t, c
     while (h < inputLength) {
-      m = nonBasicInput.find(codePoint => codePoint >= n)
+      // Find the next larger non-basic code point >= n
+      m = Number.MAX_SAFE_INTEGER
+      for (c of input) {
+        if (c >= n && c < m && !this._isBasic(c)) {
+          m = c
+        }
+      }
 
-      // Overflow detection
+      // Increase delta enough to advance the decoder's <n,i> state to <m,0>,
+      // but guard against overflow
       if (m - n > MathUtil.div(Number.MAX_SAFE_INTEGER - delta, h + 1)) {
         throw new InvalidInputError(integerOverflowMessage)
       }
-
       delta += (m - n) * (h + 1)
       n = m
 
-      for (j = 0; j < inputLength; j++) {
-        codePoint = input[j]
-        if (codePoint < n || this._isBasic(codePoint)) {
+      for (c of input) {
+        if (c < n || this._isBasic(c)) {
           // Overflow detection
           if (++delta > Number.MAX_SAFE_INTEGER) {
             throw new InvalidInputError(integerOverflowMessage)
           }
         }
-        if (codePoint === n) {
+        if (c === n) {
           q = delta
           for (k = base; true; k += base) {
             t = this._calcT(k, bias, tmin, tmax)
@@ -287,13 +283,13 @@ export default class BootstringEncoder extends Encoder {
     }
 
     // Initialize the state
+    const input = content.getCodePoints()
+    const inputLength = input.length
     let n = initialN
     let bias = initialBias
 
     // Consume all code points before the last delimiter (if there is one)
     // and copy them to output, fail on any non-basic code point
-    const input = content.getCodePoints()
-    const inputLength = input.length
     const basicLength = Math.max(input.lastIndexOf(delimiter), 0)
     const output = []
 
@@ -464,7 +460,14 @@ export default class BootstringEncoder extends Encoder {
         this.getSetting('delimiter').revalidateValue()
         break
       case 'digitMapping':
-        this.getSetting('tmax').setMax(setting.getValue().getLength())
+        // The base depends on the digit mapping
+        const base = setting.getValue().getLength()
+        this.getSetting('tmax').setMax(base - 1)
+        this.getSetting('delimiter').revalidateValue()
+        this.getSetting('initialBias').revalidateValue()
+        break
+      case 'tmin':
+        this.getSetting('initialBias').revalidateValue()
         break
       case 'tmax':
         this.getSetting('tmin').setMax(setting.getValue())
