@@ -27,16 +27,16 @@ export default class PipeView extends View {
     this._draggingBrickView = null
     this._draggingTargetIndex = null
 
-    // parts
+    // Parts
     this._$pipeParts = []
     this._pipePartPositions = []
     this._pipePartIndex = []
 
-    // scroll facts
+    // Scroll facts
     this._scrollMax = 0
     this._scrollPosition = 0
 
-    // scroll handle
+    // Scroll handle
     this._scrollHandleIndex = null
     this._scrollHandleStartPosition = null
     this._scrollHandleStartTime = null
@@ -70,19 +70,19 @@ export default class PipeView extends View {
       onDragLeave: this.scrollHandleDidStop.bind(this)
     })
 
-    // bind to existing pipe element if any
+    // Bind to existing pipe element if any
     let $root = document.querySelector('.pipe')
     if ($root === null) {
       $root = View.createElement('div')
       $root.classList.add('pipe')
     }
 
-    // bind drag events
+    // Bind drag events
     $root.ondrop = this.dragDidDrop.bind(this)
     $root.ondragenter = this.dragDidEnterPipe.bind(this)
     $root.ondragover = this.dragDidOverPipe.bind(this)
 
-    // bind to existing scrollable if any
+    // Bind to existing scrollable if any
     this._$scrollable = $root.querySelector('.pipe__scrollable')
     if (this._$scrollable === null) {
       this._$scrollable = View.createElement('div', {
@@ -132,33 +132,33 @@ export default class PipeView extends View {
    * @return {PipeView} Fluent interface
    */
   update () {
-    // gather brick views in order
+    // Gather brick views in order
     const bricks = this.getModel().getBricks()
     const brickViews = bricks.map(brick => brick.getView())
 
     this.getElement()
     const $content = this._$content
 
-    // detach each brick subview element without breaking it
-    // (emptying parent via innerHTML does not work in IE11)
+    // Detach each brick subview element without breaking it (emptying parent
+    // via innerHTML does not work in IE11)
     brickViews.forEach(brickView => {
       const $element = brickView.getElement()
       $element.parentNode && $element.parentNode.removeChild($element)
     })
 
-    // empty content element
+    // Empty content element
     $content.innerHTML = ''
 
-    // store reference and index for each pipe part
+    // Store reference and index for each pipe part
     this._$pipeParts = []
     this._pipePartIndex = []
 
-    // compose pipe
+    // Compose pipe
     let $pipePart
     let cowards = []
     for (let i = 0; i < bricks.length; i++) {
       if (!bricks[i].isHidden()) {
-        // append brick
+        // Append brick
         $pipePart = this._createPipePart(i)
         this._$pipeParts.push($pipePart)
         this._pipePartIndex.push(i)
@@ -166,10 +166,10 @@ export default class PipeView extends View {
         $content.appendChild($pipePart)
         $content.appendChild(this._createBrickPart(brickViews[i]))
       } else {
-        // collect cowards
+        // Collect cowards
         cowards.push(bricks[i])
 
-        // append cowards group if this is the last coward in the group
+        // Append cowards group if this is the last coward in the group
         if (i + 1 === bricks.length || !bricks[i + 1].isHidden()) {
           const index = i - cowards.length + 1
           $pipePart = this._createPipePart(index)
@@ -182,7 +182,7 @@ export default class PipeView extends View {
       }
     }
 
-    // add end part
+    // Add end part
     $pipePart = this._createPipePart(brickViews.length)
     this._$pipeParts.push($pipePart)
     this._pipePartIndex.push(brickViews.length)
@@ -254,10 +254,10 @@ export default class PipeView extends View {
    * @return {boolean}
    */
   isBrickDragEvent (evt) {
-    // check if brick mime type is among the drop types
+    // Check if brick mime type is among the drop types
     const types = evt.dataTransfer.types
     if (types.contains !== undefined) {
-      // in Edge, types is a DOMStringList
+      // In Edge, types is a DOMStringList
       return types.contains(brickMimeType)
     }
     return types.indexOf(brickMimeType) !== -1
@@ -278,13 +278,11 @@ export default class PipeView extends View {
    * @param {MouseEvent} evt Mouse down event
    */
   brickDragWillStart (brickView, evt) {
-    // prevent drag events originating from fields to
-    //  allow trouble-free text selection & dragging
-    // prevent drag events on bricks with invalid settings
-    //  because they can't be serialized
-    if (this.isFieldMouseEvent(evt) ||
-        !brickView.getModel().isValid()) {
-      // temporary disable dragging the brick's pipe part
+    // Prevent drag events originating from fields to allow trouble-free text
+    // selection & dragging; Prevent drag events on bricks with invalid settings
+    // because they can't be serialized
+    if (this.isFieldMouseEvent(evt) || !brickView.getModel().isValid()) {
+      // Temporary disable dragging the brick's pipe part
       const $brickPart = brickView.getElement().parentNode
       if ($brickPart) {
         $brickPart.draggable = false
@@ -301,14 +299,14 @@ export default class PipeView extends View {
    * @param {DragEvent} evt Drag event
    */
   brickDragDidStart (brickView, evt) {
-    // ignore drag events originating from fields to allow text dragging
-    if (this.isFieldMouseEvent(evt)) {
+    // See {@link PipeView.brickDragWillStart}
+    if (this.isFieldMouseEvent(evt) || !brickView.getModel().isValid()) {
       return
     }
 
-    // save the source brick reference
+    // Save the source brick reference
     this._draggingBrickView = brickView
-    // populate drag data transfer
+    // Populate drag data transfer
     const brickDataJson = JSON.stringify(brickView.getModel().serialize())
     evt.dataTransfer.setData(brickMimeType, brickDataJson)
     evt.dataTransfer.setData('application/json', brickDataJson)
@@ -331,7 +329,7 @@ export default class PipeView extends View {
    */
   dragDidEnterPipe (evt) {
     if (this.isBrickDragEvent(evt)) {
-      // needed to trigger the drop event for this drag
+      // Needed to trigger the drop event for this drag
       evt.preventDefault()
     }
   }
@@ -348,7 +346,7 @@ export default class PipeView extends View {
       const dragX = evt.pageX + this._scrollPosition
       const dragY = evt.pageY
 
-      // find nearest pipe part
+      // Find nearest pipe part
       let nearestDistance = null
       let nearestIndex = 0
 
@@ -373,7 +371,7 @@ export default class PipeView extends View {
    */
   dragDidDrop (evt) {
     if (this.isBrickDragEvent(evt)) {
-      // handle brick drop
+      // Handle brick drop
       evt.preventDefault()
       const copy = evt.dataTransfer.effectAllowed === 'copy'
       const insertIndex = this._pipePartIndex[this._draggingTargetIndex]
@@ -396,14 +394,14 @@ export default class PipeView extends View {
    */
   setDraggingPipePartIndex (index) {
     if (this._draggingTargetIndex !== index) {
-      // remove dragging class from current target
+      // Remove dragging class from current target
       if (this._draggingTargetIndex !== null) {
         this._$pipeParts[this._draggingTargetIndex]
           .classList.remove('pipe__part-pipe--dragging')
       }
-      // update index
+      // Update index
       this._draggingTargetIndex = index
-      // add dragging class on new target
+      // Add dragging class on new target
       if (index !== null) {
         this._$pipeParts[this._draggingTargetIndex]
           .classList.add('pipe__part-pipe--dragging')
@@ -423,7 +421,7 @@ export default class PipeView extends View {
     const deltaY = evt.deltaY
 
     if (Math.abs(deltaX) <= Math.abs(deltaY)) {
-      // ignore vertical scrolling
+      // Ignore vertical scrolling
       return
     }
 
@@ -448,11 +446,11 @@ export default class PipeView extends View {
    */
   scrollHandleDidScroll () {
     if (this._scrollHandleIndex === null) {
-      // stop when scroll handle is no longer active
+      // Stop when scroll handle is no longer active
       return
     }
 
-    // calculate intermediate scroll position
+    // Calculate intermediate scroll position
     const direction = this._scrollHandleIndex === 0 ? -1 : 1
     const duration = (new Date().getTime() - this._scrollHandleStartTime) / 1000
     const delta = direction * Math.pow(duration, 2) * scrollHandleSpeed
@@ -477,13 +475,13 @@ export default class PipeView extends View {
   layout () {
     super.layout()
 
-    // measure scroll max
+    // Measure scroll max
     this._scrollMax = this._$content.offsetWidth - this._$scrollable.offsetWidth
 
-    // reset scroll position to respect new bounds
+    // Reset scroll position to respect new bounds
     this.scrollTo(this._scrollPosition)
 
-    // update scroll handles
+    // Update scroll handles
     this._$scrollHandleLeft.classList.toggle(
       scrollHandleDisabledClass,
       this._scrollPosition === 0)
@@ -492,7 +490,7 @@ export default class PipeView extends View {
       scrollHandleDisabledClass,
       this._scrollPosition === this._scrollMax)
 
-    // track pipe part positions to prepare for dragging events
+    // Track pipe part positions to prepare for dragging events
     const scrollY = window.scrollY
     this._pipePartPositions = this._$pipeParts.map($pipePart => {
       const rect = $pipePart.getBoundingClientRect()
@@ -509,15 +507,15 @@ export default class PipeView extends View {
    * @return {PipeView} Fluent interface
    */
   scrollTo (x = 0) {
-    // remove decimal digits
+    // Remove decimal digits
     x = parseInt(x)
 
-    // respect bounds
+    // Respect bounds
     x = Math.max(Math.min(x, this._scrollMax), 0)
 
-    // only proceed when something has changed
+    // Only proceed when something has changed
     if (this._scrollPosition !== x) {
-      // left scroll handle
+      // Left scroll handle
       if (x === 0) {
         this._$scrollHandleLeft.classList.add(scrollHandleDisabledClass)
         this.scrollHandleDidStop()
@@ -525,7 +523,7 @@ export default class PipeView extends View {
         this._$scrollHandleLeft.classList.remove(scrollHandleDisabledClass)
       }
 
-      // right scroll handle
+      // Right scroll handle
       if (x === this._scrollMax) {
         this._$scrollHandleRight.classList.add(scrollHandleDisabledClass)
         this.scrollHandleDidStop()
@@ -533,7 +531,7 @@ export default class PipeView extends View {
         this._$scrollHandleRight.classList.remove(scrollHandleDisabledClass)
       }
 
-      // apply change to DOM
+      // Apply change to DOM
       this._$content.style.transform = x > 0 ? `translate(${-x}px, 0)` : ''
 
       this._scrollPosition = x
