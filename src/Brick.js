@@ -320,7 +320,7 @@ export default class Brick extends Viewable {
 
     // Settings, if any
     const settingsData = this._settingsForm.serializeValues()
-    if (Object.keys(settingsData)) {
+    if (Object.keys(settingsData).length > 0) {
       data.settings = settingsData
     }
 
