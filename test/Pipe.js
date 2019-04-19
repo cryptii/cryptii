@@ -3,7 +3,7 @@ import assert from 'assert'
 import { describe, it } from 'mocha'
 
 import AffineCipherEncoder from '../src/Encoder/AffineCipher'
-import AtbashEncoder from '../src/Encoder/Atbash'
+import AlphabeticalSubstitutionEncoder from '../src/Encoder/AlphabeticalSubstitution'
 import BrickFactory from '../src/Factory/Brick'
 import Pipe from '../src/Pipe'
 import ROT13Encoder from '../src/Encoder/ROT13'
@@ -18,6 +18,12 @@ const examplePipeData = {
   ],
   content: 'the quick brown fox jumps over 13 lazy dogs.',
   contentBucket: 0
+}
+
+const atbashBrick = {
+  name: 'alphabetical-substitution',
+  plaintextAlphabet: 'abcdefghijklmnopqrstuvwxyz',
+  ciphertextAlphabet: 'zyxwvutsrqponmlkjihgfedcba'
 }
 
 /** @test {Pipe} */
@@ -163,8 +169,8 @@ describe('Pipe', () => {
       const a = await pipe.getContent(2)
       assert.strictEqual(a.getString(), 'xrw ceyim bjosh doz feavq olwj 13 tung pokq')
       // Replace second encoder, the last bucket should update
-      pipe.spliceBricks(2, 1, [{ name: 'atbash' }])
-      assert.strictEqual(pipe.getBricks()[2] instanceof AtbashEncoder, true)
+      pipe.spliceBricks(2, 1, [atbashBrick])
+      assert.strictEqual(pipe.getBricks()[2] instanceof AlphabeticalSubstitutionEncoder, true)
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'pvq kioea ldyuf jyn himrw ybqd 13 tszg xycw')
       // Change translation direction by changing the last bucket
@@ -196,7 +202,7 @@ describe('Pipe', () => {
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'uryyb jbeyq')
       // Replace both encoders, only the last bucket should update
-      pipe.spliceBricks(1, 3, [{ name: 'rot13' }, { name: 'text' }, { name: 'atbash' }])
+      pipe.spliceBricks(1, 3, [{ name: 'rot13' }, { name: 'text' }, atbashBrick])
       const c = await pipe.getContent(0)
       assert.strictEqual(c.getString(), 'ahiib rbuis')
       const d = await pipe.getContent(2)
@@ -207,7 +213,7 @@ describe('Pipe', () => {
       const pipe = Pipe.extract({
         bricks: [
           { name: 'text' },
-          { name: 'atbash' },
+          atbashBrick,
           { name: 'text' },
           { name: 'rot13' },
           { name: 'text' }
@@ -244,7 +250,7 @@ describe('Pipe', () => {
       const a = await pipe.getContent(0)
       assert.strictEqual(a.getString(), 'hello world')
       // Replace first two encoders by a single new one
-      pipe.spliceBricks(1, 3, [{ name: 'atbash' }])
+      pipe.spliceBricks(1, 3, [atbashBrick])
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'jvjah ewtcb')
       const c = await pipe.getContent(0)

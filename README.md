@@ -37,7 +37,6 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `alphabetical-substitution` | Substitution cipher | [Alphabetical substitution](https://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution) |
 | `affine-cipher` | Substitution cipher | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
 | `caesar-cipher` | Substitution cipher | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
-| `atbash` | Substitution cipher | [Atbash](https://en.wikipedia.org/wiki/Atbash) using latin or hebrew alphabet |
 | `vigenere-cipher` | Substitution cipher | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
 | `enigma` | Substitution cipher | [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) incl. 13 models |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
