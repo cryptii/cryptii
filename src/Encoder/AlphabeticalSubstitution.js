@@ -70,15 +70,19 @@ export default class AlphabeticalSubstitutionEncoder extends Encoder {
 
   /**
    * Validates ciphertext setting value.
+   * @protected
    * @param {mixed} rawValue Raw value
    * @param {Setting} setting Sender setting
    * @return {boolean|object}
    */
   validateCiphertextValue (rawValue, setting) {
-    const plaintextAlphabet = this.getSettingValue('plaintextAlphabet')
-    let ciphertextAlphabet = setting.filterValue(rawValue)
+    // The ciphertext alphabet depends on the plaintext alphabet
+    if (!this.isSettingValid('plaintextAlphabet')) {
+      return false
+    }
 
-    if (ciphertextAlphabet.getLength() > plaintextAlphabet.getLength()) {
+    const plaintextAlphabet = this.getSettingValue('plaintextAlphabet')
+    if (rawValue.getLength() > plaintextAlphabet.getLength()) {
       return {
         key: 'alphabetContainsUnusedCharacters',
         message: `The ciphertext alphabet is longer than the plaintext alphabet`

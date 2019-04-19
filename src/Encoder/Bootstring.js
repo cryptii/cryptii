@@ -482,19 +482,16 @@ export default class BootstringEncoder extends Encoder {
    * @return {boolean|object}
    */
   validateDigitMappingValue (value, setting) {
-    const basicRangeStart = this.getSetting('basicRangeStart')
-    const basicRangeEnd = this.getSetting('basicRangeEnd')
-
-    if (!basicRangeStart.isValid() || !basicRangeEnd.isValid()) {
-      // Can't validate digit mapping without valid basic range
+    // Can't validate digit mapping without valid basic range
+    if (!this.isSettingValid('basicRangeStart', 'basicRangeEnd')) {
       return false
     }
 
-    const rangeStart = basicRangeStart.getValue()
-    const rangeEnd = basicRangeEnd.getValue()
+    const basicRangeStart = this.getSettingValue('basicRangeStart')
+    const basicRangeEnd = this.getSettingValue('basicRangeEnd')
 
     const invalidIndex = value.getCodePoints().findIndex(codePoint =>
-      codePoint < rangeStart || codePoint > rangeEnd)
+      codePoint < basicRangeStart || codePoint > basicRangeEnd)
 
     if (invalidIndex !== -1) {
       return {
@@ -515,23 +512,20 @@ export default class BootstringEncoder extends Encoder {
    * @return {boolean|object}
    */
   validateDelimiterValue (value, setting) {
-    const basicRangeStart = this.getSetting('basicRangeStart')
-    const basicRangeEnd = this.getSetting('basicRangeEnd')
-    const digitMapping = this.getSetting('digitMapping')
-
-    if (!basicRangeStart.isValid() ||
-        !basicRangeEnd.isValid() ||
-        !digitMapping.isValid()) {
-      // Can't validate digit mapping without valid basic range
+    // The delimiter value depends on the basic range and the digit mapping
+    if (!this.isSettingValid('basicRangeStart', 'basicRangeEnd', 'digitMapping')) {
       return false
     }
+
+    const { basicRangeStart, basicRangeEnd, digitMapping } =
+      this.getSettingValues()
 
     const delimiter = value.getCodePointAt(0)
 
     // Delimiter needs to be in the basic code point range
-    if (delimiter < basicRangeStart.getValue() ||
-        delimiter > basicRangeEnd.getValue() ||
-        digitMapping.getValue().indexOfCodePoint(delimiter) !== -1) {
+    if (delimiter < basicRangeStart ||
+        delimiter > basicRangeEnd ||
+        digitMapping.indexOfCodePoint(delimiter) !== -1) {
       return {
         key: 'bootstringDelimiterInvalid',
         message:
@@ -551,15 +545,13 @@ export default class BootstringEncoder extends Encoder {
    * @return {boolean|object}
    */
   validateInitialBiasValue (value, setting) {
-    const digitMapping = this.getSetting('digitMapping')
-    const tmin = this.getSetting('tmin')
-
-    if (!digitMapping.isValid() || !tmin.isValid()) {
-      // Can't validate initial bias without valid base and tmin values
+    // Can't validate initial bias without valid base and tmin values
+    if (!this.isSettingValid('digitMapping', 'tmin')) {
       return false
     }
 
-    const base = digitMapping.getValue().getLength()
+    const base = this.getSettingValue('digitMapping').getLength()
+    const tmin = this.getSettingValue('tmin')
 
     if (MathUtil.mod(value, base) > base - tmin) {
       return {

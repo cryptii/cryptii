@@ -214,6 +214,16 @@ export default class Brick extends Viewable {
   }
 
   /**
+   * Returns true, if settings matching the given setting names are valid.
+   * @param {...names} names Setting names to be validated
+   * @return {boolean} True, if valid
+   */
+  isSettingValid (...names) {
+    // Check if there is an invalid setting among the given setting names
+    return names.find(name => !this.getSetting(name).isValid()) === undefined
+  }
+
+  /**
    * Returns true, if the brick input is randomizable.
    * @return {boolean}
    */
