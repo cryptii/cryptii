@@ -94,8 +94,7 @@ gulp.task('script', () => {
           exclude: ['node_modules/**']
         }),
         nodeResolve({
-          jsnext: true,
-          main: true
+          mainFields: ['module', 'main']
         }),
         commonJs({
           include: ['node_modules/**'],

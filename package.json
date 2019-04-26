@@ -1,8 +1,8 @@
 {
   "name": "cryptii",
   "version": "4.0.6",
-  "author": "Fränz Friederes (fraenz.frieder.es)",
   "description": "Framework and web app for encoding and decoding content.",
+  "author": "Fränz Friederes (fraenz.frieder.es)",
   "repository": {
     "type": "git",
     "url": "https://github.com/cryptii/cryptii.git"
@@ -21,38 +21,42 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
-    "detect-browser": "^4.1.0"
+    "detect-browser": "^4.5.0",
+    "rollup": "^1.10.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/polyfill": "^7.2.5",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/register": "^7.0.0",
-    "babel-eslint": "^8.2.6",
-    "del": "^3.0.0",
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/polyfill": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/register": "^7.4.0",
+    "babel-eslint": "^10.0.1",
+    "del": "^4.1.0",
     "dom4": "^2.1.4",
     "git-rev-sync": "^1.12.0",
-    "gulp": "^4.0.0",
-    "gulp-autoprefixer": "^6.0.0",
-    "gulp-better-rollup": "^3.4.0",
-    "gulp-clean-css": "^4.0.0",
-    "gulp-cli": "^2.0.1",
+    "gulp": "^4.0.1",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-better-rollup": "^4.0.1",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-cli": "^2.2.0",
     "gulp-clone": "^2.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-header": "^2.0.7",
     "gulp-mocha": "^6.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.4",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-standard": "^12.0.0",
-    "gulp-uglify": "^3.0.1",
+    "gulp-uglify": "^3.0.2",
     "normalize-scss": "^7.0.1",
     "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-commonjs": "^9.2.0",
-    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.3",
     "sass-inline-svg": "^1.2.0",
     "standard": "^12.0.1",
     "streamqueue": "^1.1.2"
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }
