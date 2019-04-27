@@ -14,7 +14,9 @@ export default class AlphabetField extends TextField {
    */
   constructor (name, spec = {}) {
     super(name, spec)
-    this.setMinLength(2, false)
+    if (this.getMinLength() === null) {
+      this.setMinLength(2, false)
+    }
   }
 
   /**

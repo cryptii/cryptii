@@ -5,6 +5,7 @@ import Factory from '../Factory'
 import AffineCipherEncoder from '../Encoder/AffineCipher'
 import AlphabeticalSubstitutionEncoder from '../Encoder/AlphabeticalSubstitution'
 import Ascii85Encoder from '../Encoder/Ascii85'
+import Base32Encoder from '../Encoder/Base32'
 import Base64Encoder from '../Encoder/Base64'
 import BitwiseOperationEncoder from '../Encoder/BitwiseOperation'
 import BlockCipherEncoder from '../Encoder/BlockCipher'
@@ -54,6 +55,7 @@ export default class BrickFactory extends Factory {
       CaesarCipherEncoder,
       VigenereCipherEncoder,
       EnigmaEncoder,
+      Base32Encoder,
       Base64Encoder,
       Ascii85Encoder,
       URLEncoder,

@@ -39,6 +39,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `caesar-cipher` | Substitution cipher | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
 | `vigenere-cipher` | Substitution cipher | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
 | `enigma` | Substitution cipher | [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) incl. 13 models |
+| `base32` | Encoding | [Base32](https://en.wikipedia.org/wiki/Base32) incl. variants base32hex, z-base-32, … |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
 | `ascii85` | Encoding | [Ascii85 / Base85](https://en.wikipedia.org/wiki/Ascii85) incl. variant [Z85](https://rfc.zeromq.org/spec:32/Z85/) |
 | `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
