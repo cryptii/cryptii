@@ -8,36 +8,47 @@ import EncoderTester from '../Helper/EncoderTester'
 describe('Base32Encoder', () => EncoderTester.test(Base32Encoder, [
   {
     settings: { variant: 'base32' },
-    content: 'The quick brown fox jumps over the lazy dogs.',
+    content: 'The quick brown fox jumps over the lazy dog.',
     expectedResult:
-      'KRUGKIDROVUWG2ZAMJZG653OEBTG66BANJ2W24DTEBXXMZLSEB2GQZJANRQXU6JAMRXWO4ZO'
+      'KRUGKIDROVUWG2ZAMJZG653OEBTG66BANJ2W24DTEBXXMZLSEB2GQZJANRQXU6JAMRXWOLQ='
   },
   {
     settings: { variant: 'base32hex' },
-    content: 'The quick brown fox jumps over the lazy dogs.',
+    content: 'The quick brown fox jumps over the lazy dog.',
     expectedResult:
-      'AHK6A83HELKM6QP0C9P6UTRE41J6UU10D9QMQS3J41NNCPBI41Q6GP90DHGNKU90CHNMESPE'
+      'AHK6A83HELKM6QP0C9P6UTRE41J6UU10D9QMQS3J41NNCPBI41Q6GP90DHGNKU90CHNMEBG='
   },
   {
     settings: { variant: 'z-base-32' },
-    content: 'The quick brown fox jumps over the lazy dogs.',
+    content: 'The quick brown fox jumps over the lazy dog.',
     expectedResult:
-      'ktwgkedtqiwsg43ycj3g675qrbug66bypj4s4hdurbzzc3m1rb4go3jyptozw6jyctzsqh3q'
+      'ktwgkedtqiwsg43ycj3g675qrbug66bypj4s4hdurbzzc3m1rb4go3jyptozw6jyctzsqmo'
   },
   {
     settings: { variant: 'crockford-base32' },
-    content: 'The quick brown fox jumps over the lazy dogs.',
+    content: 'The quick brown fox jumps over the lazy dog.',
     expectedResult:
-      'AHM6A83HENMP6TS0C9S6YXVE41K6YY10D9TPTW3K41QQCSBJ41T6GS90DHGQMY90CHQPEWSE'
+      'AHM6A83HENMP6TS0C9S6YXVE41K6YY10D9TPTW3K41QQCSBJ41T6GS90DHGQMY90CHQPEBG'
   },
   {
     direction: 'decode',
     settings: { variant: 'crockford-base32' },
     content:
       'ahm6a83henmp6ts0c9s6yxve41k6yyLod9tp' +
-      'tw3k41qqcsbj4lt6gs9Odhgqmy90chqpewse',
+      'tw3k41qqcsbj4lt6gs9Odhgqmy90chqpebg',
     expectedResult:
-      'The quick brown fox jumps over the lazy dogs.'
+      'The quick brown fox jumps over the lazy dog.'
+  },
+  {
+    settings: {
+      variant: 'custom',
+      alphabet: '❶❷❸❹❺❻❼❽❾❿➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒➓❊❋',
+      padding: '❈'
+    },
+    content: 'The quick brown fox jumps over the lazy dog.',
+    expectedResult:
+      '➀➇➊❼➀❾❹➇➄➋➊➌❼➐➏❶➂❿➏❼❊➓➑➄❺❷➉❼❊❊❷❶➃❿➐➌' +
+      '➐➒❹➉❺❷➍➍➂➏➁➈❺❷➐❼➆➏❿❶➃➇➆➍➊❊❿❶➂➇➍➌➄➁➆❈'
   },
   // Test vectors for Base32 described in section 10 of RFC 4648
   {
