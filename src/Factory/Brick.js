@@ -19,6 +19,7 @@ import IntegerEncoder from '../Encoder/Integer'
 import MorseCodeEncoder from '../Encoder/MorseCode'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import PunycodeEncoder from '../Encoder/Punycode'
+import RC4Encoder from '../Encoder/RC4'
 import ROT13Encoder from '../Encoder/ROT13'
 import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
 import TextTransformEncoder from '../Encoder/TextTransform'
@@ -64,6 +65,7 @@ export default class BrickFactory extends Factory {
       UnicodeCodePointsEncoder,
       IntegerEncoder,
       BlockCipherEncoder,
+      RC4Encoder,
       HashEncoder,
       HMACEncoder
     ]

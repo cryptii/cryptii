@@ -19,11 +19,13 @@ export default class ByteField extends Field {
     super(name, spec)
     this._viewPrototype = ByteFieldView
 
+    const options = spec.options || {}
+
     this._value = spec.value || new Uint8Array()
     this._minSize = null
     this._maxSize = null
+    this._randomizeSize = options.randomizeSize || null
 
-    const options = spec.options || {}
     this.setMinSize(options.minSize || null, false)
     this.setMaxSize(options.maxSize || null, false)
   }
@@ -121,7 +123,10 @@ export default class ByteField extends Field {
     if (value !== null) {
       return value
     }
-    if (this.getMinSize() !== null) {
+    if (this._randomizeSize !== null) {
+      // Use randomize size
+      return random.nextBytes(this._randomizeSize)
+    } else if (this.getMinSize() !== null) {
       // Use the min size
       return random.nextBytes(this.getMinSize())
     } else if (this.isValid()) {
