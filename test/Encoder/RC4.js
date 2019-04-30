@@ -47,6 +47,30 @@ describe('RC4Encoder', () => EncoderTester.test(RC4Encoder, [
       '97ab8a1bf0afb96132f2f67258da15a8' +
       '8263efdb45c4a18684ef87e6b19e5b09')
   },
+  // Key length: 64 bits, drop: 240
+  {
+    settings: { key: bytes('0102030405060708'), drop: 240 },
+    content: bytes(
+      '00000000000000000000000000000000'),
+    expectedResult: bytes(
+      '9636ebc9841926f4f7d1f362bddf6e18')
+  },
+  // Key length: 64 bits, drop: 768
+  {
+    settings: { key: bytes('0102030405060708'), drop: 768 },
+    content: bytes(
+      '00000000000000000000000000000000'),
+    expectedResult: bytes(
+      '44173a103b6616c5d5ad1cee40c863d0')
+  },
+  // Key length: 64 bits, drop: 3072
+  {
+    settings: { key: bytes('0102030405060708'), drop: 3072 },
+    content: bytes(
+      '00000000000000000000000000000000'),
+    expectedResult: bytes(
+      'bc7683205d4f443dc1f29dda3315c87b')
+  },
   // Key length: 80 bits
   {
     settings: { key: bytes('0102030405060708090a') },

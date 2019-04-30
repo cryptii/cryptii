@@ -35,6 +35,17 @@ export default class RC4Encoder extends Encoder {
           maxSize: 32,
           randomizeSize: 8
         }
+      },
+      {
+        name: 'drop',
+        type: 'number',
+        label: 'Drop bytes',
+        value: 0,
+        randomizable: false,
+        options: {
+          integer: true,
+          min: 0
+        }
       }
     ])
   }
@@ -48,8 +59,9 @@ export default class RC4Encoder extends Encoder {
    */
   performTranslate (content, isEncode) {
     const key = this.getSettingValue('key')
-    const keyLength = key.length
+    const drop = this.getSettingValue('drop')
 
+    const keyLength = key.length
     const input = content.getBytes()
     const inputLength = input.length
     const result = new Uint8Array(inputLength)
@@ -71,12 +83,15 @@ export default class RC4Encoder extends Encoder {
     j = 0
 
     let keyStreamByte
-    for (let k = 0; k < inputLength; k++) {
+    for (let k = 0; k < drop + inputLength; k++) {
       i = (i + 1) % 256
       j = (j + s[i]) % 256
       ;[s[i], s[j]] = [s[j], s[i]]
       keyStreamByte = s[(s[i] + s[j]) % 256]
-      result[k] = input[k] ^ keyStreamByte
+
+      if (k >= drop) {
+        result[k - drop] = input[k - drop] ^ keyStreamByte
+      }
     }
 
     return result
