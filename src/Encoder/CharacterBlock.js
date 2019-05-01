@@ -2,7 +2,7 @@
 import Chain from '../Chain'
 import Encoder from '../Encoder'
 
-// possible modes
+// Modes
 const CharacterToBlockMode = 0
 const BlockToCharacterMode = 1
 
@@ -82,12 +82,15 @@ export default class CharacterBlockEncoder extends Encoder {
         const blocks = content.getCodePoints()
           .map((codePoint, index) =>
             this.performCharEncodeToBlock(codePoint, index, content))
+          .filter(block => block !== null)
+          .map(Chain.wrap)
         return Chain.join(blocks, this.getSeparator())
 
       case BlockToCharacterMode:
         return content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockEncodeToChar(block, index, blocks, content))
+          .filter(codePoint => codePoint !== null)
     }
   }
 
@@ -103,11 +106,14 @@ export default class CharacterBlockEncoder extends Encoder {
         return content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockDecodeToChar(block, index, blocks, content))
+          .filter(codePoint => codePoint !== null)
 
       case BlockToCharacterMode:
         const blocks = content.getCodePoints()
           .map((codePoint, index) =>
             this.performCharDecodeToBlock(codePoint, index, content))
+          .filter(block => block !== null)
+          .map(Chain.wrap)
         return Chain.join(blocks, this.getSeparator())
     }
   }
@@ -119,7 +125,7 @@ export default class CharacterBlockEncoder extends Encoder {
    * @param {number} codePoint Unicode code point
    * @param {number} index Unicode code point index
    * @param {Chain} content Content to be encoded
-   * @return {string|Chain} Encoded block
+   * @return {number[]|string|Uint8Array|Chain|null} Encoded block
    */
   performCharEncodeToBlock (codePoint, index, content) {
     // Abstract method
@@ -133,7 +139,7 @@ export default class CharacterBlockEncoder extends Encoder {
    * @param {number} index Block index
    * @param {Chain[]} blocks Blocks to be encoded
    * @param {Chain} content Content to be encoded
-   * @return {number} Encoded code point
+   * @return {number|null} Encoded code point
    */
   performBlockEncodeToChar (block, index, blocks, content) {
     // Abstract method
@@ -146,7 +152,7 @@ export default class CharacterBlockEncoder extends Encoder {
    * @param {number} codePoint Unicode code point
    * @param {number} index Unicode code point index
    * @param {Chain} content Content to be decoded
-   * @return {string|Chain} Decoded block
+   * @return {number[]|string|Uint8Array|Chain|null} Decoded block
    */
   performCharDecodeToBlock (codePoint, index, content) {
     // Abstract method
@@ -160,7 +166,7 @@ export default class CharacterBlockEncoder extends Encoder {
    * @param {number} index Block index
    * @param {Chain[]} blocks Blocks to be decoded
    * @param {Chain} content Content to be decoded
-   * @return {number} Decoded code point
+   * @return {number|null} Decoded code point
    */
   performBlockDecodeToChar (block, index, blocks, content) {
     // Abstract method

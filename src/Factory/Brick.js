@@ -2,6 +2,7 @@
 import Factory from '../Factory'
 
 // Package bricks
+import A1Z26Encoder from '../Encoder/A1Z26'
 import AffineCipherEncoder from '../Encoder/AffineCipher'
 import AlphabeticalSubstitutionEncoder from '../Encoder/AlphabeticalSubstitution'
 import Ascii85Encoder from '../Encoder/Ascii85'
@@ -50,12 +51,13 @@ export default class BrickFactory extends Factory {
       BitwiseOperationEncoder,
       MorseCodeEncoder,
       SpellingAlphabetEncoder,
-      AlphabeticalSubstitutionEncoder,
-      ROT13Encoder,
-      AffineCipherEncoder,
-      CaesarCipherEncoder,
-      VigenereCipherEncoder,
       EnigmaEncoder,
+      CaesarCipherEncoder,
+      AffineCipherEncoder,
+      ROT13Encoder,
+      A1Z26Encoder,
+      VigenereCipherEncoder,
+      AlphabeticalSubstitutionEncoder,
       Base32Encoder,
       Base64Encoder,
       Ascii85Encoder,
