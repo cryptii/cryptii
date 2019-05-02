@@ -2,10 +2,10 @@
 import { describe } from 'mocha'
 
 import EncoderTester from '../Helper/EncoderTester'
-import TextTransformEncoder from '../../src/Encoder/TextTransform'
+import CaseTransformEncoder from '../../src/Encoder/CaseTransform'
 
-/** @test {TextTransformEncoder} */
-describe('TextTransformEncoder', () => EncoderTester.test(TextTransformEncoder, [
+/** @test {CaseTransformEncoder} */
+describe('CaseTransformEncoder', () => EncoderTester.test(CaseTransformEncoder, [
   {
     settings: { case: 'lower' },
     direction: 'encode',
@@ -35,17 +35,5 @@ describe('TextTransformEncoder', () => EncoderTester.test(TextTransformEncoder, 
     direction: 'encode',
     content: 'Hello 👋 World',
     expectedResult: 'hELLO 👋 wORLD'
-  },
-  {
-    settings: { arrangement: 'reverse' },
-    direction: 'encode',
-    content: 'Hello 👋 World',
-    expectedResult: 'dlroW 👋 olleH'
-  },
-  {
-    settings: { case: 'alternating', arrangement: 'reverse' },
-    direction: 'encode',
-    content: 'Hello 👋 World',
-    expectedResult: 'dLrOw 👋 oLlEh'
   }
 ]))

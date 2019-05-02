@@ -28,7 +28,8 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 
 | Name | Category | Description |
 | ---- | -------- | ----------- |
-| `text-transform` | Transform | Transforming character case and arrangement |
+| `reverse` | Transform | Reverses the order of bytes, characters or lines |
+| `case-transform` | Transform | Transforms to upper case, lower case, … |
 | `numeral-system` | Transform | Translates numerals between systems |
 | `bitwise-operation` | Transform | [Bitwise operations](https://en.wikipedia.org/wiki/Bitwise_operation) (NOT, AND, OR, …) |
 | `morse-code` | Alphabets | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |

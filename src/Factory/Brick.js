@@ -13,6 +13,7 @@ import BlockCipherEncoder from '../Encoder/BlockCipher'
 import BootstringEncoder from '../Encoder/Bootstring'
 import BytesViewer from '../Viewer/Bytes'
 import CaesarCipherEncoder from '../Encoder/CaesarCipher'
+import CaseTransformEncoder from '../Encoder/CaseTransform'
 import EnigmaEncoder from '../Encoder/Enigma'
 import HashEncoder from '../Encoder/Hash'
 import HMACEncoder from '../Encoder/HMAC'
@@ -21,9 +22,9 @@ import MorseCodeEncoder from '../Encoder/MorseCode'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import PunycodeEncoder from '../Encoder/Punycode'
 import RC4Encoder from '../Encoder/RC4'
+import ReverseEncoder from '../Encoder/Reverse'
 import ROT13Encoder from '../Encoder/ROT13'
 import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
-import TextTransformEncoder from '../Encoder/TextTransform'
 import TextViewer from '../Viewer/Text'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import URLEncoder from '../Encoder/URL'
@@ -46,7 +47,8 @@ export default class BrickFactory extends Factory {
     const invokables = [
       TextViewer,
       BytesViewer,
-      TextTransformEncoder,
+      ReverseEncoder,
+      CaseTransformEncoder,
       NumeralSystemEncoder,
       BitwiseOperationEncoder,
       MorseCodeEncoder,

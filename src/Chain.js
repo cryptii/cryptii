@@ -176,8 +176,9 @@ export default class Chain {
    * @return {Chain[]}
    */
   split (separator = undefined, limit = undefined) {
+    separator = separator instanceof Chain ? separator.toString() : separator
     return this.getString()
-      .split(separator ? separator.toString() : undefined, limit)
+      .split(separator, limit)
       .map(stringPart => Chain.wrap(stringPart, this._encoding))
   }
 
