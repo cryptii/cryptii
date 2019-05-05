@@ -42,6 +42,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `vigenere-cipher` | Substitution cipher | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
 | `polybius-square` | Substitution cipher | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
 | ↳ `bifid-cipher` | Substitution cipher | [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher) |
+| ↳ `tap-code` | Substitution cipher | [Tap code](https://en.wikipedia.org/wiki/Tap_code) |
 | `alphabetical-substitution` | Substitution cipher | [Alphabetical substitution](https://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution) |
 | `base32` | Encoding | [Base32](https://en.wikipedia.org/wiki/Base32) incl. variants base32hex, z-base-32, … |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |

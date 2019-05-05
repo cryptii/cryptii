@@ -62,29 +62,20 @@ export default class BifidCipherEncoder extends Encoder {
   }
 
   /**
-   * Triggered before performing encode or decode on given content.
-   * @param {Chain} content
-   * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {number[]|string|Uint8Array|Chain} Filtered content
-   */
-  willTranslate (content, isEncode) {
-    // I and J share the same position in the Bifid alphabet
-    // Replace all J characters by I
-    return content.getString().replace(/j/gi, 'i')
-  }
-
-  /**
    * Performs encode on given content.
    * @protected
    * @param {Chain} content
    * @return {number[]|string|Uint8Array|Chain} Encoded content
    */
   async performEncode (content) {
-    const sourcePolybius = await this._polybiusSquare.encode(content)
-    const polybiusLength = sourcePolybius.getLength()
+    // Encode content to coordinates using Polybius square
+    // As I and J shares the same alphabet position, replace all J chars
+    const sourcePolybius = await this._polybiusSquare.encode(
+      content.getString().replace(/j/gi, 'i'))
 
     // Transpose coordinates such that the first coordinates (X) appear
     // combined before the second coordinates (Y)
+    const polybiusLength = sourcePolybius.getLength()
     const resultPolybius = new Array(polybiusLength)
     for (let i = 0; i < polybiusLength / 2; i++) {
       resultPolybius[i] =
