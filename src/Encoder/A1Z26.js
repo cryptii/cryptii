@@ -4,7 +4,7 @@ import CharacterBlockEncoder from './CharacterBlock'
 const meta = {
   name: 'a1z26',
   title: 'A1Z26',
-  category: 'Substitution cipher',
+  category: 'Ciphers',
   type: 'encoder'
 }
 

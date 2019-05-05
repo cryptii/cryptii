@@ -5,7 +5,7 @@ import Encoder from '../Encoder'
 const meta = {
   name: 'affine-cipher',
   title: 'Affine cipher',
-  category: 'Substitution cipher',
+  category: 'Ciphers',
   type: 'encoder'
 }
 

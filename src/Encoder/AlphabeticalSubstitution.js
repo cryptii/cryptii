@@ -6,7 +6,7 @@ import ArrayUtil from '../ArrayUtil'
 const meta = {
   name: 'alphabetical-substitution',
   title: 'Alphabetical substitution',
-  category: 'Substitution cipher',
+  category: 'Ciphers',
   type: 'encoder'
 }
 

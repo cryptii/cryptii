@@ -4,7 +4,7 @@ import Encoder from '../Encoder'
 const meta = {
   name: 'rot13',
   title: 'ROT13',
-  category: 'Substitution cipher',
+  category: 'Ciphers',
   type: 'encoder'
 }
 

@@ -28,34 +28,34 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 
 | Name | Category | Description |
 | ---- | -------- | ----------- |
-| `reverse` | Transform | Reverses the order of bytes, characters or lines |
-| `case-transform` | Transform | Transforms to upper case, lower case, … |
-| `numeral-system` | Transform | Translates numerals between systems |
-| `bitwise-operation` | Transform | [Bitwise operations](https://en.wikipedia.org/wiki/Bitwise_operation) (NOT, AND, OR, …) |
-| `morse-code` | Alphabets | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
-| `spelling-alphabet` | Alphabets | Several [spelling alphabets](https://en.wikipedia.org/wiki/Spelling_alphabet) |
-| `enigma` | Substitution cipher | [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) incl. 13 models |
-| `caesar-cipher` | Substitution cipher | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
-| `affine-cipher` | Substitution cipher | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
-| `rot13` | Substitution cipher | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
-| `a1z26` | Substitution cipher | Number to letter encoder (A1Z26) |
-| `vigenere-cipher` | Substitution cipher | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
-| `polybius-square` | Substitution cipher | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
-| ↳ `bifid-cipher` | Substitution cipher | [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher) |
-| ↳ `tap-code` | Substitution cipher | [Tap code](https://en.wikipedia.org/wiki/Tap_code) |
-| `alphabetical-substitution` | Substitution cipher | [Alphabetical substitution](https://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution) |
+| `a1z26` | Ciphers | Number to letter encoder (A1Z26) |
+| `affine-cipher` | Ciphers | [Affine Cipher](https://en.wikipedia.org/wiki/Affine_cipher) |
+| `alphabetical-substitution` | Ciphers | [Alphabetical substitution](https://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution) |
+| `ascii85` | Encoding | [Ascii85 / Base85](https://en.wikipedia.org/wiki/Ascii85) incl. variant [Z85](https://rfc.zeromq.org/spec:32/Z85/) |
 | `base32` | Encoding | [Base32](https://en.wikipedia.org/wiki/Base32) incl. variants base32hex, z-base-32, … |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
-| `ascii85` | Encoding | [Ascii85 / Base85](https://en.wikipedia.org/wiki/Ascii85) incl. variant [Z85](https://rfc.zeromq.org/spec:32/Z85/) |
-| `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
-| `url-encoding` | Encoding | [URL encoding / Percent-encoding](https://en.wikipedia.org/wiki/Percent-encoding) |
+| `bitwise-operation` | Transform | [Bitwise operations](https://en.wikipedia.org/wiki/Bitwise_operation) (NOT, AND, OR, …) |
+| `block-cipher` | Modern cryptography | [Block ciphers](https://en.wikipedia.org/wiki/Block_cipher) incl. [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) |
 | `bootstring` | Encoding | [Bootstring](https://tools.ietf.org/html/rfc3492) |
 | ↳ `punycode` | Encoding | [Punycode](https://tools.ietf.org/html/rfc3492) |
-| `integer` | Encoding | Translates between bytes and [integers](https://en.wikipedia.org/wiki/Integer_(computer_science)) |
-| `rc4` | Modern cryptography | [RC4](https://en.wikipedia.org/wiki/RC4) incl. RC4-drop |
-| `block-cipher` | Modern cryptography | [Block ciphers](https://en.wikipedia.org/wiki/Block_cipher) incl. [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) |
+| `caesar-cipher` | Ciphers | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
+| `case-transform` | Transform | Transforms to upper case, lower case, … |
+| `enigma` | Ciphers | [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) incl. 13 models |
 | `hash` | Modern cryptography | Creating a [message digest](https://en.wikipedia.org/wiki/Cryptographic_hash_function) |
 | ↳ `hmac` | Modern cryptography | Creating a [Hash-based message authentication code](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code) |
+| `integer` | Encoding | Translates between bytes and [integers](https://en.wikipedia.org/wiki/Integer_(computer_science)) |
+| `morse-code` | Alphabets | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
+| `numeral-system` | Transform | Translates numerals between systems |
+| `polybius-square` | Ciphers | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
+| ↳ `bifid-cipher` | Ciphers | [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher) |
+| ↳ `tap-code` | Ciphers | [Tap code](https://en.wikipedia.org/wiki/Tap_code) |
+| `rc4` | Modern cryptography | [RC4](https://en.wikipedia.org/wiki/RC4) incl. RC4-drop |
+| `reverse` | Transform | Reverses the order of bytes, characters or lines |
+| `rot13` | Ciphers | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
+| `spelling-alphabet` | Alphabets | Several [spelling alphabets](https://en.wikipedia.org/wiki/Spelling_alphabet) |
+| `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
+| `url-encoding` | Encoding | [URL encoding / Percent-encoding](https://en.wikipedia.org/wiki/Percent-encoding) |
+| `vigenere-cipher` | Ciphers | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
 
 Example usage:
 

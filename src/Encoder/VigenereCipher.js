@@ -6,7 +6,7 @@ import MathUtil from '../MathUtil'
 const meta = {
   name: 'vigenere-cipher',
   title: 'Vigenère cipher',
-  category: 'Substitution cipher',
+  category: 'Ciphers',
   type: 'encoder'
 }
 

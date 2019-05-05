@@ -6,7 +6,7 @@ import InvalidInputError from '../Error/InvalidInput'
 const meta = {
   name: 'polybius-square',
   title: 'Polybius square',
-  category: 'Substitution cipher',
+  category: 'Ciphers',
   type: 'encoder'
 }
 
