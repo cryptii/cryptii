@@ -1,5 +1,6 @@
 
 import ArrayUtil from '../ArrayUtil'
+import Chain from '../Chain'
 import TextField from './Text'
 
 /**
@@ -37,5 +38,23 @@ export default class AlphabetField extends TextField {
     }
 
     return super.validateValue(rawValue)
+  }
+
+  /**
+   * Returns a randomly chosen value or null if not applicable.
+   * @param {Random} random Random number generator
+   * @return {mixed} Randomly chosen value
+   */
+  randomizeValue (random) {
+    const value = super.randomizeValue(random)
+    if (value !== null) {
+      return value
+    }
+    if (this.isValid()) {
+      // Shuffle current alphabet
+      const codePoints = this.getValue().getCodePoints()
+      return Chain.wrap(ArrayUtil.shuffle(codePoints, random))
+    }
+    return null
   }
 }

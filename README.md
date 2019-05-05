@@ -40,6 +40,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `rot13` | Substitution cipher | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
 | `a1z26` | Substitution cipher | Number to letter encoder (A1Z26) |
 | `vigenere-cipher` | Substitution cipher | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
+| `polybius-square` | Substitution cipher | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
 | `alphabetical-substitution` | Substitution cipher | [Alphabetical substitution](https://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution) |
 | `base32` | Encoding | [Base32](https://en.wikipedia.org/wiki/Base32) incl. variants base32hex, z-base-32, … |
 | `base64` | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |

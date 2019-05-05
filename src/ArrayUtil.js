@@ -110,4 +110,49 @@ export default class ArrayUtil {
     }
     return a
   }
+
+  /**
+   * Returns the index of the first occurrence of the given slice.
+   * @param {array} array Haystack
+   * @param {array} slice Needle slice elements
+   * @param {number} [fromIndex=0] Index at which to begin searching
+   * @return {number} Index of the first slice occurance or -1 if there is none
+   */
+  static indexOfSlice (array, slice, fromIndex = 0) {
+    if (slice.length === 0) {
+      return -1
+    }
+    let i = -1
+    let j = fromIndex - 1
+    // Find the next occurrence of the first element
+    while (i === -1 && (j = array.indexOf(slice[0], j + 1)) !== -1) {
+      // Compare slice
+      if (this.isEqual(array.slice(j, j + slice.length), slice)) {
+        i = j
+      }
+    }
+    return i
+  }
+
+  /**
+   * Removes all occurences of the given slice from the given array.
+   * @param {array} array Target array
+   * @param {array} slice Slice elements to be removed
+   * @return {array} Resulting array
+   */
+  static removeSlice (array, slice) {
+    let i = 0
+    let j = -1
+    let result = []
+    // Find next occurence of the given slice
+    while ((j = this.indexOfSlice(array, slice, j + 1)) !== -1) {
+      // Append elements in between of the last and current slice
+      result = result.concat(array.slice(i, j))
+      // Move the cursor behind the current slice
+      i = j + slice.length
+    }
+    // Append the trailing array elements behind last slice
+    result = result.concat(array.slice(i))
+    return result
+  }
 }
