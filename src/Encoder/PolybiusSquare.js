@@ -38,7 +38,7 @@ export default class PolybiusSquareEncoder extends Encoder {
         }
       },
       {
-        name: 'columns',
+        name: 'rows',
         type: 'alphabet',
         value: '12345',
         width: 6,
@@ -48,7 +48,7 @@ export default class PolybiusSquareEncoder extends Encoder {
         }
       },
       {
-        name: 'rows',
+        name: 'columns',
         type: 'alphabet',
         value: '12345',
         width: 6,
@@ -168,7 +168,7 @@ export default class PolybiusSquareEncoder extends Encoder {
     const columns = this.getSettingValue('columns').getCodePoints()
 
     // Ignore all separators inside the given content
-    const input = ArrayUtil.removeSlice(content.getCodePoints(), separator)
+    const input = ArrayUtil.replaceSlice(content.getCodePoints(), separator)
 
     const alphabetLength = alphabet.length
     const width = columns.length

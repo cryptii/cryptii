@@ -21,6 +21,7 @@ import IntegerEncoder from '../Encoder/Integer'
 import MorseCodeEncoder from '../Encoder/MorseCode'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import PolybiusSquareEncoder from '../Encoder/PolybiusSquare'
+import BifidCipherEncoder from '../Encoder/BifidCipher'
 import PunycodeEncoder from '../Encoder/Punycode'
 import RC4Encoder from '../Encoder/RC4'
 import ReverseEncoder from '../Encoder/Reverse'
@@ -61,6 +62,7 @@ export default class BrickFactory extends Factory {
       A1Z26Encoder,
       VigenereCipherEncoder,
       PolybiusSquareEncoder,
+      BifidCipherEncoder,
       AlphabeticalSubstitutionEncoder,
       Base32Encoder,
       Base64Encoder,

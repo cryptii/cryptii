@@ -317,17 +317,35 @@ export default class Field extends Viewable {
   }
 
   /**
-   * Returns a randomly chosen value or null if not applicable.
+   * Returns a randomly chosen value or `null` if not applicable.
    * @override
    * @param {Random} random Random number generator
    * @return {mixed} Randomly chosen value
    */
   randomizeValue (random) {
+    return this.randomizeValueWithCallback(random)
+  }
+
+  /**
+   * Returns a randomly chosen value using the custom randomize value callback.
+   * If not applicable, `null` is returned.
+   * @protected
+   * @param {Random} random Random number generator
+   * @return {mixed} Randomly chosen value
+   */
+  randomizeValueWithCallback (random) {
     if (this._randomizeValueCallback !== null) {
       return this._randomizeValueCallback(random, this)
     }
-    // Generic fields don't know how to choose a random value
     return null
+  }
+
+  /**
+   * Returns wether a custom randomize value callback is set.
+   * @return {boolean}
+   */
+  isCustomRandomizationSet () {
+    return this._randomizeValueCallback !== null
   }
 
   /**

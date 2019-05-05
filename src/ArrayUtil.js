@@ -135,12 +135,14 @@ export default class ArrayUtil {
   }
 
   /**
-   * Removes all occurences of the given slice from the given array.
+   * Finds all occurences of the given slice inside a target array and replaces
+   * them with the given replacement slice.
    * @param {array} array Target array
    * @param {array} slice Slice elements to be removed
+   * @param {array} [replacement=[]] Replacement slice
    * @return {array} Resulting array
    */
-  static removeSlice (array, slice) {
+  static replaceSlice (array, slice, replacement = []) {
     let i = 0
     let j = -1
     let result = []
@@ -148,6 +150,8 @@ export default class ArrayUtil {
     while ((j = this.indexOfSlice(array, slice, j + 1)) !== -1) {
       // Append elements in between of the last and current slice
       result = result.concat(array.slice(i, j))
+      // Append replacement elements
+      result = result.concat(replacement)
       // Move the cursor behind the current slice
       i = j + slice.length
     }

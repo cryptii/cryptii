@@ -46,7 +46,7 @@ export default class AlphabetField extends TextField {
    * @return {mixed} Randomly chosen value
    */
   randomizeValue (random) {
-    const value = super.randomizeValue(random)
+    const value = this.randomizeValueWithCallback(random)
     if (value !== null) {
       return value
     }

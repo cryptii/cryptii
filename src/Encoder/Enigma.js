@@ -796,13 +796,12 @@ export default class EnigmaEncoder extends Encoder {
   /**
    * Validates plugboard setting value.
    * @protected
-   * @param {mixed} rawValue
+   * @param {Chain} rawValue
    * @param {Setting} setting
    * @return {boolean} Returns true, if value is valid.
    */
   validatePlugboardValue (rawValue, setting) {
-    // Filter raw value
-    const plugboard = setting.filterValue(rawValue).getString()
+    const plugboard = rawValue.getString()
 
     // Empty plugboard is valid
     if (plugboard === '') {

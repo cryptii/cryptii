@@ -32,8 +32,11 @@ export default class TextField extends Field {
     this._caseSensitivity = null
 
     const options = spec.options || {}
-    this.setMinLength(options.minLength || null, false)
-    this.setMaxLength(options.maxLength || null, false)
+    this.setMinLength(
+      options.minLength !== undefined ? options.minLength : null, false)
+    this.setMaxLength(
+      options.maxLength !== undefined ? options.maxLength : null, false)
+
     this.setAllowedChars(options.allowedChars || null, false)
     this.setCaseSensitivity(options.caseSensitivity || false, false)
   }
