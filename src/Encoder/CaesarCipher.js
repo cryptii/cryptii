@@ -50,11 +50,15 @@ export default class CaesarCipherEncoder extends Encoder {
         caseSensitivity: false
       },
       {
-        name: 'caseSensitivity',
-        type: 'boolean',
+        name: 'caseStrategy',
+        type: 'enum',
+        value: 'maintain',
         width: 6,
-        value: false,
-        randomizable: false
+        randomizable: false,
+        options: {
+          elements: ['maintain', 'ignore', 'strict'],
+          labels: ['Maintain case', 'Ignore case', 'Strict (A ≠ a)']
+        }
       },
       {
         name: 'includeForeignChars',
@@ -75,28 +79,41 @@ export default class CaesarCipherEncoder extends Encoder {
    * Performs encode or decode on given content.
    * @param {Chain} content
    * @param {boolean} isEncode True for encoding, false for decoding
-   * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
+   * @return {number[]|string|Uint8Array|Chain} Resulting content
    */
   performTranslate (content, isEncode) {
-    const { alphabet, shift, caseSensitivity, includeForeignChars } =
+    const { shift, caseStrategy, includeForeignChars } =
       this.getSettingValues()
 
-    // Lowercase content if translation is not case sensitive
-    if (!caseSensitivity) {
-      content = content.toLowerCase()
+    // Prepare alphabet(s) depending on chosen case strategy
+    let alphabet = this.getSettingValue('alphabet')
+    let uppercaseAlphabet
+    if (caseStrategy !== 'strict') {
+      alphabet = alphabet.toLowerCase()
+      uppercaseAlphabet = alphabet.toUpperCase()
     }
 
     const m = alphabet.getLength()
     const n = content.getLength()
     const result = new Array(n)
 
-    let codePoint, x, y
+    let codePoint, x, y, uppercase
     let j = 0
 
     // Go through each character in content
     for (let i = 0; i < n; i++) {
       codePoint = content.getCodePointAt(i)
+
+      // Match alphabet character
       x = alphabet.indexOfCodePoint(codePoint)
+      uppercase = false
+
+      // Match uppercase alphabet character (depending on case strategy)
+      if (x === -1 && caseStrategy !== 'strict') {
+        x = uppercaseAlphabet.indexOfCodePoint(codePoint)
+        uppercase = true
+      }
+
       if (x === -1) {
         // Character is not in the alphabet
         if (includeForeignChars) {
@@ -105,7 +122,13 @@ export default class CaesarCipherEncoder extends Encoder {
       } else {
         // Shift character
         y = MathUtil.mod(x + shift * (isEncode ? 1 : -1), m)
-        result[j++] = alphabet.getCodePointAt(y)
+
+        // Translate index to character following the case strategy
+        if (caseStrategy === 'maintain' && uppercase) {
+          result[j++] = uppercaseAlphabet.getCodePointAt(y)
+        } else {
+          result[j++] = alphabet.getCodePointAt(y)
+        }
       }
     }
 
@@ -119,9 +142,9 @@ export default class CaesarCipherEncoder extends Encoder {
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
-      case 'caseSensitivity':
+      case 'caseStrategy':
         // Apply case sensitivity on the alphabet setting
-        this.getSetting('alphabet').setCaseSensitivity(value)
+        this.getSetting('alphabet').setCaseSensitivity(value === 'strict')
         break
       case 'alphabet':
         // The shift value description depends on the alphabet and thus needs

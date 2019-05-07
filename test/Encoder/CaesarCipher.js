@@ -21,5 +21,22 @@ describe('CaesarCipherEncoder', () => EncoderTester.test(CaesarCipherEncoder, [
     settings: { shift: 77 },
     content: 'the quick brown fox jumps over 13 lazy dogs.',
     expectedResult: 'sgd pthbj aqnvm enw itlor nudq 13 kzyx cnfr.'
+  },
+  // Case strategy tests
+  {
+    settings: { shift: 7, caseStrategy: 'maintain' },
+    content: 'Hello World',
+    expectedResult: 'Olssv Dvysk'
+  },
+  {
+    settings: { shift: 7, caseStrategy: 'ignore' },
+    direction: 'encode',
+    content: 'Hello World',
+    expectedResult: 'olssv dvysk'
+  },
+  {
+    settings: { shift: 7, caseStrategy: 'strict' },
+    content: 'Hello World',
+    expectedResult: 'Hlssv Wvysk'
   }
 ]))
