@@ -37,5 +37,22 @@ describe('AlphabeticalSubstitutionEncoder', () => EncoderTester.test(Alphabetica
     },
     content: 'flee at once. we are discovered!',
     expectedResult: 'siaa zq lkba. va zoa rfpbluaoar!'
+  },
+  // Case strategy tests
+  {
+    settings: { caseStrategy: 'maintain' },
+    content: 'Hello World',
+    expectedResult: 'Svool Dliow'
+  },
+  {
+    settings: { caseStrategy: 'ignore' },
+    direction: 'encode',
+    content: 'Hello World',
+    expectedResult: 'svool dliow'
+  },
+  {
+    settings: { caseStrategy: 'strict' },
+    content: 'Hello World',
+    expectedResult: 'Hvool Wliow'
   }
 ]))

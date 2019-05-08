@@ -17,13 +17,25 @@ describe('AffineCipherEncoder', () => EncoderTester.test(AffineCipherEncoder, [
     expectedResult: 'ihhwvcswfrcp'
   },
   {
-    settings: { caseSensitivity: true, a: 5, b: 8 },
-    content: 'AffineCipher',
-    expectedResult: 'AhhwvcCwfrcp'
-  },
-  {
     settings: { alphabet: 'zyxwvutsrqponmlkjihgfedcba', a: 5, b: 8 },
     content: 'affinecipher',
     expectedResult: 'wvvkjqgktfqd'
+  },
+  // Case strategy tests
+  {
+    settings: { caseStrategy: 'maintain', a: 5, b: 8 },
+    content: 'AffineCipher',
+    expectedResult: 'IhhwvcSwfrcp'
+  },
+  {
+    settings: { caseStrategy: 'ignore', a: 5, b: 8 },
+    direction: 'encode',
+    content: 'AffineCipher',
+    expectedResult: 'ihhwvcswfrcp'
+  },
+  {
+    settings: { caseStrategy: 'strict', a: 5, b: 8 },
+    content: 'AffineCipher',
+    expectedResult: 'AhhwvcCwfrcp'
   }
 ]))
