@@ -31,16 +31,26 @@ describe('VigenereCipherEncoder', () => EncoderTester.test(VigenereCipherEncoder
     content: 'the quick brown fox jumps over the lazy dog',
     expectedResult: 'tig tynir jayhz scm zleim jrbp shf nddd jvo'
   },
+  // Case strategy tests
   {
-    settings: { key: 'AKEY', caseSensitivity: false },
-    direction: 'encode',
-    content: 'Geheimnis',
-    expectedResult: 'golciwrgs'
+    settings: { caseStrategy: 'maintain', key: 'GEHEIM' },
+    content: 'The Quick Brown Fox Jumps Over The Lazy Dog',
+    expectedResult: 'Zll Ucuio Ivwit Jvb Rgstz Sdqx Xoi Tmfc Kso'
   },
   {
-    settings: { key: 'AKEY', caseSensitivity: false },
-    direction: 'decode',
-    content: 'Golciwrgs',
-    expectedResult: 'geheimnis'
+    settings: { caseStrategy: 'maintain', key: 'geheim', keyMode: 'autokey' },
+    content: 'The Quick Brown Fox Jumps Over The Lazy Dog',
+    expectedResult: 'Zll Ucuvr Fhiep Ppo Xqzug Leyd Izs Geqr Ksr'
+  },
+  {
+    settings: { caseStrategy: 'ignore', key: 'geheim' },
+    direction: 'encode',
+    content: 'Dies ist ein Geheimnis',
+    expectedResult: 'jmlw qez ipr oqnipqvuy'
+  },
+  {
+    settings: { caseStrategy: 'strict', key: 'geheim' },
+    content: 'Dies ist ein Geheimnis',
+    expectedResult: 'Doiz maf kmu Gipqoquma'
   }
 ]))
