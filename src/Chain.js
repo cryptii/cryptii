@@ -214,6 +214,27 @@ export default class Chain {
   }
 
   /**
+   * Creates a mixed alphabet by extending this chain by the given one.
+   * @param {number[]|string|Uint8Array|Chain} alphabet Alphabet the target
+   * should be extended by.
+   * @return {Chain} Mixed alphabet
+   */
+  extend (alphabet) {
+    const key = this.getCodePoints()
+    const codePoints = Chain.wrap(alphabet).getCodePoints()
+    const mixedAlphabet = key.slice()
+    let element
+    let i = 0
+    while (mixedAlphabet.length < codePoints.length && i < codePoints.length) {
+      element = codePoints[i++]
+      if (key.indexOf(element) === -1) {
+        mixedAlphabet.push(element)
+      }
+    }
+    return Chain.wrap(mixedAlphabet)
+  }
+
+  /**
    * Retrieves the matches when matching a string against a regular expression.
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match
    * @param {RegExp|string} regexp A regular expression object.

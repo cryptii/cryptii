@@ -48,6 +48,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `numeral-system` | Transform | Translates numerals between systems |
 | `polybius-square` | Ciphers | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
 | ↳ `bifid-cipher` | Ciphers | [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher) |
+| ↳ `nihilist-cipher` | Ciphers | [Nihilist cipher](https://en.wikipedia.org/wiki/Nihilist_cipher) |
 | ↳ `tap-code` | Ciphers | [Tap code](https://en.wikipedia.org/wiki/Tap_code) |
 | `rc4` | Modern cryptography | [RC4](https://en.wikipedia.org/wiki/RC4) incl. RC4-drop |
 | `reverse` | Transform | Reverses the order of bytes, characters or lines |

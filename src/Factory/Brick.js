@@ -8,6 +8,7 @@ import AlphabeticalSubstitutionEncoder from '../Encoder/AlphabeticalSubstitution
 import Ascii85Encoder from '../Encoder/Ascii85'
 import Base32Encoder from '../Encoder/Base32'
 import Base64Encoder from '../Encoder/Base64'
+import BifidCipherEncoder from '../Encoder/BifidCipher'
 import BitwiseOperationEncoder from '../Encoder/BitwiseOperation'
 import BlockCipherEncoder from '../Encoder/BlockCipher'
 import BootstringEncoder from '../Encoder/Bootstring'
@@ -19,15 +20,15 @@ import HashEncoder from '../Encoder/Hash'
 import HMACEncoder from '../Encoder/HMAC'
 import IntegerEncoder from '../Encoder/Integer'
 import MorseCodeEncoder from '../Encoder/MorseCode'
+import NihilistCipherEncoder from '../Encoder/NihilistCipher'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import PolybiusSquareEncoder from '../Encoder/PolybiusSquare'
-import BifidCipherEncoder from '../Encoder/BifidCipher'
-import TapCodeEncoder from '../Encoder/TapCode'
 import PunycodeEncoder from '../Encoder/Punycode'
 import RC4Encoder from '../Encoder/RC4'
 import ReverseEncoder from '../Encoder/Reverse'
 import ROT13Encoder from '../Encoder/ROT13'
 import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
+import TapCodeEncoder from '../Encoder/TapCode'
 import TextViewer from '../Viewer/Text'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import URLEncoder from '../Encoder/URL'
@@ -64,6 +65,7 @@ export default class BrickFactory extends Factory {
       VigenereCipherEncoder,
       PolybiusSquareEncoder,
       BifidCipherEncoder,
+      NihilistCipherEncoder,
       TapCodeEncoder,
       AlphabeticalSubstitutionEncoder,
       Base32Encoder,

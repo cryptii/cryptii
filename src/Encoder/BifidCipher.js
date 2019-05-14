@@ -118,27 +118,8 @@ export default class BifidCipherEncoder extends Encoder {
     switch (setting.getName()) {
       case 'key':
         // Derive Polybius square alphabet from the key setting
-        const alphabet = this._createMixedAlphabet(value.getString())
-        this._polybiusSquare.setSettingValue('alphabet', alphabet)
+        this._polybiusSquare.setSettingValue('alphabet', value.extend(alphabet))
         break
     }
-    super.settingValueDidChange(setting, value)
-  }
-
-  /**
-   * Creates a mixed-alphabet for the given key.
-   * @param {string} key Key
-   * @return {string} Resulting mixed-alphabet
-   */
-  _createMixedAlphabet (key) {
-    let mixedAlphabet = key
-    let i = 0
-    while (mixedAlphabet.length < alphabet.length) {
-      if (key.indexOf(alphabet[i]) === -1) {
-        mixedAlphabet += alphabet[i]
-      }
-      i++
-    }
-    return mixedAlphabet
   }
 }

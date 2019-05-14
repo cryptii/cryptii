@@ -84,8 +84,8 @@ export default class AlphabeticalSubstitutionEncoder extends Encoder {
 
     // Retrieve alphabets
     let sourceAlphabet = this.getSettingValue('plaintextAlphabet')
-    let destAlphabet = this._extendAlphabet(sourceAlphabet,
-      this.getSettingValue('ciphertextAlphabet'))
+    let destAlphabet =
+      this.getSettingValue('ciphertextAlphabet').extend(sourceAlphabet)
 
     // Swap source and destination alphabets if decoding
     if (!isEncode) {
@@ -134,25 +134,6 @@ export default class AlphabeticalSubstitutionEncoder extends Encoder {
     }
 
     return result.slice(0, j)
-  }
-
-  /**
-   * Extends the ciphertext alphabet with plaintext code points that do not
-   * appear in the ciphertext until both alphabets are equal in length.
-   * @param {Chain} plaintext Plaintext alphabet characters
-   * @param {Chain} ciphertext Ciphertext alphabet characters
-   * @return {Chain} Expanded ciphertext alphabet
-   */
-  _extendAlphabet (plaintext, ciphertext) {
-    const expanded = ciphertext.getCodePoints()
-    let i = 0
-    while (expanded.length < plaintext.getLength()) {
-      if (ciphertext.indexOfCodePoint(plaintext.getCodePointAt(i)) === -1) {
-        expanded.push(plaintext.getCodePointAt(i))
-      }
-      i++
-    }
-    return Chain.wrap(expanded)
   }
 
   /**
