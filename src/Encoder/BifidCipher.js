@@ -43,7 +43,7 @@ export default class BifidCipherEncoder extends Encoder {
       type: 'alphabet',
       value: defaultKey,
       options: {
-        allowedChars: alphabet,
+        whitelistChars: alphabet,
         caseSensitivity: false,
         minLength: 0
       }

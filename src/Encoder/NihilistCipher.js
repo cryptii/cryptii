@@ -57,7 +57,7 @@ export default class NihilistCipherEncoder extends Encoder {
         type: 'text',
         value: defaultKey,
         options: {
-          allowedChars: alphabet,
+          whitelistChars: alphabet,
           caseSensitivity: false,
           minLength: 2
         }
@@ -68,6 +68,7 @@ export default class NihilistCipherEncoder extends Encoder {
         value: ' ',
         randomizable: false,
         options: {
+          blacklistChars: '0123456789',
           minLength: 1
         }
       }
@@ -187,7 +188,7 @@ export default class NihilistCipherEncoder extends Encoder {
         // Create mixed alphabet
         const mixedAlphabet = value.extend(alphabet)
         this._polybiusSquare.setSettingValue('alphabet', mixedAlphabet)
-        this.getSetting('key').setAllowedChars(mixedAlphabet)
+        this.getSetting('key').setWhitelistChars(mixedAlphabet)
         break
     }
   }

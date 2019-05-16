@@ -54,7 +54,7 @@ export default class VigenereCipherEncoder extends Encoder {
         type: 'text',
         value: 'cryptii',
         options: {
-          allowedChars: defaultAlphabet,
+          whitelistChars: defaultAlphabet,
           minLength: 2
         }
       },
@@ -215,7 +215,7 @@ export default class VigenereCipherEncoder extends Encoder {
         break
       case 'alphabet':
         // Update allowed chars of key setting
-        this.getSetting('key').setAllowedChars(value)
+        this.getSetting('key').setWhitelistChars(value)
         break
       case 'caseStrategy':
         this.getSetting('alphabet').setCaseSensitivity(value === 'strict')

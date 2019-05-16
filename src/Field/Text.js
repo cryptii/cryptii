@@ -2,7 +2,6 @@
 import ArrayUtil from '../ArrayUtil'
 import Chain from '../Chain'
 import Field from '../Field'
-import TextEncoder from '../TextEncoder'
 import TextFieldView from '../View/Field/Text'
 
 /**
@@ -16,8 +15,10 @@ export default class TextField extends Field {
    * @param {mixed} [spec.options] Field options
    * @param {?number} [spec.options.minLength=null] Minimum amount of characters
    * @param {?number} [spec.options.maxLength=null] Maximum amount of characters
-   * @param {?number[]} [spec.options.allowedCodePoints=null]
-   * Restricts text to given Unicode code points.
+   * @param {?number[]|string|Chain} [spec.options.whitelistChars=null]
+   * Restricts the value to the given set of Unicode code points.
+   * @param {?number[]|string|Chain} [spec.options.blacklistChars=null]
+   * Forbids the given set of Unicode code points in the value.
    * @param {boolean} [spec.options.caseSensitivity=false]
    * Wether to respect case sensitivity
    */
@@ -28,16 +29,18 @@ export default class TextField extends Field {
     this._value = Chain.wrap(spec.value || null)
     this._minLength = null
     this._maxLength = null
-    this._allowedChars = null
+    this._whitelistChars = null
+    this._blacklistChars = null
     this._caseSensitivity = null
 
+    // Apply text setting options
     const options = spec.options || {}
-    this.setMinLength(
-      options.minLength !== undefined ? options.minLength : null, false)
-    this.setMaxLength(
-      options.maxLength !== undefined ? options.maxLength : null, false)
-
-    this.setAllowedChars(options.allowedChars || null, false)
+    this.setMinLength(options.minLength !== undefined
+      ? options.minLength : null, false)
+    this.setMaxLength(options.maxLength !== undefined
+      ? options.maxLength : null, false)
+    this.setWhitelistChars(options.whitelistChars || null, false)
+    this.setBlacklistChars(options.blacklistChars || null, false)
     this.setCaseSensitivity(options.caseSensitivity || false, false)
   }
 
@@ -86,31 +89,46 @@ export default class TextField extends Field {
   }
 
   /**
-   * Returns allowed Unicode code points.
-   * @return {?number[]} Allowed Unicode code points
+   * Returns the whitelisted Unicode code points.
+   * @return {?number[]} Whitelisted Unicode code points
    */
-  getAllowedChars () {
-    return this._allowedChars
+  getWhitelistChars () {
+    return this._whitelistChars
   }
 
   /**
-   * Restricts text to given Unicode code points.
-   * @param {?number[]|string|Chain} allowedChars
+   * Restricts the value to the given set of Unicode code points.
+   * @param {?number[]|string|Chain} whitelistChars Whitelist code points
    * @param {boolean} [revalidate=true] Wether to revalidate current value
    * @return {TextField} Fluent interface
    */
-  setAllowedChars (allowedChars, revalidate = true) {
-    if (this._allowedChars === allowedChars) {
-      return this
-    }
+  setWhitelistChars (whitelistChars, revalidate = true) {
+    this._whitelistChars =
+      whitelistChars !== null
+        ? Chain.wrap(whitelistChars).getCodePoints()
+        : null
+    return revalidate ? this.revalidateValue() : this
+  }
 
-    if (typeof allowedChars === 'string') {
-      allowedChars = TextEncoder.codePointsFromString(allowedChars)
-    } else if (allowedChars instanceof Chain) {
-      allowedChars = allowedChars.getCodePoints()
-    }
+  /**
+   * Returns the blacklisted Unicode code points.
+   * @return {?number[]} Blacklisted Unicode code points
+   */
+  getBlacklistChars () {
+    return this._blacklistChars
+  }
 
-    this._allowedChars = allowedChars
+  /**
+   * Forbids the given set of Unicode code points in the value.
+   * @param {?number[]|string|Chain} blacklistChars Blacklist code points
+   * @param {boolean} [revalidate=true] Wether to revalidate current value
+   * @return {TextField} Fluent interface
+   */
+  setBlacklistChars (blacklistChars, revalidate = true) {
+    this._blacklistChars =
+      blacklistChars !== null
+        ? Chain.wrap(blacklistChars).getCodePoints()
+        : null
     return revalidate ? this.revalidateValue() : this
   }
 
@@ -171,22 +189,28 @@ export default class TextField extends Field {
       }
     }
 
-    // Validate allowed chars
-    if (this._allowedChars !== null) {
-      let invalidCharacters = []
+    // Validate character whitelist and blacklist
+    if (this._whitelistChars !== null || this._blacklistChars !== null) {
+      let whitelist = this._whitelistChars
+      let blacklist = this._blacklistChars
+      let invalidChars = []
+      let c
+
       for (let i = 0; i < value.getLength(); i++) {
-        if (this._allowedChars.indexOf(value.getCodePointAt(i)) === -1) {
-          invalidCharacters.push(value.getCharAt(i))
+        c = value.getCodePointAt(i)
+        if ((whitelist !== null && whitelist.indexOf(c) === -1) ||
+            (blacklist !== null && blacklist.indexOf(c) !== -1)) {
+          invalidChars.push(value.getCharAt(i))
         }
       }
 
-      if (invalidCharacters.length > 0) {
-        invalidCharacters = ArrayUtil.unique(invalidCharacters)
+      if (invalidChars.length > 0) {
+        invalidChars = ArrayUtil.unique(invalidChars)
         return {
-          key: 'textNotAllowedCharacter',
+          key: 'textForbiddenCharacter',
           message:
-            `The value contains characters that are not allowed: ` +
-            `'${invalidCharacters.join('')}'`
+            `The value contains forbidden characters: ` +
+            `'${invalidChars.join('')}'`
         }
       }
     }
@@ -217,13 +241,13 @@ export default class TextField extends Field {
     if (value !== null) {
       return value
     }
-    if (this.isValid() && this.getAllowedChars() !== null) {
+    if (this.isValid() && this.getWhitelistChars() !== null) {
       // Use the current value's length to
       // produce the same amount of random chars
       const length = this.getValue().getLength()
       const codePoints = []
       for (let i = 0; i < length; i++) {
-        codePoints.push(random.nextChoice(this.getAllowedChars()))
+        codePoints.push(random.nextChoice(this.getWhitelistChars()))
       }
       return Chain.wrap(codePoints)
     }
