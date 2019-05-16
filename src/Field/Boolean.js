@@ -12,18 +12,16 @@ export default class BooleanField extends Field {
   /**
    * Constructor
    * @param {string} name Field name
-   * @param {object} [spec] Field spec
-   * @param {mixed} [spec.options] Field options
-   * @param {string} [spec.options.trueLabel='Yes'] Label for 'true' choice
-   * @param {string} [spec.options.falseLabel='No'] Label for 'false' choice
+   * @param {mixed} [spec] Field options
+   * @param {string} [spec.trueLabel='Yes'] Label for 'true' choice
+   * @param {string} [spec.falseLabel='No'] Label for 'false' choice
    */
   constructor (name, spec = {}) {
     super(name, spec)
     this._viewPrototype = BooleanFieldView
 
-    const options = spec.options || {}
-    this._trueLabel = options.trueLabel || 'Yes'
-    this._falseLabel = options.falseLabel || 'No'
+    this._trueLabel = spec.trueLabel || 'Yes'
+    this._falseLabel = spec.falseLabel || 'No'
   }
 
   /**

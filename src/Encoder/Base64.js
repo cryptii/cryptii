@@ -33,12 +33,10 @@ export default class Base64Encoder extends Encoder {
       type: 'enum',
       label: 'Variant',
       value: 'base64',
-      randomizable: false,
-      options: {
-        elements: variants.map(variant => variant.name),
-        labels: variants.map(variant => variant.label),
-        descriptions: variants.map(variant => variant.description)
-      }
+      elements: variants.map(variant => variant.name),
+      labels: variants.map(variant => variant.label),
+      descriptions: variants.map(variant => variant.description),
+      randomizable: false
     })
   }
 

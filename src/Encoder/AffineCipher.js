@@ -37,55 +37,49 @@ export default class AffineCipherEncoder extends Encoder {
         name: 'a',
         type: 'number',
         label: 'Slope / a',
-        width: 6,
         value: 5,
+        integer: true,
+        min: 1,
         validateValue: this.validateSlopeValue.bind(this),
         randomizeValue: this.randomizeSlopeValue.bind(this),
-        options: {
-          integer: true,
-          min: 1
-        }
+        width: 6
       },
       {
         name: 'b',
         type: 'number',
         label: 'Intercept / b',
-        width: 6,
         value: 8,
+        integer: true,
+        min: 1,
         randomizeValue: this.randomizeInterceptValue.bind(this),
-        options: {
-          integer: true,
-          min: 1
-        }
+        width: 6
       },
       {
         name: 'alphabet',
-        type: 'alphabet',
+        type: 'text',
         value: defaultAlphabet,
+        uniqueChars: true,
+        minLength: 2,
         randomizable: false
       },
       {
         name: 'caseStrategy',
         type: 'enum',
         value: 'maintain',
+        elements: ['maintain', 'ignore', 'strict'],
+        labels: ['Maintain case', 'Ignore case', 'Strict (A ≠ a)'],
         width: 6,
-        randomizable: false,
-        options: {
-          elements: ['maintain', 'ignore', 'strict'],
-          labels: ['Maintain case', 'Ignore case', 'Strict (A ≠ a)']
-        }
+        randomizable: false
       },
       {
         name: 'includeForeignChars',
         type: 'boolean',
         label: 'Foreign Chars',
-        width: 6,
         value: true,
-        randomizable: false,
-        options: {
-          trueLabel: 'Include',
-          falseLabel: 'Ignore'
-        }
+        width: 6,
+        trueLabel: 'Include',
+        falseLabel: 'Ignore',
+        randomizable: false
       }
     ])
   }

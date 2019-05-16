@@ -42,12 +42,10 @@ export default class HMACEncoder extends Encoder {
         name: 'algorithm',
         type: 'enum',
         value: hashAlgorithmSetting.getValue(),
+        elements: hashAlgorithmSetting.getElements(),
+        labels: hashAlgorithmSetting.getElementLabels(),
         randomizable: false,
-        style: 'radio',
-        options: {
-          elements: hashAlgorithmSetting.getElements(),
-          labels: hashAlgorithmSetting.getElementLabels()
-        }
+        style: 'radio'
       }
     ])
   }

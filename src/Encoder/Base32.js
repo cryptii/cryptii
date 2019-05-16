@@ -77,34 +77,29 @@ export default class Base32Encoder extends Encoder {
         name: 'variant',
         type: 'enum',
         value: 'base32',
-        randomizable: false,
-        options: {
-          elements: variants.map(variant => variant.name),
-          labels: variants.map(variant => variant.label)
-        }
+        elements: variants.map(variant => variant.name),
+        labels: variants.map(variant => variant.label),
+        randomizable: false
       },
       {
         name: 'alphabet',
-        type: 'alphabet',
+        type: 'text',
         value: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567',
+        uniqueChars: true,
+        minLength: 32,
+        maxLength: 32,
+        caseSensitivity: true,
         randomizable: false,
-        visible: false,
-        options: {
-          minLength: 32,
-          maxLength: 32,
-          caseSensitivity: true
-        }
+        visible: false
       },
       {
         name: 'padding',
         type: 'text',
         value: '=',
+        minLength: 0,
+        maxLength: 1,
         randomizable: false,
-        visible: false,
-        options: {
-          minLength: 0,
-          maxLength: 1
-        }
+        visible: false
       }
     ])
   }
@@ -239,7 +234,6 @@ export default class Base32Encoder extends Encoder {
         this.getSetting('padding').setVisible(value === 'custom')
         break
     }
-    super.settingValueDidChange(setting, value)
   }
 
   /**

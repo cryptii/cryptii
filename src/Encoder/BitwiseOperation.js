@@ -40,38 +40,34 @@ export default class BitwiseOperationEncoder extends Encoder {
         name: 'operation',
         type: 'enum',
         value: 'NOT',
+        elements: [
+          'NOT',
+          'AND',
+          'OR',
+          'XOR',
+          'NAND',
+          'NOR',
+          'NXOR'
+        ],
+        labels: [
+          'NOT ~a',
+          'AND (a & b)',
+          'OR (a | b)',
+          'XOR (a ^ b)',
+          'NAND ~(a & b)',
+          'NOR ~(a | b)',
+          'NXOR ~(a ^ b)'
+        ],
         randomizable: false,
-        style: 'radio',
-        options: {
-          elements: [
-            'NOT',
-            'AND',
-            'OR',
-            'XOR',
-            'NAND',
-            'NOR',
-            'NXOR'
-          ],
-          labels: [
-            'NOT ~a',
-            'AND (a & b)',
-            'OR (a | b)',
-            'XOR (a ^ b)',
-            'NAND ~(a & b)',
-            'NOR ~(a | b)',
-            'NXOR ~(a ^ b)'
-          ]
-        }
+        style: 'radio'
       },
       {
         name: 'operand',
         label: 'Operand B (Repeating)',
         type: 'bytes',
         value: new Uint8Array([15]),
-        visible: false,
-        options: {
-          minSize: 1
-        }
+        minSize: 1,
+        visible: false
       }
     ])
   }
@@ -139,6 +135,5 @@ export default class BitwiseOperationEncoder extends Encoder {
       // Only make operand visible when necessary
       this.getSetting('operand').setVisible(value !== 'NOT')
     }
-    super.settingValueDidChange(setting, value)
   }
 }

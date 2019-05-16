@@ -12,14 +12,15 @@ export default class TextField extends Field {
    * Constructor
    * @param {string} name Field name
    * @param {object} [spec] Field spec
-   * @param {mixed} [spec.options] Field options
-   * @param {?number} [spec.options.minLength=null] Minimum amount of characters
-   * @param {?number} [spec.options.maxLength=null] Maximum amount of characters
-   * @param {?number[]|string|Chain} [spec.options.whitelistChars=null]
+   * @param {?number} [spec.minLength=null] Minimum amount of characters
+   * @param {?number} [spec.maxLength=null] Maximum amount of characters
+   * @param {?number[]|string|Chain} [spec.whitelistChars=null]
    * Restricts the value to the given set of Unicode code points.
-   * @param {?number[]|string|Chain} [spec.options.blacklistChars=null]
+   * @param {?number[]|string|Chain} [spec.blacklistChars=null]
    * Forbids the given set of Unicode code points in the value.
-   * @param {boolean} [spec.options.caseSensitivity=false]
+   * @param {boolean} [spec.uniqueChars=false]
+   * Sets wether value characters need to be unique.
+   * @param {boolean} [spec.caseSensitivity=false]
    * Wether to respect case sensitivity
    */
   constructor (name, spec = {}) {
@@ -31,17 +32,16 @@ export default class TextField extends Field {
     this._maxLength = null
     this._whitelistChars = null
     this._blacklistChars = null
+    this._uniqueChars = false
     this._caseSensitivity = null
 
-    // Apply text setting options
-    const options = spec.options || {}
-    this.setMinLength(options.minLength !== undefined
-      ? options.minLength : null, false)
-    this.setMaxLength(options.maxLength !== undefined
-      ? options.maxLength : null, false)
-    this.setWhitelistChars(options.whitelistChars || null, false)
-    this.setBlacklistChars(options.blacklistChars || null, false)
-    this.setCaseSensitivity(options.caseSensitivity || false, false)
+    // Apply field options
+    this.setMinLength(spec.minLength !== undefined ? spec.minLength : null, false)
+    this.setMaxLength(spec.maxLength !== undefined ? spec.maxLength : null, false)
+    this.setWhitelistChars(spec.whitelistChars || null, false)
+    this.setBlacklistChars(spec.blacklistChars || null, false)
+    this.setUniqueChars(spec.uniqueChars || false, false)
+    this.setCaseSensitivity(spec.caseSensitivity || false, false)
   }
 
   /**
@@ -133,6 +133,28 @@ export default class TextField extends Field {
   }
 
   /**
+   * Wether value characters need to be unique.
+   * @return {boolean}
+   */
+  isUniqueChars () {
+    return this._uniqueChars
+  }
+
+  /**
+   * Sets wether value characters need to be unique.
+   * @param {boolean} uniqueChars Character uniqueness
+   * @param {boolean} [revalidate=true] Wether to revalidate current value
+   * @return {TextField} Fluent interface
+   */
+  setUniqueChars (uniqueChars, revalidate = true) {
+    if (this._uniqueChars === uniqueChars) {
+      return this
+    }
+    this._uniqueChars = uniqueChars
+    return revalidate ? this.revalidateValue() : this
+  }
+
+  /**
    * Returns wether to respect case sensitivity.
    * @return {boolean}
    */
@@ -189,6 +211,14 @@ export default class TextField extends Field {
       }
     }
 
+    // Validate character uniqueness
+    if (this._uniqueChars && !ArrayUtil.isUnique(value.getCodePoints())) {
+      return {
+        key: 'textCharactersNotUnique',
+        message: `The value must not contain duplicate characters`
+      }
+    }
+
     // Validate character whitelist and blacklist
     if (this._whitelistChars !== null || this._blacklistChars !== null) {
       let whitelist = this._whitelistChars
@@ -241,15 +271,21 @@ export default class TextField extends Field {
     if (value !== null) {
       return value
     }
-    if (this.isValid() && this.getWhitelistChars() !== null) {
-      // Use the current value's length to
-      // produce the same amount of random chars
-      const length = this.getValue().getLength()
-      const codePoints = []
-      for (let i = 0; i < length; i++) {
-        codePoints.push(random.nextChoice(this.getWhitelistChars()))
+    if (this.isValid()) {
+      if (this.isUniqueChars()) {
+        // Shuffle the characters of the current value
+        const codePoints = this.getValue().getCodePoints()
+        return Chain.wrap(ArrayUtil.shuffle(codePoints, random))
+      } else if (this.getWhitelistChars() !== null) {
+        // Use the current value's length to
+        // produce the same amount of random chars
+        const length = this.getValue().getLength()
+        const codePoints = []
+        for (let i = 0; i < length; i++) {
+          codePoints.push(random.nextChoice(this.getWhitelistChars()))
+        }
+        return Chain.wrap(codePoints)
       }
-      return Chain.wrap(codePoints)
     }
     return null
   }

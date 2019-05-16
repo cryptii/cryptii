@@ -40,13 +40,12 @@ export default class BifidCipherEncoder extends Encoder {
     super()
     this.addSetting({
       name: 'key',
-      type: 'alphabet',
+      type: 'text',
       value: defaultKey,
-      options: {
-        whitelistChars: alphabet,
-        caseSensitivity: false,
-        minLength: 0
-      }
+      whitelistChars: alphabet,
+      uniqueChars: true,
+      minLength: 0,
+      caseSensitivity: false
     })
 
     // Create internal Polybius square encoder instance

@@ -10,35 +10,32 @@ export default class NumberField extends Field {
    * Constructor
    * @param {string} name Field name
    * @param {object} spec Field spec
-   * @param {mixed} [spec.options] Field options
-   * @param {boolean} [spec.options.integer=false] Wether to use integer values
-   * @param {?number} [spec.options.step=1] Step size
-   * @param {?number} [spec.options.min=null] Minimum value (inclusive)
-   * @param {?number} [spec.options.max=null] Maximum value (exclusive)
-   * @param {?boolean} [spec.options.rotate=true] Wether the value should rotate
+   * @param {boolean} [spec.integer=false] Wether to use integer values
+   * @param {?number} [spec.step=1] Step size
+   * @param {?number} [spec.min=null] Minimum value (inclusive)
+   * @param {?number} [spec.max=null] Maximum value (exclusive)
+   * @param {?boolean} [spec.rotate=true] Wether the value should rotate
    * when stepping over limits. Rotation can only be enabled when both min and
    * max values are defined.
    * @param {function(value: number, field: Field): ?string}
-   * [spec.options.describeValue] Function describing the given numeric value in
+   * [spec.describeValue] Function describing the given numeric value in
    * a context-based human-readable way. It only gets called with valid values.
    */
   constructor (name, spec) {
     super(name, spec)
     this._viewPrototype = NumberFieldView
 
-    const options = spec.options || {}
-    this._integer = options.integer || false
-    this._step = options.step || 1
-    this._min = options.min !== undefined ? options.min : null
-    this._max = options.max !== undefined ? options.max : null
+    this._integer = spec.integer || false
+    this._step = spec.step || 1
+    this._min = spec.min !== undefined ? spec.min : null
+    this._max = spec.max !== undefined ? spec.max : null
 
     this._rotate =
-      options.rotate !== undefined
-        ? options.rotate
+      spec.rotate !== undefined
+        ? spec.rotate
         : (this._min !== null && this._max !== null)
 
-    // Describe value function
-    this._describeValueCallback = options.describeValue || null
+    this._describeValueCallback = spec.describeValue || null
   }
 
   /**

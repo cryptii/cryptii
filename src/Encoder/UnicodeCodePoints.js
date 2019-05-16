@@ -33,28 +33,26 @@ export default class UnicodeCodePointsEncoder extends CharacterBlockEncoder {
       name: 'format',
       type: 'enum',
       value: 'unicode',
+      elements: [
+        'unicode',
+        'decimal',
+        'hexadecimal',
+        'binary',
+        'octal',
+        'ncr-decimal',
+        'ncr-hexadecimal'
+      ],
+      labels: [
+        'Unicode notation',
+        'Decimal',
+        'Hexadecimal',
+        'Binary',
+        'Octal',
+        'NCR (Decimal)',
+        'NCR (Hexadecimal)'
+      ],
       randomizable: false,
-      style: 'radio',
-      options: {
-        elements: [
-          'unicode',
-          'decimal',
-          'hexadecimal',
-          'binary',
-          'octal',
-          'ncr-decimal',
-          'ncr-hexadecimal'
-        ],
-        labels: [
-          'Unicode notation',
-          'Decimal',
-          'Hexadecimal',
-          'Binary',
-          'Octal',
-          'NCR (Decimal)',
-          'NCR (Hexadecimal)'
-        ]
-      }
+      style: 'radio'
     })
   }
 

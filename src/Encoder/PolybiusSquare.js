@@ -30,32 +30,32 @@ export default class PolybiusSquareEncoder extends Encoder {
     this.addSettings([
       {
         name: 'alphabet',
-        type: 'alphabet',
+        type: 'text',
         value: 'abcdefghiklmnopqrstuvwxyz',
+        uniqueChars: true,
+        minLength: 2,
         validateValue: this.validateAlphabetValue.bind(this),
-        options: {
-          caseSensitivity: false
-        }
+        caseSensitivity: false
       },
       {
         name: 'rows',
-        type: 'alphabet',
+        type: 'text',
         value: '12345',
+        uniqueChars: true,
+        minLength: 2,
         width: 6,
         randomizable: false,
-        options: {
-          caseSensitivity: false
-        }
+        caseSensitivity: false
       },
       {
         name: 'columns',
-        type: 'alphabet',
+        type: 'text',
         value: '12345',
+        uniqueChars: true,
+        minLength: 2,
         width: 6,
         randomizable: false,
-        options: {
-          caseSensitivity: false
-        }
+        caseSensitivity: false
       },
       {
         name: 'separator',
@@ -78,10 +78,8 @@ export default class PolybiusSquareEncoder extends Encoder {
         width: 6,
         value: true,
         randomizable: false,
-        options: {
-          trueLabel: 'Include',
-          falseLabel: 'Ignore'
-        }
+        trueLabel: 'Include',
+        falseLabel: 'Ignore'
       }
     ])
   }
@@ -248,7 +246,6 @@ export default class PolybiusSquareEncoder extends Encoder {
         this.getSetting('alphabet').revalidateValue()
         break
     }
-    super.settingValueDidChange(setting, value)
   }
 
   /**

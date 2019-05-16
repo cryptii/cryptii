@@ -28,8 +28,10 @@ export default class A1Z26Encoder extends CharacterBlockEncoder {
     this.addSettings([
       {
         name: 'alphabet',
-        type: 'alphabet',
-        value: 'abcdefghijklmnopqrstuvwxyz'
+        type: 'text',
+        value: 'abcdefghijklmnopqrstuvwxyz',
+        uniqueChars: true,
+        minLength: 2
       },
       {
         name: 'caseSensitivity',

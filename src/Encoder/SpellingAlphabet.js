@@ -106,12 +106,10 @@ export default class SpellingAlphabetEncoder extends Encoder {
     this.addSetting({
       name: 'alphabet',
       type: 'enum',
+      elements: alphabetSpecs.map(alphabet => alphabet.name),
+      labels: alphabetSpecs.map(alphabet => alphabet.label),
       randomizable: false,
-      style: 'radio',
-      options: {
-        elements: alphabetSpecs.map(alphabet => alphabet.name),
-        labels: alphabetSpecs.map(alphabet => alphabet.label)
-      }
+      style: 'radio'
     })
 
     this.buildTranslationMap()
@@ -171,7 +169,6 @@ export default class SpellingAlphabetEncoder extends Encoder {
         this.buildTranslationMap()
         break
     }
-    super.settingValueDidChange(setting, value)
   }
 
   /**

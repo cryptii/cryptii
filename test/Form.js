@@ -12,31 +12,25 @@ function getExampleFieldSpecs () {
       type: 'boolean',
       label: 'Foreign Chars',
       value: false,
-      randomizable: false,
-      options: {
-        trueLabel: 'Include',
-        falseLabel: 'Ignore'
-      }
+      trueLabel: 'Include',
+      falseLabel: 'Ignore',
+      randomizable: false
     },
     {
       name: 'invisible',
       type: 'enum',
       value: '?',
+      elements: ['?', '!'],
       visible: false,
-      priority: -10,
-      options: {
-        elements: ['?', '!']
-      }
+      priority: -10
     },
     {
       name: 'model',
       type: 'enum',
       value: 'I',
+      elements: ['I'],
       randomizable: false,
-      priority: 100,
-      options: {
-        elements: ['I']
-      }
+      priority: 100
     }
   ]
   for (let i = 1; i <= 3; i++) {
@@ -45,14 +39,16 @@ function getExampleFieldSpecs () {
       label: `Rotor ${i}`,
       type: 'enum',
       value: 'I',
-      options: { elements: ['I', 'II', 'III', 'IV', 'V'] }
+      elements: ['I', 'II', 'III', 'IV', 'V']
     })
     fieldSpecs.push({
       name: `position${i}`,
       label: `Position ${i}`,
       type: 'number',
       value: 1,
-      options: { integer: true, min: 1, max: 27 }
+      integer: true,
+      min: 1,
+      max: 27
     })
   }
   return fieldSpecs

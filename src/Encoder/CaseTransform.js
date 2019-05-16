@@ -30,24 +30,22 @@ export default class CaseTransformEncoder extends Encoder {
       name: 'case',
       type: 'enum',
       value: 'lower',
+      elements: [
+        'lower',
+        'upper',
+        'capitalize',
+        'alternating',
+        'inverse'
+      ],
+      labels: [
+        'Lower case',
+        'Upper case',
+        'Capitalize',
+        'Alternating case',
+        'Inverse case'
+      ],
       randomizable: false,
-      style: 'radio',
-      options: {
-        elements: [
-          'lower',
-          'upper',
-          'capitalize',
-          'alternating',
-          'inverse'
-        ],
-        labels: [
-          'Lower case',
-          'Upper case',
-          'Capitalize',
-          'Alternating case',
-          'Inverse case'
-        ]
-      }
+      style: 'radio'
     })
   }
 

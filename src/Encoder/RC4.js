@@ -30,22 +30,18 @@ export default class RC4Encoder extends Encoder {
         name: 'key',
         type: 'bytes',
         value: new Uint8Array([99, 114, 121, 112, 116, 105, 105]),
-        options: {
-          minSize: 1,
-          maxSize: 32,
-          randomizeSize: 8
-        }
+        minSize: 1,
+        maxSize: 32,
+        randomizeSize: 8
       },
       {
         name: 'drop',
         type: 'number',
         label: 'Drop bytes',
         value: 0,
-        randomizable: false,
-        options: {
-          integer: true,
-          min: 0
-        }
+        integer: true,
+        min: 0,
+        randomizable: false
       }
     ])
   }

@@ -91,12 +91,10 @@ export default class BlockCipherEncoder extends Encoder {
         name: 'algorithm',
         type: 'enum',
         value: defaultAlgorithm.name,
+        elements: algorithms.map(algorithm => algorithm.name),
+        labels: algorithms.map(algorithm => algorithm.label),
         randomizable: false,
-        width: paddingAvailable ? 8 : 12,
-        options: {
-          elements: algorithms.map(algorithm => algorithm.name),
-          labels: algorithms.map(algorithm => algorithm.label)
-        }
+        width: paddingAvailable ? 8 : 12
       },
       {
         name: 'padding',
@@ -110,11 +108,9 @@ export default class BlockCipherEncoder extends Encoder {
         name: 'mode',
         type: 'enum',
         value: 'cbc',
-        randomizable: false,
-        options: {
-          elements: modes.map(mode => mode.name),
-          labels: modes.map(mode => mode.label)
-        }
+        elements: modes.map(mode => mode.name),
+        labels: modes.map(mode => mode.label),
+        randomizable: false
       },
       {
         name: 'key',
@@ -123,10 +119,8 @@ export default class BlockCipherEncoder extends Encoder {
           0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
           0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c ]
         ),
-        options: {
-          minSize: defaultAlgorithm.keySize,
-          maxSize: defaultAlgorithm.keySize
-        }
+        minSize: defaultAlgorithm.keySize,
+        maxSize: defaultAlgorithm.keySize
       },
       {
         name: 'iv',
@@ -136,10 +130,8 @@ export default class BlockCipherEncoder extends Encoder {
           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
           0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F ]
         ),
-        options: {
-          minSize: defaultAlgorithm.blockSize,
-          maxSize: defaultAlgorithm.blockSize
-        }
+        minSize: defaultAlgorithm.blockSize,
+        maxSize: defaultAlgorithm.blockSize
       }
     ])
   }
@@ -152,16 +144,15 @@ export default class BlockCipherEncoder extends Encoder {
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
-      case 'algorithm': {
+      case 'algorithm':
         const { keySize } = BlockCipherEncoder.getAlgorithm(value)
 
         this.getSetting('key')
           .setMinSize(keySize)
           .setMaxSize(keySize)
         break
-      }
 
-      case 'mode': {
+      case 'mode':
         const algorithm = this.getSettingValue('algorithm')
         const { blockSize } = BlockCipherEncoder.getAlgorithm(algorithm)
         const { hasIV } = BlockCipherEncoder.getMode(value)
@@ -171,10 +162,7 @@ export default class BlockCipherEncoder extends Encoder {
           .setMinSize(blockSize)
           .setMaxSize(blockSize)
         break
-      }
     }
-
-    super.settingValueDidChange(setting, value)
   }
 
   /**

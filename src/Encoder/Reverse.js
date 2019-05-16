@@ -31,20 +31,18 @@ export default class ReverseEncoder extends Encoder {
       label: 'By',
       type: 'enum',
       value: 'character',
+      elements: [
+        'byte',
+        'character',
+        'line'
+      ],
+      labels: [
+        'Byte',
+        'Character',
+        'Line'
+      ],
       randomizable: false,
-      style: 'radio',
-      options: {
-        elements: [
-          'byte',
-          'character',
-          'line'
-        ],
-        labels: [
-          'Byte',
-          'Character',
-          'Line'
-        ]
-      }
+      style: 'radio'
     })
   }
 

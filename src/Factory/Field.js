@@ -2,7 +2,6 @@
 import Factory from '../Factory'
 
 // Package fields
-import AlphabetField from '../Field/Alphabet'
 import BooleanField from '../Field/Boolean'
 import ByteField from '../Field/Byte'
 import EnumField from '../Field/Enum'
@@ -24,7 +23,6 @@ export default class FieldFactory extends Factory {
 
     // Gather package field classes
     const invokables = {
-      alphabet: AlphabetField,
       boolean: BooleanField,
       bytes: ByteField,
       enum: EnumField,
@@ -43,8 +41,7 @@ export default class FieldFactory extends Factory {
    * @example
    * let variantField = FieldFactory.getInstance().create({
    *   name: 'variant',
-   *   type: 'enum',
-   *   options: { ... }
+   *   type: 'enum'
    * })
    * @param {object} spec Specification
    * @param {string} spec.name Name to provide to the field

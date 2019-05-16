@@ -38,48 +38,44 @@ export default class BootstringEncoder extends Encoder {
         label: 'Basic Start',
         type: 'number',
         value: 0,
+        integer: true,
+        rotate: false,
+        min: 0,
+        max: 127 - minBase,
         width: 6,
-        randomizable: false,
-        options: {
-          integer: true,
-          rotate: false,
-          min: 0,
-          max: 127 - minBase
-        }
+        randomizable: false
       },
       {
         name: 'basicRangeEnd',
         label: 'Basic End',
         type: 'number',
         value: 127,
+        integer: true,
+        rotate: false,
+        min: minBase,
+        // Max Unicode code point value
+        max: 0x10FFFF,
         width: 6,
-        randomizable: false,
-        options: {
-          integer: true,
-          rotate: false,
-          min: minBase,
-          // Max Unicode code point value
-          max: 0x10FFFF
-        }
+        randomizable: false
       },
       {
         name: 'digitMapping',
-        type: 'alphabet',
+        type: 'text',
         value: 'abcdefghijklmnopqrstuvwxyz0123456789',
-        randomizable: false,
-        validateValue: this.validateDigitMappingValue.bind(this)
+        uniqueChars: true,
+        minLength: 2,
+        validateValue: this.validateDigitMappingValue.bind(this),
+        randomizable: false
       },
       {
         name: 'delimiter',
         type: 'text',
         value: '-',
         width: 6,
-        randomizable: false,
+        minLength: 1,
+        maxLength: 1,
         validateValue: this.validateDelimiterValue.bind(this),
-        options: {
-          minLength: 1,
-          maxLength: 1
-        }
+        randomizable: false
       },
       {
         name: 'caseSensitivity',
@@ -92,71 +88,59 @@ export default class BootstringEncoder extends Encoder {
         name: 'initialBias',
         type: 'number',
         value: 72,
+        integer: true,
         width: 6,
-        randomizable: false,
         validateValue: this.validateInitialBiasValue.bind(this),
-        options: {
-          integer: true
-        }
+        randomizable: false
       },
       {
         name: 'initialN',
         type: 'number',
         value: 128,
+        integer: true,
+        min: 0,
         width: 6,
-        randomizable: false,
-        options: {
-          integer: true,
-          min: 0
-        }
+        randomizable: false
       },
       {
         name: 'tmin',
         type: 'number',
         value: 1,
+        integer: true,
+        rotate: false,
+        min: 0,
+        max: 26,
         width: 6,
-        randomizable: false,
-        options: {
-          integer: true,
-          rotate: false,
-          min: 0,
-          max: 26
-        }
+        randomizable: false
       },
       {
         name: 'tmax',
         type: 'number',
         value: 26,
+        integer: true,
+        rotate: false,
+        min: 0,
+        max: 35,
         width: 6,
-        randomizable: false,
-        options: {
-          integer: true,
-          rotate: false,
-          min: 0,
-          max: 35
-        }
+        randomizable: false
       },
       {
         name: 'skew',
         type: 'number',
         value: 38,
+        integer: true,
+        min: 1,
         width: 6,
-        randomizable: false,
-        options: {
-          integer: true,
-          min: 1
-        }
+        randomizable: false
       },
       {
         name: 'damp',
         type: 'number',
         value: 700,
+        integer: true,
+        min: 2,
         width: 6,
-        randomizable: false,
-        options: {
-          integer: true,
-          min: 2
-        }
+        randomizable: false
       }
     ])
   }
@@ -447,7 +431,6 @@ export default class BootstringEncoder extends Encoder {
    * @param {mixed} value New field value
    */
   settingValueDidChange (setting, value) {
-    super.settingValueDidChange(setting, value)
     switch (setting.getName()) {
       case 'basicRangeStart':
         this.getSetting('basicRangeEnd').setMin(setting.getValue() + minBase)

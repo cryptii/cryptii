@@ -382,23 +382,19 @@ export default class EnigmaEncoder extends Encoder {
       name: 'model',
       type: 'enum',
       value: model.name,
-      randomizable: false,
-      options: {
-        elements: models.map(model => model.name),
-        labels: models.map(model => model.label),
-        descriptions: models.map(model => model.description)
-      }
+      elements: models.map(model => model.name),
+      labels: models.map(model => model.label),
+      descriptions: models.map(model => model.description),
+      randomizable: false
     })
 
     this.addSetting({
       name: 'reflector',
       type: 'enum',
       value: reflectorRotors[0].name,
-      width: 4,
-      options: {
-        elements: reflectorRotors.map(rotor => rotor.name),
-        labels: reflectorRotors.map(rotor => rotor.label)
-      }
+      elements: reflectorRotors.map(rotor => rotor.name),
+      labels: reflectorRotors.map(rotor => rotor.label),
+      width: 4
     })
 
     this.addSetting({
@@ -406,13 +402,11 @@ export default class EnigmaEncoder extends Encoder {
       label: `Position`,
       type: 'number',
       value: 1,
-      width: 4,
-      options: {
-        integer: true,
-        min: 1,
-        max: 27,
-        describeValue: this.describePositionValue.bind(this)
-      }
+      integer: true,
+      min: 1,
+      max: 27,
+      describeValue: this.describePositionValue.bind(this),
+      width: 4
     })
 
     this.addSetting({
@@ -420,13 +414,11 @@ export default class EnigmaEncoder extends Encoder {
       label: `Ring`,
       type: 'number',
       value: 1,
-      width: 4,
-      options: {
-        integer: true,
-        min: 1,
-        max: 27,
-        describeValue: this.describePositionValue.bind(this)
-      }
+      integer: true,
+      min: 1,
+      max: 27,
+      describeValue: this.describePositionValue.bind(this),
+      width: 4
     })
 
     // Register settings for each possible slot
@@ -436,12 +428,10 @@ export default class EnigmaEncoder extends Encoder {
         label: `Rotor ${i + 1}`,
         type: 'enum',
         value: rotorNames[0],
+        elements: rotorNames,
+        labels: rotorLabels,
         randomizable: false,
-        width: 4,
-        options: {
-          elements: rotorNames,
-          labels: rotorLabels
-        }
+        width: 4
       })
 
       this.addSetting({
@@ -449,13 +439,11 @@ export default class EnigmaEncoder extends Encoder {
         label: `Position`,
         type: 'number',
         value: 1,
-        width: 4,
-        options: {
-          integer: true,
-          min: 1,
-          max: 27,
-          describeValue: this.describePositionValue.bind(this)
-        }
+        integer: true,
+        min: 1,
+        max: 27,
+        describeValue: this.describePositionValue.bind(this),
+        width: 4
       })
 
       this.addSetting({
@@ -463,13 +451,11 @@ export default class EnigmaEncoder extends Encoder {
         label: `Ring`,
         type: 'number',
         value: 1,
-        width: 4,
-        options: {
-          integer: true,
-          min: 1,
-          max: 27,
-          describeValue: this.describePositionValue.bind(this)
-        }
+        integer: true,
+        min: 1,
+        max: 27,
+        describeValue: this.describePositionValue.bind(this),
+        width: 4
       })
     }
 
@@ -487,11 +473,9 @@ export default class EnigmaEncoder extends Encoder {
       type: 'boolean',
       label: 'Foreign Chars',
       value: false,
-      randomizable: false,
-      options: {
-        trueLabel: 'Include',
-        falseLabel: 'Ignore'
-      }
+      trueLabel: 'Include',
+      falseLabel: 'Ignore',
+      randomizable: false
     })
 
     // Apply options and layout for given model

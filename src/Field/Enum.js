@@ -10,10 +10,9 @@ export default class EnumField extends Field {
    * Constructor
    * @param {string} name Field name
    * @param {Object} spec Field spec
-   * @param {mixed} spec.options Field options
-   * @param {mixed[]} spec.options.elements Possible enum values
-   * @param {string[]} [spec.options.labels] Value labels
-   * @param {string[]} [spec.options.descriptions] Value descriptions
+   * @param {mixed[]} spec.elements Possible enum values
+   * @param {string[]} [spec.labels] Value labels
+   * @param {string[]} [spec.descriptions] Value descriptions
    * @param {string} [spec.style="default"] Field appearance
    */
   constructor (name, spec) {
@@ -26,9 +25,9 @@ export default class EnumField extends Field {
     this._style = spec.style || 'default'
 
     this.setElements(
-      spec.options.elements,
-      spec.options.labels || null,
-      spec.options.descriptions || null,
+      spec.elements,
+      spec.labels || null,
+      spec.descriptions || null,
       false
     )
   }

@@ -36,29 +36,27 @@ export default class CaesarCipherEncoder extends Encoder {
         label: 'Shift',
         priority: 10,
         value: defaultShift,
-        randomizeValue: this.randomizeShiftValue.bind(this),
-        options: {
-          integer: true,
-          describeValue: this.describeShiftValue.bind(this)
-        }
+        integer: true,
+        describeValue: this.describeShiftValue.bind(this),
+        randomizeValue: this.randomizeShiftValue.bind(this)
       },
       {
         name: 'alphabet',
-        type: 'alphabet',
+        type: 'text',
         value: defaultAlphabet,
-        randomizable: false,
-        caseSensitivity: false
+        uniqueChars: true,
+        minLength: 2,
+        caseSensitivity: false,
+        randomizable: false
       },
       {
         name: 'caseStrategy',
         type: 'enum',
         value: 'maintain',
+        elements: ['maintain', 'ignore', 'strict'],
+        labels: ['Maintain case', 'Ignore case', 'Strict (A ≠ a)'],
         width: 6,
-        randomizable: false,
-        options: {
-          elements: ['maintain', 'ignore', 'strict'],
-          labels: ['Maintain case', 'Ignore case', 'Strict (A ≠ a)']
-        }
+        randomizable: false
       },
       {
         name: 'includeForeignChars',
@@ -66,11 +64,9 @@ export default class CaesarCipherEncoder extends Encoder {
         label: 'Foreign Chars',
         width: 6,
         value: true,
-        randomizable: false,
-        options: {
-          trueLabel: 'Include',
-          falseLabel: 'Ignore'
-        }
+        trueLabel: 'Include',
+        falseLabel: 'Ignore',
+        randomizable: false
       }
     ])
   }
@@ -152,7 +148,6 @@ export default class CaesarCipherEncoder extends Encoder {
         this.getSetting('shift').setNeedsValueDescriptionUpdate()
         break
     }
-    super.settingValueDidChange(setting, value)
   }
 
   /**

@@ -49,11 +49,9 @@ export default class Ascii85Encoder extends Encoder {
       type: 'enum',
       label: 'Variant',
       value: 'original',
-      randomizable: false,
-      options: {
-        elements: variantSpecs.map(variant => variant.name),
-        labels: variantSpecs.map(variant => variant.label)
-      }
+      elements: variantSpecs.map(variant => variant.name),
+      labels: variantSpecs.map(variant => variant.label),
+      randomizable: false
     })
   }
 

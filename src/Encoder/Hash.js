@@ -74,12 +74,10 @@ export default class HashEncoder extends Encoder {
       name: 'algorithm',
       type: 'enum',
       value: 'sha256',
+      elements: algorithms.map(algorithm => algorithm.name),
+      labels: algorithms.map(algorithm => algorithm.label),
       randomizable: false,
-      style: 'radio',
-      options: {
-        elements: algorithms.map(algorithm => algorithm.name),
-        labels: algorithms.map(algorithm => algorithm.label)
-      }
+      style: 'radio'
     })
   }
 

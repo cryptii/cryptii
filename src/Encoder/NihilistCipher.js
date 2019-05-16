@@ -44,33 +44,28 @@ export default class NihilistCipherEncoder extends Encoder {
     this.addSettings([
       {
         name: 'alphabet',
-        type: 'alphabet',
+        type: 'text',
         value: alphabet,
-        options: {
-          caseSensitivity: false,
-          minLength: 0,
-          maxLength: 25
-        }
+        uniqueChars: true,
+        minLength: 0,
+        maxLength: 25,
+        caseSensitivity: false
       },
       {
         name: 'key',
         type: 'text',
         value: defaultKey,
-        options: {
-          whitelistChars: alphabet,
-          caseSensitivity: false,
-          minLength: 2
-        }
+        whitelistChars: alphabet,
+        caseSensitivity: false,
+        minLength: 2
       },
       {
         name: 'separator',
         type: 'text',
         value: ' ',
         randomizable: false,
-        options: {
-          blacklistChars: '0123456789',
-          minLength: 1
-        }
+        blacklistChars: '0123456789',
+        minLength: 1
       }
     ])
 

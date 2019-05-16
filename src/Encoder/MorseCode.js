@@ -54,31 +54,17 @@ export default class MorseCodeEncoder extends Encoder {
         name: 'variant',
         type: 'enum',
         value: 'english',
-        randomizable: false,
-        options: {
-          elements: [
-            'english'
-          ],
-          labels: [
-            'English'
-          ]
-        }
+        elements: ['english'],
+        labels: ['English'],
+        randomizable: false
       },
       {
         name: 'representation',
         type: 'enum',
         value: 'code',
-        randomizable: false,
-        options: {
-          elements: [
-            'code',
-            'timing'
-          ],
-          labels: [
-            'Code',
-            'Timing'
-          ]
-        }
+        elements: ['code', 'timing'],
+        labels: ['Code', 'Timing'],
+        randomizable: false
       },
       {
         name: 'shortMark',
@@ -86,12 +72,9 @@ export default class MorseCodeEncoder extends Encoder {
         type: 'text',
         width: 4,
         value: '.',
+        minLength: 1,
         randomizable: false,
-        validateValue:
-          this.validateCodeMarkSettingValue.bind(this),
-        options: {
-          minLength: 1
-        }
+        validateValue: this.validateCodeMarkSettingValue.bind(this)
       },
       {
         name: 'longerMark',
@@ -99,12 +82,9 @@ export default class MorseCodeEncoder extends Encoder {
         type: 'text',
         width: 4,
         value: '-',
+        minLength: 1,
         randomizable: false,
-        validateValue:
-          this.validateCodeMarkSettingValue.bind(this),
-        options: {
-          minLength: 1
-        }
+        validateValue: this.validateCodeMarkSettingValue.bind(this)
       },
       {
         name: 'spaceMark',
@@ -112,12 +92,9 @@ export default class MorseCodeEncoder extends Encoder {
         type: 'text',
         width: 4,
         value: '/',
+        minLength: 1,
         randomizable: false,
-        validateValue:
-          this.validateCodeMarkSettingValue.bind(this),
-        options: {
-          minLength: 1
-        }
+        validateValue: this.validateCodeMarkSettingValue.bind(this)
       },
       {
         name: 'signalOnMark',
@@ -126,12 +103,9 @@ export default class MorseCodeEncoder extends Encoder {
         width: 6,
         visible: false,
         value: '=',
+        minLength: 1,
         randomizable: false,
-        validateValue:
-          this.validateTimingMarkSettingValue.bind(this),
-        options: {
-          minLength: 1
-        }
+        validateValue: this.validateTimingMarkSettingValue.bind(this)
       },
       {
         name: 'signalOffMark',
@@ -140,12 +114,9 @@ export default class MorseCodeEncoder extends Encoder {
         width: 6,
         visible: false,
         value: '.',
+        minLength: 1,
         randomizable: false,
-        validateValue:
-          this.validateTimingMarkSettingValue.bind(this),
-        options: {
-          minLength: 1
-        }
+        validateValue: this.validateTimingMarkSettingValue.bind(this)
       }
     ])
   }
@@ -368,7 +339,6 @@ export default class MorseCodeEncoder extends Encoder {
         this.getSetting('signalOffMark').setVisible(value === 'timing')
         break
     }
-    super.settingValueDidChange(setting, value)
   }
 
   /**

@@ -33,41 +33,41 @@ export default class AlphabeticalSubstitutionEncoder extends Encoder {
     this.addSettings([
       {
         name: 'plaintextAlphabet',
-        type: 'alphabet',
+        type: 'text',
         value: defaultPlaintextAlphabet,
-        randomizable: false,
-        caseSensitivity: false
+        uniqueChars: true,
+        minLength: 2,
+        caseSensitivity: false,
+        randomizable: false
       },
       {
         name: 'ciphertextAlphabet',
-        type: 'alphabet',
+        type: 'text',
         value: defaultCiphertextAlphabet,
+        uniqueChars: true,
+        minLength: 0,
+        caseSensitivity: false,
         validateValue: this.validateCiphertextValue.bind(this),
-        randomizeValue: this.randomizeCiphertextValue.bind(this),
-        caseSensitivity: false
+        randomizeValue: this.randomizeCiphertextValue.bind(this)
       },
       {
         name: 'caseStrategy',
         type: 'enum',
         value: 'maintain',
+        elements: ['maintain', 'ignore', 'strict'],
+        labels: ['Maintain case', 'Ignore case', 'Strict (A ≠ a)'],
         width: 6,
-        randomizable: false,
-        options: {
-          elements: ['maintain', 'ignore', 'strict'],
-          labels: ['Maintain case', 'Ignore case', 'Strict (A ≠ a)']
-        }
+        randomizable: false
       },
       {
         name: 'includeForeignChars',
         type: 'boolean',
         label: 'Foreign Chars',
-        width: 6,
         value: true,
-        randomizable: false,
-        options: {
-          trueLabel: 'Include',
-          falseLabel: 'Ignore'
-        }
+        trueLabel: 'Include',
+        falseLabel: 'Ignore',
+        width: 6,
+        randomizable: false
       }
     ])
   }

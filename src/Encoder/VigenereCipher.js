@@ -34,62 +34,56 @@ export default class VigenereCipherEncoder extends Encoder {
         name: 'variant',
         type: 'enum',
         value: 'standard',
-        options: {
-          elements: [
-            'standard',
-            'beaufort-cipher',
-            'variant-beaufort-cipher',
-            'trithemius-cipher'
-          ],
-          labels: [
-            'Standard Vigenère cipher',
-            'Beaufort cipher',
-            'Variant Beaufort cipher',
-            'Trithemius cipher'
-          ]
-        }
+        elements: [
+          'standard',
+          'beaufort-cipher',
+          'variant-beaufort-cipher',
+          'trithemius-cipher'
+        ],
+        labels: [
+          'Standard Vigenère cipher',
+          'Beaufort cipher',
+          'Variant Beaufort cipher',
+          'Trithemius cipher'
+        ]
       },
       {
         name: 'key',
         type: 'text',
         value: 'cryptii',
-        options: {
-          whitelistChars: defaultAlphabet,
-          minLength: 2
-        }
+        whitelistChars: defaultAlphabet,
+        minLength: 2
       },
       {
         name: 'keyMode',
         type: 'enum',
         value: 'repeat',
-        randomizable: false,
-        options: {
-          elements: [
-            'repeat',
-            'autokey'
-          ],
-          labels: [
-            'Repeat',
-            'Autokey'
-          ]
-        }
+        elements: [
+          'repeat',
+          'autokey'
+        ],
+        labels: [
+          'Repeat',
+          'Autokey'
+        ],
+        randomizable: false
       },
       {
         name: 'alphabet',
-        type: 'alphabet',
+        type: 'text',
         value: defaultAlphabet,
+        uniqueChars: true,
+        minLength: 2,
         randomizable: false
       },
       {
         name: 'caseStrategy',
         type: 'enum',
         value: 'maintain',
+        elements: ['maintain', 'ignore', 'strict'],
+        labels: ['Maintain case', 'Ignore case', 'Strict (A ≠ a)'],
         width: 6,
-        randomizable: false,
-        options: {
-          elements: ['maintain', 'ignore', 'strict'],
-          labels: ['Maintain case', 'Ignore case', 'Strict (A ≠ a)']
-        }
+        randomizable: false
       },
       {
         name: 'includeForeignChars',
@@ -98,10 +92,8 @@ export default class VigenereCipherEncoder extends Encoder {
         width: 6,
         value: true,
         randomizable: false,
-        options: {
-          trueLabel: 'Include',
-          falseLabel: 'Ignore'
-        }
+        trueLabel: 'Include',
+        falseLabel: 'Ignore'
       }
     ])
   }

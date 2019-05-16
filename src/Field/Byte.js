@@ -8,26 +8,23 @@ import Field from '../Field'
  */
 export default class ByteField extends Field {
   /**
-   * Field constructor
+   * Constructor
    * @param {string} name Field name
    * @param {Object} [spec] Field spec
-   * @param {mixed} [spec.options] Field options
-   * @param {?number} [spec.options.minSize=null] Minimum size in bytes
-   * @param {?number} [spec.options.maxSize=null] Maximum size in bytes
+   * @param {?number} [spec.minSize=null] Minimum size in bytes
+   * @param {?number} [spec.maxSize=null] Maximum size in bytes
    */
   constructor (name, spec = {}) {
     super(name, spec)
     this._viewPrototype = ByteFieldView
 
-    const options = spec.options || {}
-
     this._value = spec.value || new Uint8Array()
     this._minSize = null
     this._maxSize = null
-    this._randomizeSize = options.randomizeSize || null
+    this._randomizeSize = spec.randomizeSize || null
 
-    this.setMinSize(options.minSize || null, false)
-    this.setMaxSize(options.maxSize || null, false)
+    this.setMinSize(spec.minSize || null, false)
+    this.setMaxSize(spec.maxSize || null, false)
   }
 
   /**

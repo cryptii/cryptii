@@ -62,24 +62,20 @@ export default class NumeralSystemEncoder extends Encoder {
         label: 'Read',
         type: 'enum',
         value: 'decimal',
+        elements: systemNames,
+        labels: systemLabels,
         randomizable: false,
-        style: 'radio',
-        options: {
-          elements: systemNames,
-          labels: systemLabels
-        }
+        style: 'radio'
       },
       {
         name: 'to',
         label: 'Convert to',
         type: 'enum',
         value: 'roman-numerals',
+        elements: systemNames,
+        labels: systemLabels,
         randomizable: false,
-        style: 'radio',
-        options: {
-          elements: systemNames,
-          labels: systemLabels
-        }
+        style: 'radio'
       }
     ])
   }

@@ -43,52 +43,46 @@ export default class IntegerEncoder extends Encoder {
         name: 'format',
         type: 'enum',
         value: 'decimal',
+        elements: [
+          'binary',
+          'octal',
+          'decimal',
+          'hexadecimal'
+        ],
+        labels: [
+          'Binary',
+          'Octal',
+          'Decimal',
+          'Hexadecimal'
+        ],
         randomizable: false,
-        priority: 30,
-        options: {
-          elements: [
-            'binary',
-            'octal',
-            'decimal',
-            'hexadecimal'
-          ],
-          labels: [
-            'Binary',
-            'Octal',
-            'Decimal',
-            'Hexadecimal'
-          ]
-        }
+        priority: 30
       },
       {
         name: 'type',
         type: 'enum',
         value: 'U8',
+        elements: typeNames,
+        labels: typeLabels,
         randomizable: false,
         style: 'radio',
-        priority: 20,
-        options: {
-          elements: typeNames,
-          labels: typeLabels
-        }
+        priority: 20
       },
       {
         name: 'byteOrder',
         type: 'enum',
         value: 'big-endian',
+        elements: [
+          'little-endian',
+          'big-endian'
+        ],
+        labels: [
+          'Little-endian',
+          'Big-endian'
+        ],
         randomizable: false,
         visible: false,
-        priority: 10,
-        options: {
-          elements: [
-            'little-endian',
-            'big-endian'
-          ],
-          labels: [
-            'Little-endian',
-            'Big-endian'
-          ]
-        }
+        priority: 10
       }
     ])
   }
@@ -252,6 +246,5 @@ export default class IntegerEncoder extends Encoder {
         const typeIndex = typeNames.indexOf(this.getSettingValue('type'))
         this.getSetting('byteOrder').setVisible(typeBytes[typeIndex] > 1)
     }
-    super.settingValueDidChange(setting, value)
   }
 }

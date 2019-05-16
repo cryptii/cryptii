@@ -40,8 +40,8 @@ export default class TapCodeEncoder extends Encoder {
         type: 'text',
         width: 4,
         value: '.',
-        randomizable: false,
-        options: { minLength: 1 }
+        minLength: 1,
+        randomizable: false
       },
       {
         name: 'groupMark',
@@ -49,8 +49,8 @@ export default class TapCodeEncoder extends Encoder {
         type: 'text',
         width: 4,
         value: ' ',
-        randomizable: false,
-        options: { minLength: 1 }
+        minLength: 1,
+        randomizable: false
       },
       {
         name: 'letterMark',
@@ -58,8 +58,8 @@ export default class TapCodeEncoder extends Encoder {
         type: 'text',
         width: 4,
         value: '  ',
-        randomizable: false,
-        options: { minLength: 1 }
+        minLength: 1,
+        randomizable: false
       }
     ])
 
