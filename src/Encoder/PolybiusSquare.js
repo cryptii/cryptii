@@ -76,7 +76,7 @@ export default class PolybiusSquareEncoder extends Encoder {
         type: 'boolean',
         label: 'Foreign Chars',
         width: 6,
-        value: true,
+        value: false,
         randomizable: false,
         trueLabel: 'Include',
         falseLabel: 'Ignore'
