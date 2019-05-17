@@ -36,17 +36,9 @@ export default class BytesViewer extends Viewer {
         type: 'enum',
         width: 6,
         value: 'hexadecimal',
-        randomizable: false,
-        options: {
-          elements: [
-            'hexadecimal',
-            'binary'
-          ],
-          labels: [
-            'Hexadecimal',
-            'Binary'
-          ]
-        }
+        elements: ['hexadecimal', 'binary'],
+        labels: ['Hexadecimal', 'Binary'],
+        randomizable: false
       },
       {
         name: 'groupBits',
@@ -54,17 +46,15 @@ export default class BytesViewer extends Viewer {
         type: 'enum',
         width: 6,
         value: 8,
-        randomizable: false,
-        options: {
-          elements: [null, 4, 8, 16, 32],
-          labels: [
-            'None',
-            'Half-byte',
-            'Byte',
-            '2 Bytes',
-            '4 Bytes'
-          ]
-        }
+        elements: [null, 4, 8, 16, 32],
+        labels: [
+          'None',
+          'Half-byte',
+          'Byte',
+          '2 Bytes',
+          '4 Bytes'
+        ],
+        randomizable: false
       }
     ])
   }
