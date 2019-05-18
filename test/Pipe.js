@@ -11,13 +11,14 @@ import TextViewer from '../src/Viewer/Text'
 import VigenereCipherEncoder from '../src/Encoder/VigenereCipher'
 
 const examplePipeData = {
-  bricks: [
+  items: [
     { name: 'text' },
     { name: 'affine-cipher', settings: { a: 7, b: 7 } },
     { name: 'text' }
   ],
-  content: 'the quick brown fox jumps over 13 lazy dogs.',
-  contentBucket: 0
+  content: {
+    data: 'the quick brown fox jumps over 13 lazy dogs.'
+  }
 }
 
 const atbashBrick = {
@@ -40,16 +41,12 @@ describe('Pipe', () => {
       assert.strictEqual(pipeBricks[1] instanceof AffineCipherEncoder, true)
       assert.strictEqual(pipeBricks[2] instanceof TextViewer, true)
       // Brick settings
-      assert.strictEqual(
-        pipeBricks[1].getSettingValue('a'),
-        examplePipeData.bricks[1].settings.a)
-      assert.strictEqual(
-        pipeBricks[1].getSettingValue('b'),
-        examplePipeData.bricks[1].settings.b)
+      assert.strictEqual(pipeBricks[1].getSettingValue('a'), 7)
+      assert.strictEqual(pipeBricks[1].getSettingValue('b'), 7)
       // Content applied to the pipe
       assert.strictEqual(
-        pipe.getContent(examplePipeData.contentBucket, false).getString(),
-        examplePipeData.content)
+        pipe.getContent(0, false).getString(),
+        'the quick brown fox jumps over 13 lazy dogs.')
       // View should only be created lazily
       assert.strictEqual(pipe.hasView(), false)
     })
@@ -117,13 +114,16 @@ describe('Pipe', () => {
     it('should replace a single encoder whilst maintaining result and direction (case 1 & 2)', async () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract({
-        bricks: [
+        items: [
           { name: 'text' },
           { name: 'affine-cipher', settings: { a: 7, b: 7 } },
           { name: 'text' }
         ],
-        content: 'kej prlvz owbfu qbm srnid byjw 13 ghat cbxd.',
-        contentBucket: 1
+        content: {
+          data: 'kej prlvz owbfu qbm srnid byjw 13 ghat cbxd.',
+          // Content bucket 1
+          index: 2
+        }
       }, factory)
       // Let content propagate backward
       const a = await pipe.getContent(0)
@@ -156,14 +156,15 @@ describe('Pipe', () => {
     it('should replace the second encoder whilst maintaining result and direction (case 1 & 2)', async () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract({
-        bricks: [
+        items: [
           { name: 'text' },
           { name: 'affine-cipher', settings: { a: 7, b: 7 } },
           { name: 'rot13' },
           { name: 'text' }
         ],
-        content: 'the quick brown fox jumps over 13 lazy dogs',
-        contentBucket: 0
+        content: {
+          data: 'the quick brown fox jumps over 13 lazy dogs'
+        }
       }, factory)
       // Let content propagate forward through both encoders
       const a = await pipe.getContent(2)
@@ -186,15 +187,18 @@ describe('Pipe', () => {
     it('should select the first bucket when replacing both encoders (case 3)', async () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract({
-        bricks: [
+        items: [
           { name: 'text' },
           { name: 'affine-cipher', settings: { a: 7, b: 7 } },
           { name: 'text' },
           { name: 'rot13' },
           { name: 'text' }
         ],
-        content: 'hello world',
-        contentBucket: 1
+        content: {
+          data: 'hello world',
+          // Content bucket 1
+          index: 2
+        }
       }, factory)
       // Let content propagate in both directions
       const a = await pipe.getContent(0)
@@ -211,15 +215,18 @@ describe('Pipe', () => {
     it('should keep propagation from last bucket when replacing the first encoder by two new ones (case 4)', async () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract({
-        bricks: [
+        items: [
           { name: 'text' },
           atbashBrick,
           { name: 'text' },
           { name: 'rot13' },
           { name: 'text' }
         ],
-        content: 'jvjah ewtcb',
-        contentBucket: 2
+        content: {
+          data: 'jvjah ewtcb',
+          // Content bucket 2
+          index: 4
+        }
       }, factory)
       // Let content propagate backwards
       const a = await pipe.getContent(0)
@@ -234,7 +241,7 @@ describe('Pipe', () => {
     it('should keep propagation from last bucket when replacing the two first encoders by a single new one (case 4)', async () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract({
-        bricks: [
+        items: [
           { name: 'text' },
           { name: 'rot13' },
           { name: 'text' },
@@ -243,8 +250,11 @@ describe('Pipe', () => {
           { name: 'rot13' },
           { name: 'text' }
         ],
-        content: 'jvjah ewtcb',
-        contentBucket: 3
+        content: {
+          data: 'jvjah ewtcb',
+          // Content bucket 3
+          index: 6
+        }
       }, factory)
       // Let content propagate backwards
       const a = await pipe.getContent(0)

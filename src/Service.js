@@ -39,11 +39,7 @@ export default class Service {
         'Content-type': 'application/json; charset=utf-8',
         'Authorization': `Bearer ${session.token}`
       },
-      body: JSON.stringify({
-        title: pipe.getTitle(),
-        description: pipe.getDescription(),
-        content: pipe.serialize()
-      })
+      body: JSON.stringify(pipe.serialize())
     })
 
     if (!response.ok) {

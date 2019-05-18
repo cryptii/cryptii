@@ -29,7 +29,7 @@ export default class Brick extends Viewable {
     this._settingsForm = new Form()
     this._settingsForm.setDelegate(this)
 
-    this._alias = null
+    this._title = null
     this._hidden = false
   }
 
@@ -68,30 +68,30 @@ export default class Brick extends Viewable {
   }
 
   /**
-   * Returns the brick alias or the title if alias is not set.
+   * Returns brick name.
+   * @return {string}
+   */
+  getName () {
+    return this.getMeta().name
+  }
+
+  /**
+   * Returns the brick title.
    * @return {string} Brick title
    */
   getTitle () {
-    return this._alias === null
+    return this._title === null
       ? this.getMeta().title
-      : this._alias
+      : this._title
   }
 
   /**
-   * Returns the brick alias, if any.
-   * @return {?string} Brick alias or null
-   */
-  getAlias () {
-    return this._alias
-  }
-
-  /**
-   * Sets the brick alias.
-   * @param {?string} alias Brick alias or null to clear it
+   * Sets the brick title.
+   * @param {?string} title Brick title or null to reset
    * @return {Brick} Fluent interface
    */
-  setAlias (alias) {
-    this._alias = alias
+  setTitle (title) {
+    this._title = title && title !== this.getMeta().title ? title : null
     return this
   }
 
@@ -325,18 +325,23 @@ export default class Brick extends Viewable {
   serialize () {
     const data = {}
 
-    // Brick name
-    data.name = this.getMeta().name
+    // Name
+    data.name = this.getName()
 
-    // Settings, if any
+    // Set title, if not using the default
+    if (this._title !== null) {
+      data.title = this._title
+    }
+
+    // Set hidden
+    if (this.isHidden()) {
+      data.hidden = true
+    }
+
+    // Set settings, if any
     const settingsData = this._settingsForm.serializeValues()
     if (Object.keys(settingsData).length > 0) {
       data.settings = settingsData
-    }
-
-    // Hidden state, if hidden
-    if (this.isHidden()) {
-      data.hidden = true
     }
 
     return data
@@ -352,7 +357,7 @@ export default class Brick extends Viewable {
       throw new Error(`Invalid bricks can't be copied.`)
     }
     const copy = new this.constructor()
-    copy.setAlias(this.getAlias())
+    copy.setTitle(this.getTitle())
     copy.setHidden(this.isHidden())
     copy.setSettingValues(this.getSettingValues())
     return copy
@@ -366,61 +371,51 @@ export default class Brick extends Viewable {
    * @return {Brick} Extracted brick
    */
   static extract (data, brickFactory) {
-    // Read brick name
+    // Verify name
     if (typeof data.name !== 'string') {
       throw new Error(
-        `Malformed brick data: Attribute 'name' is expected to be a string`)
+        `Brick property 'name' is expected to be of type 'string'`)
     }
 
     const name = data.name
 
-    // Check if this is a known brick type
+    // Check if this is a known brick name
     if (!brickFactory.exists(name)) {
       throw new Error(
-        `Malformed brick data: Unknown brick with name '${name}'`)
+        `Brick property 'name' refers to an unknown brick '${name}'`)
     }
 
     // Create brick instance
     const brick = brickFactory.create(name)
 
-    // Read and apply alias
-    if (typeof data.alias !== 'undefined' &&
-        typeof data.alias !== 'string') {
-      throw new Error(
-        `Malformed brick data: ` +
-        `Optional attribute 'alias' is expected to be string`)
+    // Handle title property
+    if (data.title !== undefined) {
+      if (typeof data.title !== 'string') {
+        throw new Error(
+          `Optional brick property 'title' is expected to be of type 'string'`)
+      }
+      brick.setTitle(data.title)
     }
 
-    if (data.alias !== undefined) {
-      brick.setAlias(data.alias)
+    // Handle hidden property
+    if (data.hidden !== undefined) {
+      if (typeof data.hidden !== 'boolean') {
+        throw new Error(
+          `Optional brick property 'hidden' is expected to be of type 'boolean'`)
+      }
+      brick.setHidden(data.hidden)
     }
 
-    // Read and apply hidden state
-    if (typeof data.hidden !== 'undefined' &&
-        typeof data.hidden !== 'boolean') {
-      throw new Error(
-        `Malformed brick data: ` +
-        `Optional attribute 'hidden' is expected to be boolean`)
-    }
-
-    if (data.hidden === true) {
-      brick.setHidden(true)
-    }
-
-    // Read and apply reverse state
-    if (typeof data.reverse !== 'undefined' &&
-        typeof data.reverse !== 'boolean') {
-      throw new Error(
-        `Malformed brick data: ` +
-        `Optional attribute 'reverse' is expected to be boolean`)
-    }
-
-    if (data.reverse === true) {
+    // Handle reverse property
+    if (data.reverse !== undefined) {
       if (typeof brick.setReverse !== 'function') {
         throw new Error(
-          `Malformed brick data: Brick with name '${name}' can't be reversed`)
+          `Optional brick property 'reverse' can only be set on encoder bricks`)
+      } else if (typeof data.reverse !== 'boolean') {
+        throw new Error(
+          `Optional brick property 'reverse' is expected to be of type 'boolean'`)
       }
-      brick.setReverse(true)
+      brick.setReverse(data.reverse)
     }
 
     // Apply setting values
