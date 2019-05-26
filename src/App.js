@@ -11,7 +11,9 @@ import Viewable from './Viewable'
  * @type {object}
  */
 const defaultConfig = {
-  serviceEndpoint: 'https://cryptii.com/api'
+  scope: '/',
+  serviceEndpoint: 'https://cryptii.com/api',
+  serviceWorkerUrl: null
 }
 
 /**
@@ -67,6 +69,13 @@ export default class App extends Viewable {
     const view = this.getView()
     view.layout()
     setTimeout(view.layout.bind(view), 100)
+
+    // Register the service worker
+    if (this._config.serviceWorkerUrl && navigator.serviceWorker) {
+      navigator.serviceWorker.register(this._config.serviceWorkerUrl, {
+        scope: this._config.scope
+      })
+    }
 
     return this
   }

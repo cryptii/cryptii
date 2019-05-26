@@ -33,7 +33,11 @@ export default class FieldView extends View {
   setFirst (first) {
     if (this._first !== first) {
       this._first = first
-      this.getElement().classList.toggle('field--first', first)
+      if (first) {
+        this.getElement().classList.add('field--first')
+      } else {
+        this.getElement().classList.remove('field--first')
+      }
     }
     return this
   }
@@ -146,17 +150,24 @@ export default class FieldView extends View {
     $field.dataset.width = this.getModel().getWidth()
 
     // Set focus modifier
-    $field.classList.toggle('field--focus', this.hasFocus())
+    if (this.hasFocus()) {
+      $field.classList.add('field--focus')
+    } else {
+      $field.classList.remove('field--focus')
+    }
 
     // Add invalid modifier
-    $field.classList.toggle('field--invalid',
-      !this.getModel().isValid() || this.getMessage() !== null)
+    if (!this.getModel().isValid() || this.getMessage() !== null) {
+      $field.classList.add('field--invalid')
+    } else {
+      $field.classList.remove('field--invalid')
+    }
 
     // Remove old message, if any
-    if (this._$message !== null) {
-      this._$message.remove()
-      this._$message = null
+    if (this._$message !== null && this._$message.parentNode !== null) {
+      this._$message.parentNode.removeChild(this._$message)
     }
+    this._$message = null
 
     // Create new message, if any
     this._$message = this.renderMessage()

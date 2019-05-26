@@ -3,9 +3,7 @@ const { src, dest, parallel, series, watch } = require('gulp')
 const autoprefixer = require('gulp-autoprefixer')
 const babel = require('rollup-plugin-babel')
 const cleanCSS = require('gulp-clean-css')
-const clone = require('gulp-clone')
 const commonJs = require('rollup-plugin-commonjs')
-const concat = require('gulp-concat')
 const del = require('del')
 const header = require('gulp-header')
 const mocha = require('gulp-mocha')
@@ -13,12 +11,12 @@ const nodeResolve = require('rollup-plugin-node-resolve')
 const rename = require('gulp-rename')
 const revision = require('git-rev-sync')
 const rollup = require('gulp-better-rollup')
+const rollupReplace = require('rollup-plugin-replace')
 const sass = require('gulp-sass')
 const sassSVGInliner = require('sass-inline-svg')
 const sourcemaps = require('gulp-sourcemaps')
 const standard = require('gulp-standard')
-const streamQueue = require('streamqueue')
-const uglify = require('gulp-uglify')
+const terser = require('gulp-terser')
 
 const meta = require('./package.json')
 const paths = {
@@ -30,18 +28,37 @@ const paths = {
   test: './test'
 }
 
-function composeDistHeader () {
-  // Try to retrieve current commit hash
-  let distRevision
+function composeVersion () {
   try {
-    distRevision = revision.long()
+    // Include branch and commit as build metadata
+    const branch = revision.branch().replace(/[^0-9A-Za-z-]+/g, '-')
+    return `${meta.version}+${branch}.${revision.short()}`
   } catch (err) {
-    distRevision = 'unknown'
+    // Git revision details not available, only return package version
+    return meta.version
   }
+}
 
-  // Compose dist header
-  return `/*! ${meta.name} v${meta.version} (commit ${distRevision})` +
-         ` - (c) ${meta.author} ${new Date().getFullYear()} */\n`
+/**
+ * Injects a dist header featuring the package name, version and copyright
+ * notice into every file in the pipe.
+ * @return {function}
+ */
+function injectDistHeader () {
+  const version = `v${composeVersion()}`
+  const year = new Date().getFullYear()
+  return header(`/*! ${meta.name} ${version} - (c) ${meta.author} ${year} */\n`)
+}
+
+/**
+ * Renames all files in the pipe such that `index` gets replaced
+ * by the package name.
+ * @return {function}
+ */
+function renameIndexToPackage() {
+  return rename(path => {
+    path.basename = path.basename.replace('index', meta.name)
+  })
 }
 
 function scriptClean () {
@@ -62,14 +79,13 @@ function scriptTest () {
     .pipe(mocha({
       reporter: 'dot',
       require: [
-        '@babel/polyfill',
         '@babel/register'
       ]
     }))
 }
 
 function scriptLint () {
-  return src(paths.script + '/**/*.js')
+  return src(paths.script + '/index*.js')
     .pipe(standard())
     .pipe(standard.reporter('default', {
       breakOnError: true,
@@ -78,20 +94,26 @@ function scriptLint () {
 }
 
 function script () {
-  const appStream = src(paths.script + '/index.js')
+  return src(paths.script + '/index*.js')
     .pipe(sourcemaps.init())
     .pipe(rollup({
       external: ['crypto'],
       plugins: [
+        rollupReplace({
+          CRYPTII_VERSION: JSON.stringify(composeVersion())
+        }),
         babel({
           babelrc: false,
           presets: [
-            ['@babel/preset-env', {
-              loose: true,
-              modules: false
-            }]
+            [
+              '@babel/preset-env',
+              {
+                modules: false,
+                useBuiltIns: 'usage',
+                corejs: 3
+              }
+            ]
           ],
-          plugins: [],
           exclude: ['node_modules/**']
         }),
         nodeResolve({
@@ -104,53 +126,17 @@ function script () {
       ]
     }, {
       format: 'umd',
+      strict: false,
       name: meta.name,
       globals: {
         crypto: 'crypto'
       }
     }))
-
-    // Set output filename
-    .pipe(rename(`${meta.name}.js`))
-
-    // Minify code
-    .pipe(uglify({
-      // Compression in Uglify 3.4.9 breaks execution order:
-      // https://github.com/mishoo/UglifyJS2/issues/3278
-      compress: {
-        conditionals: false
-      }
-    }))
-
-    // Append header
-    .pipe(header(composeDistHeader()))
-
-  // Create polyfill stream from existing files
-  const polyfillStream = src([
-    './node_modules/dom4/build/dom4.js',
-    './node_modules/@babel/polyfill/dist/polyfill.min.js'
-  ], { base: '.' })
-    .pipe(sourcemaps.init())
-
-  // Compose library bundle
-  const libraryBundleStream = appStream.pipe(clone())
-    // Render sourcemaps
+    .pipe(terser())
+    .pipe(renameIndexToPackage())
+    .pipe(injectDistHeader())
     .pipe(sourcemaps.write('.'))
-
-  // Compose browser bundle
-  const browserBundleStream =
-    streamQueue({ objectMode: true }, polyfillStream, appStream)
-      // Concat polyfill and library
-      .pipe(concat(`${meta.name}-browser.js`))
-      // Render sourcemaps
-      .pipe(sourcemaps.write('.'))
-
-  // Save bundles and sourcemaps
-  const projectStream =
-    streamQueue({ objectMode: true }, libraryBundleStream, browserBundleStream)
-      .pipe(dest(paths.scriptDist))
-
-  return projectStream
+    .pipe(dest(paths.scriptDist))
 }
 
 function styleClean () {
@@ -158,12 +144,8 @@ function styleClean () {
 }
 
 function style () {
-  return src(paths.style + '/main.scss')
-
-    // Init sourcemaps
+  return src(paths.style + '/index*.scss')
     .pipe(sourcemaps.init())
-
-    // Compile sass to css
     .pipe(
       sass({
         includePaths: ['node_modules'],
@@ -174,18 +156,10 @@ function style () {
       })
         .on('error', sass.logError)
     )
-
-    // Autoprefix css
-    .pipe(autoprefixer('last 2 version', 'ie 11', '> 1%'))
-
-    // Minify
-    .pipe(cleanCSS({ processImport: false }))
-
-    // Append header
-    .pipe(header(composeDistHeader()))
-
-    // Save result
-    .pipe(rename(meta.name + '.css'))
+    .pipe(autoprefixer())
+    .pipe(cleanCSS())
+    .pipe(renameIndexToPackage())
+    .pipe(injectDistHeader())
     .pipe(sourcemaps.write('.'))
     .pipe(dest(paths.styleDist))
 }

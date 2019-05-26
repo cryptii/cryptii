@@ -77,11 +77,11 @@ export default class ModalView extends View {
         setTimeout(this.visibilityDidChange.bind(this, visible, cancelled), 100)
       }, { once: true })
 
-      // Trigger modal transition
-      document.body.classList.toggle('modal-visible', visible)
-      $element.classList.toggle('modal--visible', visible)
-
       if (visible) {
+        // Trigger modal transition
+        document.body.classList.add('modal-visible')
+        $element.classList.add('modal--visible')
+
         // Set dialog height to transition to
         this._$dialog.style.height = `${dialogHeight}px`
 
@@ -89,6 +89,10 @@ export default class ModalView extends View {
         this._keyUpHandler &&
           document.addEventListener('keyup', this._keyUpHandler)
       } else {
+        // Trigger modal transition
+        document.body.classList.remove('modal-visible')
+        $element.classList.remove('modal--visible')
+
         // Set dialog height to transition to
         this._$dialog.style.height = '0px'
 

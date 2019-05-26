@@ -2,7 +2,7 @@
   "name": "cryptii",
   "version": "4.0.6",
   "description": "Framework and web app for encoding and decoding content.",
-  "author": "Fränz Friederes (fraenz.frieder.es)",
+  "author": "Fränz Friederes",
   "repository": {
     "type": "git",
     "url": "https://github.com/cryptii/cryptii.git"
@@ -21,42 +21,43 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
-    "detect-browser": "^4.5.0",
-    "rollup": "^1.10.1"
+    "detect-browser": "^4.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
-    "@babel/polyfill": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/register": "^7.4.0",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
     "babel-eslint": "^10.0.1",
-    "del": "^4.1.0",
-    "dom4": "^2.1.4",
+    "core-js": "^3.1.2",
+    "del": "^4.1.1",
     "git-rev-sync": "^1.12.0",
-    "gulp": "^4.0.1",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
     "gulp-better-rollup": "^4.0.1",
     "gulp-clean-css": "^4.2.0",
     "gulp-cli": "^2.2.0",
-    "gulp-clone": "^2.0.1",
-    "gulp-concat": "^2.6.1",
     "gulp-header": "^2.0.7",
     "gulp-mocha": "^6.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-standard": "^12.0.0",
-    "gulp-uglify": "^3.0.2",
+    "gulp-terser": "^1.2.0",
     "normalize-scss": "^7.0.1",
+    "rollup": "^1.12.3",
     "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-commonjs": "^9.3.4",
-    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-node-resolve": "^5.0.0",
+    "rollup-plugin-replace": "^2.2.0",
     "sass-inline-svg": "^1.2.0",
-    "standard": "^12.0.1",
-    "streamqueue": "^1.1.2"
+    "standard": "^12.0.1"
   },
   "browserslist": [
-    "defaults"
+    "last 1 version",
+    "> 0.5%",
+    "maintained node versions",
+    "not dead"
   ]
 }

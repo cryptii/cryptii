@@ -482,13 +482,17 @@ export default class PipeView extends View {
     this.scrollTo(this._scrollPosition)
 
     // Update scroll handles
-    this._$scrollHandleLeft.classList.toggle(
-      scrollHandleDisabledClass,
-      this._scrollPosition === 0)
+    if (this._scrollPosition === 0) {
+      this._$scrollHandleLeft.classList.add(scrollHandleDisabledClass)
+    } else {
+      this._$scrollHandleLeft.classList.remove(scrollHandleDisabledClass)
+    }
 
-    this._$scrollHandleRight.classList.toggle(
-      scrollHandleDisabledClass,
-      this._scrollPosition === this._scrollMax)
+    if (this._scrollPosition === this._scrollMax) {
+      this._$scrollHandleRight.classList.add(scrollHandleDisabledClass)
+    } else {
+      this._$scrollHandleRight.classList.remove(scrollHandleDisabledClass)
+    }
 
     // Track pipe part positions to prepare for dragging events
     const scrollY = window.scrollY

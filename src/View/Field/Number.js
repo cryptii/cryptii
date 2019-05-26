@@ -35,10 +35,11 @@ export default class NumberFieldView extends FieldView {
     // Check if display enable state has changed
     if (this._displayEnabled !== displayEnabled) {
       this._displayEnabled = displayEnabled
-      this._$display.classList.toggle(
-        'field-number__display--enabled', displayEnabled)
+      if (displayEnabled) {
+        this._$display.classList.add('field-number__display--enabled')
+      } else {
+        this._$display.classList.remove('field-number__display--enabled')
 
-      if (!displayEnabled) {
         // Clean up display values
         this._$displayValue.innerText = ''
         this._$displayDescription.innerText = ''
