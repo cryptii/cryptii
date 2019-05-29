@@ -37,17 +37,17 @@ export default class View {
     })
 
     // append children
-    switch (Object.prototype.toString.call(children)) {
-      case '[object String]':
-        $element.innerText = children
-        break
-      case '[object Array]':
-        children.forEach($child => $child && $element.appendChild($child))
-        break
-      case '[object Null]':
-        break
-      default:
-        $element.appendChild(children)
+    if (children !== null) {
+      switch (Object.prototype.toString.call(children)) {
+        case '[object String]':
+          $element.innerText = children
+          break
+        case '[object Array]':
+          children.forEach($child => $child && $element.appendChild($child))
+          break
+        default:
+          $element.appendChild(children)
+      }
     }
     return $element
   }

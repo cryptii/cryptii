@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="dist/style/cryptii.css">
 
     <!-- Script -->
-    <script async src="dist/script/cryptii-browser.js" data-cryptii-init></script>
+    <script async src="dist/script/cryptii.js" data-cryptii-init></script>
     <script type="application/json" data-cryptii-config>
       {
         "serviceEndpoint": "https://cryptii.com/api"
@@ -20,7 +20,7 @@
     </script>
     <script type="application/vnd.cryptii.pipe+json" data-cryptii-pipe>
       {
-        "bricks": [
+        "items": [
           {
             "name": "text",
             "alias": "Plaintext"
@@ -33,7 +33,9 @@
             "alias": "Ciphertext"
           }
         ],
-        "content": "Hello World"
+        "content": {
+          "data": "Hello World"
+        }
       }
     </script>
 
