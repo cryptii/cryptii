@@ -26,11 +26,19 @@ export default class NumberFieldView extends FieldView {
    */
   updateValue () {
     const value = this.getModel().getValue()
+    this._$input.value = value
+    this._updateValueDisplay()
+    return this
+  }
+
+  /**
+   * Retrieves the value description from the model and updates it in view.
+   * @return {FieldView} Fluent interface
+   */
+  _updateValueDisplay () {
+    const value = this.getModel().getValue()
     const valueDescription = this.getModel().getValueDescription()
     const displayEnabled = valueDescription !== null
-
-    // Update input value
-    this._$input.value = value
 
     // Check if display enable state has changed
     if (this._displayEnabled !== displayEnabled) {
@@ -123,6 +131,8 @@ export default class NumberFieldView extends FieldView {
   inputValueDidChange (evt) {
     // Notify model
     this.getModel().viewValueDidChange(this, this._$input.value)
+    // Keep value display in sync with the input value
+    this._updateValueDisplay()
   }
 
   /**

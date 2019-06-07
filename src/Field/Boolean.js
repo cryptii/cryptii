@@ -83,9 +83,8 @@ export default class BooleanField extends Field {
    * @protected
    * @param {BooleanFieldView} view
    * @param {mixed} value
-   * @return {BooleanField} Fluent interface
    */
   viewValueDidChange (view, value) {
-    return this.setValue(value, view)
+    this.setValue(value, view)
   }
 }

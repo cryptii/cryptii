@@ -317,9 +317,8 @@ export default class TextField extends Field {
    * @protected
    * @param {TextFieldView} view
    * @param {mixed} value
-   * @return {TextField} Fluent interface
    */
   viewValueDidChange (view, value) {
-    return this.setValue(value, view)
+    this.setValue(value, view)
   }
 }

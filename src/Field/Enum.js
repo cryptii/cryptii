@@ -181,10 +181,9 @@ export default class EnumField extends Field {
    * @protected
    * @param {EnumFieldView} view
    * @param {mixed} value
-   * @return {EnumField} Fluent interface
    */
   viewValueDidChange (view, value) {
-    return this.setValue(value, view)
+    this.setValue(value, view)
   }
 
   /**
