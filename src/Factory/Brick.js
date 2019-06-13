@@ -3,6 +3,7 @@ import Factory from '../Factory'
 
 // Package bricks
 import A1Z26Encoder from '../Encoder/A1Z26'
+import ADFGXCipherEncoder from '../Encoder/ADFGXCipher'
 import AffineCipherEncoder from '../Encoder/AffineCipher'
 import AlphabeticalSubstitutionEncoder from '../Encoder/AlphabeticalSubstitution'
 import Ascii85Encoder from '../Encoder/Ascii85'
@@ -64,6 +65,7 @@ export default class BrickFactory extends Factory {
       A1Z26Encoder,
       VigenereCipherEncoder,
       PolybiusSquareEncoder,
+      ADFGXCipherEncoder,
       BifidCipherEncoder,
       NihilistCipherEncoder,
       TapCodeEncoder,

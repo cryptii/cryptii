@@ -112,6 +112,41 @@ export default class ArrayUtil {
   }
 
   /**
+   * Chunks the given array into slices of equal length.
+   * @param {array} array Array to chunk
+   * @param {number} length Length of one chunk
+   * @return {array} Array of slices
+   */
+  static chunk (array, length) {
+    const count = Math.ceil(array.length / length)
+    const chunks = new Array(count)
+    for (let i = 0; i < count; i++) {
+      chunks[i] = array.slice(i * length, (i + 1) * length)
+    }
+    return chunks
+  }
+
+  /**
+   * Joins the elements of the given array slices to an array, separated by
+   * the given glue array.
+   * @param {array} slices Array of array slices
+   * @param {array} glue Glue array separating each slice
+   * @return {array} Array
+   */
+  static joinSlices (slices, glue = []) {
+    const count = slices.length
+    const glueLength = glue.length
+    let array = []
+    for (let i = 0; i < count; i++) {
+      if (glueLength > 0 && i > 0) {
+        array = array.concat(glue)
+      }
+      array = array.concat(slices[i])
+    }
+    return array
+  }
+
+  /**
    * Returns the index of the first occurrence of the given slice.
    * @param {array} array Haystack
    * @param {array} slice Needle slice elements

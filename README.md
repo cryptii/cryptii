@@ -47,6 +47,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `morse-code` | Alphabets | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
 | `numeral-system` | Transform | Translates numerals between systems |
 | `polybius-square` | Ciphers | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
+| ↳ `adfgx-cipher` | Ciphers | [ADFGX cipher](https://en.wikipedia.org/wiki/ADFGVX_cipher) |
 | ↳ `bifid-cipher` | Ciphers | [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher) |
 | ↳ `nihilist-cipher` | Ciphers | [Nihilist cipher](https://en.wikipedia.org/wiki/Nihilist_cipher) |
 | ↳ `tap-code` | Ciphers | [Tap code](https://en.wikipedia.org/wiki/Tap_code) |
