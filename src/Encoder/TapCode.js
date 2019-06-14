@@ -6,7 +6,7 @@ import Encoder from '../Encoder'
 const meta = {
   name: 'tap-code',
   title: 'Tap code',
-  category: 'Ciphers',
+  category: 'Polybius square ciphers',
   type: 'encoder'
 }
 

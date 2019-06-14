@@ -50,26 +50,37 @@ export default class BrickFactory extends Factory {
 
     // Gather package brick classes
     const invokables = [
+      // View
       TextViewer,
       BytesViewer,
+
+      // Transform
       ReverseEncoder,
       CaseTransformEncoder,
       NumeralSystemEncoder,
       BitwiseOperationEncoder,
+
+      // Alphabets
       MorseCodeEncoder,
       SpellingAlphabetEncoder,
+
+      // Ciphers
       EnigmaEncoder,
       CaesarCipherEncoder,
       AffineCipherEncoder,
       ROT13Encoder,
       A1Z26Encoder,
       VigenereCipherEncoder,
+      AlphabeticalSubstitutionEncoder,
+
+      // Polybius square ciphers
       PolybiusSquareEncoder,
       ADFGXCipherEncoder,
       BifidCipherEncoder,
       NihilistCipherEncoder,
       TapCodeEncoder,
-      AlphabeticalSubstitutionEncoder,
+
+      // Encoding
       Base32Encoder,
       Base64Encoder,
       Ascii85Encoder,
@@ -78,6 +89,8 @@ export default class BrickFactory extends Factory {
       BootstringEncoder,
       UnicodeCodePointsEncoder,
       IntegerEncoder,
+
+      // Modern cryptography
       BlockCipherEncoder,
       RC4Encoder,
       HashEncoder,

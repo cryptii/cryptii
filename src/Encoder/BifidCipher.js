@@ -5,7 +5,7 @@ import Encoder from '../Encoder'
 const meta = {
   name: 'bifid-cipher',
   title: 'Bifid cipher',
-  category: 'Ciphers',
+  category: 'Polybius square ciphers',
   type: 'encoder'
 }
 

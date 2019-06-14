@@ -8,7 +8,7 @@ import PolybiusSquareEncoder from './PolybiusSquare'
 const meta = {
   name: 'nihilist-cipher',
   title: 'Nihilist cipher',
-  category: 'Ciphers',
+  category: 'Polybius square ciphers',
   type: 'encoder'
 }
 

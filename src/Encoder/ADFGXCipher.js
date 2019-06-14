@@ -7,7 +7,7 @@ import PolybiusSquareEncoder from './PolybiusSquare'
 const meta = {
   name: 'adfgx-cipher',
   title: 'ADFGX cipher',
-  category: 'Ciphers',
+  category: 'Polybius square ciphers',
   type: 'encoder'
 }
 
