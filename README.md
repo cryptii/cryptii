@@ -46,15 +46,16 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `integer` | Encoding | Translates between bytes and [integers](https://en.wikipedia.org/wiki/Integer_(computer_science)) |
 | `morse-code` | Alphabets | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
 | `numeral-system` | Transform | Translates numerals between systems |
-| `polybius-square` | Ciphers | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
-| ↳ `adfgx-cipher` | Ciphers | [ADFGX cipher](https://en.wikipedia.org/wiki/ADFGVX_cipher) |
-| ↳ `bifid-cipher` | Ciphers | [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher) |
-| ↳ `nihilist-cipher` | Ciphers | [Nihilist cipher](https://en.wikipedia.org/wiki/Nihilist_cipher) |
-| ↳ `tap-code` | Ciphers | [Tap code](https://en.wikipedia.org/wiki/Tap_code) |
+| `polybius-square` | Polybius square | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
+| ↳ `adfgx-cipher` | Polybius square | [ADFGX cipher](https://en.wikipedia.org/wiki/ADFGVX_cipher) |
+| ↳ `bifid-cipher` | Polybius square | [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher) |
+| ↳ `nihilist-cipher` | Polybius square | [Nihilist cipher](https://en.wikipedia.org/wiki/Nihilist_cipher) |
+| ↳ `tap-code` | Polybius square | [Tap code](https://en.wikipedia.org/wiki/Tap_code) |
 | `rc4` | Modern cryptography | [RC4](https://en.wikipedia.org/wiki/RC4) incl. RC4-drop |
 | `reverse` | Transform | Reverses the order of bytes, characters or lines |
 | `rot13` | Ciphers | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
 | `spelling-alphabet` | Alphabets | Several [spelling alphabets](https://en.wikipedia.org/wiki/Spelling_alphabet) |
+| `trifid-cipher` | Polybius square | [Trifid cipher](https://en.wikipedia.org/wiki/Trifid_cipher) |
 | `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
 | `url-encoding` | Encoding | [URL encoding / Percent-encoding](https://en.wikipedia.org/wiki/Percent-encoding) |
 | `vigenere-cipher` | Ciphers | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |

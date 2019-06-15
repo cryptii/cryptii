@@ -31,6 +31,7 @@ import ROT13Encoder from '../Encoder/ROT13'
 import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
 import TapCodeEncoder from '../Encoder/TapCode'
 import TextViewer from '../Viewer/Text'
+import TrifidCipherEncoder from '../Encoder/TrifidCipher'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import URLEncoder from '../Encoder/URL'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
@@ -79,6 +80,7 @@ export default class BrickFactory extends Factory {
       BifidCipherEncoder,
       NihilistCipherEncoder,
       TapCodeEncoder,
+      TrifidCipherEncoder,
 
       // Encoding
       Base32Encoder,

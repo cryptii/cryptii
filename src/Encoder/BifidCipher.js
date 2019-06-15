@@ -10,12 +10,6 @@ const meta = {
 }
 
 /**
- * Default key
- * @type {string}
- */
-const defaultKey = 'bgwkzqpndsioaxefclumthyvr'
-
-/**
  * The Bifid alphabet (without the letter J)
  * @type {string}
  */
@@ -41,8 +35,7 @@ export default class BifidCipherEncoder extends Encoder {
     this.addSetting({
       name: 'key',
       type: 'text',
-      value: defaultKey,
-      whitelistChars: alphabet,
+      value: '',
       uniqueChars: true,
       minLength: 0,
       caseSensitivity: false
@@ -51,7 +44,7 @@ export default class BifidCipherEncoder extends Encoder {
     // Create internal Polybius square encoder instance
     this._polybiusSquare = new PolybiusSquareEncoder()
     this._polybiusSquare.setSettingValues({
-      alphabet: defaultKey,
+      alphabet: alphabet,
       rows: '12345',
       columns: '12345',
       separator: '',
