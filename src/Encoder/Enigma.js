@@ -463,6 +463,7 @@ export default class EnigmaEncoder extends Encoder {
       name: 'plugboard',
       type: 'text',
       value: '',
+      caseSensitivity: false,
       validateValue: this.validatePlugboardValue.bind(this),
       filterValue: value => value.getString().trim().toLowerCase(),
       randomizeValue: this.randomizePlugboardValue.bind(this)

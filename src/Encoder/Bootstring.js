@@ -64,6 +64,7 @@ export default class BootstringEncoder extends Encoder {
         value: 'abcdefghijklmnopqrstuvwxyz0123456789',
         uniqueChars: true,
         minLength: 2,
+        caseSensitivity: false,
         validateValue: this.validateDigitMappingValue.bind(this),
         randomizable: false
       },
@@ -74,6 +75,7 @@ export default class BootstringEncoder extends Encoder {
         width: 6,
         minLength: 1,
         maxLength: 1,
+        caseSensitivity: false,
         validateValue: this.validateDelimiterValue.bind(this),
         randomizable: false
       },
@@ -454,6 +456,10 @@ export default class BootstringEncoder extends Encoder {
         break
       case 'tmax':
         this.getSetting('tmin').setMax(setting.getValue())
+        break
+      case 'caseSensitivity':
+        this.getSetting('digitMapping').setCaseSensitivity(value)
+        this.getSetting('delimiter').setCaseSensitivity(value)
         break
     }
   }

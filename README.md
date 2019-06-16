@@ -52,6 +52,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | ↳ `nihilist-cipher` | Polybius square | [Nihilist cipher](https://en.wikipedia.org/wiki/Nihilist_cipher) |
 | ↳ `tap-code` | Polybius square | [Tap code](https://en.wikipedia.org/wiki/Tap_code) |
 | `rc4` | Modern cryptography | [RC4](https://en.wikipedia.org/wiki/RC4) incl. RC4-drop |
+| `replace` | Transform | Finds and replaces a given text |
 | `reverse` | Transform | Reverses the order of bytes, characters or lines |
 | `rot13` | Ciphers | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
 | `spelling-alphabet` | Alphabets | Several [spelling alphabets](https://en.wikipedia.org/wiki/Spelling_alphabet) |

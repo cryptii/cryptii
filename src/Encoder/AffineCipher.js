@@ -60,7 +60,8 @@ export default class AffineCipherEncoder extends Encoder {
         value: defaultAlphabet,
         uniqueChars: true,
         minLength: 2,
-        randomizable: false
+        randomizable: false,
+        caseSensitivity: false
       },
       {
         name: 'caseStrategy',

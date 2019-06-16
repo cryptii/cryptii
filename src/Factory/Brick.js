@@ -26,6 +26,7 @@ import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import PolybiusSquareEncoder from '../Encoder/PolybiusSquare'
 import PunycodeEncoder from '../Encoder/Punycode'
 import RC4Encoder from '../Encoder/RC4'
+import ReplaceEncoder from '../Encoder/Replace'
 import ReverseEncoder from '../Encoder/Reverse'
 import ROT13Encoder from '../Encoder/ROT13'
 import SpellingAlphabetEncoder from '../Encoder/SpellingAlphabet'
@@ -56,6 +57,7 @@ export default class BrickFactory extends Factory {
       BytesViewer,
 
       // Transform
+      ReplaceEncoder,
       ReverseEncoder,
       CaseTransformEncoder,
       NumeralSystemEncoder,

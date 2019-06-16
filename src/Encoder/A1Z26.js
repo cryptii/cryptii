@@ -66,9 +66,14 @@ export default class A1Z26Encoder extends CharacterBlockEncoder {
    * @return {number[]|string|Uint8Array|Chain|null} Encoded block
    */
   performCharEncodeToBlock (codePoint, index, content) {
-    const alphabet = this.getSettingValue('alphabet')
-    let charIndex = alphabet.indexOfCodePoint(codePoint)
+    const caseSensitivity = this.getSettingValue('caseSensitivity')
 
+    let alphabet = this.getSettingValue('alphabet')
+    if (!caseSensitivity) {
+      alphabet = alphabet.toLowerCase()
+    }
+
+    let charIndex = alphabet.indexOfCodePoint(codePoint)
     if (charIndex === -1) {
       return null
     }
@@ -89,7 +94,12 @@ export default class A1Z26Encoder extends CharacterBlockEncoder {
    * @return {number|null} Decoded code point
    */
   performBlockDecodeToChar (block, index, blocks, content) {
-    const alphabet = this.getSettingValue('alphabet')
+    const caseSensitivity = this.getSettingValue('caseSensitivity')
+
+    let alphabet = this.getSettingValue('alphabet')
+    if (!caseSensitivity) {
+      alphabet = alphabet.toLowerCase()
+    }
 
     const charIndex = parseInt(block)
     if (isNaN(charIndex) || charIndex < 1 || charIndex > alphabet.getLength()) {

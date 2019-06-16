@@ -56,8 +56,8 @@ export default class NihilistCipherEncoder extends Encoder {
         type: 'text',
         value: defaultKey,
         whitelistChars: alphabet,
-        caseSensitivity: false,
-        minLength: 2
+        minLength: 2,
+        caseSensitivity: false
       },
       {
         name: 'separator',
@@ -65,7 +65,8 @@ export default class NihilistCipherEncoder extends Encoder {
         value: ' ',
         randomizable: false,
         blacklistChars: '0123456789',
-        minLength: 1
+        minLength: 1,
+        caseSensitivity: false
       }
     ])
 

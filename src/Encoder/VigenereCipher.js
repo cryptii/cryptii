@@ -45,14 +45,16 @@ export default class VigenereCipherEncoder extends Encoder {
           'Beaufort cipher',
           'Variant Beaufort cipher',
           'Trithemius cipher'
-        ]
+        ],
+        randomizable: false
       },
       {
         name: 'key',
         type: 'text',
         value: 'cryptii',
         whitelistChars: defaultAlphabet,
-        minLength: 2
+        minLength: 2,
+        caseSensitivity: false
       },
       {
         name: 'keyMode',
@@ -74,6 +76,7 @@ export default class VigenereCipherEncoder extends Encoder {
         value: defaultAlphabet,
         uniqueChars: true,
         minLength: 2,
+        caseSensitivity: false,
         randomizable: false
       },
       {

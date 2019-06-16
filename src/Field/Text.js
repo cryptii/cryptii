@@ -20,7 +20,7 @@ export default class TextField extends Field {
    * Forbids the given set of Unicode code points in the value.
    * @param {boolean} [spec.uniqueChars=false]
    * Sets wether value characters need to be unique.
-   * @param {boolean} [spec.caseSensitivity=false]
+   * @param {boolean} [spec.caseSensitivity=true]
    * Wether to respect case sensitivity
    */
   constructor (name, spec = {}) {
@@ -41,7 +41,7 @@ export default class TextField extends Field {
     this.setWhitelistChars(spec.whitelistChars || null, false)
     this.setBlacklistChars(spec.blacklistChars || null, false)
     this.setUniqueChars(spec.uniqueChars || false, false)
-    this.setCaseSensitivity(spec.caseSensitivity || false, false)
+    this.setCaseSensitivity(spec.caseSensitivity !== false, false)
   }
 
   /**

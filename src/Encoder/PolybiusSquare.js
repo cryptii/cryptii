@@ -62,6 +62,7 @@ export default class PolybiusSquareEncoder extends Encoder {
         type: 'text',
         value: '',
         randomizable: false,
+        caseSensitivity: false,
         validateValue: this.validateSeparatorValue.bind(this)
       },
       {
@@ -238,8 +239,9 @@ export default class PolybiusSquareEncoder extends Encoder {
     switch (setting.getName()) {
       case 'caseSensitivity':
         this.getSetting('alphabet').setCaseSensitivity(value)
-        this.getSetting('columns').setCaseSensitivity(value)
         this.getSetting('rows').setCaseSensitivity(value)
+        this.getSetting('columns').setCaseSensitivity(value)
+        this.getSetting('separator').setCaseSensitivity(value)
         break
       case 'columns':
       case 'rows':
