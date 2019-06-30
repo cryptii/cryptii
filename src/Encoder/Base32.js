@@ -11,7 +11,7 @@ const meta = {
 }
 
 /**
- * Array of Base32 variant specs.
+ * Array of Base32 variant options.
  * @type {object[]}
  */
 const variants = [
@@ -76,7 +76,7 @@ export default class Base32Encoder extends Encoder {
       {
         name: 'variant',
         type: 'enum',
-        value: 'base32',
+        value: variants[0].name,
         elements: variants.map(variant => variant.name),
         labels: variants.map(variant => variant.label),
         randomizable: false
@@ -84,18 +84,18 @@ export default class Base32Encoder extends Encoder {
       {
         name: 'alphabet',
         type: 'text',
-        value: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567',
+        value: variants[0].alphabet,
         uniqueChars: true,
         minLength: 32,
         maxLength: 32,
         caseSensitivity: true,
-        randomizable: false,
         visible: false
       },
       {
         name: 'padding',
         type: 'text',
         value: '=',
+        blacklistChars: variants[0].alphabet,
         minLength: 0,
         maxLength: 1,
         randomizable: false,
@@ -111,7 +111,7 @@ export default class Base32Encoder extends Encoder {
    * @return {number[]|string|Uint8Array|Chain|Promise} Encoded content
    */
   performEncode (content) {
-    const { alphabet, padding } = this.getVariantSpec()
+    const { alphabet, padding } = this.getVariantOptions()
     const alphabetCodePoints = alphabet.getCodePoints()
 
     // Prepare input and output arrays
@@ -166,7 +166,7 @@ export default class Base32Encoder extends Encoder {
    */
   performDecode (content) {
     const { alphabet, decodeMap, padding, decodeContentFilter } =
-      this.getVariantSpec()
+      this.getVariantOptions()
 
     // Apply variant filter before decoding
     if (decodeContentFilter === 'uppercase') {
@@ -228,23 +228,29 @@ export default class Base32Encoder extends Encoder {
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
-      case 'variant':
+      case 'variant': {
         // Make alphabet and padding settings available with the custom variant
         this.getSetting('alphabet').setVisible(value === 'custom')
         this.getSetting('padding').setVisible(value === 'custom')
         break
+      }
+
+      case 'alphabet': {
+        // Alphabet characters are not allowed to be used as padding
+        this.getSetting('padding').setBlacklistChars(value)
+        break
+      }
     }
   }
 
   /**
-   * Returns the current variant spec.
-   * @return {object} Variant spec
+   * Returns the current variant options.
+   * @return {object} Variant options
    */
-  getVariantSpec () {
+  getVariantOptions () {
     const name = this.getSettingValue('variant')
-
     if (name === 'custom') {
-      // Compose custom variant spec
+      // Compose custom variant options
       const padding = this.getSettingValue('padding')
       return {
         alphabet: this.getSettingValue('alphabet'),
@@ -254,10 +260,10 @@ export default class Base32Encoder extends Encoder {
       }
     }
 
-    // Find variant spec
-    const spec = variants.find(variant => variant.name === name)
-    spec.alphabet = Chain.wrap(spec.alphabet)
-    spec.decodeMap = spec.decodeMap || {}
-    return spec
+    // Find variant options
+    const options = variants.find(variant => variant.name === name)
+    options.alphabet = Chain.wrap(options.alphabet)
+    options.decodeMap = options.decodeMap || {}
+    return options
   }
 }

@@ -2,46 +2,17 @@
 import StringUtil from './StringUtil'
 import ByteEncodingError from './Error/ByteEncoding'
 
-const base64Alphabet =
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
-const base64Variants = {
-  base64: {
-    label: 'Standard \'base64\' (RFC 3548, RFC 4648)',
-    description: null,
-    alphabet: base64Alphabet + '+/',
-    padCharacter: '=',
-    padCharacterOptional: false,
-    foreignCharactersForbidden: true
-  },
-  base64url: {
-    label: 'Standard \'base64url\' (RFC 4648 §5)',
-    description: 'URL and Filename Safe Alphabet',
-    alphabet: base64Alphabet + '-_',
-    padCharacter: '=',
-    padCharacterOptional: true,
-    foreignCharactersForbidden: true
-  },
-  rfc2045: {
-    label: 'Transfer encoding for MIME (RFC 2045)',
-    description: null,
-    alphabet: base64Alphabet + '+/',
-    padCharacter: '=',
-    padCharacterOptional: false,
-    foreignCharactersForbidden: false,
-    maxLineLength: 76,
-    lineSeparator: '\r\n'
-  },
-  rfc1421: {
-    label: 'Original Base64 (RFC 1421)',
-    description: 'Privacy-Enhanced Mail (PEM)',
-    alphabet: base64Alphabet + '+/',
-    padCharacter: '=',
-    padCharacterOptional: false,
-    foreignCharactersForbidden: true,
-    maxLineLength: 64,
-    lineSeparator: '\r\n'
-  }
+/**
+ * Default Base64 options
+ * @type {object}
+ */
+const defaultBase64Options = {
+  alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
+  padding: '=',
+  paddingOptional: false,
+  foreignCharacters: false,
+  maxLineLength: null,
+  lineSeparator: '\r\n'
 }
 
 /**
@@ -122,14 +93,28 @@ export default class ByteEncoder {
   /**
    * Returns base64 string representing given bytes.
    * @param {Uint8Array} bytes Bytes
-   * @param {string} [variant='base64'] Base64 variant (base64, base64url)
+   * @param {object} [options] Base64 options
+   * @param {string} [options.alphabet] Base64 alphabet
+   * @param {string} [options.padding='='] Padding character
+   * @param {boolean} [options.paddingOptional=false] Wether padding is optional
+   * @param {boolean} [options.foreignCharacters=false] Wether foreign
+   * @param {number|null} [options.maxLineLength=null] Maximum line length
+   * @param {string} [options.lineSeparator='\r\n'] Line separator, if
+   * having a maximum line length.
    * @return {string} Base64 string
    */
-  static base64StringFromBytes (bytes, variant = 'base64') {
-    const options = base64Variants[variant]
-    const alphabet = options.alphabet
-    const padCharacter = !options.padCharacterOptional && options.padCharacter
-      ? options.padCharacter : ''
+  static base64StringFromBytes (bytes, options = {}) {
+    // Compose options
+    const {
+      alphabet,
+      padding,
+      paddingOptional,
+      maxLineLength,
+      lineSeparator
+    } = Object.assign({}, defaultBase64Options, options)
+
+    // Choose padding
+    const paddingCharacter = !paddingOptional && padding ? padding : ''
 
     // Encode each 3-byte-pair
     let string = ''
@@ -158,17 +143,17 @@ export default class ByteEncoder {
       string +=
         alphabet[octet1] +
         alphabet[octet2] +
-        (!isNaN(byte2) ? alphabet[octet3] : padCharacter) +
-        (!isNaN(byte3) ? alphabet[octet4] : padCharacter)
+        (!isNaN(byte2) ? alphabet[octet3] : paddingCharacter) +
+        (!isNaN(byte3) ? alphabet[octet4] : paddingCharacter)
     }
 
-    if (options.maxLineLength) {
+    if (maxLineLength) {
       // Limit text line length, insert line separators
       let limitedString = ''
-      for (let i = 0; i < string.length; i += options.maxLineLength) {
+      for (let i = 0; i < string.length; i += maxLineLength) {
         limitedString +=
-          (limitedString !== '' ? options.lineSeparator : '') +
-          string.substr(i, options.maxLineLength)
+          (limitedString !== '' ? lineSeparator : '') +
+          string.substr(i, maxLineLength)
       }
       string = limitedString
     }
@@ -179,12 +164,29 @@ export default class ByteEncoder {
   /**
    * Returns bytes from given base64 string.
    * @param {string} string Base64 string
-   * @param {string} [variant='base64']  Base64 variant (base64, base64url)
-   * @return {Uint8Array} Bytes
+   * @param {object} [options] Base64 options
+   * @param {string} [options.alphabet] Base64 alphabet
+   * @param {string} [options.padding='='] Padding character
+   * @param {boolean} [options.paddingOptional=false] Wether padding is optional
+   * @param {boolean} [options.foreignCharacters=false] Wether foreign
+   * characters are allowed inside Base64 encoded content.
+   * @param {number|null} [options.maxLineLength=null] Maximum line length
+   * @param {string} [options.lineSeparator='\r\n'] Line separator, if
+   * having a maximum line length.
+   * @throws {ByteEncodingError} If the string contains forbidden characters.
+   * @throws {ByteEncodingError} If the string unexpectedly ends.
+   * @return {string} Base64 string
    */
-  static bytesFromBase64String (string, variant = 'base64') {
-    const options = base64Variants[variant]
-    const alphabet = options.alphabet
+  static bytesFromBase64String (string, options = {}) {
+    // Compose options
+    const {
+      alphabet,
+      padding,
+      paddingOptional,
+      foreignCharacters,
+      maxLineLength,
+      lineSeparator
+    } = Object.assign({}, defaultBase64Options, options)
 
     // Translate each character into an octet
     const length = string.length
@@ -196,20 +198,20 @@ export default class ByteEncoder {
     while (++i < length) {
       character = string[i]
 
-      if (options.lineSeparator &&
-          character === options.lineSeparator[0] &&
-          string.substr(i, options.lineSeparator.length) ===
-            options.lineSeparator) {
+      if (maxLineLength !== null &&
+          lineSeparator &&
+          character === lineSeparator[0] &&
+          string.substr(i, lineSeparator.length) === lineSeparator) {
         // This is a line separator, skip it
-        i = i + options.lineSeparator.length - 1
-      } else if (character === options.padCharacter) {
+        i = i + lineSeparator.length - 1
+      } else if (character === padding) {
         // This is a pad character, ignore it
       } else {
         // This is an octet or a foreign character
         octet = alphabet.indexOf(character)
         if (octet !== -1) {
           octets.push(octet)
-        } else if (options.foreignCharactersForbidden) {
+        } else if (!foreignCharacters) {
           throw new ByteEncodingError(
             `Forbidden character '${character}' at index ${i}`)
         }
@@ -217,15 +219,15 @@ export default class ByteEncoder {
     }
 
     // Calculate original padding and verify it
-    const padding = (4 - octets.length % 4) % 4
-    if (padding === 3) {
+    const paddingSize = (4 - octets.length % 4) % 4
+    if (paddingSize === 3) {
       throw new ByteEncodingError(
         `A single remaining encoded character in the last quadruple or a ` +
         `padding of 3 characters is not allowed`)
     }
 
     // Fill up octets
-    for (i = 0; i < padding; i++) {
+    for (i = 0; i < paddingSize; i++) {
       octets.push(0)
     }
 
@@ -244,21 +246,6 @@ export default class ByteEncoder {
       bytes[j + 2] = ((octets[i + 2] & 0b000011) << 6) | octets[i + 3]
     }
 
-    return bytes.slice(0, size - padding)
-  }
-
-  /**
-   * Returns available base64 variants.
-   * @return {object[]} Variant objects (containing name, label, description)
-   */
-  static getBase64Variants () {
-    return Object.keys(base64Variants).map(name => {
-      const options = base64Variants[name]
-      return {
-        name,
-        label: options.label,
-        description: options.description
-      }
-    })
+    return bytes.slice(0, size - paddingSize)
   }
 }
