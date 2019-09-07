@@ -9,7 +9,7 @@ describe('URLEncoder', () => EncoderTester.test(URLEncoder, [
   {
     // RFC 3986 2.2 reserved characters
     content:
-      `!*'();:@&=+$,/?#[]`,
+      '!*\'();:@&=+$,/?#[]',
     expectedResult:
       '%21%2a%27%28%29%3b%3a%40%26%3d%2b%24%2c%2f%3f%23%5b%5d'
   },
