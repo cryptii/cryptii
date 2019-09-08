@@ -70,11 +70,18 @@ export default class App extends Viewable {
     view.layout()
     setTimeout(view.layout.bind(view), 100)
 
-    // Register the service worker
-    if (this._config.serviceWorkerUrl && navigator.serviceWorker) {
-      navigator.serviceWorker.register(this._config.serviceWorkerUrl, {
-        scope: this._config.scope
-      })
+    // Configure service worker, if supported
+    if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
+      if (this._config.serviceWorkerUrl) {
+        // Register the service worker
+        navigator.serviceWorker.register(this._config.serviceWorkerUrl, {
+          scope: this._config.scope
+        })
+      } else {
+        // Unregister existing service workers
+        navigator.serviceWorker.getRegistrations().then(registrations =>
+          registrations.forEach(registration => registration.unregister()))
+      }
     }
 
     return this
