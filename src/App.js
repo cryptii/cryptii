@@ -52,7 +52,7 @@ export default class App extends Viewable {
    */
   run (pipeData = null) {
     // Apply browser class name
-    Browser.applyClassName()
+    Browser.placeBrowserAttribute()
 
     // Create and configure pipe instance
     if (pipeData !== null) {

@@ -4,10 +4,10 @@
 @import 'variables/breakpoints';
 @import 'variables/colors';
 
-// Tools
-@import 'tools/breakpoint';
-@import 'tools/each-breakpoint';
-@import 'tools/browser';
+// Helpers
+@import 'helpers/breakpoint';
+@import 'helpers/each-breakpoint';
+@import 'helpers/browser';
 
 // Symbols
 @import 'symbols/typography';

@@ -1,7 +1,11 @@
 
 import { detect } from 'detect-browser'
 
-let browserIdentifier = null
+/**
+ * Lazily detected browser identifier.
+ * @type {string|false}
+ */
+let identifier = null
 
 /**
  * Utility class providing static methods for
@@ -9,54 +13,50 @@ let browserIdentifier = null
  */
 export default class Browser {
   /**
-   * Returns current browser identifier (format: [browser name]-[version]).
-   * @return {string}
+   * Returns the current browser's identifier formatted name-major-minor-patch.
+   * @return {string|false} Browser identifier string or false, if unknown
    */
-  static getIdentifier () {
-    if (browserIdentifier === null) {
+  static identify () {
+    if (identifier === null) {
       const browser = detect()
-      browserIdentifier = browser ? `${browser.name}-${browser.version}` : false
+      identifier = browser
+        ? `${browser.name}-${browser.version.replace(/\./g, '-')}`
+        : false
     }
-    return browserIdentifier
+    return identifier
   }
 
   /**
-   * Matches one or more browsers using name-version identifiers.
-   * @param {...string} identifiers
-   * @return {boolean} True, if one of the identifiers match.
+   * Returns true, if at least one of the given browser identifiers match with
+   * the current environment (e.g. ie, safari-12-1).
+   * @param {...string} browsers Browser identifiers to be matched
+   * @return {boolean}
    */
-  static match (...identifiers) {
-    const browserIdentifier = Browser.getIdentifier()
-    if (browserIdentifier === false) {
-      // unable to identify browser
+  static match (...browsers) {
+    const identifier = Browser.identify()
+    if (identifier === false) {
       return false
     }
-
-    // check if at least one of the identifiers match
-    return identifiers.reduce((match, string) =>
-      match || string === browserIdentifier.substr(0, string.length), false)
+    return browsers.find(id => identifier.indexOf(id) === 0) !== undefined
   }
 
   /**
-   * Checks wether script is currently running inside a node environment.
-   * @param {string} [version] Version string
-   * @return {Boolean}
+   * Checks wether script is currently running inside a Node.js environment.
+   * @param {string} [version] Node.js version string
+   * @return {boolean}
    */
   static isNode (version = '') {
     return this.match('node-' + version)
   }
 
   /**
-   * Applies browser identifier class name to html tag.
-   * @return {Browser} Fluent interface
+   * Places the current browser identifier into the root element 'data-browser'
+   * attribute to power the SASS browser mixin.
+   * @return {Browser}
    */
-  static applyClassName () {
-    const browserIdentifier = Browser.getIdentifier()
-    if (!Browser.isNode() && browserIdentifier) {
-      // add browser identifier class name to html tag
-      // makes browser sass mixin work
-      const $html = document.querySelector('html')
-      $html.classList.add(`browser--${browserIdentifier}`)
+  static placeBrowserAttribute () {
+    if (Browser.identify() !== false && !Browser.isNode()) {
+      document.documentElement.dataset.browser = Browser.identify()
     }
     return this
   }

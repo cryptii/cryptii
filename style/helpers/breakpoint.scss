@@ -1,7 +1,9 @@
 
-$breakpoint-names: map-keys($breakpoints);
-
+/// Builds a media query between the given breakpoint identifiers.
+/// @param {String} $start Start breakpoint
+/// @param {String|Boolean} $end End breakpoint (optional)
 @mixin breakpoint($from, $to: false) {
+  $breakpoint-names: map-keys($breakpoints);
   $query: '';
   $min: false;
   $max: false;
