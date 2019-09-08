@@ -29,10 +29,11 @@ export { default as View } from './View'
 export { default as Viewable } from './Viewable'
 export { default as Viewer } from './Viewer'
 
-// Check if we are running in the browser
-if (typeof window !== 'undefined') {
-  // Check if the init flag is set before initializing the app
-  if (document.querySelector('script[data-cryptii-init]') !== null) {
+// Check if we are running in the browser and if the init flag is set
+if (typeof window !== 'undefined' &&
+    document.querySelector('script[data-cryptii-init]') !== null) {
+  // Define app initialization in the browser
+  const init = () => {
     // Read optional pipe content
     const $pipeData = document.querySelector('script[data-cryptii-pipe]')
     const pipeData = $pipeData !== null ? JSON.parse($pipeData.innerHTML) : null
@@ -44,5 +45,12 @@ if (typeof window !== 'undefined') {
     // Configure app and bootstrap it
     const app = new App(config)
     app.run(pipeData)
+  }
+
+  // Trigger initialization when the DOM is ready
+  if (document.readyState !== 'loading') {
+    init()
+  } else {
+    window.addEventListener('DOMContentLoaded', init)
   }
 }
