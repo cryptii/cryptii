@@ -7,6 +7,7 @@ import ADFGXCipherEncoder from '../Encoder/ADFGXCipher'
 import AffineCipherEncoder from '../Encoder/AffineCipher'
 import AlphabeticalSubstitutionEncoder from '../Encoder/AlphabeticalSubstitution'
 import Ascii85Encoder from '../Encoder/Ascii85'
+import BaconCipherEncoder from '../Encoder/BaconCipher'
 import Base32Encoder from '../Encoder/Base32'
 import Base64Encoder from '../Encoder/Base64'
 import BifidCipherEncoder from '../Encoder/BifidCipher'
@@ -74,6 +75,7 @@ export default class BrickFactory extends Factory {
       ROT13Encoder,
       A1Z26Encoder,
       VigenereCipherEncoder,
+      BaconCipherEncoder,
       AlphabeticalSubstitutionEncoder,
 
       // Polybius square ciphers
