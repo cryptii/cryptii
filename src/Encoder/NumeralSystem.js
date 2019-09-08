@@ -1,6 +1,7 @@
 
 import Encoder from '../Encoder'
 import StringUtil from '../StringUtil'
+import InvalidInputError from '../Error/InvalidInput'
 
 const meta = {
   name: 'numeral-system',
@@ -10,25 +11,25 @@ const meta = {
 }
 
 const systemNames = [
-  'decimal',
   'binary',
   'octal',
+  'decimal',
   'hexadecimal',
   'roman-numerals'
 ]
 
 const systemLabels = [
-  'Decimal',
-  'Binary',
-  'Octal',
-  'Hexadecimal',
+  'Binary (2)',
+  'Octal (8)',
+  'Decimal (10)',
+  'Hexadecimal (16)',
   'Roman numerals'
 ]
 
 const systemPatterns = [
-  /(\d+)/g,
   /([01]+)/g,
   /([0-7]+)/g,
+  /(\d+)/g,
   /([0-9a-f]+)/gi,
   /([IVXLCDM]+)/gi
 ]
@@ -71,7 +72,7 @@ export default class NumeralSystemEncoder extends Encoder {
         name: 'to',
         label: 'Convert to',
         type: 'enum',
-        value: 'roman-numerals',
+        value: 'hexadecimal',
         elements: systemNames,
         labels: systemLabels,
         randomizable: false,
@@ -119,57 +120,102 @@ export default class NumeralSystemEncoder extends Encoder {
   /**
    * Translates number from given system to decimal.
    * @protected
-   * @param {string} system Numeral system to translate from
-   * @param {string} rawNumber
-   * @return {?number} Decimal or null, if not defined
+   * @param {string} type Numeral system to translate from
+   * @param {string} string String representation
+   * @return {Number|BigInt|null} Number, BigInt or null, if not defined
    */
-  static decodeNumber (system, rawNumber) {
-    let decimal = null
-    switch (system) {
-      case 'decimal':
-        decimal = parseInt(rawNumber, 10)
-        break
+  static decodeNumber (type, string) {
+    // If BigInt is available, use it to treat arbitrarily large integers
+    if (typeof BigInt !== 'undefined') {
+      // See https://github.com/tc39/proposal-bigint/issues/86#issuecomment-348317283
+      switch (type) {
+        case 'binary':
+          return BigInt(`0b${string}`)
+        case 'octal':
+          return BigInt(`0o${string}`)
+        case 'decimal':
+          return BigInt(string)
+        case 'hexadecimal':
+          return BigInt(`0x${string}`)
+      }
+    }
+
+    // Fallback to limited JavaScript Numbers
+    let number = null
+    switch (type) {
       case 'binary':
-        decimal = parseInt(rawNumber, 2)
+        number = parseInt(string, 2)
         break
       case 'octal':
-        decimal = parseInt(rawNumber, 8)
+        number = parseInt(string, 8)
+        break
+      case 'decimal':
+        number = parseInt(string, 10)
         break
       case 'hexadecimal':
-        decimal = parseInt(rawNumber, 16)
+        number = parseInt(string, 16)
         break
       case 'roman-numerals':
-        decimal = NumeralSystemEncoder.romanNumeralsToDecimal(rawNumber)
+        number = NumeralSystemEncoder.romanNumeralsToDecimal(string)
         break
     }
-    return decimal !== null && !isNaN(decimal) ? decimal : null
+
+    // Check for successful
+    if (number === null || isNaN(number)) {
+      return null
+    }
+
+    // Validate Number limits
+    if (!NumeralSystemEncoder.isSafeInteger(number)) {
+      throw new InvalidInputError(
+        `Can't read '${string}' because the current environment does not ` +
+        `support arbitrarily large integers.`)
+    }
+
+    return number
   }
 
   /**
-   * Translates number from decimal to given system.
+   * Exports number in the given system.
    * @protected
    * @param {string} system Numeral system to translate to
-   * @param {number} decimal
-   * @return {?string} Number or null, if not defined
+   * @param {Number|BigInt} number
+   * @return {?string} Number string or null, if not defined
    */
-  static encodeNumber (system, decimal) {
-    switch (system) {
+  static encodeNumber (type, number) {
+    switch (type) {
       case 'binary':
-        return decimal.toString(2)
+        return number.toString(2)
       case 'octal':
-        return decimal.toString(8)
+        return number.toString(8)
+      case 'decimal':
+        return number.toString(10)
       case 'hexadecimal':
-        return decimal.toString(16)
+        return number.toString(16)
       case 'roman-numerals':
-        return NumeralSystemEncoder.decimalToRomanNumerals(decimal)
+        return NumeralSystemEncoder.decimalToRomanNumerals(number)
+      default:
+        return null
     }
-    return decimal
+  }
+
+  /**
+   * Determines whether the provided value is a `Number` that is a safe integer.
+   * @param {Number} testValue
+   * @return {Boolean}
+   */
+  static isSafeInteger (testValue) {
+    if (Number.isSafeInteger === undefined) {
+      const maxInteger = Number.MAX_SAFE_INTEGER || 9007199254740991
+      return Number.isInteger(testValue) && Math.abs(testValue) <= maxInteger
+    }
+    return Number.isSafeInteger(testValue)
   }
 
   /**
    * Translates given decimal to roman numerals.
    * @protected
-   * @param {number} decimal Decimal value (1-3999)
+   * @param {Number|BigInt} decimal Decimal value (1-3999)
    * @return {?string} Roman numerals or null, if not defined
    */
   static decimalToRomanNumerals (decimal) {
@@ -177,7 +223,7 @@ export default class NumeralSystemEncoder extends Encoder {
       return null
     }
 
-    let remainder = decimal
+    let remainder = Number(decimal)
     let romanNumerals = ''
     let numeral
 
