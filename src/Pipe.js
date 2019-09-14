@@ -830,7 +830,7 @@ export default class Pipe extends Viewable {
     if (brick instanceof Encoder) {
       // Trigger encode or decode depending on location of the selected bucket
       const lowerBucket = this.getBucketIndexForBrick(brick)
-      const isEncode = this._selectedBucket > lowerBucket
+      const isEncode = this._selectedBucket <= lowerBucket
       this._triggerEncoderTranslation(brick, isEncode)
     } else {
       // Trigger view

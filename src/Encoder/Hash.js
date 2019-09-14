@@ -1,5 +1,5 @@
 
-import Browser from '../Browser'
+import EnvUtil from '../EnvUtil'
 import Encoder from '../Encoder'
 import md5 from './Hash/md5'
 import nodeCrypto from 'crypto'
@@ -23,7 +23,7 @@ const algorithms = [
     label: 'SHA-1',
     blockSize: 64,
     browserAlgorithm: 'SHA-1',
-    browserExceptions: ['ie-11', 'edge'],
+    browserExceptions: ['ie=11', 'edge'],
     nodeAlgorithm: 'sha1'
   },
   {
@@ -45,7 +45,7 @@ const algorithms = [
     label: 'SHA-512',
     blockSize: 128,
     browserAlgorithm: 'SHA-512',
-    browserExceptions: ['ie-11'],
+    browserExceptions: ['ie=11'],
     nodeAlgorithm: 'sha512'
   }
 ]
@@ -107,7 +107,7 @@ export default class HashEncoder extends Encoder {
         return new Promise(resolve => resolve(md5(message)))
     }
 
-    if (Browser.isNode()) {
+    if (EnvUtil.isNode()) {
       // Create message digest using Node Crypto async
       return new Promise((resolve, reject) => {
         const resultBuffer =
@@ -143,7 +143,7 @@ export default class HashEncoder extends Encoder {
    * @return {object[]}
    */
   static filterAvailableAlgorithms () {
-    const isNode = Browser.isNode()
+    const isNode = EnvUtil.isNode()
     return algorithms.filter(algorithm => {
       // Algorithm availability not bound to the environment
       if (algorithm.available === true) {
@@ -153,7 +153,7 @@ export default class HashEncoder extends Encoder {
       // Browser environment
       if (!isNode && algorithm.browserAlgorithm !== undefined) {
         if (algorithm.browserExceptions !== undefined) {
-          return !Browser.match.apply(Browser, algorithm.browserExceptions)
+          return !EnvUtil.match.apply(EnvUtil, algorithm.browserExceptions)
         }
         return true
       }

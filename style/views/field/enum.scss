@@ -39,7 +39,7 @@
       -moz-appearance: none;
       appearance: none;
 
-      @include browser(ie-11) {
+      @include browser('ie/11') {
         // hide select dropdown control in ie11
         &::-ms-expand {
           display: none;

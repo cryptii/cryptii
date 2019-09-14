@@ -1,7 +1,7 @@
 
 import AppView from './View/App'
 import BrickFactory from './Factory/Brick'
-import Browser from './Browser'
+import EnvUtil from './EnvUtil'
 import Pipe from './Pipe'
 import Service from './Service'
 import Viewable from './Viewable'
@@ -51,8 +51,8 @@ export default class App extends Viewable {
    * @return {App} Fluent interface
    */
   run (pipeData = null) {
-    // Apply browser class name
-    Browser.placeBrowserAttribute()
+    // Place browser attribute
+    EnvUtil.placeBrowserAttribute()
 
     // Create and configure pipe instance
     if (pipeData !== null) {

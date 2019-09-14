@@ -1,5 +1,5 @@
 
-import Browser from '../Browser'
+import EnvUtil from '../EnvUtil'
 import Encoder from '../Encoder'
 import InvalidInputError from '../Error/InvalidInput'
 import nodeCrypto from 'crypto'
@@ -207,7 +207,7 @@ export default class BlockCipherEncoder extends Encoder {
       iv = new Uint8Array([])
     }
 
-    if (Browser.isNode()) {
+    if (EnvUtil.isNode()) {
       const cipherName = algorithm.nodeAlgorithm + '-' + mode
 
       // Node v8.x - convert Uint8Array to Buffer - not needed for v10
@@ -271,7 +271,7 @@ export default class BlockCipherEncoder extends Encoder {
    * @return {boolean}
    */
   static isPaddingAvailable () {
-    return Browser.isNode()
+    return EnvUtil.isNode()
   }
 
   /**
@@ -290,7 +290,7 @@ export default class BlockCipherEncoder extends Encoder {
    * @return {object[]}
    */
   static getAlgorithms () {
-    const isNode = Browser.isNode()
+    const isNode = EnvUtil.isNode()
     return algorithms.filter(algorithm =>
       (algorithm.browserAlgorithm && !isNode) ||
       (algorithm.nodeAlgorithm && isNode)
@@ -313,7 +313,7 @@ export default class BlockCipherEncoder extends Encoder {
    * @return {object[]}
    */
   static getModes () {
-    const isNode = Browser.isNode()
+    const isNode = EnvUtil.isNode()
     return modes.filter(mode =>
       (mode.browserMode && !isNode) ||
       (mode.nodeMode && isNode)

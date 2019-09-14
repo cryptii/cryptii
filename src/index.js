@@ -1,11 +1,13 @@
 
 import App from './App'
+import EnvUtil from './EnvUtil'
 
 export { App }
+export { EnvUtil }
+
 export { default as ArrayUtil } from './ArrayUtil'
 export { default as Brick } from './Brick'
 export { default as BrickFactory } from './Factory/Brick'
-export { default as Browser } from './Browser'
 export { default as ByteEncoder } from './ByteEncoder'
 export { default as ByteEncodingError } from './Error/ByteEncoding'
 export { default as Chain } from './Chain'
@@ -30,7 +32,7 @@ export { default as Viewable } from './Viewable'
 export { default as Viewer } from './Viewer'
 
 // Check if we are running in the browser and if the init flag is set
-if (typeof window !== 'undefined' &&
+if (EnvUtil.isBrowser() &&
     document.querySelector('script[data-cryptii-init]') !== null) {
   // Define app initialization in the browser
   const init = () => {
