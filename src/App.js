@@ -1,4 +1,6 @@
 
+/* globals CRYPTII_VERSION */
+
 import AppView from './View/App'
 import BrickFactory from './Factory/Brick'
 import EnvUtil from './EnvUtil'
@@ -11,6 +13,7 @@ import Viewable from './Viewable'
  * @type {object}
  */
 const defaultConfig = {
+  version: CRYPTII_VERSION,
   scope: '/',
   serviceEndpoint: 'https://cryptii.com/api',
   serviceWorkerUrl: null
@@ -84,7 +87,30 @@ export default class App extends Viewable {
       }
     }
 
+    // Listen for the debug shortcut `Ctrl+I`
+    if (EnvUtil.isBrowser()) {
+      document.addEventListener('keydown', evt => {
+        if (evt.ctrlKey && evt.key === 'i') {
+          evt.preventDefault()
+          alert(this.debug())
+        }
+      })
+    }
+
     return this
+  }
+
+  /**
+   * Composes a JSON string containing debug information about the current app
+   * state useful for bug reports.
+   * @return {string}
+   */
+  debug () {
+    return JSON.stringify({
+      version: this._config.version,
+      env: EnvUtil.identify(),
+      pipe: this.getPipe().serialize(),
+    })
   }
 
   /**
