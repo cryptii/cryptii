@@ -8,23 +8,28 @@ Web app and framework offering modular conversion, encoding and encryption. Tran
 
 ## Getting started
 
-Several quick start options are available:
+Quick start options:
+- [Use the live version](https://cryptii.com)
+- [Download the latest release](https://github.com/cryptii/cryptii/releases/latest)
+- Clone the repository: `git clone git@github.com:cryptii/cryptii.git`
+- Build using the Node.js version specified in `.nvmrc`: `npm build`
 
-- Use the [latest live version](https://cryptii.com) or [download the latest release](https://github.com/cryptii/cryptii/releases/latest).
-- Clone the repo: `git clone git@github.com:cryptii/cryptii.git`
-- Install the [node](https://nodejs.org/) version specified in `.nvmrc`.
-- Run `npm install` to install the dependencies.
-- Run `npm run-script build` to build into the `dist/` folder.
-- Run `npm run-script test` to test the source code.
-- Run `npm run-script watch` to watch for changes.
+Quick links:
+- [Report an issue](https://github.com/cryptii/cryptii/issues/new/choose)
+- [Changelog and releases](https://github.com/cryptii/cryptii/releases)
+- [Contributing guidelines](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
 
-## Concepts
+## Concept
 
-This framework and web app tries to reflect a wide variety of ciphers, formats, algorithms and methods (called 'bricks') while keeping them easily combinable. There are two categories of bricks: encoders and viewers.
+This framework and web app aims to support a wide variety of ciphers, formats, algorithms and methods (called 'Bricks') while keeping them easily combinable. There are currently two types of Bricks: Encoders and Viewers. Encoders manipulate content by encoding or decoding in a specific way and using specific settings while Viewers allow users to access and edit the content fed into or outputted by Encoders in a certain way and format.
 
-### Encoders
+Bricks can be arranged inside a Pipe. When the content gets edited inside a Viewer or when Brick settings get changed, the result propagates through the Pipe's Bricks in order and in both directions.
 
-Encoders manipulate content by encoding or decoding it in a specific way and using specific settings.
+Chain objects encapsulate UTF-8 text or binary based content exchanged between Bricks. They automatically encode or decode the content when combining a text based output with a binary based input and vice-versa.
+
+## Brick library
+
 
 | Name | Category | Description |
 | ---- | -------- | ----------- |
@@ -39,6 +44,7 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `block-cipher` | Modern cryptography | [Block ciphers](https://en.wikipedia.org/wiki/Block_cipher) incl. [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) |
 | `bootstring` | Encoding | [Bootstring](https://tools.ietf.org/html/rfc3492) |
 | ↳ `punycode` | Encoding | [Punycode](https://tools.ietf.org/html/rfc3492) |
+| `bytes` | View | Viewing and editing bytes |
 | `caesar-cipher` | Ciphers | [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher) |
 | `case-transform` | Transform | Transforms to upper case, lower case, … |
 | `enigma` | Ciphers | [Enigma machine](https://en.wikipedia.org/wiki/Enigma_machine) incl. 13 models |
@@ -57,51 +63,8 @@ Encoders manipulate content by encoding or decoding it in a specific way and usi
 | `reverse` | Transform | Reverses the order of bytes, characters or lines |
 | `rot13` | Ciphers | [ROT13](https://en.wikipedia.org/wiki/ROT13) incl. variants ROT5, ROT18 & ROT47 |
 | `spelling-alphabet` | Alphabets | Several [spelling alphabets](https://en.wikipedia.org/wiki/Spelling_alphabet) |
+| `text` | View | Viewing and editing in plain text |
 | `trifid-cipher` | Polybius square | [Trifid cipher](https://en.wikipedia.org/wiki/Trifid_cipher) |
 | `unicode-code-points` | Encoding | Encoding to Unicode code points in given format |
 | `url-encoding` | Encoding | [URL encoding / Percent-encoding](https://en.wikipedia.org/wiki/Percent-encoding) |
 | `vigenere-cipher` | Ciphers | [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) incl. [Beaufort cipher](https://en.wikipedia.org/wiki/Beaufort_cipher) variants |
-
-Example usage:
-
-```javascript
-const bricks = cryptii.BrickFactory.getInstance()
-const encoder = bricks.create('rot13')
-encoder.setSettingValue('variant', 'rot47')
-const result = encoder.encode('Hello World') // returns a Chain object
-result.getString() // returns 'w6==@ (@C=5'
-```
-
-### Viewers
-
-Viewers allow users to view and edit content in a specific way or format.
-
-| Name | Category | Description |
-| ---- | -------- | ----------- |
-| `text` | View | Viewing and editing in plain text |
-| `bytes` | View | Viewing and editing bytes |
-
-### Chains
-
-Chain objects encapsulate the actual content used and returned by encoders and viewers. This content can either be a string, an array of Unicode code points or a `Uint8Array` of bytes.
-
-Chains are immutable. You define its content by passing one of these representations as first argument to the constructor.
-
-```javascript
-const a = new cryptii.Chain('🦊🚀')
-const b = new cryptii.Chain([129418, 128640])
-const c = new cryptii.Chain(new Uint8Array([240, 159, 166, 138, 240, 159, 154, 128]))
-cryptii.Chain.isEqual(a, b, c) // returns true
-```
-
-The object handles the translation between these representations lazily for you. You can access any of these through getter and additional convenience methods.
-
-```javascript
-const string = chain.getString()
-const codePoints = chain.getCodePoints()
-const bytes = chain.getBytes()
-```
-
-## Changelog
-
-See [the Releases section of the GitHub repository](https://github.com/cryptii/cryptii/releases) for changelogs for each release version of cryptii.
