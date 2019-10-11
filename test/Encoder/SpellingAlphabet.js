@@ -44,5 +44,16 @@ describe('SpellingAlphabetEncoder', () => EncoderTester.test(SpellingAlphabetEnc
       '(space) Gustav Erik (space) Viktor Åke Rudolf (space) Wilhelm Caesar ' +
       '- Zäta Olof Niklas Martin Östen (space) Ivar Qvintus - Helge Johan ' +
       'Ärlig Ludvig Petter .'
+  },
+  {
+    settings: { alphabet: 'russian' },
+    content: 'Съешь же ещё этих мягких французских булок да выпей чаю',
+    expectedResult:
+      'Семён Твёрдый_знак Елена Шура Мягкий_знак (space) Женя Елена (space) ' +
+      'Елена Щука Ёлка (space) Эхо Татьяна Иван Харитон (space) Михаил Яков ' +
+      'Григорий Константин Иван Харитон (space) Фёдор Роман Анна Николай ' +
+      'Цапля Ульяна Зинаида Семён Константин Иван Харитон (space) Борис ' +
+      'Ульяна Леонид Ольга Константин (space) Дмитрий Анна (space) Василий ' +
+      'Еры Павел Елена Иван_краткий (space) Человек Анна Юрий'
   }
 ]))
