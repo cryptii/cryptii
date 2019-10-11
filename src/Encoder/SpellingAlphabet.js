@@ -23,7 +23,8 @@ const alphabetSpecs = [
       'Xray',     'Yankee',   'Zulu',     'Zero',     'One',      'Two',
       'Three',    'Four',     'Five',     'Six',      'Seven',    'Eight',
       'Nine',     'Stop'
-    ]
+    ],
+    spaceWord: '(space)'
   },
   {
     name: 'dutch',
@@ -44,7 +45,8 @@ const alphabetSpecs = [
       'Ypsilon',    'Zacharias',  'Nul',        'Een',        'Twee',
       'Drie',       'Vier',       'Vijf',       'Zes',        'Zeven',
       'Acht',       'Negen'
-    ]
+    ],
+    spaceWord: '(spatiebalk)'
   },
   {
     name: 'german',
@@ -61,7 +63,8 @@ const alphabetSpecs = [
       'Eszett',     'Scharfes S', 'Null',       'Eins',       'Zwei',
       'Drei',       'Vier',       'Fünf',       'Sechs',      'Sieben',
       'Acht',       'Neun'
-    ]
+    ],
+    spaceWord: '(leertaste)'
   },
   {
     name: 'swedish',
@@ -76,7 +79,8 @@ const alphabetSpecs = [
       'Zäta',       'Åke',        'Ärlig',      'Östen',      'Nolla',
       'Ett',        'Tvåa',       'Trea',       'Fyra',       'Femma',
       'Sexa',       'Sju',        'Åtta',       'Nia'
-    ]
+    ],
+    spaceWord: '(mellanslag)'
   },
   {
     name: 'russian',
@@ -113,7 +117,7 @@ const alphabetSpecs = [
   /* eslint-enable no-multi-spaces */
 ]
 
-const spaceWord = '(space)'
+const defaultSpaceWord = '(space)'
 
 /**
  * Encoder brick translating characters into words of given spelling alphabet.
@@ -239,6 +243,8 @@ export default class SpellingAlphabetEncoder extends Encoder {
         wordMap[word] = characters[index]
       }
     })
+
+    const spaceWord = spec.spaceWord || defaultSpaceWord
 
     // Add space character
     characterMap[' '] = spaceWord
