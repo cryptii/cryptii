@@ -18,6 +18,12 @@ describe('SpellingAlphabetEncoder', () => {
         'Oscar Golf Sierra Stop'
     },
     {
+      settings: { alphabet: 'nato' },
+      content: 'X-Ray Xray',
+      expectedResult: 'xx',
+      direction: 'decode'
+    },
+    {
       settings: { alphabet: 'dutch' },
       content: 'typisch kaf bij zo exquis gevormde juwelen',
       expectedResult:
@@ -28,6 +34,14 @@ describe('SpellingAlphabetEncoder', () => {
         'Willem Eduard Lodewijk Eduard Nico'
     },
     {
+      settings: { alphabet: 'dutch' },
+      content:
+        'IJmuiden IJsbrand (spatiebalk) Johan Jacob (spatiebalk) Lodewijk Leo (spatiebalk) ' +
+        'Quirinius Quinten (spatiebalk) Richard Rudolf',
+      expectedResult: 'ijij jj ll qq rr',
+      direction: 'decode'
+    },
+    {
       settings: { alphabet: 'german' },
       content: 'jörg bäckt quasi zwei haxenfüße vom wildpony',
       expectedResult:
@@ -36,6 +50,15 @@ describe('SpellingAlphabetEncoder', () => {
         'Wilhelm Emil Ida (Leertaste) Heinrich Anton Xanthippe Emil Nordpol ' +
         'Friedrich Übermut Eszett Emil (Leertaste) Viktor Otto Martha (Leertaste) ' +
         'Wilhelm Ida Ludwig Dora Paula Otto Nordpol Ypsilon'
+    },
+    {
+      settings: { alphabet: 'german' },
+      content:
+        'Kaufmann Konrad (Leertaste) Samuel Siegfried (Leertaste) Xanthippe Xaver ' +
+        '(Leertaste) Zacharias Zürich (Leertaste) Ökonom Österreich (Leertaste) ' +
+        'Übermut Übel (Leertaste) Eszett Scharfes S',
+      expectedResult: 'kk ss xx zz öö üü ßß',
+      direction: 'decode'
     },
     {
       settings: { alphabet: 'swedish' },
@@ -57,6 +80,16 @@ describe('SpellingAlphabetEncoder', () => {
         'Ульяна Леонид Ольга Константин (пробел) Дмитрий Анна (пробел) Василий ' +
         'Еры Павел Елена Иван краткий (пробел) Человек Анна Юрий (пробел) Один Два Три ' +
         '(пробел) Четыре Пять Шесть (пробел) Семь Восемь Девять Ноль Точка'
+    },
+    {
+      settings: { alphabet: 'russian' },
+      content:
+        'Анна Антон (пробел) Григорий Галина (пробел) Женя Жук (пробел) Зинаида Зоя ' +
+        '(пробел) Иван краткий Йот (пробел) Константин Киловатт (пробел) Михаил Мария ' +
+        '(пробел) Роман Радио (пробел) Семён Сергей (пробел) Татьяна Тамара (пробел) ' +
+        'Цапля Центр (пробел) Еры Игрек (пробел) Эхо Эмма',
+      expectedResult: 'аа гг жж зз йй кк мм рр сс тт цц ыы ээ',
+      direction: 'decode'
     }
   ])
 
