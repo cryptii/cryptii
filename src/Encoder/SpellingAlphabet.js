@@ -80,7 +80,7 @@ const alphabetSpecs = [
   },
   {
     name: 'russian',
-    label: 'Russian spelling alphabet (oficial)',
+    label: 'Russian spelling alphabet (official)',
     characters: 'абвгдежзийклмнопрстуфхцчшщъыьэюя0123456789.',
     words: [
       'Анна',       'Борис',        'Василий', 'Григорий',    'Дмитрий',
