@@ -9,7 +9,7 @@ const meta = {
   type: 'encoder'
 }
 
-const alphabetSpecs = [
+const defaultAlphabetSpecs = [
   /* eslint-disable no-multi-spaces */
   {
     name: 'nato',
@@ -1033,8 +1033,9 @@ export default class SpellingAlphabetEncoder extends Encoder {
   /**
    * Constructor
    */
-  constructor () {
+  constructor (alphabetSpecs = defaultAlphabetSpecs) {
     super()
+    this._alphabetSpecs = alphabetSpecs
     this._characterMap = {}
     this._wordMap = {}
 
@@ -1113,7 +1114,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
    */
   buildTranslationMap () {
     const name = this.getSettingValue('alphabet')
-    const spec = alphabetSpecs.find(spec => spec.name === name)
+    const spec = this._alphabetSpecs.find(spec => spec.name === name)
     if (spec === undefined) {
       throw new Error(`Alphabet with name '${name}' is not defined`)
     }
