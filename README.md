@@ -11,7 +11,9 @@ Web app and framework offering modular conversion, encoding and encryption. Tran
 - Use the [live version](https://cryptii.com)
 - Download the [latest stable release](https://github.com/cryptii/cryptii/releases/latest) or [other releases](https://github.com/cryptii/cryptii/releases)
 - Clone the repository: `git clone git@github.com:cryptii/cryptii.git`
-- Build using the Node.js version specified in `.nvmrc`: `npm build`
+- Ensure you have Node.js of version specified in `.nvmrc` installed
+- `npm ci`
+- `npm run-script build`
 - [Contribute to the project](CONTRIBUTING.md) or [report an issue](https://github.com/cryptii/cryptii/issues/new/choose)
 
 ## Concept
