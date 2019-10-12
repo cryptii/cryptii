@@ -109,11 +109,7 @@ const alphabetSpecs = [
       },
       {
         character: 'x',
-        word: 'X-ray'
-      },
-      {
-        character: 'x',
-        word: 'Xray'
+        word: ['X-ray', 'Xray']
       },
       {
         character: 'y',
@@ -208,11 +204,7 @@ const alphabetSpecs = [
       },
       {
         character: 'ij',
-        word: 'IJmuiden'
-      },
-      {
-        character: 'ij',
-        word: 'IJsbrand'
+        word: ['IJmuiden', 'IJsbrand']
       },
       {
         character: 'i',
@@ -220,11 +212,7 @@ const alphabetSpecs = [
       },
       {
         character: 'j',
-        word: 'Johan'
-      },
-      {
-        character: 'j',
-        word: 'Jacob'
+        word: ['Johan', 'Jacob']
       },
       {
         character: 'k',
@@ -232,11 +220,7 @@ const alphabetSpecs = [
       },
       {
         character: 'l',
-        word: 'Lodewijk'
-      },
-      {
-        character: 'l',
-        word: 'Leo'
+        word: ['Lodewijk', 'Leo']
       },
       {
         character: 'm',
@@ -256,19 +240,11 @@ const alphabetSpecs = [
       },
       {
         character: 'q',
-        word: 'Quirinius'
-      },
-      {
-        character: 'q',
-        word: 'Quinten'
+        word: ['Quirinius', 'Quinten']
       },
       {
         character: 'r',
-        word: 'Richard'
-      },
-      {
-        character: 'r',
-        word: 'Rudolf'
+        word: ['Richard', 'Rudolf']
       },
       {
         character: 's',
@@ -391,11 +367,7 @@ const alphabetSpecs = [
       },
       {
         character: 'k',
-        word: 'Kaufmann'
-      },
-      {
-        character: 'k',
-        word: 'Konrad'
+        word: ['Kaufmann', 'Konrad']
       },
       {
         character: 'l',
@@ -427,11 +399,7 @@ const alphabetSpecs = [
       },
       {
         character: 's',
-        word: 'Samuel'
-      },
-      {
-        character: 's',
-        word: 'Siegfried'
+        word: ['Samuel', 'Siegfried']
       },
       {
         character: 't',
@@ -451,11 +419,7 @@ const alphabetSpecs = [
       },
       {
         character: 'x',
-        word: 'Xanthippe'
-      },
-      {
-        character: 'x',
-        word: 'Xaver'
+        word: ['Xanthippe', 'Xaver']
       },
       {
         character: 'y',
@@ -463,11 +427,7 @@ const alphabetSpecs = [
       },
       {
         character: 'z',
-        word: 'Zacharias'
-      },
-      {
-        character: 'z',
-        word: 'Zürich'
+        word: ['Zacharias', 'Zürich']
       },
       {
         character: 'ä',
@@ -475,27 +435,15 @@ const alphabetSpecs = [
       },
       {
         character: 'ö',
-        word: 'Ökonom'
-      },
-      {
-        character: 'ö',
-        word: 'Österreich'
+        word: ['Ökonom', 'Österreich']
       },
       {
         character: 'ü',
-        word: 'Übermut'
-      },
-      {
-        character: 'ü',
-        word: 'Übel'
+        word: ['Übermut', 'Übel']
       },
       {
         character: 'ß',
-        word: 'Eszett'
-      },
-      {
-        character: 'ß',
-        word: 'Scharfes S'
+        word: ['Eszett', 'Scharfes S']
       },
       {
         character: '0',
@@ -1175,12 +1123,20 @@ export default class SpellingAlphabetEncoder extends Encoder {
     const wordMap = {}
 
     spec.mappings.forEach((mapping) => {
-      if (characterMap[mapping.character] === undefined) {
-        characterMap[mapping.character] = mapping.word
-      }
-      if (wordMap[mapping.word] === undefined) {
-        wordMap[mapping.word] = mapping.character
-      }
+      const characters = Array.isArray(mapping.character) ? mapping.character : [mapping.character]
+      const words = Array.isArray(mapping.word) ? mapping.word : [mapping.word]
+
+      characters.forEach((character) => {
+        if (characterMap[character] === undefined) {
+          characterMap[character] = words[0]
+        }
+      })
+
+      words.forEach((word) => {
+        if (wordMap[word] === undefined) {
+          wordMap[word] = characters[0]
+        }
+      })
     })
 
     const spaceWord = spec.spaceWord || defaultSpaceWord
