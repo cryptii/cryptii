@@ -14,105 +14,1054 @@ const alphabetSpecs = [
   {
     name: 'nato',
     label: 'NATO/ICAO phonetic alphabet',
-    characters: 'abcdefghijklmnopqrstuvwxxyz0123456789.',
-    words: [
-      'Alfa',     'Bravo',    'Charlie',  'Delta',    'Echo',     'Foxtrot',
-      'Golf',     'Hotel',    'India',    'Juliett',  'Kilo',     'Lima',
-      'Mike',     'November', 'Oscar',    'Papa',     'Quebec',   'Romeo',
-      'Sierra',   'Tango',    'Uniform',  'Victor',   'Whiskey',  'X-ray',
-      'Xray',     'Yankee',   'Zulu',     'Zero',     'One',      'Two',
-      'Three',    'Four',     'Five',     'Six',      'Seven',    'Eight',
-      'Nine',     'Stop'
+    mappings: [
+      {
+        character: 'a',
+        word: 'Alfa'
+      },
+      {
+        character: 'b',
+        word: 'Bravo'
+      },
+      {
+        character: 'c',
+        word: 'Charlie'
+      },
+      {
+        character: 'd',
+        word: 'Delta'
+      },
+      {
+        character: 'e',
+        word: 'Echo'
+      },
+      {
+        character: 'f',
+        word: 'Foxtrot'
+      },
+      {
+        character: 'g',
+        word: 'Golf'
+      },
+      {
+        character: 'h',
+        word: 'Hotel'
+      },
+      {
+        character: 'i',
+        word: 'India'
+      },
+      {
+        character: 'j',
+        word: 'Juliett'
+      },
+      {
+        character: 'k',
+        word: 'Kilo'
+      },
+      {
+        character: 'l',
+        word: 'Lima'
+      },
+      {
+        character: 'm',
+        word: 'Mike'
+      },
+      {
+        character: 'n',
+        word: 'November'
+      },
+      {
+        character: 'o',
+        word: 'Oscar'
+      },
+      {
+        character: 'p',
+        word: 'Papa'
+      },
+      {
+        character: 'q',
+        word: 'Quebec'
+      },
+      {
+        character: 'r',
+        word: 'Romeo'
+      },
+      {
+        character: 's',
+        word: 'Sierra'
+      },
+      {
+        character: 't',
+        word: 'Tango'
+      },
+      {
+        character: 'u',
+        word: 'Uniform'
+      },
+      {
+        character: 'v',
+        word: 'Victor'
+      },
+      {
+        character: 'w',
+        word: 'Whiskey'
+      },
+      {
+        character: 'x',
+        word: 'X-ray'
+      },
+      {
+        character: 'x',
+        word: 'Xray'
+      },
+      {
+        character: 'y',
+        word: 'Yankee'
+      },
+      {
+        character: 'z',
+        word: 'Zulu'
+      },
+      {
+        character: '0',
+        word: 'Zero'
+      },
+      {
+        character: '1',
+        word: 'One'
+      },
+      {
+        character: '2',
+        word: 'Two'
+      },
+      {
+        character: '3',
+        word: 'Three'
+      },
+      {
+        character: '4',
+        word: 'Four'
+      },
+      {
+        character: '5',
+        word: 'Five'
+      },
+      {
+        character: '6',
+        word: 'Six'
+      },
+      {
+        character: '7',
+        word: 'Seven'
+      },
+      {
+        character: '8',
+        word: 'Eight'
+      },
+      {
+        character: '9',
+        word: 'Nine'
+      },
+      {
+        character: '.',
+        word: 'Stop'
+      }
     ],
     spaceWord: '(space)'
   },
   {
     name: 'dutch',
     label: 'Dutch spelling alphabet',
-    characters: [
-      'a',  'b',  'c',  'd',  'e',  'f',  'g',  'h',  'ij', 'ij', 'i',  'j',
-      'j',  'k',  'l',  'l',  'm',  'n',  'o',  'p',  'q',  'q',  'r',  'r',
-      's',  't',  'u',  'v',  'w',  'x',  'y',  'z',  '0',  '1',  '2',  '3',
-      '4',  '5',  '6',  '7',  '8',  '9'
-    ],
-    words: [
-      'Anton',      'Bernhard',   'Cornelis',   'Dirk',       'Eduard',
-      'Ferdinand',  'Gerard',     'Hendrik',    'IJmuiden',   'IJsbrand',
-      'Izaak',      'Johan',      'Jacob',      'Karel',      'Lodewijk',
-      'Leo',        'Maria',      'Nico',       'Otto',       'Pieter',
-      'Quirinius',  'Quinten',    'Richard',    'Rudolf',     'Simon',
-      'Theodoor',   'Utrecht',    'Victor',     'Willem',     'Xantippe',
-      'Ypsilon',    'Zacharias',  'Nul',        'Een',        'Twee',
-      'Drie',       'Vier',       'Vijf',       'Zes',        'Zeven',
-      'Acht',       'Negen'
+    mappings: [
+      {
+        character: 'a',
+        word: 'Anton'
+      },
+      {
+        character: 'b',
+        word: 'Bernhard'
+      },
+      {
+        character: 'c',
+        word: 'Cornelis'
+      },
+      {
+        character: 'd',
+        word: 'Dirk'
+      },
+      {
+        character: 'e',
+        word: 'Eduard'
+      },
+      {
+        character: 'f',
+        word: 'Ferdinand'
+      },
+      {
+        character: 'g',
+        word: 'Gerard'
+      },
+      {
+        character: 'h',
+        word: 'Hendrik'
+      },
+      {
+        character: 'ij',
+        word: 'IJmuiden'
+      },
+      {
+        character: 'ij',
+        word: 'IJsbrand'
+      },
+      {
+        character: 'i',
+        word: 'Izaak'
+      },
+      {
+        character: 'j',
+        word: 'Johan'
+      },
+      {
+        character: 'j',
+        word: 'Jacob'
+      },
+      {
+        character: 'k',
+        word: 'Karel'
+      },
+      {
+        character: 'l',
+        word: 'Lodewijk'
+      },
+      {
+        character: 'l',
+        word: 'Leo'
+      },
+      {
+        character: 'm',
+        word: 'Maria'
+      },
+      {
+        character: 'n',
+        word: 'Nico'
+      },
+      {
+        character: 'o',
+        word: 'Otto'
+      },
+      {
+        character: 'p',
+        word: 'Pieter'
+      },
+      {
+        character: 'q',
+        word: 'Quirinius'
+      },
+      {
+        character: 'q',
+        word: 'Quinten'
+      },
+      {
+        character: 'r',
+        word: 'Richard'
+      },
+      {
+        character: 'r',
+        word: 'Rudolf'
+      },
+      {
+        character: 's',
+        word: 'Simon'
+      },
+      {
+        character: 't',
+        word: 'Theodoor'
+      },
+      {
+        character: 'u',
+        word: 'Utrecht'
+      },
+      {
+        character: 'v',
+        word: 'Victor'
+      },
+      {
+        character: 'w',
+        word: 'Willem'
+      },
+      {
+        character: 'x',
+        word: 'Xantippe'
+      },
+      {
+        character: 'y',
+        word: 'Ypsilon'
+      },
+      {
+        character: 'z',
+        word: 'Zacharias'
+      },
+      {
+        character: '0',
+        word: 'Nul'
+      },
+      {
+        character: '1',
+        word: 'Een'
+      },
+      {
+        character: '2',
+        word: 'Twee'
+      },
+      {
+        character: '3',
+        word: 'Drie'
+      },
+      {
+        character: '4',
+        word: 'Vier'
+      },
+      {
+        character: '5',
+        word: 'Vijf'
+      },
+      {
+        character: '6',
+        word: 'Zes'
+      },
+      {
+        character: '7',
+        word: 'Zeven'
+      },
+      {
+        character: '8',
+        word: 'Acht'
+      },
+      {
+        character: '9',
+        word: 'Negen'
+      },
     ],
     spaceWord: '(spatiebalk)'
   },
   {
     name: 'german',
     label: 'German spelling alphabet',
-    characters: 'abcdefghijkklmnopqrsstuvwxxyzzäööüüßß0123456789',
-    words: [
-      'Anton',      'Berta',      'Cäsar',      'Dora',       'Emil',
-      'Friedrich',  'Gustav',     'Heinrich',   'Ida',        'Julius',
-      'Kaufmann',   'Konrad',     'Ludwig',     'Martha',     'Nordpol',
-      'Otto',       'Paula',      'Quelle',     'Richard',    'Samuel',
-      'Siegfried',  'Theodor',    'Ulrich',     'Viktor',     'Wilhelm',
-      'Xanthippe',  'Xaver',      'Ypsilon',    'Zacharias',  'Zürich',
-      'Ärger',      'Ökonom',     'Österreich', 'Übermut',    'Übel',
-      'Eszett',     'Scharfes S', 'Null',       'Eins',       'Zwei',
-      'Drei',       'Vier',       'Fünf',       'Sechs',      'Sieben',
-      'Acht',       'Neun'
+    mappings: [
+      {
+        character: 'a',
+        word: 'Anton'
+      },
+      {
+        character: 'b',
+        word: 'Berta'
+      },
+      {
+        character: 'c',
+        word: 'Cäsar'
+      },
+      {
+        character: 'd',
+        word: 'Dora'
+      },
+      {
+        character: 'e',
+        word: 'Emil'
+      },
+      {
+        character: 'f',
+        word: 'Friedrich'
+      },
+      {
+        character: 'g',
+        word: 'Gustav'
+      },
+      {
+        character: 'h',
+        word: 'Heinrich'
+      },
+      {
+        character: 'i',
+        word: 'Ida'
+      },
+      {
+        character: 'j',
+        word: 'Julius'
+      },
+      {
+        character: 'k',
+        word: 'Kaufmann'
+      },
+      {
+        character: 'k',
+        word: 'Konrad'
+      },
+      {
+        character: 'l',
+        word: 'Ludwig'
+      },
+      {
+        character: 'm',
+        word: 'Martha'
+      },
+      {
+        character: 'n',
+        word: 'Nordpol'
+      },
+      {
+        character: 'o',
+        word: 'Otto'
+      },
+      {
+        character: 'p',
+        word: 'Paula'
+      },
+      {
+        character: 'q',
+        word: 'Quelle'
+      },
+      {
+        character: 'r',
+        word: 'Richard'
+      },
+      {
+        character: 's',
+        word: 'Samuel'
+      },
+      {
+        character: 's',
+        word: 'Siegfried'
+      },
+      {
+        character: 't',
+        word: 'Theodor'
+      },
+      {
+        character: 'u',
+        word: 'Ulrich'
+      },
+      {
+        character: 'v',
+        word: 'Viktor'
+      },
+      {
+        character: 'w',
+        word: 'Wilhelm'
+      },
+      {
+        character: 'x',
+        word: 'Xanthippe'
+      },
+      {
+        character: 'x',
+        word: 'Xaver'
+      },
+      {
+        character: 'y',
+        word: 'Ypsilon'
+      },
+      {
+        character: 'z',
+        word: 'Zacharias'
+      },
+      {
+        character: 'z',
+        word: 'Zürich'
+      },
+      {
+        character: 'ä',
+        word: 'Ärger'
+      },
+      {
+        character: 'ö',
+        word: 'Ökonom'
+      },
+      {
+        character: 'ö',
+        word: 'Österreich'
+      },
+      {
+        character: 'ü',
+        word: 'Übermut'
+      },
+      {
+        character: 'ü',
+        word: 'Übel'
+      },
+      {
+        character: 'ß',
+        word: 'Eszett'
+      },
+      {
+        character: 'ß',
+        word: 'Scharfes S'
+      },
+      {
+        character: '0',
+        word: 'Null'
+      },
+      {
+        character: '1',
+        word: 'Eins'
+      },
+      {
+        character: '2',
+        word: 'Zwei'
+      },
+      {
+        character: '3',
+        word: 'Drei'
+      },
+      {
+        character: '4',
+        word: 'Vier'
+      },
+      {
+        character: '5',
+        word: 'Fünf'
+      },
+      {
+        character: '6',
+        word: 'Sechs'
+      },
+      {
+        character: '7',
+        word: 'Sieben'
+      },
+      {
+        character: '8',
+        word: 'Acht'
+      },
+      {
+        character: '9',
+        word: 'Neun'
+      },
     ],
     spaceWord: '(Leertaste)'
   },
   {
     name: 'swedish',
     label: 'Swedish Armed Forces\' radio alphabet',
-    characters: 'abcdefghijklmnopqrstuvwxyzåäö0123456789',
-    words: [
-      'Adam',       'Bertil',     'Caesar',     'David',      'Erik',
-      'Filip',      'Gustav',     'Helge',      'Ivar',       'Johan',
-      'Kalle',      'Ludvig',     'Martin',     'Niklas',     'Olof',
-      'Petter',     'Qvintus',    'Rudolf',     'Sigurd',     'Tore',
-      'Urban',      'Viktor',     'Wilhelm',    'Xerxes',     'Yngve',
-      'Zäta',       'Åke',        'Ärlig',      'Östen',      'Nolla',
-      'Ett',        'Tvåa',       'Trea',       'Fyra',       'Femma',
-      'Sexa',       'Sju',        'Åtta',       'Nia'
+    mappings: [
+      {
+        character: 'a',
+        word: 'Adam'
+      },
+      {
+        character: 'b',
+        word: 'Bertil'
+      },
+      {
+        character: 'c',
+        word: 'Caesar'
+      },
+      {
+        character: 'd',
+        word: 'David'
+      },
+      {
+        character: 'e',
+        word: 'Erik'
+      },
+      {
+        character: 'f',
+        word: 'Filip'
+      },
+      {
+        character: 'g',
+        word: 'Gustav'
+      },
+      {
+        character: 'h',
+        word: 'Helge'
+      },
+      {
+        character: 'i',
+        word: 'Ivar'
+      },
+      {
+        character: 'j',
+        word: 'Johan'
+      },
+      {
+        character: 'k',
+        word: 'Kalle'
+      },
+      {
+        character: 'l',
+        word: 'Ludvig'
+      },
+      {
+        character: 'm',
+        word: 'Martin'
+      },
+      {
+        character: 'n',
+        word: 'Niklas'
+      },
+      {
+        character: 'o',
+        word: 'Olof'
+      },
+      {
+        character: 'p',
+        word: 'Petter'
+      },
+      {
+        character: 'q',
+        word: 'Qvintus'
+      },
+      {
+        character: 'r',
+        word: 'Rudolf'
+      },
+      {
+        character: 's',
+        word: 'Sigurd'
+      },
+      {
+        character: 't',
+        word: 'Tore'
+      },
+      {
+        character: 'u',
+        word: 'Urban'
+      },
+      {
+        character: 'v',
+        word: 'Viktor'
+      },
+      {
+        character: 'w',
+        word: 'Wilhelm'
+      },
+      {
+        character: 'x',
+        word: 'Xerxes'
+      },
+      {
+        character: 'y',
+        word: 'Yngve'
+      },
+      {
+        character: 'z',
+        word: 'Zäta'
+      },
+      {
+        character: 'å',
+        word: 'Åke'
+      },
+      {
+        character: 'ä',
+        word: 'Ärlig'
+      },
+      {
+        character: 'ö',
+        word: 'Östen'
+      },
+      {
+        character: '0',
+        word: 'Nolla'
+      },
+      {
+        character: '1',
+        word: 'Ett'
+      },
+      {
+        character: '2',
+        word: 'Tvåa'
+      },
+      {
+        character: '3',
+        word: 'Trea'
+      },
+      {
+        character: '4',
+        word: 'Fyra'
+      },
+      {
+        character: '5',
+        word: 'Femma'
+      },
+      {
+        character: '6',
+        word: 'Sexa'
+      },
+      {
+        character: '7',
+        word: 'Sju'
+      },
+      {
+        character: '8',
+        word: 'Åtta'
+      },
+      {
+        character: '9',
+        word: 'Nia'
+      }
     ],
     spaceWord: '(mellanslag)'
   },
   {
     name: 'russian',
     label: 'Russian spelling alphabet (official, excludes Ё)',
-    characters: 'абвгдежзийклмнопрстуфхцчшщъыьэюя0123456789.',
-    words: [
-      'Анна',       'Борис',        'Василий', 'Григорий',    'Дмитрий',
-      'Елена',      'Женя',         'Зинаида', 'Иван',        'Иван краткий',
-      'Константин', 'Леонид',       'Михаил',  'Николай',     'Ольга',
-      'Павел',      'Роман',        'Семён',   'Татьяна',     'Ульяна',
-      'Фёдор',      'Харитон',      'Цапля',   'Человек',     'Шура',
-      'Щука',       'Твёрдый знак', 'Еры',     'Мягкий знак', 'Эхо',
-      'Юрий',       'Яков',         'Ноль',    'Один',        'Два',
-      'Три',        'Четыре',       'Пять',    'Шесть',       'Семь',
-      'Восемь',     'Девять',       'Точка'
+    mappings: [
+      {
+        character: 'а',
+        word: 'Анна'
+      },
+      {
+        character: 'б',
+        word: 'Борис'
+      },
+      {
+        character: 'в',
+        word: 'Василий'
+      },
+      {
+        character: 'г',
+        word: 'Григорий'
+      },
+      {
+        character: 'д',
+        word: 'Дмитрий'
+      },
+      {
+        character: 'е',
+        word: 'Елена'
+      },
+      {
+        character: 'ж',
+        word: 'Женя'
+      },
+      {
+        character: 'з',
+        word: 'Зинаида'
+      },
+      {
+        character: 'и',
+        word: 'Иван'
+      },
+      {
+        character: 'й',
+        word: 'Иван краткий'
+      },
+      {
+        character: 'к',
+        word: 'Константин'
+      },
+      {
+        character: 'л',
+        word: 'Леонид'
+      },
+      {
+        character: 'м',
+        word: 'Михаил'
+      },
+      {
+        character: 'н',
+        word: 'Николай'
+      },
+      {
+        character: 'о',
+        word: 'Ольга'
+      },
+      {
+        character: 'п',
+        word: 'Павел'
+      },
+      {
+        character: 'р',
+        word: 'Роман'
+      },
+      {
+        character: 'с',
+        word: 'Семён'
+      },
+      {
+        character: 'т',
+        word: 'Татьяна'
+      },
+      {
+        character: 'у',
+        word: 'Ульяна'
+      },
+      {
+        character: 'ф',
+        word: 'Фёдор'
+      },
+      {
+        character: 'х',
+        word: 'Харитон'
+      },
+      {
+        character: 'ц',
+        word: 'Цапля'
+      },
+      {
+        character: 'ч',
+        word: 'Человек'
+      },
+      {
+        character: 'ш',
+        word: 'Шура'
+      },
+      {
+        character: 'щ',
+        word: 'Щука'
+      },
+      {
+        character: 'ъ',
+        word: 'Твёрдый знак'
+      },
+      {
+        character: 'ы',
+        word: 'Еры'
+      },
+      {
+        character: 'ь',
+        word: 'Мягкий знак'
+      },
+      {
+        character: 'э',
+        word: 'Эхо'
+      },
+      {
+        character: 'ю',
+        word: 'Юрий'
+      },
+      {
+        character: 'я',
+        word: 'Яков'
+      },
+      {
+        character: '0',
+        word: 'Ноль'
+      },
+      {
+        character: '1',
+        word: 'Один'
+      },
+      {
+        character: '2',
+        word: 'Два'
+      },
+      {
+        character: '3',
+        word: 'Три'
+      },
+      {
+        character: '4',
+        word: 'Четыре'
+      },
+      {
+        character: '5',
+        word: 'Пять'
+      },
+      {
+        character: '6',
+        word: 'Шесть'
+      },
+      {
+        character: '7',
+        word: 'Семь'
+      },
+      {
+        character: '8',
+        word: 'Восемь'
+      },
+      {
+        character: '9',
+        word: 'Девять'
+      },
+      {
+        character: '.',
+        word: 'Точка'
+      }
     ],
     spaceWord: '(пробел)'
   },
   {
     name: 'russian-unofficial',
     label: 'Russian spelling alphabet (unofficial, includes Ё)',
-    characters: 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789.',
-    words: [
-      'Антон',  'Борис',    'Василий',      'Галина', 'Дмитрий',
-      'Елена',  'Ёлка',     'Жук',          'Зоя',    'Иван',
-      'Йот',    'Киловатт', 'Леонид',       'Мария',  'Николай',
-      'Ольга',  'Павел',    'Радио',        'Сергей', 'Тамара',
-      'Ульяна', 'Фёдор',    'Харитон',      'Центр',  'Человек',
-      'Шура',   'Щука',     'Твёрдый знак', 'Игрек',  'Мягкий знак',
-      'Эмма',   'Юрий',     'Яков',         'Ноль',   'Один',
-      'Два',    'Три',      'Четыре',       'Пять',   'Шесть',
-      'Семь',   'Восемь',   'Девять',       'Точка'
+    mappings: [
+      {
+        character: 'а',
+        word: 'Антон'
+      },
+      {
+        character: 'б',
+        word: 'Борис'
+      },
+      {
+        character: 'в',
+        word: 'Василий'
+      },
+      {
+        character: 'г',
+        word: 'Галина'
+      },
+      {
+        character: 'д',
+        word: 'Дмитрий'
+      },
+      {
+        character: 'е',
+        word: 'Елена'
+      },
+      {
+        character: 'ё',
+        word: 'Ёлка'
+      },
+      {
+        character: 'ж',
+        word: 'Жук'
+      },
+      {
+        character: 'з',
+        word: 'Зоя'
+      },
+      {
+        character: 'и',
+        word: 'Иван'
+      },
+      {
+        character: 'й',
+        word: 'Йот'
+      },
+      {
+        character: 'к',
+        word: 'Киловатт'
+      },
+      {
+        character: 'л',
+        word: 'Леонид'
+      },
+      {
+        character: 'м',
+        word: 'Мария'
+      },
+      {
+        character: 'н',
+        word: 'Николай'
+      },
+      {
+        character: 'о',
+        word: 'Ольга'
+      },
+      {
+        character: 'п',
+        word: 'Павел'
+      },
+      {
+        character: 'р',
+        word: 'Радио'
+      },
+      {
+        character: 'с',
+        word: 'Сергей'
+      },
+      {
+        character: 'т',
+        word: 'Тамара'
+      },
+      {
+        character: 'у',
+        word: 'Ульяна'
+      },
+      {
+        character: 'ф',
+        word: 'Фёдор'
+      },
+      {
+        character: 'х',
+        word: 'Харитон'
+      },
+      {
+        character: 'ц',
+        word: 'Центр'
+      },
+      {
+        character: 'ч',
+        word: 'Человек'
+      },
+      {
+        character: 'ш',
+        word: 'Шура'
+      },
+      {
+        character: 'щ',
+        word: 'Щука'
+      },
+      {
+        character: 'ъ',
+        word: 'Твёрдый знак'
+      },
+      {
+        character: 'ы',
+        word: 'Игрек'
+      },
+      {
+        character: 'ь',
+        word: 'Мягкий знак'
+      },
+      {
+        character: 'э',
+        word: 'Эмма'
+      },
+      {
+        character: 'ю',
+        word: 'Юрий'
+      },
+      {
+        character: 'я',
+        word: 'Яков'
+      },
+      {
+        character: '0',
+        word: 'Ноль'
+      },
+      {
+        character: '1',
+        word: 'Один'
+      },
+      {
+        character: '2',
+        word: 'Два'
+      },
+      {
+        character: '3',
+        word: 'Три'
+      },
+      {
+        character: '4',
+        word: 'Четыре'
+      },
+      {
+        character: '5',
+        word: 'Пять'
+      },
+      {
+        character: '6',
+        word: 'Шесть'
+      },
+      {
+        character: '7',
+        word: 'Семь'
+      },
+      {
+        character: '8',
+        word: 'Восемь'
+      },
+      {
+        character: '9',
+        word: 'Девять'
+      },
+      {
+        character: '.',
+        word: 'Точка'
+      }
     ],
     spaceWord: '(пробел)'
   }
@@ -221,28 +1170,16 @@ export default class SpellingAlphabetEncoder extends Encoder {
       throw new Error(`Alphabet with name '${name}' is not defined`)
     }
 
-    // Read spec
-    const characters =
-      typeof spec.characters === 'string'
-        ? spec.characters.split('')
-        : spec.characters
-
-    const words = spec.words
-
-    // Build encode map
-    const characterMap = {}
-    characters.forEach((character, index) => {
-      if (characterMap[character] === undefined) {
-        characterMap[character] = words[index]
-      }
-    })
-
-    // Build decode map
+    // Build encode/decode maps
+    const characterMap = {};
     const wordMap = {}
-    words.forEach((word, index) => {
-      word = word.toLowerCase()
-      if (wordMap[word] === undefined) {
-        wordMap[word] = characters[index]
+
+    spec.mappings.forEach((mapping) => {
+      if (characterMap[mapping.character] === undefined) {
+        characterMap[mapping.character] = mapping.word
+      }
+      if (wordMap[mapping.word] === undefined) {
+        wordMap[mapping.word] = mapping.character
       }
     })
 
