@@ -16,6 +16,10 @@ const defaultAlphabetSpecs = [
     label: 'NATO/ICAO phonetic alphabet',
     mappings: [
       {
+        character: ' ',
+        word: '(space)'
+      },
+      {
         character: 'a',
         word: 'Alfa'
       },
@@ -163,13 +167,16 @@ const defaultAlphabetSpecs = [
         character: '.',
         word: 'Stop'
       }
-    ],
-    spaceWord: '(space)'
+    ]
   },
   {
     name: 'dutch',
     label: 'Dutch spelling alphabet',
     mappings: [
+      {
+        character: ' ',
+        word: '(spatiebalk)'
+      },
       {
         character: 'a',
         word: 'Anton'
@@ -318,13 +325,16 @@ const defaultAlphabetSpecs = [
         character: '9',
         word: 'Negen'
       },
-    ],
-    spaceWord: '(spatiebalk)'
+    ]
   },
   {
     name: 'german',
     label: 'German spelling alphabet',
     mappings: [
+      {
+        character: ' ',
+        word: '(Leertaste)'
+      },
       {
         character: 'a',
         word: 'Anton'
@@ -485,13 +495,16 @@ const defaultAlphabetSpecs = [
         character: '9',
         word: 'Neun'
       },
-    ],
-    spaceWord: '(Leertaste)'
+    ]
   },
   {
     name: 'swedish',
     label: 'Swedish Armed Forces\' radio alphabet',
     mappings: [
+      {
+        character: ' ',
+        word: '(mellanslag)'
+      },
       {
         character: 'a',
         word: 'Adam'
@@ -648,13 +661,16 @@ const defaultAlphabetSpecs = [
         character: '9',
         word: 'Nia'
       }
-    ],
-    spaceWord: '(mellanslag)'
+    ]
   },
   {
     name: 'russian',
     label: 'Russian spelling alphabet',
     mappings: [
+      {
+        character: ' ',
+        word: '(пробел)'
+      },
       {
         character: 'а',
         word: ['Анна', 'Антон']
@@ -831,8 +847,7 @@ const defaultAlphabetSpecs = [
         character: '.',
         word: 'Точка'
       }
-    ],
-    spaceWord: '(пробел)'
+    ]
   }
   /* eslint-enable no-multi-spaces */
 ]
@@ -963,11 +978,10 @@ export default class SpellingAlphabetEncoder extends Encoder {
       })
     })
 
-    const spaceWord = spec.spaceWord || defaultSpaceWord
-
-    // Add space character
-    characterMap[' '] = spaceWord
-    wordMap[spaceWord] = ' '
+    if (characterMap[' '] === undefined) {
+      characterMap[' '] = defaultSpaceWord
+      wordMap[defaultSpaceWord] = ' '
+    }
 
     this._characterMap = characterMap
     this._wordMap = wordMap
