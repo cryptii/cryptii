@@ -653,11 +653,11 @@ const defaultAlphabetSpecs = [
   },
   {
     name: 'russian',
-    label: 'Russian spelling alphabet (official, excludes Ё)',
+    label: 'Russian spelling alphabet',
     mappings: [
       {
         character: 'а',
-        word: 'Анна'
+        word: ['Анна', 'Антон']
       },
       {
         character: 'б',
@@ -669,186 +669,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'г',
-        word: 'Григорий'
-      },
-      {
-        character: 'д',
-        word: 'Дмитрий'
-      },
-      {
-        character: 'е',
-        word: 'Елена'
-      },
-      {
-        character: 'ж',
-        word: 'Женя'
-      },
-      {
-        character: 'з',
-        word: 'Зинаида'
-      },
-      {
-        character: 'и',
-        word: 'Иван'
-      },
-      {
-        character: 'й',
-        word: 'Иван краткий'
-      },
-      {
-        character: 'к',
-        word: 'Константин'
-      },
-      {
-        character: 'л',
-        word: 'Леонид'
-      },
-      {
-        character: 'м',
-        word: 'Михаил'
-      },
-      {
-        character: 'н',
-        word: 'Николай'
-      },
-      {
-        character: 'о',
-        word: 'Ольга'
-      },
-      {
-        character: 'п',
-        word: 'Павел'
-      },
-      {
-        character: 'р',
-        word: 'Роман'
-      },
-      {
-        character: 'с',
-        word: 'Семён'
-      },
-      {
-        character: 'т',
-        word: 'Татьяна'
-      },
-      {
-        character: 'у',
-        word: 'Ульяна'
-      },
-      {
-        character: 'ф',
-        word: 'Фёдор'
-      },
-      {
-        character: 'х',
-        word: 'Харитон'
-      },
-      {
-        character: 'ц',
-        word: 'Цапля'
-      },
-      {
-        character: 'ч',
-        word: 'Человек'
-      },
-      {
-        character: 'ш',
-        word: 'Шура'
-      },
-      {
-        character: 'щ',
-        word: 'Щука'
-      },
-      {
-        character: 'ъ',
-        word: 'Твёрдый знак'
-      },
-      {
-        character: 'ы',
-        word: 'Еры'
-      },
-      {
-        character: 'ь',
-        word: 'Мягкий знак'
-      },
-      {
-        character: 'э',
-        word: 'Эхо'
-      },
-      {
-        character: 'ю',
-        word: 'Юрий'
-      },
-      {
-        character: 'я',
-        word: 'Яков'
-      },
-      {
-        character: '0',
-        word: 'Ноль'
-      },
-      {
-        character: '1',
-        word: 'Один'
-      },
-      {
-        character: '2',
-        word: 'Два'
-      },
-      {
-        character: '3',
-        word: 'Три'
-      },
-      {
-        character: '4',
-        word: 'Четыре'
-      },
-      {
-        character: '5',
-        word: 'Пять'
-      },
-      {
-        character: '6',
-        word: 'Шесть'
-      },
-      {
-        character: '7',
-        word: 'Семь'
-      },
-      {
-        character: '8',
-        word: 'Восемь'
-      },
-      {
-        character: '9',
-        word: 'Девять'
-      },
-      {
-        character: '.',
-        word: 'Точка'
-      }
-    ],
-    spaceWord: '(пробел)'
-  },
-  {
-    name: 'russian-unofficial',
-    label: 'Russian spelling alphabet (unofficial, includes Ё)',
-    mappings: [
-      {
-        character: 'а',
-        word: 'Антон'
-      },
-      {
-        character: 'б',
-        word: 'Борис'
-      },
-      {
-        character: 'в',
-        word: 'Василий'
-      },
-      {
-        character: 'г',
-        word: 'Галина'
+        word: ['Григорий', 'Галина']
       },
       {
         character: 'д',
@@ -864,11 +685,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ж',
-        word: 'Жук'
+        word: ['Женя', 'Жук']
       },
       {
         character: 'з',
-        word: 'Зоя'
+        word: ['Зинаида', 'Зоя']
       },
       {
         character: 'и',
@@ -876,11 +697,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'й',
-        word: 'Йот'
+        word: ['Иван краткий', 'Йот']
       },
       {
         character: 'к',
-        word: 'Киловатт'
+        word: ['Константин', 'Киловатт']
       },
       {
         character: 'л',
@@ -888,7 +709,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'м',
-        word: 'Мария'
+        word: ['Михаил', 'Мария']
       },
       {
         character: 'н',
@@ -904,15 +725,15 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'р',
-        word: 'Радио'
+        word: ['Роман', 'Радио']
       },
       {
         character: 'с',
-        word: 'Сергей'
+        word: ['Семён', 'Сергей']
       },
       {
         character: 'т',
-        word: 'Тамара'
+        word: ['Татьяна', 'Тамара']
       },
       {
         character: 'у',
@@ -928,7 +749,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ц',
-        word: 'Центр'
+        word: ['Цапля', 'Центр']
       },
       {
         character: 'ч',
@@ -948,7 +769,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ы',
-        word: 'Игрек'
+        word: ['Еры', 'Игрек']
       },
       {
         character: 'ь',
@@ -956,7 +777,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'э',
-        word: 'Эмма'
+        word: ['Эхо', 'Эмма']
       },
       {
         character: 'ю',
