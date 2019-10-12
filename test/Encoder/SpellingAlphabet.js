@@ -30,10 +30,10 @@ describe('SpellingAlphabetEncoder', () => EncoderTester.test(SpellingAlphabetEnc
     settings: { alphabet: 'german' },
     content: 'jörg bäckt quasi zwei haxenfüße vom wildpony',
     expectedResult:
-      'Julius Ökonom Richard Gustav (leertaste) Berta Ärger Cäsar Kaufmann ' +
-      'Theodor (leertaste) Quelle Ulrich Anton Samuel Ida (leertaste) Zacharias ' +
-      'Wilhelm Emil Ida (leertaste) Heinrich Anton Xanthippe Emil Nordpol ' +
-      'Friedrich Übermut Eszett Emil (leertaste) Viktor Otto Martha (leertaste) ' +
+      'Julius Ökonom Richard Gustav (Leertaste) Berta Ärger Cäsar Kaufmann ' +
+      'Theodor (Leertaste) Quelle Ulrich Anton Samuel Ida (Leertaste) Zacharias ' +
+      'Wilhelm Emil Ida (Leertaste) Heinrich Anton Xanthippe Emil Nordpol ' +
+      'Friedrich Übermut Eszett Emil (Leertaste) Viktor Otto Martha (Leertaste) ' +
       'Wilhelm Ida Ludwig Dora Paula Otto Nordpol Ypsilon'
   },
   {

@@ -64,7 +64,7 @@ const alphabetSpecs = [
       'Drei',       'Vier',       'Fünf',       'Sechs',      'Sieben',
       'Acht',       'Neun'
     ],
-    spaceWord: '(leertaste)'
+    spaceWord: '(Leertaste)'
   },
   {
     name: 'swedish',
