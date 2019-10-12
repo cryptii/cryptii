@@ -1127,15 +1127,17 @@ export default class SpellingAlphabetEncoder extends Encoder {
       const words = Array.isArray(mapping.word) ? mapping.word : [mapping.word]
 
       characters.forEach((character) => {
-        if (characterMap[character] === undefined) {
-          characterMap[character] = words[0]
+        if (characterMap[character] !== undefined) {
+          throw new Error(`Alphabet with name '${name}' has multiple mappings with character '${character}'`)
         }
+        characterMap[character] = words[0]
       })
 
       words.forEach((word) => {
-        if (wordMap[word] === undefined) {
-          wordMap[word] = characters[0]
+        if (wordMap[word] !== undefined) {
+          throw new Error(`Alphabet with name '${name}' has multiple mappings with word '${word}'`)
         }
+        wordMap[word] = characters[0]
       })
     })
 
