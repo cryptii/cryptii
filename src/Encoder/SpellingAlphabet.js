@@ -151,11 +151,11 @@ export default class SpellingAlphabetEncoder extends Encoder {
 
     while (index < string.length) {
       // Find next occurance in string
-      const searchValue = searchValues.find(char =>
-        string.substr(index, char.length).toLowerCase() === char)
+      const searchValue = searchValues.find(value =>
+        string.substr(index, value.length).toLowerCase() === value)
 
       if (searchValue !== undefined) {
-        // Append word to result
+        // Append char (in encode mode) or word (in decode mode) to result
         resultValues.push(replacementMap[searchValue])
         index += searchValue.length
       } else {
