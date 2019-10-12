@@ -144,7 +144,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
 
     // Alphabet characters
     const replacementMap = isEncode ? this._characterMap : this._wordMap
-    const searchValues = Object.keys(replacementMap)
+    const searchValues = Object.keys(replacementMap).sort((a, b) => b.length - a.length);
 
     let index = 0
     const resultValues = []
