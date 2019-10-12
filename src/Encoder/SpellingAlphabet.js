@@ -172,7 +172,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
     while (index < string.length) {
       // Find next occurance in string
       const searchValue = searchValues.find(value =>
-        string.substr(index, value.length).toLowerCase() === value)
+        string.substr(index, value.length).toLowerCase() === value.toLowerCase())
 
       if (searchValue !== undefined) {
         // Append char (in encode mode) or word (in decode mode) to result
