@@ -47,7 +47,7 @@ describe('SpellingAlphabetEncoder', () => EncoderTester.test(SpellingAlphabetEnc
   },
   {
     settings: { alphabet: 'russian' },
-    content: 'Съешь же ещё этих мягких французских булок да выпей чаю',
+    content: 'съешь же ещё этих мягких французских булок да выпей чаю',
     expectedResult:
       'Семён Твёрдый знак Елена Шура Мягкий знак (space) Женя Елена (space) ' +
       'Елена Щука Ёлка (space) Эхо Татьяна Иван Харитон (space) Михаил Яков ' +
