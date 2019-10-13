@@ -8,7 +8,7 @@ import SpellingAlphabetEncoder from '../../src/Encoder/SpellingAlphabet'
 describe('SpellingAlphabetEncoder', () => {
   EncoderTester.test(SpellingAlphabetEncoder, [
     {
-      settings: { alphabet: 'nato' },
+      settings: { alphabet: 'english' },
       content: 'the quick brown fox jumps over 13 lazy dogs.',
       expectedResult:
         'Tango Hotel Echo (space) Quebec Uniform India Charlie Kilo (space) ' +
@@ -18,7 +18,7 @@ describe('SpellingAlphabetEncoder', () => {
         'Oscar Golf Sierra Period'
     },
     {
-      settings: { alphabet: 'nato' },
+      settings: { alphabet: 'english' },
       content: 'X-Ray Xray (space) Period Stop',
       expectedResult: 'xx ..',
       direction: 'decode'

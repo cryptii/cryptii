@@ -12,8 +12,8 @@ const meta = {
 const defaultAlphabetSpecs = [
   /* eslint-disable no-multi-spaces */
   {
-    name: 'nato',
-    label: 'NATO/ICAO phonetic alphabet',
+    name: 'english',
+    label: 'English',
     variants: [
       {
         name: 'icao2008',
@@ -1639,7 +1639,7 @@ const defaultAlphabetSpecs = [
   },
   {
     name: 'dutch',
-    label: 'Dutch spelling alphabet',
+    label: 'Dutch',
     mappings: [
       {
         character: ' ',
@@ -1797,7 +1797,7 @@ const defaultAlphabetSpecs = [
   },
   {
     name: 'german',
-    label: 'German spelling alphabet',
+    label: 'German',
     mappings: [
       {
         character: ' ',
@@ -1967,7 +1967,7 @@ const defaultAlphabetSpecs = [
   },
   {
     name: 'swedish',
-    label: 'Swedish Armed Forces\' radio alphabet',
+    label: 'Swedish',
     mappings: [
       {
         character: ' ',
@@ -2133,7 +2133,7 @@ const defaultAlphabetSpecs = [
   },
   {
     name: 'russian',
-    label: 'Russian spelling alphabet',
+    label: 'Russian',
     mappings: [
       {
         character: ' ',
