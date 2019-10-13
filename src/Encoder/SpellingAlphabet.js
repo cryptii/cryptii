@@ -1130,23 +1130,23 @@ export default class SpellingAlphabetEncoder extends Encoder {
 
     this._variantOverridesMap = {}
 
-    spec.mappings.forEach((mapping) => {
+    for (let mapping of spec.mappings) {
       const characters = wrapInArray(mapping.character)
       const words = wrapInArray(mapping.word)
       const overrides = wrapInArray(mapping.override)
 
-      overrides.forEach((override) => {
+      for (let override of overrides) {
         const overrideWords = wrapInArray(override.word)
         const variants = wrapInArray(override.variant)
         const overrideWord = overrideWords[0]
         words.push(...overrideWords)
 
-        variants.forEach((variant) => {
+        for (let variant of variants) {
           if (this._variantOverridesMap[variant] === undefined) {
             this._variantOverridesMap[variant] = []
           }
 
-          this._variantOverridesMap[variant].forEach(vo => {
+          for (let vo of this._variantOverridesMap[variant]) {
             const duplicatedCharacter = vo.characters.find(character => characters.includes(character))
             if (duplicatedCharacter) {
               throw new Error(`Alphabet with name '${name}' has conflicting mappings for variant '${variant}' with duplicated character '${duplicatedCharacter}'`)
@@ -1155,29 +1155,29 @@ export default class SpellingAlphabetEncoder extends Encoder {
             if (vo.word === overrideWords) {
               throw new Error(`Alphabet with name '${name}' has conflicting mappings for variant '${variant}' with duplicated word '${duplicatedCharacter}'`)
             }
-          })
+          }
           
           this._variantOverridesMap[variant].push({
             characters: characters,
             word: overrideWord
           })
-        })
-      })
+        }
+      }
 
-      characters.forEach((character) => {
+      for (let character of characters) {
         if (characterMap[character] !== undefined) {
           throw new Error(`Alphabet with name '${name}' has multiple mappings with character '${character}'`)
         }
         characterMap[character] = words[0]
-      })
+      }
 
-      words.forEach((word) => {
+      for (let word of words) {
         if (wordMap[word] !== undefined) {
           throw new Error(`Alphabet with name '${name}' has multiple mappings with word '${word}'`)
         }
         wordMap[word] = characters[0]
-      })
-    })
+      }
+    }
 
     if (characterMap[' '] === undefined) {
       characterMap[' '] = defaultSpaceWord
@@ -1203,12 +1203,12 @@ export default class SpellingAlphabetEncoder extends Encoder {
     const variant = this.getSettingValue('variant')
     let overrides = this._variantOverridesMap[variant]
     if (overrides) {
-      overrides.forEach(o => {
-        o.characters.forEach(c => {
+      for (let o of overrides) {
+        for (let c of o.characters) {
           this._characterMap[c] = o.word
-        })
+        }
         this._wordMap[o.word] = o.characters[0]
-      })
+      }
     }
   }
 }
