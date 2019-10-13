@@ -1002,7 +1002,7 @@ const defaultAlphabetSpecs = [
 const defaultSpaceWord = '(space)'
 
 const wrapInArray = obj => obj === undefined || obj === null ? [] :
-  Array.isArray(obj) ? obj : [obj]
+  Array.isArray(obj) ? [...obj] : [obj]
 
 /**
  * Encoder brick translating characters into words of given spelling alphabet.
