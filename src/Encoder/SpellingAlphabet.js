@@ -1146,13 +1146,13 @@ export default class SpellingAlphabetEncoder extends Encoder {
             this._variantOverridesMap[variant] = []
           }
 
-          for (let vo of this._variantOverridesMap[variant]) {
-            const duplicatedCharacter = vo.characters.find(character => characters.includes(character))
+          for (let variantOverride of this._variantOverridesMap[variant]) {
+            const duplicatedCharacter = variantOverride.characters.find(character => characters.includes(character))
             if (duplicatedCharacter) {
               throw new Error(`Alphabet with name '${name}' has conflicting mappings for variant '${variant}' with duplicated character '${duplicatedCharacter}'`)
             }
 
-            if (vo.word === overrideWords) {
+            if (variantOverride.word === overrideWord) {
               throw new Error(`Alphabet with name '${name}' has conflicting mappings for variant '${variant}' with duplicated word '${duplicatedCharacter}'`)
             }
           }
@@ -1201,13 +1201,13 @@ export default class SpellingAlphabetEncoder extends Encoder {
     Object.assign(this._characterMap, this._characterMapNoOverrides)
     Object.assign(this._wordMap, this._wordMapNoOverrides)
     const variant = this.getSettingValue('variant')
-    let overrides = this._variantOverridesMap[variant]
-    if (overrides) {
-      for (let o of overrides) {
-        for (let c of o.characters) {
-          this._characterMap[c] = o.word
+    let variantOverrides = this._variantOverridesMap[variant]
+    if (variantOverrides) {
+      for (let variantOverride of variantOverrides) {
+        for (let character of variantOverride.characters) {
+          this._characterMap[character] = variantOverride.word
         }
-        this._wordMap[o.word] = o.characters[0]
+        this._wordMap[variantOverride.word] = variantOverride.characters[0]
       }
     }
   }
