@@ -173,8 +173,8 @@ const defaultAlphabetSpecs = [
           {
             word: 'Argentine',
             variant: 'icao1920'
-      },
-      {
+          },
+          {
             word: 'Amsterdam',
             variant: [
               'icao1927',
@@ -224,8 +224,8 @@ const defaultAlphabetSpecs = [
           {
             word: 'Brussels',
             variant: 'icao1920'
-      },
-      {
+          },
+          {
             word: 'Baltimore',
             variant: [
               'icao1927',
@@ -275,8 +275,8 @@ const defaultAlphabetSpecs = [
               'icao1920',
               'icao1927'
             ]
-      },
-      {
+          },
+          {
             word: 'Casablanca',
             variant: [
               'icao1932',
@@ -314,8 +314,8 @@ const defaultAlphabetSpecs = [
           {
             word: 'Damascus',
             variant: 'icao1920'
-      },
-      {
+          },
+          {
             word: 'Denmark',
             variant: 'icao1927'
           },
@@ -365,8 +365,8 @@ const defaultAlphabetSpecs = [
           {
             word: 'Ecuador',
             variant: 'icao1920'
-      },
-      {
+          },
+          {
             word: 'Eddystone',
             variant: 'icao1927'
           },
@@ -414,8 +414,8 @@ const defaultAlphabetSpecs = [
           {
             word: 'France',
             variant: 'icao1920'
-      },
-      {
+          },
+          {
             word: 'Francisco',
             variant: 'icao1927'
           },
@@ -463,8 +463,8 @@ const defaultAlphabetSpecs = [
           {
             word: 'Greece',
             variant: 'icao1920'
-      },
-      {
+          },
+          {
             word: 'Gibraltar',
             variant: 'icao1927'
           },
@@ -522,8 +522,8 @@ const defaultAlphabetSpecs = [
               'icao1920',
               'icao1927'
             ]
-      },
-      {
+          },
+          {
             word: 'Havana',
             variant: [
               'icao1932',
@@ -572,8 +572,8 @@ const defaultAlphabetSpecs = [
               'icao1947',
               'ia1947'
             ]
-      },
-      {
+          },
+          {
             word: 'Italia',
             variant: [
               'icao1932',
@@ -608,8 +608,8 @@ const defaultAlphabetSpecs = [
           {
             word: 'Japan',
             variant: 'icao1920'
-      },
-      {
+          },
+          {
             word: 'Jerusalem',
             variant: [
               'icao1927',
@@ -675,8 +675,8 @@ const defaultAlphabetSpecs = [
           {
             word: 'Khartoum',
             variant: 'icao1920'
-      },
-      {
+          },
+          {
             word: 'Kimberley',
             variant: 'icao1927'
           },
@@ -717,8 +717,8 @@ const defaultAlphabetSpecs = [
               'ia1932',
               'imms1932'
             ]
-      },
-      {
+          },
+          {
             word: 'Love',
             variant: [
               'icao1946',
@@ -757,8 +757,8 @@ const defaultAlphabetSpecs = [
           {
             word: 'Madrid',
             variant: 'icao1920'
-      },
-      {
+          },
+          {
             word: 'Madagascar',
             variant: [
               'icao1927',
@@ -815,8 +815,8 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'ia1947arrl'
             ]
-      },
-      {
+          },
+          {
             word: 'Neufchatel',
             variant: 'icao1927'
           },
@@ -2333,14 +2333,14 @@ export default class SpellingAlphabetEncoder extends Encoder {
    * Returns brick meta.
    * @return {object}
    */
-  static getMeta () {
+  static getMeta() {
     return meta
   }
 
   /**
    * Constructor
    */
-  constructor (alphabetSpecs = defaultAlphabetSpecs) {
+  constructor(alphabetSpecs = defaultAlphabetSpecs) {
     super()
     this._alphabetSpecs = alphabetSpecs
     this._characterMap = {}
@@ -2358,8 +2358,8 @@ export default class SpellingAlphabetEncoder extends Encoder {
     this.addSetting({
       name: 'variant',
       type: 'enum',
-      elements: [ '' ],
-      labels: [ '' ],
+      elements: [''],
+      labels: [''],
       randomizable: false
     })
 
@@ -2373,7 +2373,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
    * @param {boolean} isEncode True for encoding, false for decoding
    * @return {number[]|string|Uint8Array|Chain|Promise} Resulting content
    */
-  performTranslate (content, isEncode) {
+  performTranslate(content, isEncode) {
     // Retrieve content string and normalize its whitespaces
     const string = StringUtil.normalizeWhitespaces(content.getString())
 
