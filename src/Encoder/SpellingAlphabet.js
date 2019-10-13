@@ -884,7 +884,15 @@ export default class SpellingAlphabetEncoder extends Encoder {
       style: 'radio'
     })
 
-    this.buildTranslationMap()
+    this.addSetting({
+      name: 'variant',
+      type: 'enum',
+      elements: [ '' ],
+      labels: [ '' ],
+      randomizable: false
+    })
+
+    this.buildTranslationMap(true)
   }
 
   /**
@@ -938,8 +946,11 @@ export default class SpellingAlphabetEncoder extends Encoder {
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
       case 'alphabet':
-        this.buildTranslationMap()
+        this.buildTranslationMap(true)
         break
+      case 'variant':
+        this.buildTranslationMap(false)
+        break;
     }
   }
 
@@ -948,11 +959,22 @@ export default class SpellingAlphabetEncoder extends Encoder {
    * @protected
    * @return {SpellingAlphabetEncoder} Fluent interface
    */
-  buildTranslationMap () {
+  buildTranslationMap (refreshVariants) {
     const name = this.getSettingValue('alphabet')
     const spec = this._alphabetSpecs.find(spec => spec.name === name)
     if (spec === undefined) {
       throw new Error(`Alphabet with name '${name}' is not defined`)
+    }
+
+    if (refreshVariants) {
+      const variantSetting = this.getSetting('variant')
+      const variants = spec.variants || [{
+        name: '',
+        value: ''
+      }]
+
+      variantSetting.setElements(variants.map(v => v.name), variants.map(v => v.label), variants.map(v => v.description), false)
+      variantSetting.setValue(variants[0].name)
     }
 
     // Build encode/decode maps
