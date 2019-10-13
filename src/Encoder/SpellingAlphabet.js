@@ -1156,9 +1156,8 @@ export default class SpellingAlphabetEncoder extends Encoder {
         } else {
           words.push(overrideWords[0])
         }
-        overrideWords.slice(1).forEach((overrideWord) => {
-          words.push(overrideWord)
-        })
+
+        words.push(...overrideWords.slice(1))
       })
 
       characters.forEach((character) => {
