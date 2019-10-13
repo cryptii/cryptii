@@ -15,12 +15,12 @@ describe('SpellingAlphabetEncoder', () => {
         'Bravo Romeo Oscar Whiskey November (space) Foxtrot Oscar X-ray ' +
         '(space) Juliett Uniform Mike Papa Sierra (space) Oscar Victor Echo ' +
         'Romeo (space) One Three (space) Lima Alfa Zulu Yankee (space) Delta ' +
-        'Oscar Golf Sierra Stop'
+        'Oscar Golf Sierra Period'
     },
     {
       settings: { alphabet: 'nato' },
-      content: 'X-Ray Xray',
-      expectedResult: 'xx',
+      content: 'X-Ray Xray (space) Period Stop',
+      expectedResult: 'xx ..',
       direction: 'decode'
     },
     {

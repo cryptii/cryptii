@@ -165,7 +165,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '.',
-        word: 'Stop'
+        word: ['Period', 'Stop']
       }
     ]
   },
