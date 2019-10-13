@@ -14,7 +14,7 @@ describe('SpellingAlphabetEncoder', () => {
         'Tango Hotel Echo (space) Quebec Uniform India Charlie Kilo (space) ' +
         'Bravo Romeo Oscar Whiskey November (space) Foxtrot Oscar X-ray ' +
         '(space) Juliett Uniform Mike Papa Sierra (space) Oscar Victor Echo ' +
-        'Romeo (space) One Three (space) Lima Alfa Zulu Yankee (space) Delta ' +
+        'Romeo (space) Wun Tree (space) Lima Alfa Zulu Yankee (space) Delta ' +
         'Oscar Golf Sierra Period'
     },
     {
