@@ -1124,6 +1124,8 @@ export default class SpellingAlphabetEncoder extends Encoder {
       variantSetting.setValue(variants[0].name)
     }
 
+    const variant = this.getSettingValue('variant')
+
     // Build encode/decode maps
     const characterMap = {};
     const wordMap = {}
@@ -1131,6 +1133,30 @@ export default class SpellingAlphabetEncoder extends Encoder {
     spec.mappings.forEach((mapping) => {
       const characters = Array.isArray(mapping.character) ? mapping.character : [mapping.character]
       const words = Array.isArray(mapping.word) ? mapping.word : [mapping.word]
+      const overrides = Array.isArray(mapping.override) ? mapping.override : mapping.override ? [mapping.override] : []
+
+      let variantsProcessed = []
+
+      overrides.forEach((override) => {
+        const overrideWords = Array.isArray(override.word) ? override.word : [override.word]
+        const variants = Array.isArray(override.variant) ? override.variant : [override.variant]
+
+        variants.forEach((overrideVariant) => {
+          if (variantsProcessed.includes(overrideVariant)) {
+            throw new Error(`Alphabet with name '${name}' has mapping that overrides variant '${overrideVariant}' more than once`)
+          }
+          variantsProcessed += overrideVariant
+        })
+
+        if (variants.includes(variant)){
+          words.unshift(overrideWords[0])
+        } else {
+          words.push(overrideWords[0])
+        }
+        overrideWords.slice(1).forEach((overrideWord) => {
+          words.push(overrideWord)
+        })
+      })
 
       characters.forEach((character) => {
         if (characterMap[character] !== undefined) {

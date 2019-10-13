@@ -164,4 +164,56 @@ describe('SpellingAlphabetEncoder', () => {
       error.message.includes('\'BadAlphabet\'') && error.message.includes('\'BadWord\'')
     )
   })
+
+  it('should take overrides from specified variant', done => {
+    const alphabetSpecs = [
+      {
+        name: 'Alphabet',
+        variants: [
+          {
+            name: 'someVariant',
+            label: 'someVariant',
+            description: 'someVariant'
+          },
+          {
+            name: 'someOtherVariant',
+            label: 'someOtherVariant',
+            description: 'someOtherVariant'
+          }
+        ],
+        mappings: [
+          {
+            character: 'x',
+            word: 'Word1',
+            override: {
+              word: 'OverriddenWord1',
+              variant: 'someVariant'
+            }
+          },
+          {
+            character: 'y',
+            word: 'Word2',
+            override: {
+              word: 'OverriddenWord2',
+              variant: 'someOtherVariant'
+            }
+          },
+          {
+            character: 'z',
+            word: 'Word3',
+            override: {
+              word: 'OverriddenWord3',
+              variant: ['someOtherVariant', 'someVariant']
+            }
+          }
+        ]
+      }
+    ]
+
+    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
+    encoder.setSettingValue('variant', 'someVariant')
+    encoder.encode('xyz').then(result => {
+      assert.strictEqual(result.getString(), 'OverriddenWord1 Word2 OverriddenWord3')
+    }).then(done, done)
+  })
 })
