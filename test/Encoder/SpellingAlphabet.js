@@ -1,4 +1,3 @@
-
 import { describe } from 'mocha'
 
 import EncoderTester from '../Helper/EncoderTester'
@@ -44,5 +43,28 @@ describe('SpellingAlphabetEncoder', () => EncoderTester.test(SpellingAlphabetEnc
       '(space) Gustav Erik (space) Viktor Åke Rudolf (space) Wilhelm Caesar ' +
       '- Zäta Olof Niklas Martin Östen (space) Ivar Qvintus - Helge Johan ' +
       'Ärlig Ludvig Petter .'
+  },
+  {
+    settings: { alphabet: 'russian' },
+    content: 'съешь же еще этих мягких французских булок да выпей чаю 123 456 7890.',
+    expectedResult:
+      'Семён Твёрдый знак Елена Шура Мягкий знак (space) Женя Елена (space) ' +
+      'Елена Щука Елена (space) Эхо Татьяна Иван Харитон (space) Михаил Яков ' +
+      'Григорий Константин Иван Харитон (space) Фёдор Роман Анна Николай ' +
+      'Цапля Ульяна Зинаида Семён Константин Иван Харитон (space) Борис ' +
+      'Ульяна Леонид Ольга Константин (space) Дмитрий Анна (space) Василий ' +
+      'Еры Павел Елена Иван краткий (space) Человек Анна Юрий (space) Один Два Три ' +
+      '(space) Четыре Пять Шесть (space) Семь Восемь Девять Ноль Точка'
+  },
+  {
+    settings: { alphabet: 'russian-unofficial' },
+    content: 'съешь же ещё этих мягких французских булок да выпей чаю 123 456 7890.',
+    expectedResult:
+      'Сергей Твёрдый знак Елена Шура Мягкий знак (space) Жук Елена (space) Елена ' +
+      'Щука Ёлка (space) Эмма Тамара Иван Харитон (space) Мария Яков Галина Киловатт ' +
+      'Иван Харитон (space) Фёдор Радио Антон Николай Центр Ульяна Зоя Сергей Киловатт ' +
+      'Иван Харитон (space) Борис Ульяна Леонид Ольга Киловатт (space) Дмитрий Антон ' +
+      '(space) Василий Игрек Павел Елена Йот (space) Человек Антон Юрий (space) Один Два ' +
+      'Три (space) Четыре Пять Шесть (space) Семь Восемь Девять Ноль Точка'
   }
 ]))
