@@ -14,6 +14,153 @@ const defaultAlphabetSpecs = [
   {
     name: 'nato',
     label: 'NATO/ICAO phonetic alphabet',
+    variants: [
+      {
+        name: 'icao2008',
+        label: 'Latest - NATO/ICAO, 2008 - Present',
+        description: '2008 – present ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code',
+      },
+      {
+        name: 'icao1959',
+        label: 'NATO/ICAO, 1959, Geneva',
+        description: '1959 (Geneva) administrative radio conference\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1956',
+        label: 'NATO/ICAO, 1956, Final',
+        description: '1956 ICAO final\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1951',
+        label: 'NATO/ICAO, 1951',
+        description: '1951 ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1949',
+        label: 'NATO/ICAO, 1949',
+        description: '1949 ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1947',
+        label: 'NATO/ICAO, 1947, IATA Proposal',
+        description: '1947 IATA proposal to ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1947lac',
+        label: 'NATO/ICAO, 1947, Latin America/Caribbean',
+        description: '1947 ICAO Latin America/Caribbean\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1947arrl',
+        label: 'NATO/ICAO, 1947, ARRL',
+        description: '1947 ICAO (adopted exactly from ARRL)\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1947usuk1943',
+        label: 'NATO/ICAO, 1947, 1943 US-UK',
+        description: '1947 ICAO (same as 1943 US-UK)\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1947ac',
+        label: 'NATO/ICAO, 1947, Atlantic City',
+        description: '1947 (Atlantic City) International Radio Conference\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1946',
+        label: 'NATO/ICAO, 1946, Communications Division, Joint Army/Navy',
+        description: '1946 ICAO Second Session of the Communications Division (same as Joint Army/Navy)\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1938',
+        label: 'NATO/ICAO, 1938, Cairo',
+        description: '1938 (Cairo) International Radiocommunication Conference\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1932',
+        label: 'NATO/ICAO, 1932, CCIR/ICAN',
+        description: '1932 General Radiocommunication and Additional Regulations (CCIR/ICAN)\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1927',
+        label: 'NATO/ICAO, 1927, Washington, CCIR',
+        description: '1927 (Washington, D.C.) International Radiotelegraph Convention (CCIR)\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'icao1920',
+        label: 'NATO/ICAO, 1920, UECU',
+        description: '1920 UECU\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'ia1956',
+        label: 'International aviation, 1956 - Present',
+        description: '1956 – present ICAO\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'ia1951',
+        label: 'International aviation, 1951',
+        description: '1951 ICAO\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'ia1949',
+        label: 'International aviation, 1949',
+        description: '1949 ICAO\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'ia1947',
+        label: 'International aviation, 1947, IATA Proposal',
+        description: '1947 IATA proposal to ICAO\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'ia1947lac',
+        label: 'International aviation, 1947, Latin America/Caribbean',
+        description: '1947 ICAO Latin America/Caribbean\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'ia1947arrl',
+        label: 'International aviation, 1947, ARRL',
+        description: '1947 ICAO (adopted exactly from ARRL)\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'ia1947usuk1943',
+        label: 'International aviation, 1947, 1943 US/UK',
+        description: '1947 ICAO (same as 1943 US-UK)\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'ia1946',
+        label: 'International aviation, 1946, Communications Division, Joint Army/Navy',
+        description: '1946 ICAO Second Session of the Communications Division (same as Joint Army/Navy)\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'ia1932',
+        label: 'International aviation, 1932',
+        description: '1932 General Radiocommunication and Additional Regulations (CCIR/ICAN)\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'imms2000',
+        label: 'International maritime mobile service, 2000 - Present, IMO SMCP',
+        description: '2000 – present IMO SMCP\nInternational maritime mobile service\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'imms1967',
+        label: 'International maritime mobile service, 1967, WARC',
+        description: '1967 WARC\nInternational maritime mobile service\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'imms1965',
+        label: 'International maritime mobile service, 1965 - Present, WRC-03',
+        description: '1965 – present (WRC-03) IMO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'imms1932',
+        label: 'International maritime mobile service, 1932 - 1965, IMO',
+        description: '1932 - 1965 IMO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'deltaairlines',
+        label: 'Delta Air Lines Airports',
+        description: 'Airports that have a majority of Delta Air Lines flights\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      }
+    ],
     mappings: [
       {
         character: ' ',
