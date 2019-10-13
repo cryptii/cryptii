@@ -1001,6 +1001,9 @@ const defaultAlphabetSpecs = [
 
 const defaultSpaceWord = '(space)'
 
+const wrapInArray = obj => obj === undefined || obj === null ? [] :
+  Array.isArray(obj) ? obj : [obj]
+
 /**
  * Encoder brick translating characters into words of given spelling alphabet.
  */
@@ -1131,15 +1134,15 @@ export default class SpellingAlphabetEncoder extends Encoder {
     const wordMap = {}
 
     spec.mappings.forEach((mapping) => {
-      const characters = Array.isArray(mapping.character) ? mapping.character : [mapping.character]
-      const words = Array.isArray(mapping.word) ? mapping.word : [mapping.word]
-      const overrides = Array.isArray(mapping.override) ? mapping.override : mapping.override ? [mapping.override] : []
+      const characters = wrapInArray(mapping.character)
+      const words = wrapInArray(mapping.word)
+      const overrides = wrapInArray(mapping.override)
 
       let variantsProcessed = []
 
       overrides.forEach((override) => {
-        const overrideWords = Array.isArray(override.word) ? override.word : [override.word]
-        const variants = Array.isArray(override.variant) ? override.variant : [override.variant]
+        const overrideWords = wrapInArray(override.word)
+        const variants = wrapInArray(override.variant)
 
         variants.forEach((overrideVariant) => {
           if (variantsProcessed.includes(overrideVariant)) {
