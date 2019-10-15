@@ -247,4 +247,27 @@ describe('SpellingAlphabetEncoder', () => {
       assert.strictEqual(result.getString(), 'zz')
     }).then(done, done)
   })
+
+  it('should ignore mappings wher words set to null', done => {
+    const alphabetSpecs = [
+      {
+        name: 'Alphabet',
+        mappings: [
+          {
+            character: 'a',
+            word: null
+          },
+          {
+            character: 'b',
+            word: 'Bravo'
+          }
+        ]
+      }
+    ]
+
+    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
+    encoder.encode('ab').then(result => {
+      assert.strictEqual(result.getString(), 'a Bravo')
+    }).then(done, done)
+  })
 })
