@@ -158,6 +158,251 @@ const defaultAlphabetSpecs = [
         name: 'deltaairlines',
         label: 'Delta Air Lines Airports',
         description: 'Airports that have a majority of Delta Air Lines flights\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+      },
+      {
+        name: 'flaghoist1908',
+        label: 'flaghoist1908',
+        description: 'flaghoist1908'
+      },
+      {
+        name: 'flaghoist1908v2',
+        label: 'flaghoist1908v2',
+        description: 'flaghoist1908v2'
+      },
+      {
+        name: 'flaghoist1920',
+        label: 'flaghoist1920',
+        description: 'flaghoist1920'
+      },
+      {
+        name: 'flaghoist1942',
+        label: 'flaghoist1942',
+        description: 'flaghoist1942'
+      },
+      {
+        name: 'flaghoist1969',
+        label: 'flaghoist1969',
+        description: 'flaghoist1969'
+      },
+      {
+        name: 'tel1904british-army',
+        label: 'tel1904british-army',
+        description: 'tel1904british-army'
+      },
+      {
+        name: 'tel1908tasmania',
+        label: 'tel1908tasmania',
+        description: 'tel1908tasmania'
+      },
+      {
+        name: 'tel1912western-union',
+        label: 'tel1912western-union',
+        description: 'tel1912western-union'
+      },
+      {
+        name: 'tel1914british-post-office',
+        label: 'tel1914british-post-office',
+        description: 'tel1914british-post-office'
+      },
+      {
+        name: 'tel1917at-t',
+        label: 'tel1917at-t',
+        description: 'tel1917at-t'
+      },
+      {
+        name: 'tel1917at-t-overseas',
+        label: 'tel1917at-t-overseas',
+        description: 'tel1917at-t-overseas'
+      },
+      {
+        name: 'tel1918western-union',
+        label: 'tel1918western-union',
+        description: 'tel1918western-union'
+      },
+      {
+        name: 'tel1928western-union',
+        label: 'tel1928western-union',
+        description: 'tel1928western-union'
+      },
+      {
+        name: 'tel1932itu-t-iits-code-a-french',
+        label: 'tel1932itu-t-iits-code-a-french',
+        description: 'tel1932itu-t-iits-code-a-french'
+      },
+      {
+        name: 'tel1932itu-t-iits-code-b-english',
+        label: 'tel1932itu-t-iits-code-b-english',
+        description: 'tel1932itu-t-iits-code-b-english'
+      },
+      {
+        name: 'tel1942westernunion',
+        label: 'tel1942westernunion',
+        description: 'tel1942westernunion'
+      },
+      {
+        name: 'tel1947itc',
+        label: 'tel1947itc',
+        description: 'tel1947itc'
+      },
+      {
+        name: 'tel1958itc',
+        label: 'tel1958itc',
+        description: 'tel1958itc'
+      },
+      {
+        name: 'radtel1915british-army',
+        label: 'radtel1915british-army',
+        description: 'radtel1915british-army'
+      },
+      {
+        name: 'radtel1917royal-navy',
+        label: 'radtel1917royal-navy',
+        description: 'radtel1917royal-navy'
+      },
+      {
+        name: 'radtel1918british-army',
+        label: 'radtel1918british-army',
+        description: 'radtel1918british-army'
+      },
+      {
+        name: 'radtel1919us-air-service',
+        label: 'radtel1919us-air-service',
+        description: 'radtel1919us-air-service'
+      },
+      {
+        name: 'radtel1920uecu',
+        label: 'radtel1920uecu',
+        description: 'radtel1920uecu'
+      },
+      {
+        name: 'radtel1927ccir',
+        label: 'radtel1927ccir',
+        description: 'radtel1927ccir'
+      },
+      {
+        name: 'radtel1930arrl',
+        label: 'radtel1930arrl',
+        description: 'radtel1930arrl'
+      },
+      {
+        name: 'radtel1932ccir',
+        label: 'radtel1932ccir',
+        description: 'radtel1932ccir'
+      },
+      {
+        name: 'radtel1932arrl',
+        label: 'radtel1932arrl',
+        description: 'radtel1932arrl'
+      },
+      {
+        name: 'radtel1936arrl',
+        label: 'radtel1936arrl',
+        description: 'radtel1936arrl'
+      },
+      {
+        name: 'radtel1938cairo',
+        label: 'radtel1938cairo',
+        description: 'radtel1938cairo'
+      },
+      {
+        name: 'radtel1914royal-navy',
+        label: 'radtel1914royal-navy',
+        description: 'radtel1914royal-navy'
+      },
+      {
+        name: 'radtel1924raf',
+        label: 'radtel1924raf',
+        description: 'radtel1924raf'
+      },
+      {
+        name: 'radtel1943raf',
+        label: 'radtel1943raf',
+        description: 'radtel1943raf'
+      },
+      {
+        name: 'radtel1927navy',
+        label: 'radtel1927navy',
+        description: 'radtel1927navy'
+      },
+      {
+        name: 'radtel1941joint-army',
+        label: 'radtel1941joint-army',
+        description: 'radtel1941joint-army'
+      },
+      {
+        name: 'radtel1946arrl',
+        label: 'radtel1946arrl',
+        description: 'radtel1946arrl'
+      },
+      {
+        name: 'radtel1947ac',
+        label: 'radtel1947ac',
+        description: 'radtel1947ac'
+      },
+      {
+        name: 'radtel1949icao',
+        label: 'radtel1949icao',
+        description: 'radtel1949icao'
+      },
+      {
+        name: 'radtel1951iata-v2',
+        label: 'radtel1951iata-v2',
+        description: 'radtel1951iata-v2'
+      },
+      {
+        name: 'radtel1957aarl',
+        label: 'radtel1957aarl',
+        description: 'radtel1957aarl'
+      },
+      {
+        name: 'radtel1959arc',
+        label: 'radtel1959arc',
+        description: 'radtel1959arc'
+      },
+      {
+        name: 'radtel1969',
+        label: 'radtel1969',
+        description: 'radtel1969'
+      },
+      {
+        name: 'radtel1932itu-ican',
+        label: 'radtel1932itu-ican',
+        description: 'radtel1932itu-ican'
+      },
+      {
+        name: 'radtel1951iata',
+        label: 'radtel1951iata',
+        description: 'radtel1951iata'
+      },
+      {
+        name: 'radtel1956icao',
+        label: 'radtel1956icao',
+        description: 'radtel1956icao'
+      },
+      {
+        name: 'radtel1957apco-project2',
+        label: 'radtel1957apco-project2',
+        description: 'radtel1957apco-project2'
+      },
+      {
+        name: 'radtel1974apco-project14',
+        label: 'radtel1974apco-project14',
+        description: 'radtel1974apco-project14'
+      },
+      {
+        name: 'radtel1970arrl',
+        label: 'radtel1970arrl',
+        description: 'radtel1970arrl'
+      },
+      {
+        name: 'radtel-dx',
+        label: 'radtel-dx',
+        description: 'radtel-dx'
+      },
+      {
+        name: 'radtel-dx-alternate',
+        label: 'radtel-dx-alternate',
+        description: 'radtel-dx-alternate'
       }
     ],
     mappings: [
@@ -175,21 +420,84 @@ const defaultAlphabetSpecs = [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1941joint-army'
             ]
+          },
+          {
+            word: 'Ace',
+            variant: 'radtel1924raf'
+          },
+          {
+            word: 'Ack',
+            variant: [
+              'tel1904british-army',
+              'radtel1915british-army',
+              'radtel1918british-army'
+            ]
+          },
+          {
+            word: 'Actor',
+            variant: 'flaghoist1908'
           },
           {
             word: 'Adam',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'radtel1946arrl',
+              'radtel1957apco-project2'
+            ]
+          },
+          {
+            word: 'Adams',
+            variant: [
+              'tel1912western-union',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl'
+            ]
+          },
+          {
+            word: 'Affirm',
+            variant: {
+              name: 'radtel1943raf',
+              primary: false
+            }
+          },
+          {
+            word: 'Afirm',
+            variant: [
+              'flaghoist1942',
+              'radtel1927navy'
+            ]
+          },
+          {
+            word: 'Alice',
+            variant: [
+              'tel1917at-t',
+              'radtel1957aarl'
             ]
           },
           {
             word: 'Alpha',
             variant: [
               'icao1947',
-              'ia1947'
+              'ia1947',
+              'radtel1974apco-project14',
+              'radtel1970arrl'
+            ]
+          },
+          {
+            word: 'America',
+            variant: [
+              'tel1917at-t-overseas',
+              'radtel-dx'
             ]
           },
           {
@@ -200,7 +508,16 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1927ccir',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican',
+              'radtel-dx-alternate'
             ]
           },
           {
@@ -211,8 +528,35 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Andrew',
+            variant: 'tel1932itu-t-iits-code-b-english'
+          },
+          {
+            word: 'Apple',
+            variant: 'tel1914british-post-office'
+          },
+          {
+            word: 'Apples',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
+            ]
+          },
+          {
             word: 'Argentine',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
+          },
+          {
+            word: 'Ash',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Authority',
+            variant: 'tel1908tasmania'
           }
         ]
       },
@@ -221,6 +565,10 @@ const defaultAlphabetSpecs = [
         word: 'Bravo',
         override: [
           {
+            word: 'Back',
+            variant: 'flaghoist1908v2'
+          },
+          {
             word: 'Baker',
             variant: [
               'icao1946',
@@ -228,7 +576,13 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'ia1946',
               'ia1947usuk1943',
-              'ia1947arrl'
+              'ia1947arrl',
+              'flaghoist1908',
+              'flaghoist1942',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army',
+              'radtel1946arrl'
             ]
           },
           {
@@ -239,7 +593,39 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1927ccir',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican',
+              'radtel-dx-alternate'
+            ]
+          },
+          {
+            word: 'Beer',
+            variant: [
+              'tel1904british-army',
+              'radtel1915british-army',
+              'radtel1918british-army',
+              'radtel1924raf'
+            ]
+          },
+          {
+            word: 'Benjamin',
+            variant: [
+              'tel1917at-t-overseas',
+              'tel1932itu-t-iits-code-b-english'
+            ]
+          },
+          {
+            word: 'Bertha',
+            variant: [
+              'tel1917at-t',
+              'radtel1957aarl'
             ]
           },
           {
@@ -248,7 +634,32 @@ const defaultAlphabetSpecs = [
               'icao1947',
               'icao1949',
               'ia1947',
-              'ia1949'
+              'ia1949',
+              'radtel1949icao'
+            ]
+          },
+          {
+            word: 'Bills',
+            variant: 'tel1908tasmania'
+          },
+          {
+            word: 'Boston',
+            variant: [
+              'tel1912western-union',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel-dx'
+            ]
+          },
+          {
+            word: 'Boy',
+            variant: [
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1957apco-project2'
             ]
           },
           {
@@ -259,8 +670,23 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Brother',
+            variant: 'tel1914british-post-office'
+          },
+          {
             word: 'Brussels',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
+          },
+          {
+            word: 'Butter',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
+            ]
           }
         ]
       },
@@ -272,8 +698,20 @@ const defaultAlphabetSpecs = [
             word: 'Canada',
             variant: [
               'icao1920',
-              'icao1927'
+              'icao1927',
+              'flaghoist1920',
+              'radtel1920uecu',
+              'radtel1927ccir',
+              'radtel-dx'
             ]
+          },
+          {
+            word: 'Canteen',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Capture',
+            variant: 'tel1908tasmania'
           },
           {
             word: 'Casablanca',
@@ -282,8 +720,52 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
+          },
+          {
+            word: 'Cast',
+            variant: [
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1927navy'
+            ]
+          },
+          {
+            word: 'Chain',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Charles',
+            variant: [
+              'tel1917at-t',
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
+            ]
+          },
+          {
+            word: 'Chicago',
+            variant: [
+              'tel1912western-union',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl'
+            ]
+          },
+          {
+            word: 'Chile',
+            variant: 'radtel-dx-alternate'
           },
           {
             word: 'Coca',
@@ -291,7 +773,10 @@ const defaultAlphabetSpecs = [
               'icao1949',
               'icao1951',
               'ia1949',
-              'ia1951'
+              'ia1951',
+              'radtel1949icao',
+              'radtel1951iata-v2',
+              'radtel1951iata'
             ]
           },
           {
@@ -300,6 +785,10 @@ const defaultAlphabetSpecs = [
               'icao1947lac',
               'ia1947lac'
             ]
+          },
+          {
+            word: 'Cork',
+            variant: 'radtel1918british-army'
           }
         ]
       },
@@ -316,7 +805,11 @@ const defaultAlphabetSpecs = [
           },
           {
             word: 'Damascus',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
           },
           {
             word: 'Danemark',
@@ -325,7 +818,13 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac'
             ]
           },
           {
@@ -343,12 +842,46 @@ const defaultAlphabetSpecs = [
               {
                 name: 'deltaairlines',
                 primary: false
-              }
+              },
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
             ]
           },
           {
             word: 'Denmark',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir',
+              'radtel1932itu-ican',
+              'radtel-dx'
+            ]
+          },
+          {
+            word: 'Denver',
+            variant: [
+              'tel1912western-union',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl'
+            ]
+          },
+          {
+            word: 'Destroy',
+            variant: 'tel1908tasmania'
+          },
+          {
+            word: 'Diver',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Dock',
+            variant: 'radtel1919us-air-service'
           },
           {
             word: 'Dog',
@@ -356,7 +889,32 @@ const defaultAlphabetSpecs = [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'flaghoist1908v2',
+              'flaghoist1942',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army'
+            ]
+          },
+          {
+            word: 'Don',
+            variant: [
+              'radtel1915british-army',
+              'radtel1918british-army',
+              'radtel1924raf'
+            ]
+          },
+          {
+            word: 'Dover',
+            variant: 'tel1914british-post-office'
+          },
+          {
+            word: 'Duff',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
             ]
           }
         ]
@@ -366,21 +924,46 @@ const defaultAlphabetSpecs = [
         word: 'Echo',
         override: [
           {
+            word: 'Eagle',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Eastern',
+            variant: 'tel1914british-post-office'
+          },
+          {
             word: 'Easy',
             variant: [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army'
             ]
           },
           {
             word: 'Ecuador',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
+          },
+          {
+            word: 'Eddy',
+            variant: 'radtel1918british-army'
           },
           {
             word: 'Eddystone',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir'
+            ]
           },
           {
             word: 'Edison',
@@ -389,7 +972,14 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
@@ -398,8 +988,31 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'icao1947',
               'ia1947arrl',
-              'ia1947'
+              'ia1947',
+              'tel1912western-union',
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1932itu-t-iits-code-b-english',
+              'tel1942westernunion',
+              'radtel1917royal-navy',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1914royal-navy',
+              'radtel1924raf',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
             ]
+          },
+          {
+            word: 'Egg',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Egypt',
+            variant: 'radtel-dx-alternate'
           },
           {
             word: 'Elsa',
@@ -407,6 +1020,14 @@ const defaultAlphabetSpecs = [
               'icao1947lac',
               'ia1947lac'
             ]
+          },
+          {
+            word: 'England',
+            variant: 'radtel-dx'
+          },
+          {
+            word: 'Englishmen',
+            variant: 'tel1908tasmania'
           }
         ]
       },
@@ -415,11 +1036,23 @@ const defaultAlphabetSpecs = [
         word: 'Foxtrot',
         override: [
           {
+            word: 'Father',
+            variant: 'tel1914british-post-office'
+          },
+          {
             word: 'Fiesta',
             variant: [
               'icao1947lac',
               'ia1947lac'
             ]
+          },
+          {
+            word: 'Finland',
+            variant: 'radtel-dx-alternate'
+          },
+          {
+            word: 'Fisher',
+            variant: 'flaghoist1908'
           },
           {
             word: 'Florida',
@@ -428,7 +1061,14 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
@@ -439,23 +1079,70 @@ const defaultAlphabetSpecs = [
               'icao1947',
               'ia1946',
               'ia1947usuk1943',
-              'ia1947'
+              'ia1947',
+              'flaghoist1908v2',
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army'
             ]
           },
           {
+            word: 'Fractious',
+            variant: 'tel1908tasmania'
+          },
+          {
             word: 'France',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu',
+              'radtel-dx'
+            ]
           },
           {
             word: 'Francisco',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir'
+            ]
+          },
+          {
+            word: 'Frank',
+            variant: [
+              'tel1912western-union',
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
+            ]
           },
           {
             word: 'Freddie',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'radtel1924raf'
             ]
+          },
+          {
+            word: 'Freddy',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
+            ]
+          },
+          {
+            word: 'Frederick',
+            variant: 'tel1932itu-t-iits-code-b-english'
           }
         ]
       },
@@ -470,8 +1157,23 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
+          },
+          {
+            word: 'Galloping',
+            variant: 'tel1908tasmania'
+          },
+          {
+            word: 'Gangway',
+            variant: 'flaghoist1908'
           },
           {
             word: 'Gato',
@@ -481,6 +1183,10 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Geneva',
+            variant: 'radtel-dx-alternate'
+          },
+          {
             word: 'George',
             variant: [
               'icao1946',
@@ -488,18 +1194,52 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'ia1946',
               'ia1947usuk1943',
-              'ia1947arrl'
+              'ia1947arrl',
+              'flaghoist1942',
+              'tel1912western-union',
+              'tel1914british-post-office',
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1932itu-t-iits-code-b-english',
+              'tel1942westernunion',
+              'radtel1917royal-navy',
+              'radtel1919us-air-service',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1936arrl',
+              'radtel1914royal-navy',
+              'radtel1924raf',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
             ]
           },
           {
+            word: 'Germany',
+            variant: 'radtel-dx'
+          },
+          {
             word: 'Gibraltar',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir'
+            ]
+          },
+          {
+            word: 'Gig',
+            variant: 'flaghoist1908v2'
           },
           {
             word: 'Gold',
             variant: [
               'icao1951',
-              'ia1951'
+              'ia1951',
+              'radtel1951iata-v2'
             ]
           },
           {
@@ -511,7 +1251,11 @@ const defaultAlphabetSpecs = [
           },
           {
             word: 'Greece',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
           }
         ]
       },
@@ -520,17 +1264,30 @@ const defaultAlphabetSpecs = [
         word: 'Hotel',
         override: [
           {
+            word: 'Halliard',
+            variant: 'flaghoist1908'
+          },
+          {
             word: 'Hanover',
             variant: [
               'icao1920',
-              'icao1927'
+              'icao1927',
+              'flaghoist1920',
+              'radtel1920uecu',
+              'radtel1927ccir'
             ]
           },
           {
             word: 'Harry',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'tel1914british-post-office',
+              'tel1917at-t-overseas',
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1917royal-navy',
+              'radtel1914royal-navy',
+              'radtel1924raf'
             ]
           },
           {
@@ -542,8 +1299,45 @@ const defaultAlphabetSpecs = [
               'icao1947',
               'ia1932',
               'ia1947',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
+          },
+          {
+            word: 'Have',
+            variant: [
+              'radtel1919us-air-service',
+              'radtel1936arrl'
+            ]
+          },
+          {
+            word: 'Hawaii',
+            variant: 'radtel-dx-alternate'
+          },
+          {
+            word: 'Henry',
+            variant: [
+              'tel1912western-union',
+              'tel1917at-t',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
+            ]
+          },
+          {
+            word: 'High',
+            variant: 'tel1908tasmania'
           },
           {
             word: 'Hombre',
@@ -553,12 +1347,29 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Honolulu',
+            variant: 'radtel-dx'
+          },
+          {
+            word: 'Horse',
+            variant: 'flaghoist1908v2'
+          },
+          {
             word: 'How',
             variant: [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'radtel1943raf',
+              'radtel1941joint-army'
+            ]
+          },
+          {
+            word: 'Hypo',
+            variant: [
+              'flaghoist1942',
+              'radtel1927navy'
             ]
           }
         ]
@@ -568,10 +1379,65 @@ const defaultAlphabetSpecs = [
         word: 'India',
         override: [
           {
+            word: 'Ice',
+            variant: 'flaghoist1908v2'
+          },
+          {
             word: 'Ida',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'tel1917at-t',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
+            ]
+          },
+          {
+            word: 'Ink',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1918british-army',
+              'radtel1914royal-navy',
+              'radtel1924raf'
+            ]
+          },
+          {
+            word: 'Insect',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Int',
+            variant: [
+              'flaghoist1942',
+              'radtel1927navy'
+            ]
+          },
+          {
+            word: 'Interrogatory',
+            variant: {
+              name: 'radtel1943raf',
+              primary: false
+            }
+          },
+          {
+            word: 'Invariably',
+            variant: 'tel1908tasmania'
+          },
+          {
+            word: 'Ireland (late 1912=ida)',
+            variant: 'tel1912western-union'
+          },
+          {
+            word: 'Isaac',
+            variant: [
+              'tel1917at-t-overseas',
+              'tel1932itu-t-iits-code-b-english'
             ]
           },
           {
@@ -581,7 +1447,14 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
@@ -590,7 +1463,12 @@ const defaultAlphabetSpecs = [
               'icao1920',
               'icao1927',
               'icao1947',
-              'ia1947'
+              'ia1947',
+              'flaghoist1920',
+              'radtel1920uecu',
+              'radtel1927ccir',
+              'radtel-dx',
+              'radtel-dx-alternate'
             ]
           },
           {
@@ -599,7 +1477,11 @@ const defaultAlphabetSpecs = [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1941joint-army'
             ]
           }
         ]
@@ -609,15 +1491,47 @@ const defaultAlphabetSpecs = [
         word: 'Juliett',
         override: [
           {
+            word: 'Jack',
+            variant: [
+              'tel1914british-post-office',
+              'tel1917at-t-overseas',
+              'tel1932itu-t-iits-code-b-english'
+            ]
+          },
+          {
+            word: 'Jake',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'James',
+            variant: [
+              'tel1917at-t',
+              'radtel1957aarl'
+            ]
+          },
+          {
             word: 'Japan',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu',
+              'radtel-dx',
+              'radtel-dx-alternate'
+            ]
+          },
+          {
+            word: 'Jersey',
+            variant: 'tel1912western-union'
           },
           {
             word: 'Jerusalem',
             variant: [
               'icao1927',
               'icao1947ac',
-              'ia1932'
+              'ia1932',
+              'radtel1927ccir',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
@@ -626,15 +1540,62 @@ const defaultAlphabetSpecs = [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army'
             ]
+          },
+          {
+            word: 'Jockey',
+            variant: 'flaghoist1908'
           },
           {
             word: 'John',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1946arrl',
+              'radtel1957apco-project2'
             ]
+          },
+          {
+            word: 'Johnnie',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy',
+              'radtel1924raf'
+            ]
+          },
+          {
+            word: 'Johnny',
+            variant: {
+              name: 'radtel1943raf',
+              primary: false
+            }
+          },
+          {
+            word: 'Jude',
+            variant: [
+              'tel1947itc',
+              'tel1958itc'
+            ]
+          },
+          {
+            word: 'Jug',
+            variant: 'radtel1918british-army'
+          },
+          {
+            word: 'Juggling',
+            variant: 'tel1908tasmania'
           },
           {
             word: 'Juliet',
@@ -644,8 +1605,13 @@ const defaultAlphabetSpecs = [
             word: 'Julietta',
             variant: [
               'icao1949',
-              'ia1949'
+              'ia1949',
+              'radtel1949icao'
             ]
+          },
+          {
+            word: 'Juliette',
+            variant: 'radtel1974apco-project14'
           },
           {
             word: 'Julio',
@@ -666,7 +1632,10 @@ const defaultAlphabetSpecs = [
             variant: [
               'icao1932',
               'icao1938',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'radtel1932ccir',
+              'radtel1938cairo'
             ]
           }
         ]
@@ -676,8 +1645,23 @@ const defaultAlphabetSpecs = [
         word: 'Kilo',
         override: [
           {
+            word: 'Kate',
+            variant: [
+              'tel1917at-t',
+              'radtel1957aarl'
+            ]
+          },
+          {
+            word: 'Kentucky',
+            variant: 'radtel-dx-alternate'
+          },
+          {
             word: 'Khartoum',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
           },
           {
             word: 'Kilogramme',
@@ -686,12 +1670,26 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
+            word: 'Kilowatt',
+            variant: 'radtel-dx'
+          },
+          {
             word: 'Kimberley',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir'
+            ]
           },
           {
             word: 'King',
@@ -701,8 +1699,37 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'ia1946',
               'ia1947usuk1943',
-              'ia1947arrl'
+              'ia1947arrl',
+              'flaghoist1908v2',
+              'flaghoist1942',
+              'tel1912western-union',
+              'tel1914british-post-office',
+              'tel1917at-t-overseas',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1932itu-t-iits-code-b-english',
+              'tel1942westernunion',
+              'radtel1917royal-navy',
+              'radtel1919us-air-service',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1936arrl',
+              'radtel1914royal-navy',
+              'radtel1924raf',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army',
+              'radtel1946arrl',
+              'radtel1957apco-project2'
             ]
+          },
+          {
+            word: 'Knapsack',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Knights',
+            variant: 'tel1908tasmania'
           }
         ]
       },
@@ -711,10 +1738,27 @@ const defaultAlphabetSpecs = [
         word: 'Lima',
         override: [
           {
+            word: 'Lash',
+            variant: 'flaghoist1908v2'
+          },
+          {
             word: 'Lewis',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'radtel1946arrl'
+            ]
+          },
+          {
+            word: 'Lincoln',
+            variant: [
+              'tel1912western-union',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1957apco-project2'
             ]
           },
           {
@@ -732,7 +1776,37 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1927ccir',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
+            ]
+          },
+          {
+            word: 'London',
+            variant: [
+              'tel1914british-post-office',
+              'tel1917at-t-overseas',
+              'radtel1917royal-navy',
+              'radtel1914royal-navy',
+              'radtel1924raf',
+              'radtel-dx'
+            ]
+          },
+          {
+            word: 'Loose',
+            variant: 'tel1908tasmania'
+          },
+          {
+            word: 'Louis',
+            variant: [
+              'tel1917at-t',
+              'radtel1957aarl'
             ]
           },
           {
@@ -741,8 +1815,22 @@ const defaultAlphabetSpecs = [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army'
             ]
+          },
+          {
+            word: 'Lucy',
+            variant: 'tel1932itu-t-iits-code-b-english'
+          },
+          {
+            word: 'Lugger',
+            variant: 'flaghoist1908'
           },
           {
             word: 'Luis',
@@ -750,6 +1838,10 @@ const defaultAlphabetSpecs = [
               'icao1947lac',
               'ia1947lac'
             ]
+          },
+          {
+            word: 'Luxembourg',
+            variant: 'radtel-dx-alternate'
           }
         ]
       },
@@ -758,6 +1850,14 @@ const defaultAlphabetSpecs = [
         word: 'Mike',
         override: [
           {
+            word: 'Emma',
+            variant: [
+              'tel1904british-army',
+              'radtel1915british-army',
+              'radtel1918british-army'
+            ]
+          },
+          {
             word: 'Madagascar',
             variant: [
               'icao1927',
@@ -765,12 +1865,24 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1927ccir',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
             word: 'Madrid',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
           },
           {
             word: 'Maestro',
@@ -787,10 +1899,26 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Managing',
+            variant: 'tel1908tasmania'
+          },
+          {
             word: 'Mary',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'tel1912western-union',
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1932itu-t-iits-code-b-english',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
             ]
           },
           {
@@ -799,8 +1927,38 @@ const defaultAlphabetSpecs = [
               'icao1949',
               'icao1951',
               'ia1949',
-              'ia1951'
+              'ia1951',
+              'radtel1949icao',
+              'radtel1951iata-v2'
             ]
+          },
+          {
+            word: 'Mexico',
+            variant: 'radtel-dx'
+          },
+          {
+            word: 'Monkey',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy',
+              'radtel1924raf'
+            ]
+          },
+          {
+            word: 'Montreal',
+            variant: 'radtel-dx-alternate'
+          },
+          {
+            word: 'Mother',
+            variant: 'tel1914british-post-office'
+          },
+          {
+            word: 'Mule',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Musket',
+            variant: 'flaghoist1908'
           }
         ]
       },
@@ -809,12 +1967,23 @@ const defaultAlphabetSpecs = [
         word: 'November',
         override: [
           {
+            word: '?',
+            variant: 'tel1917at-t-overseas'
+          },
+          {
+            word: 'Nab',
+            variant: 'radtel1943raf'
+          },
+          {
             word: 'Nan',
             variant: [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1941joint-army'
             ]
           },
           {
@@ -822,7 +1991,10 @@ const defaultAlphabetSpecs = [
             variant: [
               'icao1920',
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'flaghoist1920',
+              'radtel1920uecu',
+              'radtel1946arrl'
             ]
           },
           {
@@ -831,27 +2003,86 @@ const defaultAlphabetSpecs = [
               'icao1949',
               'icao1951',
               'ia1949',
-              'ia1951'
+              'ia1951',
+              'radtel1949icao',
+              'radtel1951iata-v2'
             ]
           },
           {
+            word: 'Negat',
+            variant: [
+              'flaghoist1942',
+              {
+                name: 'radtel1943raf',
+                primary: false
+              },
+              'radtel1927navy'
+            ]
+          },
+          {
+            word: 'Nellie',
+            variant: 'tel1932itu-t-iits-code-b-english'
+          },
+          {
+            word: 'Nelly',
+            variant: [
+              'tel1917at-t',
+              'radtel1957aarl'
+            ]
+          },
+          {
+            word: 'Neptune',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Net',
+            variant: 'flaghoist1908v2'
+          },
+          {
             word: 'Neufchatel',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir'
+            ]
+          },
+          {
+            word: 'Never',
+            variant: 'tel1908tasmania'
           },
           {
             word: 'New york',
             variant: [
               'icao1932',
               'icao1947ac',
-              'ia1932'
+              'ia1932',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1942westernunion',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1930arrl',
+              'radtel1932ccir',
+              'radtel1932arrl',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
             word: 'New-york',
             variant: [
               'icao1938',
-              'imms1932'
+              'imms1932',
+              'radtel1938cairo'
             ]
+          },
+          {
+            word: 'Newark',
+            variant: 'tel1912western-union'
+          },
+          {
+            word: 'Nicaragua',
+            variant: 'radtel-dx-alternate'
           },
           {
             word: 'Nickel',
@@ -867,12 +2098,28 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Nora',
+            variant: 'radtel1957apco-project2'
+          },
+          {
             word: 'Norma',
             variant: [
               'icao1947lac',
               'icao1947',
               'ia1947lac',
               'ia1947'
+            ]
+          },
+          {
+            word: 'Norway',
+            variant: 'radtel-dx'
+          },
+          {
+            word: 'Nuts',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy',
+              'radtel1924raf'
             ]
           }
         ]
@@ -882,17 +2129,58 @@ const defaultAlphabetSpecs = [
         word: 'Oscar',
         override: [
           {
+            word: 'Oak',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Oble',
+            variant: 'radtel1919us-air-service'
+          },
+          {
             word: 'Oboe',
             variant: [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1941joint-army'
+            ]
+          },
+          {
+            word: 'Ocean',
+            variant: [
+              'tel1912western-union',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1957apco-project2',
+              'radtel-dx-alternate'
+            ]
+          },
+          {
+            word: 'October',
+            variant: 'tel1914british-post-office'
+          },
+          {
+            word: 'Oliver',
+            variant: [
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1957aarl'
             ]
           },
           {
             word: 'Ontario',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir',
+              'radtel-dx'
+            ]
           },
           {
             word: 'Opera',
@@ -904,25 +2192,60 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Option',
+            variant: [
+              'flaghoist1942',
+              'radtel1927navy'
+            ]
+          },
+          {
+            word: 'Orange',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy',
+              'radtel1924raf'
+            ]
+          },
+          {
             word: 'Oslo',
             variant: [
               'icao1932',
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
             word: 'Ostend',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
           },
           {
             word: 'Otto',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'radtel1946arrl'
             ]
+          },
+          {
+            word: 'Owners',
+            variant: 'tel1908tasmania'
+          },
+          {
+            word: 'Oyster',
+            variant: 'flaghoist1908'
           }
         ]
       },
@@ -931,6 +2254,14 @@ const defaultAlphabetSpecs = [
         word: 'Papa',
         override: [
           {
+            word: 'Pacific',
+            variant: 'radtel-dx'
+          },
+          {
+            word: 'Page',
+            variant: 'flaghoist1908v2'
+          },
+          {
             word: 'Paris',
             variant: [
               'icao1920',
@@ -938,8 +2269,21 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'flaghoist1920',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1920uecu',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
+          },
+          {
+            word: 'Paul',
+            variant: 'radtel1957apco-project2'
           },
           {
             word: 'Peru',
@@ -958,19 +2302,80 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'ia1946',
               'ia1947usuk1943',
-              'ia1947arrl'
+              'ia1947arrl',
+              'tel1912western-union',
+              'tel1914british-post-office',
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1932itu-t-iits-code-b-english',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1943raf',
+              'radtel1941joint-army',
+              'radtel1946arrl',
+              'radtel1957aarl'
             ]
+          },
+          {
+            word: 'Pip',
+            variant: [
+              'tel1904british-army',
+              'radtel1915british-army',
+              'radtel1918british-army',
+              'radtel1924raf'
+            ]
+          },
+          {
+            word: 'Pistol',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Play',
+            variant: 'tel1908tasmania'
           },
           {
             word: 'Polka',
             variant: [
               'icao1949',
-              'ia1949'
+              'ia1949',
+              'radtel1949icao'
             ]
           },
           {
             word: 'Portugal',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir',
+              'radtel-dx-alternate'
+            ]
+          },
+          {
+            word: 'Prep',
+            variant: [
+              'flaghoist1942',
+              {
+                name: 'radtel1943raf',
+                primary: false
+              },
+              'radtel1927navy'
+            ]
+          },
+          {
+            word: 'Pudding',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
+            ]
+          },
+          {
+            word: 'Pup',
+            variant: [
+              'radtel1919us-air-service',
+              'radtel1936arrl'
+            ]
           }
         ]
       },
@@ -979,6 +2384,33 @@ const defaultAlphabetSpecs = [
         word: 'Quebec',
         override: [
           {
+            word: 'Quack',
+            variant: [
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1927navy'
+            ]
+          },
+          {
+            word: 'Quad',
+            variant: 'radtel1918british-army'
+          },
+          {
+            word: 'Quadrant',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Quail',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Quaker',
+            variant: [
+              'tel1917at-t',
+              'radtel1957aarl'
+            ]
+          },
+          {
             word: 'Queen',
             variant: [
               'icao1946',
@@ -986,7 +2418,30 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'ia1946',
               'ia1947usuk1943',
-              'ia1947arrl'
+              'ia1947arrl',
+              'flaghoist1942',
+              'tel1908tasmania',
+              'tel1912western-union',
+              'tel1914british-post-office',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1932itu-t-iits-code-b-english',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1924raf',
+              'radtel1943raf',
+              'radtel1941joint-army',
+              'radtel1946arrl',
+              'radtel1957apco-project2',
+              'radtel-dx-alternate'
+            ]
+          },
+          {
+            word: 'Queenie',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
             ]
           },
           {
@@ -995,7 +2450,10 @@ const defaultAlphabetSpecs = [
               'icao1932',
               'icao1938',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'radtel1932ccir',
+              'radtel1938cairo'
             ]
           }
         ]
@@ -1005,14 +2463,46 @@ const defaultAlphabetSpecs = [
         word: 'Romeo',
         override: [
           {
+            word: 'Radio',
+            variant: 'radtel-dx'
+          },
+          {
+            word: 'Raft',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Reefer',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Remarks',
+            variant: 'tel1908tasmania'
+          },
+          {
             word: 'Rivoli',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir'
+            ]
           },
           {
             word: 'Robert',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'tel1914british-post-office',
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1928western-union',
+              'tel1932itu-t-iits-code-b-english',
+              'tel1942westernunion',
+              'radtel1917royal-navy',
+              'radtel1932arrl',
+              'radtel1914royal-navy',
+              'radtel1924raf',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
             ]
           },
           {
@@ -1023,7 +2513,11 @@ const defaultAlphabetSpecs = [
               'icao1947',
               'ia1946',
               'ia1947usuk1943',
-              'ia1947'
+              'ia1947',
+              'flaghoist1942',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army'
             ]
           },
           {
@@ -1033,12 +2527,35 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
+            word: 'Romania',
+            variant: 'radtel-dx-alternate'
+          },
+          {
             word: 'Rome',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
+          },
+          {
+            word: 'Ropert',
+            variant: [
+              'tel1912western-union',
+              'tel1918western-union',
+              'radtel1930arrl'
+            ]
           },
           {
             word: 'Rosa',
@@ -1046,6 +2563,14 @@ const defaultAlphabetSpecs = [
               'icao1947lac',
               'ia1947lac'
             ]
+          },
+          {
+            word: 'Rot',
+            variant: 'radtel1936arrl'
+          },
+          {
+            word: 'Rush',
+            variant: 'radtel1919us-air-service'
           }
         ]
       },
@@ -1054,10 +2579,35 @@ const defaultAlphabetSpecs = [
         word: 'Sierra',
         override: [
           {
+            word: 'Esses',
+            variant: [
+              'tel1904british-army',
+              'radtel1915british-army',
+              'radtel1918british-army'
+            ]
+          },
+          {
             word: 'Sail',
             variant: [
               'icao1946',
-              'ia1946'
+              'ia1946',
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1927navy'
+            ]
+          },
+          {
+            word: 'Sam',
+            variant: 'radtel1957apco-project2'
+          },
+          {
+            word: 'Samuel',
+            variant: [
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1957aarl'
             ]
           },
           {
@@ -1075,7 +2625,16 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1927ccir',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican',
+              'radtel-dx'
             ]
           },
           {
@@ -1087,7 +2646,19 @@ const defaultAlphabetSpecs = [
           },
           {
             word: 'Sardinia',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
+          },
+          {
+            word: 'Scout',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Shipmate',
+            variant: 'flaghoist1908'
           },
           {
             word: 'Sugar',
@@ -1101,15 +2672,36 @@ const defaultAlphabetSpecs = [
               {
                 name: 'ia1946',
                 primary: false
-              }
+              },
+              'tel1912western-union',
+              'tel1914british-post-office',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1917royal-navy',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1914royal-navy',
+              'radtel1924raf',
+              'radtel1943raf',
+              'radtel1941joint-army'
             ]
+          },
+          {
+            word: 'Support',
+            variant: 'tel1908tasmania'
           },
           {
             word: 'Susan',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'radtel1946arrl'
             ]
+          },
+          {
+            word: 'Sweden',
+            variant: 'radtel-dx-alternate'
           }
         ]
       },
@@ -1118,13 +2710,34 @@ const defaultAlphabetSpecs = [
         word: 'Tango',
         override: [
           {
+            word: 'Talk',
+            variant: 'radtel1918british-army'
+          },
+          {
             word: 'Tare',
             variant: [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army'
             ]
+          },
+          {
+            word: 'Texas',
+            variant: [
+              'tel1912western-union',
+              'radtel-dx-alternate'
+            ]
+          },
+          {
+            word: 'The',
+            variant: 'tel1908tasmania'
           },
           {
             word: 'Thomas',
@@ -1132,15 +2745,47 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'icao1947',
               'ia1947arrl',
-              'ia1947'
+              'ia1947',
+              'tel1914british-post-office',
+              'tel1917at-t',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1946arrl',
+              'radtel1957aarl'
+            ]
+          },
+          {
+            word: 'Tide',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Toc',
+            variant: [
+              'tel1904british-army',
+              'radtel1915british-army',
+              'radtel1924raf'
             ]
           },
           {
             word: 'Tokio',
             variant: [
               'icao1920',
-              'icao1927'
+              'icao1927',
+              'flaghoist1920',
+              'radtel1920uecu',
+              'radtel1927ccir'
             ]
+          },
+          {
+            word: 'Tokyo',
+            variant: 'radtel-dx'
+          },
+          {
+            word: 'Tom',
+            variant: 'radtel1957apco-project2'
           },
           {
             word: 'Tomas',
@@ -1150,13 +2795,32 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Tommy',
+            variant: [
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
+            ]
+          },
+          {
+            word: 'Topsail',
+            variant: 'flaghoist1908'
+          },
+          {
             word: 'Tripoli',
             variant: [
               'icao1932',
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           }
         ]
@@ -1171,7 +2835,15 @@ const defaultAlphabetSpecs = [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'tel1914british-post-office',
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1917royal-navy',
+              'radtel1914royal-navy',
+              'radtel1924raf',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army'
             ]
           },
           {
@@ -1182,8 +2854,38 @@ const defaultAlphabetSpecs = [
               'icao1951',
               'ia1947arrl',
               'ia1949',
-              'ia1951'
+              'ia1951',
+              'tel1912western-union',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1946arrl',
+              'radtel1949icao',
+              'radtel1951iata-v2',
+              'radtel1957apco-project2'
             ]
+          },
+          {
+            word: 'Unit',
+            variant: [
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl'
+            ]
+          },
+          {
+            word: 'United',
+            variant: 'radtel-dx'
+          },
+          {
+            word: 'Unless',
+            variant: 'tel1908tasmania'
+          },
+          {
+            word: 'Unload',
+            variant: 'flaghoist1908'
           },
           {
             word: 'Upsala',
@@ -1192,7 +2894,14 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
@@ -1208,7 +2917,22 @@ const defaultAlphabetSpecs = [
               'icao1920',
               'icao1927',
               'icao1947lac',
-              'ia1947lac'
+              'ia1947lac',
+              'flaghoist1920',
+              'radtel1920uecu',
+              'radtel1927ccir',
+              'radtel-dx-alternate'
+            ]
+          },
+          {
+            word: 'Use',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Utah',
+            variant: [
+              'tel1917at-t',
+              'radtel1957aarl'
             ]
           }
         ]
@@ -1224,15 +2948,78 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
+            ]
+          },
+          {
+            word: 'Vast',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Venezuela',
+            variant: 'radtel-dx-alternate'
+          },
+          {
+            word: 'Vessel',
+            variant: 'flaghoist1908'
+          },
+          {
+            word: 'Vic',
+            variant: [
+              'tel1904british-army',
+              'radtel1915british-army',
+              'radtel1918british-army',
+              'radtel1924raf'
+            ]
+          },
+          {
+            word: 'Vice',
+            variant: [
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1927navy'
             ]
           },
           {
             word: 'Victoria',
             variant: [
               'icao1920',
-              'icao1927'
+              'icao1927',
+              'flaghoist1920',
+              'tel1914british-post-office',
+              'radtel1920uecu',
+              'radtel1927ccir',
+              'radtel-dx'
             ]
+          },
+          {
+            word: 'Victory',
+            variant: [
+              'tel1917at-t-overseas',
+              'tel1942westernunion'
+            ]
+          },
+          {
+            word: 'Vindictive',
+            variant: 'tel1908tasmania'
+          },
+          {
+            word: 'Vinegar',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
+            ]
+          },
+          {
+            word: 'Violet',
+            variant: 'tel1912western-union'
           }
         ]
       },
@@ -1249,8 +3036,34 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'flaghoist1920',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1920uecu',
+              'radtel1927ccir',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican',
+              'radtel-dx'
             ]
+          },
+          {
+            word: 'Watch',
+            variant: [
+              'radtel1919us-air-service',
+              'radtel1936arrl'
+            ]
+          },
+          {
+            word: 'Wednesday',
+            variant: 'tel1914british-post-office'
+          },
+          {
+            word: 'When',
+            variant: 'tel1908tasmania'
           },
           {
             word: 'Whisky',
@@ -1258,7 +3071,8 @@ const defaultAlphabetSpecs = [
               'ia1956',
               'imms1965',
               'imms1967',
-              'imms2000'
+              'imms2000',
+              'radtel1956icao'
             ]
           },
           {
@@ -1269,8 +3083,40 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'ia1946',
               'ia1947usuk1943',
-              'ia1947arrl'
+              'ia1947arrl',
+              'flaghoist1942',
+              'tel1912western-union',
+              'tel1917at-t',
+              'tel1917at-t-overseas',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1932itu-t-iits-code-b-english',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1924raf',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
             ]
+          },
+          {
+            word: 'Willie',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
+            ]
+          },
+          {
+            word: 'Winch',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Windage',
+            variant: 'flaghoist1908'
           }
         ]
       },
@@ -1289,12 +3135,17 @@ const defaultAlphabetSpecs = [
             word: 'Extra',
             variant: [
               'icao1951',
-              'ia1951'
+              'ia1951',
+              'radtel1951iata-v2'
             ]
           },
           {
             word: 'Xaintrie',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu'
+            ]
           },
           {
             word: 'Xanthippe',
@@ -1303,18 +3154,48 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
             word: 'Xantippe',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir'
+            ]
+          },
+          {
+            word: 'Xerxes',
+            variant: [
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
+            ]
+          },
+          {
+            word: 'Xmas',
+            variant: 'tel1914british-post-office'
+          },
+          {
+            word: 'Xpeditiously',
+            variant: 'tel1908tasmania'
           },
           {
             word: 'Xray',
             variant: [
               'icao1947usuk1943',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'flaghoist1908',
+              'flaghoist1908v2',
+              'flaghoist1942',
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1974apco-project14'
             ]
           }
         ]
@@ -1324,11 +3205,33 @@ const defaultAlphabetSpecs = [
         word: 'Yankee',
         override: [
           {
+            word: 'Yacht',
+            variant: 'flaghoist1908v2'
+          },
+          {
+            word: 'Yale',
+            variant: 'tel1912western-union'
+          },
+          {
             word: 'Yankey',
             variant: [
               'icao1949',
-              'ia1949'
+              'ia1949',
+              'radtel1949icao'
             ]
+          },
+          {
+            word: 'Yellow',
+            variant: [
+              'tel1914british-post-office',
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1917royal-navy',
+              'radtel1914royal-navy'
+            ]
+          },
+          {
+            word: 'Yeoman',
+            variant: 'flaghoist1908'
           },
           {
             word: 'Yoke',
@@ -1336,7 +3239,13 @@ const defaultAlphabetSpecs = [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army'
             ]
           },
           {
@@ -1348,7 +3257,18 @@ const defaultAlphabetSpecs = [
               'icao1938',
               'icao1947ac',
               'ia1932',
-              'imms1932'
+              'imms1932',
+              'flaghoist1920',
+              'tel1932itu-t-iits-code-a-french',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1920uecu',
+              'radtel1927ccir',
+              'radtel1932ccir',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican',
+              'radtel-dx'
             ]
           },
           {
@@ -1366,11 +3286,28 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Yorker',
+            variant: 'radtel1924raf'
+          },
+          {
             word: 'Young',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              'tel1917at-t',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl',
+              'radtel1946arrl',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
             ]
+          },
+          {
+            word: 'Your',
+            variant: 'tel1908tasmania'
           }
         ]
       },
@@ -1380,7 +3317,12 @@ const defaultAlphabetSpecs = [
         override: [
           {
             word: 'Zanzibar',
-            variant: 'icao1920'
+            variant: [
+              'icao1920',
+              'flaghoist1920',
+              'radtel1920uecu',
+              'radtel-dx'
+            ]
           },
           {
             word: 'Zebra',
@@ -1392,7 +3334,40 @@ const defaultAlphabetSpecs = [
               'ia1946',
               'ia1947usuk1943',
               'ia1947arrl',
-              'ia1949'
+              'ia1949',
+              'flaghoist1908',
+              'tel1914british-post-office',
+              'tel1917at-t',
+              'tel1932itu-t-iits-code-b-english',
+              'radtel1917royal-navy',
+              'radtel1914royal-navy',
+              'radtel1924raf',
+              'radtel1943raf',
+              'radtel1927navy',
+              'radtel1941joint-army',
+              'radtel1946arrl',
+              'radtel1949icao',
+              'radtel1957aarl',
+              'radtel1957apco-project2'
+            ]
+          },
+          {
+            word: 'Zed',
+            variant: [
+              'flaghoist1942',
+              'radtel1919us-air-service',
+              'radtel1936arrl'
+            ]
+          },
+          {
+            word: 'Zero',
+            variant: [
+              'tel1912western-union',
+              'tel1918western-union',
+              'tel1928western-union',
+              'tel1942westernunion',
+              'radtel1930arrl',
+              'radtel1932arrl'
             ]
           },
           {
@@ -1403,22 +3378,40 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Zigzag',
+            variant: 'tel1908tasmania'
+          },
+          {
+            word: 'Zoo',
+            variant: 'flaghoist1908v2'
+          },
+          {
             word: 'Zululand',
-            variant: 'icao1927'
+            variant: [
+              'icao1927',
+              'radtel1927ccir'
+            ]
           },
           {
             word: 'Zurich',
             variant: [
               'icao1938',
               'icao1947ac',
-              'imms1932'
+              'imms1932',
+              'tel1947itc',
+              'tel1958itc',
+              'radtel1938cairo',
+              'radtel1947ac',
+              'radtel1932itu-ican'
             ]
           },
           {
             word: 'Zürich',
             variant: [
               'icao1932',
-              'ia1932'
+              'ia1932',
+              'tel1932itu-t-iits-code-a-french',
+              'radtel1932ccir'
             ]
           }
         ]
@@ -1429,7 +3422,10 @@ const defaultAlphabetSpecs = [
         override: [
           {
             word: 'Nadazero',
-            variant: 'imms1967'
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
           },
           {
             word: 'Zeero',
@@ -1446,7 +3442,10 @@ const defaultAlphabetSpecs = [
         override: [
           {
             word: 'Unaone',
-            variant: 'imms1967'
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
           },
           {
             word: 'Wun',
@@ -1455,7 +3454,8 @@ const defaultAlphabetSpecs = [
               'icao2008',
               'ia1947usuk1943',
               'imms1965',
-              'imms2000'
+              'imms2000',
+              'radtel1957apco-project2'
             ]
           }
         ]
@@ -1466,7 +3466,10 @@ const defaultAlphabetSpecs = [
         override: [
           {
             word: 'Bissotwo',
-            variant: 'imms1967'
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
           },
           {
             word: 'Too',
@@ -1475,7 +3478,8 @@ const defaultAlphabetSpecs = [
               'icao2008',
               'ia1947usuk1943',
               'imms1965',
-              'imms2000'
+              'imms2000',
+              'radtel1957apco-project2'
             ]
           }
         ]
@@ -1486,7 +3490,10 @@ const defaultAlphabetSpecs = [
         override: [
           {
             word: 'Terrathree',
-            variant: 'imms1967'
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
           },
           {
             word: 'Thuh-ree',
@@ -1521,12 +3528,16 @@ const defaultAlphabetSpecs = [
             variant: [
               'icao2008',
               'imms1965',
-              'imms2000'
+              'imms2000',
+              'radtel1957apco-project2'
             ]
           },
           {
             word: 'Kartefour',
-            variant: 'imms1967'
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
           }
         ]
       },
@@ -1551,25 +3562,50 @@ const defaultAlphabetSpecs = [
           },
           {
             word: 'Pantafive',
-            variant: 'imms1967'
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
+          },
+          {
+            word: 'Vieyiv',
+            variant: 'radtel1957apco-project2'
           }
         ]
       },
       {
         character: '6',
         word: 'Six',
-        override: {
-          word: 'Soxisix',
-          variant: 'imms1967'
-        }
+        override: [
+          {
+            word: 'Siks',
+            variant: 'radtel1957apco-project2'
+          },
+          {
+            word: 'Soxisix',
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
+          }
+        ]
       },
       {
         character: '7',
         word: 'Seven',
-        override: {
-          word: 'Setteseven',
-          variant: 'imms1967'
-        }
+        override: [
+          {
+            word: 'Setteseven',
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
+          },
+          {
+            word: 'Sev-ven',
+            variant: 'radtel1957apco-project2'
+          }
+        ]
       },
       {
         character: '8',
@@ -1586,12 +3622,16 @@ const defaultAlphabetSpecs = [
             word: 'Ate',
             variant: [
               'icao1947usuk1943',
-              'ia1947usuk1943'
+              'ia1947usuk1943',
+              'radtel1957apco-project2'
             ]
           },
           {
             word: 'Oktoeight',
-            variant: 'imms1967'
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
           }
         ]
       },
@@ -1600,6 +3640,10 @@ const defaultAlphabetSpecs = [
         word: 'Nine',
         override: [
           {
+            word: 'Ni-yen',
+            variant: 'radtel1957apco-project2'
+          },
+          {
             word: 'Niner',
             variant: [
               'icao1947usuk1943',
@@ -1607,12 +3651,16 @@ const defaultAlphabetSpecs = [
               'ia1947usuk1943',
               'ia1956',
               'imms1965',
-              'imms2000'
+              'imms2000',
+              'radtel1956icao'
             ]
           },
           {
             word: 'Novenine',
-            variant: 'imms1967'
+            variant: [
+              'imms1967',
+              'radtel1969'
+            ]
           }
         ]
       },
