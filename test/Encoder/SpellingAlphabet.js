@@ -216,4 +216,35 @@ describe('SpellingAlphabetEncoder', () => {
       assert.strictEqual(result.getString(), 'OverriddenWord1 Word2 OverriddenWord3')
     }).then(done, done)
   })
+
+  it('should use overridden secondary words on decode', done => {
+    const alphabetSpecs = [
+      {
+        name: 'Alphabet',
+        variants: [
+          {
+            name: 'someVariant',
+            label: 'someVariant',
+            description: 'someVariant'
+          }
+        ],
+        mappings: [
+          {
+            character: 'z',
+            word: 'Word3',
+            override: {
+              word: ['OverriddenWord3', 'AnotherOverriddenWordThree'],
+              variant: ['someOtherVariant', 'someVariant']
+            }
+          }
+        ]
+      }
+    ]
+
+    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
+    encoder.setSettingValue('variant', 'someVariant')
+    encoder.decode('OverriddenWord3 AnotherOverriddenWordThree').then(result => {
+      assert.strictEqual(result.getString(), 'zz')
+    }).then(done, done)
+  })
 })
