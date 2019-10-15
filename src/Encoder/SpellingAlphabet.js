@@ -15,6 +15,11 @@ const defaultAlphabetSpecs = [
     label: 'English',
     variants: [
       {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
         name: 'icao2008',
         label: 'NATO/ICAO, 2008 - Present',
         description: '2008 – present ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
@@ -3419,7 +3424,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '0',
-        word: 'Zero',
+        word: null,
         override: [
           {
             word: 'Nadazero',
@@ -3434,13 +3439,25 @@ const defaultAlphabetSpecs = [
               'imms1965',
               'imms2000'
             ]
+          },
+          {
+            word: 'Zero',
+            variant: [
+              'full'
+            ]
           }
         ]
       },
       {
         character: '1',
-        word: 'One',
+        word: null,
         override: [
+          {
+            word: 'One',
+            variant: [
+              'full'
+            ]
+          },
           {
             word: 'Unaone',
             variant: [
@@ -3463,7 +3480,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '2',
-        word: 'Two',
+        word: null,
         override: [
           {
             word: 'Bissotwo',
@@ -3482,18 +3499,30 @@ const defaultAlphabetSpecs = [
               'imms2000',
               'radtel1957apco-project2'
             ]
+          },
+          {
+            word: 'Two',
+            variant: [
+              'full'
+            ]
           }
         ]
       },
       {
         character: '3',
-        word: 'Three',
+        word: null,
         override: [
           {
             word: 'Terrathree',
             variant: [
               'imms1967',
               'radtel1969'
+            ]
+          },
+          {
+            word: 'Three',
+            variant: [
+              'full'
             ]
           },
           {
@@ -3515,13 +3544,19 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '4',
-        word: 'Four',
+        word: null,
         override: [
           {
             word: 'Fo-wer',
             variant: [
               'icao1947usuk1943',
               'ia1947usuk1943'
+            ]
+          },
+          {
+            word: 'Four',
+            variant: [
+              'full'
             ]
           },
           {
@@ -3544,7 +3579,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '5',
-        word: 'Five',
+        word: null,
         override: [
           {
             word: 'Fi-yiv',
@@ -3562,6 +3597,12 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Five',
+            variant: [
+              'full'
+            ]
+          },
+          {
             word: 'Pantafive',
             variant: [
               'imms1967',
@@ -3576,11 +3617,17 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '6',
-        word: 'Six',
+        word: null,
         override: [
           {
             word: 'Siks',
             variant: 'radtel1957apco-project2'
+          },
+          {
+            word: 'Six',
+            variant: [
+              'full'
+            ]
           },
           {
             word: 'Soxisix',
@@ -3593,7 +3640,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '7',
-        word: 'Seven',
+        word: null,
         override: [
           {
             word: 'Setteseven',
@@ -3605,12 +3652,18 @@ const defaultAlphabetSpecs = [
           {
             word: 'Sev-ven',
             variant: 'radtel1957apco-project2'
+          },
+          {
+            word: 'Seven',
+            variant: [
+              'full'
+            ]
           }
         ]
       },
       {
         character: '8',
-        word: 'Eight',
+        word: null,
         override: [
           {
             word: 'Ait',
@@ -3628,6 +3681,12 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Eight',
+            variant: [
+              'full'
+            ]
+          },
+          {
             word: 'Oktoeight',
             variant: [
               'imms1967',
@@ -3638,11 +3697,17 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '9',
-        word: 'Nine',
+        word: null,
         override: [
           {
             word: 'Ni-yen',
             variant: 'radtel1957apco-project2'
+          },
+          {
+            word: 'Nine',
+            variant: [
+              'full'
+            ]
           },
           {
             word: 'Niner',
@@ -3667,18 +3732,18 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '-',
-        word: [
-          'Dash',
-          'Hyphen'
-        ]
+        word: null,
+        override: {
+          word: [
+            'Dash',
+            'Hypen'
+          ],
+          variant: 'full'
+        }
       },
       {
         character: '.',
-        word: [
-          'Period',
-          'Decimal point',
-          'Point'
-        ],
+        word: null,
         override: [
           {
             word: 'Full stop',
@@ -3690,6 +3755,14 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: [
+              'Period',
+              'Decimal point',
+              'Point'
+            ],
+            variant: 'full'
+          },
+          {
             word: 'Stop',
             variant: 'imms1967'
           }
@@ -3697,11 +3770,19 @@ const defaultAlphabetSpecs = [
       },
       {
         character: ',',
-        word: 'Comma'
+        word: null,
+        override: {
+          word: 'Comma',
+          variant: 'full'
+        }
       },
       {
         character: '/',
-        word: 'Fraction bar'
+        word: null,
+        override: {
+          word: 'Fraction bar',
+          variant: 'full'
+        }
       }
     ]
   },
