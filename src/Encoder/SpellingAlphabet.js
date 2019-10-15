@@ -4742,18 +4742,20 @@ export default class SpellingAlphabetEncoder extends Encoder {
         words.push(...secondaryWords)
       }
 
-      for (let character of characters) {
-        if (characterMap[character] !== undefined && characterMap[character] !== words[0]) {
-          throw new Error(`Alphabet with name '${alphabetName}' has multiple mappings with character '${character}'`)
+      if (characters.length > 0 && words.length > 0) {
+        for (let character of characters) {
+          if (characterMap[character] !== undefined && characterMap[character] !== words[0]) {
+            throw new Error(`Alphabet with name '${alphabetName}' has multiple mappings with character '${character}'`)
+          }
+          characterMap[character] = words[0]
         }
-        characterMap[character] = words[0]
-      }
 
-      for (let word of words) {
-        if (wordMap[word] !== undefined && wordMap[word] !== characters[0]) {
-          throw new Error(`Alphabet with name '${alphabetName}' has multiple mappings with word '${word}'`)
+        for (let word of words) {
+          if (wordMap[word] !== undefined && wordMap[word] !== characters[0]) {
+            throw new Error(`Alphabet with name '${alphabetName}' has multiple mappings with word '${word}'`)
+          }
+          wordMap[word] = characters[0]
         }
-        wordMap[word] = characters[0]
       }
     }
 
