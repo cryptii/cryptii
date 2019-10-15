@@ -306,10 +306,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'd',
-        word: [
-          'Delta',
-          'Dixie'
-        ],
+        word: 'Delta',
         override: [
           {
             word: 'Damascus',
@@ -342,7 +339,11 @@ const defaultAlphabetSpecs = [
             word: 'David',
             variant: [
               'icao1947arrl',
-              'ia1947arrl'
+              'ia1947arrl',
+              {
+                name: 'deltaairlines',
+                primary: false
+              }
             ]
           },
           {
@@ -353,7 +354,7 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Data',
+            word: ['Data', 'Dixie'],
             variant: 'deltaairlines'
           }
         ]
@@ -803,10 +804,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'n',
-        word: [
-          'November',
-          'Nickel'
-        ],
+        word: 'November',
         override: [
           {
             word: 'Nancy',
@@ -860,6 +858,20 @@ const defaultAlphabetSpecs = [
               'icao1951',
               'ia1949',
               'ia1951'
+            ]
+          },
+          {
+            word: 'Nickel',
+            variant: [
+              {
+                name: 'icao1946',
+                primary: false
+              },
+              {
+                name: 'ia1946',
+                primary: false
+              }
+
             ]
           }
         ]
@@ -1038,9 +1050,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 's',
-        word: [
-          'Sierra'
-        ],
+        word: 'Sierra',
         override: [
           {
             word: 'Sardinia',
@@ -1068,7 +1078,14 @@ const defaultAlphabetSpecs = [
             word: 'Sugar',
             variant: [
               'icao1947usuk1943',
-              'ia1947usuk1943'
+              'ia1947usuk1943', {
+                name: 'icao1946',
+                primary: false
+              },
+              {
+                name: 'ia1946',
+                primary: false
+              }
             ]
           },
           {
