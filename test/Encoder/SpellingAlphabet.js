@@ -216,4 +216,16 @@ describe('SpellingAlphabetEncoder', () => {
       assert.strictEqual(result.getString(), 'OverriddenWord1 Word2 OverriddenWord3')
     }).then(done, done)
   })
+
+  it('should show variants in encode mode', () => {
+    const encoder = new SpellingAlphabetEncoder()
+    encoder.setReverse(false)
+    assert.strictEqual(encoder.getSetting('variant').isVisible(), true)
+  })
+
+  it('should not show variants in decode mode', () => {
+    const encoder = new SpellingAlphabetEncoder()
+    encoder.setReverse(true)
+    assert.strictEqual(encoder.getSetting('variant').isVisible(), false)
+  })
 })
