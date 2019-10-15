@@ -3443,7 +3443,25 @@ const defaultAlphabetSpecs = [
           {
             word: 'Zero',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'ia1947usuk1943',
+              'ia1956',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1947usuk1943',
+              'icao1959',
+              'icao2008',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1956icao',
+              'radtel1957apco-project2',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           }
         ]
@@ -3455,7 +3473,21 @@ const defaultAlphabetSpecs = [
           {
             word: 'One',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'ia1956',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1959',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1956icao',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           },
           {
@@ -3503,7 +3535,21 @@ const defaultAlphabetSpecs = [
           {
             word: 'Two',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'ia1956',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1959',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1956icao',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           }
         ]
@@ -3522,7 +3568,22 @@ const defaultAlphabetSpecs = [
           {
             word: 'Three',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'ia1956',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1959',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1956icao',
+              'radtel1957apco-project2',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           },
           {
@@ -3556,7 +3617,21 @@ const defaultAlphabetSpecs = [
           {
             word: 'Four',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'ia1956',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1959',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1956icao',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           },
           {
@@ -3599,7 +3674,21 @@ const defaultAlphabetSpecs = [
           {
             word: 'Five',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'ia1956',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1959',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1956icao',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           },
           {
@@ -3626,7 +3715,24 @@ const defaultAlphabetSpecs = [
           {
             word: 'Six',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'ia1947usuk1943',
+              'ia1956',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1947usuk1943',
+              'icao1959',
+              'icao2008',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1956icao',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           },
           {
@@ -3656,7 +3762,24 @@ const defaultAlphabetSpecs = [
           {
             word: 'Seven',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'ia1947usuk1943',
+              'ia1956',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1947usuk1943',
+              'icao1959',
+              'icao2008',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1956icao',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           }
         ]
@@ -3683,7 +3806,22 @@ const defaultAlphabetSpecs = [
           {
             word: 'Eight',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'ia1956',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1959',
+              'icao2008',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1956icao',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           },
           {
@@ -3706,7 +3844,19 @@ const defaultAlphabetSpecs = [
           {
             word: 'Nine',
             variant: [
-              'full'
+              'full',
+              'ia1946',
+              'icao1938',
+              'icao1946',
+              'icao1947ac',
+              'icao1959',
+              'imms1932',
+              'radtel1938cairo',
+              'radtel1946arrl',
+              'radtel1947ac',
+              'radtel1959arc',
+              'tel1947itc',
+              'tel1958itc'
             ]
           },
           {
@@ -3755,12 +3905,79 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: [
-              'Period',
-              'Decimal point',
-              'Point'
-            ],
-            variant: 'full'
+            word: 'Period',
+            variant: [
+              'full',
+              {
+                name: 'icao1947ac',
+                primary: false
+              },
+              {
+                name: 'icao1959',
+                primary: false
+              },
+              {
+                name: 'radtel1947ac',
+                primary: false
+              },
+              {
+                name: 'radtel1959arc',
+                primary: false
+              },
+              {
+                name: 'tel1947itc',
+                primary: false
+              },
+              {
+                name: 'tel1958itc',
+                primary: false
+              }
+            ]
+          },
+          {
+            word: 'Decimal',
+            variant: [
+              {
+                name: 'full',
+                primary: false
+              },
+              'ia1956',
+              {
+                name: 'imms1967',
+                primary: false
+              },
+              {
+                name: 'icao2008',
+                primary: false
+              },
+              {
+                name: 'radtel1946arrl',
+                primary: false
+              },
+              'radtel1956icao',
+              {
+                name: 'radtel1959arc',
+                primary: false
+              },
+              'radtel1969',
+            ]
+          },
+          {
+            word: 'Decimal point',
+            variant: {
+              name: 'full',
+              primary: false
+            }
+          },
+          {
+            word: 'Point',
+            variant: [
+              {
+                name: 'full',
+                primary: false
+              },
+              'radtel1959arc'
+            ]
           },
           {
             word: 'Stop',
@@ -3773,7 +3990,13 @@ const defaultAlphabetSpecs = [
         word: null,
         override: {
           word: 'Comma',
-          variant: 'full'
+          variant: [
+            'full',
+            'icao1938',
+            'icao1947ac',
+            'icao1959',
+            'imms1965'
+          ]
         }
       },
       {
@@ -3781,7 +4004,17 @@ const defaultAlphabetSpecs = [
         word: null,
         override: {
           word: 'Fraction bar',
-          variant: 'full'
+          variant: [
+            'full',
+            'icao1938',
+            'icao1947ac',
+            'icao1959',
+            'imms1932',
+            'radtel1947ac',
+            'radtel1959arc',
+            'tel1947itc',
+            'tel1958itc'
+          ]
         }
       }
     ]
