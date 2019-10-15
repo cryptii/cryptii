@@ -4692,19 +4692,18 @@ export default class SpellingAlphabetEncoder extends Encoder {
       let words = wrapInArray(mapping.word)
       const overrides = wrapInArray(mapping.override)
 
-      let primaryWord = null
-      let secondaryWords = []
-      for (let override of overrides) {
-        const overrideWords = wrapInArray(override.word)
-        if (variantName === 'universal') {
-          if (override.skipInUniversalEncoder !== true) {
-            secondaryWords.push(...overrideWords)
+      const processVariant = currentVariantName => {
+        let primaryWord = null
+        let secondaryWords = []
+
+        for (let override of overrides) {
+          if (variantName == 'universal' && override.skipInUniversalEncoder) {
+            continue
           }
-        }
-        else {
-          const variants = wrapInArray(override.variant).filter(v => v === variantName || v.name === variantName)
+          const overrideWords = wrapInArray(override.word)
+          const variants = wrapInArray(override.variant).filter(v => v === currentVariantName || v.name === currentVariantName)
           if (variants.length > 1) {
-            throw new Error(`Alphabet with name '${alphabetName}' has override with word '${overrideWords[0]}' where variant '${variantName}' specified more than once`);
+            throw new Error(`Alphabet with name '${alphabetName}' has override with word '${overrideWords[0]}' where variant '${currentVariantName}' specified more than once`);
           }
           const variant = variants[0]
           if (!variant) {
@@ -4716,29 +4715,42 @@ export default class SpellingAlphabetEncoder extends Encoder {
               primaryWord = overrideWords[0]
               secondaryWords.push(...overrideWords.slice(1))
             } else {
-              throw new Error(`Alphabet with name '${alphabetName}' has multiple primary words for variant '${variantName}'. Some of them: '${primaryWord}', '${overrideWords[0]}'`);
+              throw new Error(`Alphabet with name '${alphabetName}' has multiple primary words for variant '${currentVariantName}'. Some of them: '${primaryWord}', '${overrideWords[0]}'`);
             }
           } else {
             secondaryWords.push(...overrideWords)
           }
         }
+
+        return [primaryWord, secondaryWords]
       }
 
-      if (variantName !== 'universal' && primaryWord !== null) {
-        words = [primaryWord]
+      if (variantName === 'universal') {
+        for (let currentVariantName of wrapInArray(spec.variants).map(v => v.name)) {
+          let [primaryWord, secondaryWords] = processVariant(currentVariantName)
+          if (primaryWord !== null) {
+            words.push(primaryWord)
+          }
+          words.push(...secondaryWords)
+        }
       }
-
-      words.push(...secondaryWords)
+      else {
+        let [primaryWord, secondaryWords] = processVariant(variantName)
+        if (primaryWord !== null) {
+          words = [primaryWord]
+        }
+        words.push(...secondaryWords)
+      }
 
       for (let character of characters) {
-        if (characterMap[character] !== undefined) {
+        if (characterMap[character] !== undefined && characterMap[character] !== words[0]) {
           throw new Error(`Alphabet with name '${alphabetName}' has multiple mappings with character '${character}'`)
         }
         characterMap[character] = words[0]
       }
 
       for (let word of words) {
-        if (wordMap[word] !== undefined) {
+        if (wordMap[word] !== undefined && wordMap[word] !== characters[0]) {
           throw new Error(`Alphabet with name '${alphabetName}' has multiple mappings with word '${word}'`)
         }
         wordMap[word] = characters[0]
