@@ -10,7 +10,6 @@ const meta = {
 }
 
 const defaultAlphabetSpecs = [
-  /* eslint-disable no-multi-spaces */
   {
     name: 'english',
     label: 'English',
@@ -18,7 +17,7 @@ const defaultAlphabetSpecs = [
       {
         name: 'icao2008',
         label: 'NATO/ICAO, 2008 - Present',
-        description: '2008 – present ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code',
+        description: '2008 – present ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
       },
       {
         name: 'icao1959',
@@ -171,21 +170,6 @@ const defaultAlphabetSpecs = [
         word: 'Alfa',
         override: [
           {
-            word: 'Argentine',
-            variant: 'icao1920'
-          },
-          {
-            word: 'Amsterdam',
-            variant: [
-              'icao1927',
-              'icao1932',
-              'icao1938',
-              'icao1947ac',
-              'ia1932',
-              'imms1932'
-            ]
-          },
-          {
             word: 'Able',
             variant: [
               'icao1946',
@@ -202,6 +186,24 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Alpha',
+            variant: [
+              'icao1947',
+              'ia1947'
+            ]
+          },
+          {
+            word: 'Amsterdam',
+            variant: [
+              'icao1927',
+              'icao1932',
+              'icao1938',
+              'icao1947ac',
+              'ia1932',
+              'imms1932'
+            ]
+          },
+          {
             word: 'Ana',
             variant: [
               'icao1947lac',
@@ -209,11 +211,8 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Alpha',
-            variant: [
-              'icao1947',
-              'ia1947'
-            ]
+            word: 'Argentine',
+            variant: 'icao1920'
           }
         ]
       },
@@ -222,8 +221,15 @@ const defaultAlphabetSpecs = [
         word: 'Bravo',
         override: [
           {
-            word: 'Brussels',
-            variant: 'icao1920'
+            word: 'Baker',
+            variant: [
+              'icao1946',
+              'icao1947usuk1943',
+              'icao1947arrl',
+              'ia1946',
+              'ia1947usuk1943',
+              'ia1947arrl'
+            ]
           },
           {
             word: 'Baltimore',
@@ -237,14 +243,12 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Baker',
+            word: 'Beta',
             variant: [
-              'icao1946',
-              'icao1947usuk1943',
-              'icao1947arrl',
-              'ia1946',
-              'ia1947usuk1943',
-              'ia1947arrl'
+              'icao1947',
+              'icao1949',
+              'ia1947',
+              'ia1949'
             ]
           },
           {
@@ -255,13 +259,8 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Beta',
-            variant: [
-              'icao1947',
-              'icao1949',
-              'ia1947',
-              'ia1949'
-            ]
+            word: 'Brussels',
+            variant: 'icao1920'
           }
         ]
       },
@@ -287,19 +286,19 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Coco',
-            variant: [
-              'icao1947lac',
-              'ia1947lac'
-            ]
-          },
-          {
             word: 'Coca',
             variant: [
               'icao1949',
               'icao1951',
               'ia1949',
               'ia1951'
+            ]
+          },
+          {
+            word: 'Coco',
+            variant: [
+              'icao1947lac',
+              'ia1947lac'
             ]
           }
         ]
@@ -309,12 +308,15 @@ const defaultAlphabetSpecs = [
         word: 'Delta',
         override: [
           {
-            word: 'Damascus',
-            variant: 'icao1920'
+            word: 'Dado',
+            variant: [
+              'icao1947lac',
+              'ia1947lac'
+            ]
           },
           {
-            word: 'Denmark',
-            variant: 'icao1927'
+            word: 'Damascus',
+            variant: 'icao1920'
           },
           {
             word: 'Danemark',
@@ -327,13 +329,11 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Dog',
-            variant: [
-              'icao1946',
-              'icao1947usuk1943',
-              'ia1946',
-              'ia1947usuk1943'
-            ]
+            word: [
+              'Data',
+              'Dixie'
+            ],
+            variant: 'deltaairlines'
           },
           {
             word: 'David',
@@ -347,15 +347,17 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Dado',
-            variant: [
-              'icao1947lac',
-              'ia1947lac'
-            ]
+            word: 'Denmark',
+            variant: 'icao1927'
           },
           {
-            word: ['Data', 'Dixie'],
-            variant: 'deltaairlines'
+            word: 'Dog',
+            variant: [
+              'icao1946',
+              'icao1947usuk1943',
+              'ia1946',
+              'ia1947usuk1943'
+            ]
           }
         ]
       },
@@ -363,6 +365,15 @@ const defaultAlphabetSpecs = [
         character: 'e',
         word: 'Echo',
         override: [
+          {
+            word: 'Easy',
+            variant: [
+              'icao1946',
+              'icao1947usuk1943',
+              'ia1946',
+              'ia1947usuk1943'
+            ]
+          },
           {
             word: 'Ecuador',
             variant: 'icao1920'
@@ -379,15 +390,6 @@ const defaultAlphabetSpecs = [
               'icao1947ac',
               'ia1932',
               'imms1932'
-            ]
-          },
-          {
-            word: 'Easy',
-            variant: [
-              'icao1946',
-              'icao1947usuk1943',
-              'ia1946',
-              'ia1947usuk1943'
             ]
           },
           {
@@ -413,12 +415,11 @@ const defaultAlphabetSpecs = [
         word: 'Foxtrot',
         override: [
           {
-            word: 'France',
-            variant: 'icao1920'
-          },
-          {
-            word: 'Francisco',
-            variant: 'icao1927'
+            word: 'Fiesta',
+            variant: [
+              'icao1947lac',
+              'ia1947lac'
+            ]
           },
           {
             word: 'Florida',
@@ -442,17 +443,18 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'France',
+            variant: 'icao1920'
+          },
+          {
+            word: 'Francisco',
+            variant: 'icao1927'
+          },
+          {
             word: 'Freddie',
             variant: [
               'icao1947arrl',
               'ia1947arrl'
-            ]
-          },
-          {
-            word: 'Fiesta',
-            variant: [
-              'icao1947lac',
-              'ia1947lac'
             ]
           }
         ]
@@ -462,14 +464,6 @@ const defaultAlphabetSpecs = [
         word: 'Golf',
         override: [
           {
-            word: 'Greece',
-            variant: 'icao1920'
-          },
-          {
-            word: 'Gibraltar',
-            variant: 'icao1927'
-          },
-          {
             word: 'Gallipoli',
             variant: [
               'icao1932',
@@ -477,6 +471,13 @@ const defaultAlphabetSpecs = [
               'icao1947ac',
               'ia1932',
               'imms1932'
+            ]
+          },
+          {
+            word: 'Gato',
+            variant: [
+              'icao1947lac',
+              'ia1947lac'
             ]
           },
           {
@@ -491,10 +492,14 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Gato',
+            word: 'Gibraltar',
+            variant: 'icao1927'
+          },
+          {
+            word: 'Gold',
             variant: [
-              'icao1947lac',
-              'ia1947lac'
+              'icao1951',
+              'ia1951'
             ]
           },
           {
@@ -505,11 +510,8 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Gold',
-            variant: [
-              'icao1951',
-              'ia1951'
-            ]
+            word: 'Greece',
+            variant: 'icao1920'
           }
         ]
       },
@@ -525,6 +527,13 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Harry',
+            variant: [
+              'icao1947arrl',
+              'ia1947arrl'
+            ]
+          },
+          {
             word: 'Havana',
             variant: [
               'icao1932',
@@ -537,26 +546,19 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Hombre',
+            variant: [
+              'icao1947lac',
+              'ia1947lac'
+            ]
+          },
+          {
             word: 'How',
             variant: [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
               'ia1947usuk1943'
-            ]
-          },
-          {
-            word: 'Harry',
-            variant: [
-              'icao1947arrl',
-              'ia1947arrl'
-            ]
-          },
-          {
-            word: 'Hombre',
-            variant: [
-              'icao1947lac',
-              'ia1947lac'
             ]
           }
         ]
@@ -566,12 +568,10 @@ const defaultAlphabetSpecs = [
         word: 'India',
         override: [
           {
-            word: 'Italy',
+            word: 'Ida',
             variant: [
-              'icao1920',
-              'icao1927',
-              'icao1947',
-              'ia1947'
+              'icao1947arrl',
+              'ia1947arrl'
             ]
           },
           {
@@ -585,19 +585,21 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Italy',
+            variant: [
+              'icao1920',
+              'icao1927',
+              'icao1947',
+              'ia1947'
+            ]
+          },
+          {
             word: 'Item',
             variant: [
               'icao1946',
               'icao1947usuk1943',
               'ia1946',
               'ia1947usuk1943'
-            ]
-          },
-          {
-            word: 'Ida',
-            variant: [
-              'icao1947arrl',
-              'ia1947arrl'
             ]
           }
         ]
@@ -619,14 +621,6 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Jérusalem',
-            variant: [
-              'icao1932',
-              'icao1938',
-              'imms1932'
-            ]
-          },
-          {
             word: 'Jig',
             variant: [
               'icao1946',
@@ -640,6 +634,17 @@ const defaultAlphabetSpecs = [
             variant: [
               'icao1947arrl',
               'ia1947arrl'
+            ]
+          },
+          {
+            word: 'Juliet',
+            variant: 'imms2000'
+          },
+          {
+            word: 'Julietta',
+            variant: [
+              'icao1949',
+              'ia1949'
             ]
           },
           {
@@ -657,15 +662,12 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Julietta',
+            word: 'Jérusalem',
             variant: [
-              'icao1949',
-              'ia1949'
+              'icao1932',
+              'icao1938',
+              'imms1932'
             ]
-          },
-          {
-            word: 'Juliet',
-            variant: 'imms2000'
           }
         ]
       },
@@ -678,10 +680,6 @@ const defaultAlphabetSpecs = [
             variant: 'icao1920'
           },
           {
-            word: 'Kimberley',
-            variant: 'icao1927'
-          },
-          {
             word: 'Kilogramme',
             variant: [
               'icao1932',
@@ -690,6 +688,10 @@ const defaultAlphabetSpecs = [
               'ia1932',
               'imms1932'
             ]
+          },
+          {
+            word: 'Kimberley',
+            variant: 'icao1927'
           },
           {
             word: 'King',
@@ -708,6 +710,20 @@ const defaultAlphabetSpecs = [
         character: 'l',
         word: 'Lima',
         override: [
+          {
+            word: 'Lewis',
+            variant: [
+              'icao1947arrl',
+              'ia1947arrl'
+            ]
+          },
+          {
+            word: 'Liter',
+            variant: [
+              'icao1947',
+              'ia1947'
+            ]
+          },
           {
             word: 'Liverpool',
             variant: [
@@ -729,24 +745,10 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Lewis',
-            variant: [
-              'icao1947arrl',
-              'ia1947arrl'
-            ]
-          },
-          {
             word: 'Luis',
             variant: [
               'icao1947lac',
               'ia1947lac'
-            ]
-          },
-          {
-            word: 'Liter',
-            variant: [
-              'icao1947',
-              'ia1947'
             ]
           }
         ]
@@ -755,10 +757,6 @@ const defaultAlphabetSpecs = [
         character: 'm',
         word: 'Mike',
         override: [
-          {
-            word: 'Madrid',
-            variant: 'icao1920'
-          },
           {
             word: 'Madagascar',
             variant: [
@@ -771,10 +769,14 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Mary',
+            word: 'Madrid',
+            variant: 'icao1920'
+          },
+          {
+            word: 'Maestro',
             variant: [
-              'icao1947arrl',
-              'ia1947arrl'
+              'icao1947',
+              'ia1947'
             ]
           },
           {
@@ -785,10 +787,10 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Maestro',
+            word: 'Mary',
             variant: [
-              'icao1947',
-              'ia1947'
+              'icao1947arrl',
+              'ia1947arrl'
             ]
           },
           {
@@ -807,11 +809,29 @@ const defaultAlphabetSpecs = [
         word: 'November',
         override: [
           {
+            word: 'Nan',
+            variant: [
+              'icao1946',
+              'icao1947usuk1943',
+              'ia1946',
+              'ia1947usuk1943'
+            ]
+          },
+          {
             word: 'Nancy',
             variant: [
               'icao1920',
               'icao1947arrl',
               'ia1947arrl'
+            ]
+          },
+          {
+            word: 'Nectar',
+            variant: [
+              'icao1949',
+              'icao1951',
+              'ia1949',
+              'ia1951'
             ]
           },
           {
@@ -834,33 +854,6 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Nan',
-            variant: [
-              'icao1946',
-              'icao1947usuk1943',
-              'ia1946',
-              'ia1947usuk1943'
-            ]
-          },
-          {
-            word: 'Norma',
-            variant: [
-              'icao1947lac',
-              'icao1947',
-              'ia1947lac',
-              'ia1947'
-            ]
-          },
-          {
-            word: 'Nectar',
-            variant: [
-              'icao1949',
-              'icao1951',
-              'ia1949',
-              'ia1951'
-            ]
-          },
-          {
             word: 'Nickel',
             variant: [
               {
@@ -871,7 +864,15 @@ const defaultAlphabetSpecs = [
                 name: 'ia1946',
                 primary: false
               }
-
+            ]
+          },
+          {
+            word: 'Norma',
+            variant: [
+              'icao1947lac',
+              'icao1947',
+              'ia1947lac',
+              'ia1947'
             ]
           }
         ]
@@ -881,12 +882,26 @@ const defaultAlphabetSpecs = [
         word: 'Oscar',
         override: [
           {
-            word: 'Ostend',
-            variant: 'icao1920'
+            word: 'Oboe',
+            variant: [
+              'icao1946',
+              'icao1947usuk1943',
+              'ia1946',
+              'ia1947usuk1943'
+            ]
           },
           {
             word: 'Ontario',
             variant: 'icao1927'
+          },
+          {
+            word: 'Opera',
+            variant: [
+              'icao1947lac',
+              'icao1947',
+              'ia1947lac',
+              'ia1947'
+            ]
           },
           {
             word: 'Oslo',
@@ -899,28 +914,14 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Oboe',
-            variant: [
-              'icao1946',
-              'icao1947usuk1943',
-              'ia1946',
-              'ia1947usuk1943'
-            ]
+            word: 'Ostend',
+            variant: 'icao1920'
           },
           {
             word: 'Otto',
             variant: [
               'icao1947arrl',
               'ia1947arrl'
-            ]
-          },
-          {
-            word: 'Opera',
-            variant: [
-              'icao1947lac',
-              'icao1947',
-              'ia1947lac',
-              'ia1947'
             ]
           }
         ]
@@ -941,8 +942,13 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Portugal',
-            variant: 'icao1927'
+            word: 'Peru',
+            variant: [
+              'icao1947lac',
+              'icao1947',
+              'ia1947lac',
+              'ia1947'
+            ]
           },
           {
             word: 'Peter',
@@ -956,20 +962,15 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Peru',
-            variant: [
-              'icao1947lac',
-              'icao1947',
-              'ia1947lac',
-              'ia1947'
-            ]
-          },
-          {
             word: 'Polka',
             variant: [
               'icao1949',
               'ia1949'
             ]
+          },
+          {
+            word: 'Portugal',
+            variant: 'icao1927'
           }
         ]
       },
@@ -977,15 +978,6 @@ const defaultAlphabetSpecs = [
         character: 'q',
         word: 'Quebec',
         override: [
-          {
-            word: 'Québec',
-            variant: [
-              'icao1932',
-              'icao1938',
-              'ia1932',
-              'imms1932'
-            ]
-          },
           {
             word: 'Queen',
             variant: [
@@ -996,6 +988,15 @@ const defaultAlphabetSpecs = [
               'ia1947usuk1943',
               'ia1947arrl'
             ]
+          },
+          {
+            word: 'Québec',
+            variant: [
+              'icao1932',
+              'icao1938',
+              'ia1932',
+              'imms1932'
+            ]
           }
         ]
       },
@@ -1004,21 +1005,14 @@ const defaultAlphabetSpecs = [
         word: 'Romeo',
         override: [
           {
-            word: 'Rome',
-            variant: 'icao1920'
-          },
-          {
             word: 'Rivoli',
             variant: 'icao1927'
           },
           {
-            word: 'Roma',
+            word: 'Robert',
             variant: [
-              'icao1932',
-              'icao1938',
-              'icao1947ac',
-              'ia1932',
-              'imms1932'
+              'icao1947arrl',
+              'ia1947arrl'
             ]
           },
           {
@@ -1033,11 +1027,18 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Robert',
+            word: 'Roma',
             variant: [
-              'icao1947arrl',
-              'ia1947arrl'
+              'icao1932',
+              'icao1938',
+              'icao1947ac',
+              'ia1932',
+              'imms1932'
             ]
+          },
+          {
+            word: 'Rome',
+            variant: 'icao1920'
           },
           {
             word: 'Rosa',
@@ -1053,8 +1054,18 @@ const defaultAlphabetSpecs = [
         word: 'Sierra',
         override: [
           {
-            word: 'Sardinia',
-            variant: 'icao1920'
+            word: 'Sail',
+            variant: [
+              'icao1946',
+              'ia1946'
+            ]
+          },
+          {
+            word: 'Santa',
+            variant: [
+              'icao1947',
+              'ia1947'
+            ]
           },
           {
             word: 'Santiago',
@@ -1068,17 +1079,22 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Sail',
+            word: 'Sara',
             variant: [
-              'icao1946',
-              'ia1946'
+              'icao1947lac',
+              'ia1947lac'
             ]
+          },
+          {
+            word: 'Sardinia',
+            variant: 'icao1920'
           },
           {
             word: 'Sugar',
             variant: [
               'icao1947usuk1943',
-              'ia1947usuk1943', {
+              'ia1947usuk1943',
+              {
                 name: 'icao1946',
                 primary: false
               },
@@ -1094,20 +1110,6 @@ const defaultAlphabetSpecs = [
               'icao1947arrl',
               'ia1947arrl'
             ]
-          },
-          {
-            word: 'Sara',
-            variant: [
-              'icao1947lac',
-              'ia1947lac'
-            ]
-          },
-          {
-            word: 'Santa',
-            variant: [
-              'icao1947',
-              'ia1947'
-            ]
           }
         ]
       },
@@ -1115,23 +1117,6 @@ const defaultAlphabetSpecs = [
         character: 't',
         word: 'Tango',
         override: [
-          {
-            word: 'Tokio',
-            variant: [
-              'icao1920',
-              'icao1927'
-            ]
-          },
-          {
-            word: 'Tripoli',
-            variant: [
-              'icao1932',
-              'icao1938',
-              'icao1947ac',
-              'ia1932',
-              'imms1932'
-            ]
-          },
           {
             word: 'Tare',
             variant: [
@@ -1151,10 +1136,27 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Tokio',
+            variant: [
+              'icao1920',
+              'icao1927'
+            ]
+          },
+          {
             word: 'Tomas',
             variant: [
               'icao1947lac',
               'ia1947lac'
+            ]
+          },
+          {
+            word: 'Tripoli',
+            variant: [
+              'icao1932',
+              'icao1938',
+              'icao1947ac',
+              'ia1932',
+              'imms1932'
             ]
           }
         ]
@@ -1163,25 +1165,6 @@ const defaultAlphabetSpecs = [
         character: 'u',
         word: 'Uniform',
         override: [
-          {
-            word: 'Uruguay',
-            variant: [
-              'icao1920',
-              'icao1927',
-              'icao1947lac',
-              'ia1947lac'
-            ]
-          },
-          {
-            word: 'Upsala',
-            variant: [
-              'icao1932',
-              'icao1938',
-              'icao1947ac',
-              'ia1932',
-              'imms1932'
-            ]
-          },
           {
             word: 'Uncle',
             variant: [
@@ -1203,10 +1186,29 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Upsala',
+            variant: [
+              'icao1932',
+              'icao1938',
+              'icao1947ac',
+              'ia1932',
+              'imms1932'
+            ]
+          },
+          {
             word: 'Ursula',
             variant: [
               'icao1947',
               'ia1947'
+            ]
+          },
+          {
+            word: 'Uruguay',
+            variant: [
+              'icao1920',
+              'icao1927',
+              'icao1947lac',
+              'ia1947lac'
             ]
           }
         ]
@@ -1216,13 +1218,6 @@ const defaultAlphabetSpecs = [
         word: 'Victor',
         override: [
           {
-            word: 'Victoria',
-            variant: [
-              'icao1920',
-              'icao1927'
-            ]
-          },
-          {
             word: 'Valencia',
             variant: [
               'icao1932',
@@ -1230,6 +1225,13 @@ const defaultAlphabetSpecs = [
               'icao1947ac',
               'ia1932',
               'imms1932'
+            ]
+          },
+          {
+            word: 'Victoria',
+            variant: [
+              'icao1920',
+              'icao1927'
             ]
           }
         ]
@@ -1251,6 +1253,15 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
+            word: 'Whisky',
+            variant: [
+              'ia1956',
+              'imms1965',
+              'imms1967',
+              'imms2000'
+            ]
+          },
+          {
             word: 'William',
             variant: [
               'icao1946',
@@ -1260,15 +1271,6 @@ const defaultAlphabetSpecs = [
               'ia1947usuk1943',
               'ia1947arrl'
             ]
-          },
-          {
-            word: 'Whisky',
-            variant: [
-              'ia1956',
-              'imms1965',
-              'imms1967',
-              'imms2000'
-            ]
           }
         ]
       },
@@ -1276,31 +1278,6 @@ const defaultAlphabetSpecs = [
         character: 'x',
         word: 'X-ray',
         override: [
-          {
-            word: 'Xaintrie',
-            variant: 'icao1920'
-          },
-          {
-            word: 'Xantippe',
-            variant: 'icao1927'
-          },
-          {
-            word: 'Xanthippe',
-            variant: [
-              'icao1932',
-              'icao1938',
-              'icao1947ac',
-              'ia1932',
-              'imms1932'
-            ]
-          },
-          {
-            word: 'Xray',
-            variant: [
-              'icao1947usuk1943',
-              'ia1947usuk1943'
-            ]
-          },
           {
             word: 'Equis',
             variant: [
@@ -1314,6 +1291,31 @@ const defaultAlphabetSpecs = [
               'icao1951',
               'ia1951'
             ]
+          },
+          {
+            word: 'Xaintrie',
+            variant: 'icao1920'
+          },
+          {
+            word: 'Xanthippe',
+            variant: [
+              'icao1932',
+              'icao1938',
+              'icao1947ac',
+              'ia1932',
+              'imms1932'
+            ]
+          },
+          {
+            word: 'Xantippe',
+            variant: 'icao1927'
+          },
+          {
+            word: 'Xray',
+            variant: [
+              'icao1947usuk1943',
+              'ia1947usuk1943'
+            ]
           }
         ]
       },
@@ -1322,15 +1324,10 @@ const defaultAlphabetSpecs = [
         word: 'Yankee',
         override: [
           {
-            word: 'Yokohama',
+            word: 'Yankey',
             variant: [
-              'icao1920',
-              'icao1927',
-              'icao1932',
-              'icao1938',
-              'icao1947ac',
-              'ia1932',
-              'imms1932'
+              'icao1949',
+              'ia1949'
             ]
           },
           {
@@ -1343,10 +1340,15 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Young',
+            word: 'Yokohama',
             variant: [
-              'icao1947arrl',
-              'ia1947arrl'
+              'icao1920',
+              'icao1927',
+              'icao1932',
+              'icao1938',
+              'icao1947ac',
+              'ia1932',
+              'imms1932'
             ]
           },
           {
@@ -1364,10 +1366,10 @@ const defaultAlphabetSpecs = [
             ]
           },
           {
-            word: 'Yankey',
+            word: 'Young',
             variant: [
-              'icao1949',
-              'ia1949'
+              'icao1947arrl',
+              'ia1947arrl'
             ]
           }
         ]
@@ -1379,25 +1381,6 @@ const defaultAlphabetSpecs = [
           {
             word: 'Zanzibar',
             variant: 'icao1920'
-          },
-          {
-            word: 'Zululand',
-            variant: 'icao1927'
-          },
-          {
-            word: 'Zürich',
-            variant: [
-              'icao1932',
-              'ia1932'
-            ]
-          },
-          {
-            word: 'Zurich',
-            variant: [
-              'icao1938',
-              'icao1947ac',
-              'imms1932'
-            ]
           },
           {
             word: 'Zebra',
@@ -1418,6 +1401,25 @@ const defaultAlphabetSpecs = [
               'icao1947lac',
               'ia1947lac'
             ]
+          },
+          {
+            word: 'Zululand',
+            variant: 'icao1927'
+          },
+          {
+            word: 'Zurich',
+            variant: [
+              'icao1938',
+              'icao1947ac',
+              'imms1932'
+            ]
+          },
+          {
+            word: 'Zürich',
+            variant: [
+              'icao1932',
+              'ia1932'
+            ]
           }
         ]
       },
@@ -1426,15 +1428,15 @@ const defaultAlphabetSpecs = [
         word: 'Zero',
         override: [
           {
+            word: 'Nadazero',
+            variant: 'imms1967'
+          },
+          {
             word: 'Zeero',
             variant: [
               'imms1965',
               'imms2000'
             ]
-          },
-          {
-            word: 'Nadazero',
-            variant: 'imms1967'
           }
         ]
       },
@@ -1442,6 +1444,10 @@ const defaultAlphabetSpecs = [
         character: '1',
         word: 'One',
         override: [
+          {
+            word: 'Unaone',
+            variant: 'imms1967'
+          },
           {
             word: 'Wun',
             variant: [
@@ -1451,10 +1457,6 @@ const defaultAlphabetSpecs = [
               'imms1965',
               'imms2000'
             ]
-          },
-          {
-            word: 'Unaone',
-            variant: 'imms1967'
           }
         ]
       },
@@ -1462,6 +1464,10 @@ const defaultAlphabetSpecs = [
         character: '2',
         word: 'Two',
         override: [
+          {
+            word: 'Bissotwo',
+            variant: 'imms1967'
+          },
           {
             word: 'Too',
             variant: [
@@ -1471,10 +1477,6 @@ const defaultAlphabetSpecs = [
               'imms1965',
               'imms2000'
             ]
-          },
-          {
-            word: 'Bissotwo',
-            variant: 'imms1967'
           }
         ]
       },
@@ -1482,6 +1484,10 @@ const defaultAlphabetSpecs = [
         character: '3',
         word: 'Three',
         override: [
+          {
+            word: 'Terrathree',
+            variant: 'imms1967'
+          },
           {
             word: 'Thuh-ree',
             variant: [
@@ -1496,10 +1502,6 @@ const defaultAlphabetSpecs = [
               'imms1965',
               'imms2000'
             ]
-          },
-          {
-            word: 'Terrathree',
-            variant: 'imms1967'
           }
         ]
       },
@@ -1574,17 +1576,17 @@ const defaultAlphabetSpecs = [
         word: 'Eight',
         override: [
           {
-            word: 'Ate',
-            variant: [
-              'icao1947usuk1943',
-              'ia1947usuk1943'
-            ]
-          },
-          {
             word: 'Ait',
             variant: [
               'imms1965',
               'imms2000'
+            ]
+          },
+          {
+            word: 'Ate',
+            variant: [
+              'icao1947usuk1943',
+              'ia1947usuk1943'
             ]
           },
           {
@@ -1696,7 +1698,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ij',
-        word: ['IJmuiden', 'IJsbrand']
+        word: [
+          'IJmuiden',
+          'IJsbrand'
+        ]
       },
       {
         character: 'i',
@@ -1704,7 +1709,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'j',
-        word: ['Johan', 'Jacob']
+        word: [
+          'Johan',
+          'Jacob'
+        ]
       },
       {
         character: 'k',
@@ -1712,7 +1720,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'l',
-        word: ['Lodewijk', 'Leo']
+        word: [
+          'Lodewijk',
+          'Leo'
+        ]
       },
       {
         character: 'm',
@@ -1732,11 +1743,17 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'q',
-        word: ['Quirinius', 'Quinten']
+        word: [
+          'Quirinius',
+          'Quinten'
+        ]
       },
       {
         character: 'r',
-        word: ['Richard', 'Rudolf']
+        word: [
+          'Richard',
+          'Rudolf'
+        ]
       },
       {
         character: 's',
@@ -1809,7 +1826,7 @@ const defaultAlphabetSpecs = [
       {
         character: '9',
         word: 'Negen'
-      },
+      }
     ]
   },
   {
@@ -1862,7 +1879,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'k',
-        word: ['Kaufmann', 'Konrad']
+        word: [
+          'Kaufmann',
+          'Konrad'
+        ]
       },
       {
         character: 'l',
@@ -1894,7 +1914,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 's',
-        word: ['Samuel', 'Siegfried']
+        word: [
+          'Samuel',
+          'Siegfried'
+        ]
       },
       {
         character: 't',
@@ -1914,7 +1937,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'x',
-        word: ['Xanthippe', 'Xaver']
+        word: [
+          'Xanthippe',
+          'Xaver'
+        ]
       },
       {
         character: 'y',
@@ -1922,7 +1948,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'z',
-        word: ['Zacharias', 'Zürich']
+        word: [
+          'Zacharias',
+          'Zürich'
+        ]
       },
       {
         character: 'ä',
@@ -1930,15 +1959,24 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ö',
-        word: ['Ökonom', 'Österreich']
+        word: [
+          'Ökonom',
+          'Österreich'
+        ]
       },
       {
         character: 'ü',
-        word: ['Übermut', 'Übel']
+        word: [
+          'Übermut',
+          'Übel'
+        ]
       },
       {
         character: 'ß',
-        word: ['Eszett', 'Scharfes S']
+        word: [
+          'Eszett',
+          'Scharfes S'
+        ]
       },
       {
         character: '0',
@@ -1979,7 +2017,7 @@ const defaultAlphabetSpecs = [
       {
         character: '9',
         word: 'Neun'
-      },
+      }
     ]
   },
   {
@@ -2158,7 +2196,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'а',
-        word: ['Анна', 'Антон']
+        word: [
+          'Анна',
+          'Антон'
+        ]
       },
       {
         character: 'б',
@@ -2170,7 +2211,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'г',
-        word: ['Григорий', 'Галина']
+        word: [
+          'Григорий',
+          'Галина'
+        ]
       },
       {
         character: 'д',
@@ -2186,11 +2230,17 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ж',
-        word: ['Женя', 'Жук']
+        word: [
+          'Женя',
+          'Жук'
+        ]
       },
       {
         character: 'з',
-        word: ['Зинаида', 'Зоя']
+        word: [
+          'Зинаида',
+          'Зоя'
+        ]
       },
       {
         character: 'и',
@@ -2198,11 +2248,17 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'й',
-        word: ['Иван краткий', 'Йот']
+        word: [
+          'Иван краткий',
+          'Йот'
+        ]
       },
       {
         character: 'к',
-        word: ['Константин', 'Киловатт']
+        word: [
+          'Константин',
+          'Киловатт'
+        ]
       },
       {
         character: 'л',
@@ -2210,7 +2266,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'м',
-        word: ['Михаил', 'Мария']
+        word: [
+          'Михаил',
+          'Мария'
+        ]
       },
       {
         character: 'н',
@@ -2226,15 +2285,24 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'р',
-        word: ['Роман', 'Радио']
+        word: [
+          'Роман',
+          'Радио'
+        ]
       },
       {
         character: 'с',
-        word: ['Семён', 'Сергей']
+        word: [
+          'Семён',
+          'Сергей'
+        ]
       },
       {
         character: 'т',
-        word: ['Татьяна', 'Тамара']
+        word: [
+          'Татьяна',
+          'Тамара'
+        ]
       },
       {
         character: 'у',
@@ -2250,7 +2318,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ц',
-        word: ['Цапля', 'Центр']
+        word: [
+          'Цапля',
+          'Центр'
+        ]
       },
       {
         character: 'ч',
@@ -2270,7 +2341,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ы',
-        word: ['Еры', 'Игрек']
+        word: [
+          'Еры',
+          'Игрек'
+        ]
       },
       {
         character: 'ь',
@@ -2278,7 +2352,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'э',
-        word: ['Эхо', 'Эмма']
+        word: [
+          'Эхо',
+          'Эмма'
+        ]
       },
       {
         character: 'ю',
@@ -2334,7 +2411,6 @@ const defaultAlphabetSpecs = [
       }
     ]
   }
-  /* eslint-enable no-multi-spaces */
 ]
 
 const defaultSpaceWord = '(space)'
