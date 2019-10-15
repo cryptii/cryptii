@@ -2532,9 +2532,4 @@ export default class SpellingAlphabetEncoder extends Encoder {
       }
     }
   }
-
-  setReverse (reverse) {
-    this.getSetting('variant').setVisible(!reverse)
-    return super.setReverse(reverse)
-  }
 }
