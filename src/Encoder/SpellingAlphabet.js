@@ -17,7 +17,7 @@ const defaultAlphabetSpecs = [
     variants: [
       {
         name: 'icao2008',
-        label: 'Latest - NATO/ICAO, 2008 - Present',
+        label: 'NATO/ICAO, 2008 - Present',
         description: '2008 – present ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code',
       },
       {
@@ -2431,70 +2431,90 @@ export default class SpellingAlphabetEncoder extends Encoder {
    * @return {SpellingAlphabetEncoder} Fluent interface
    */
   buildTranslationMap () {
-    const name = this.getSettingValue('alphabet')
-    const spec = this._alphabetSpecs.find(spec => spec.name === name)
-    if (spec === undefined) {
-      throw new Error(`Alphabet with name '${name}' is not defined`)
-    }
+    const spec = this._getAlphabetSpec()
 
     const variantSetting = this.getSetting('variant')
-    const variants = spec.variants || [{
-      name: '',
-      value: ''
-    }]
+    const universalVariant = {
+      name: 'universal',
+      label: 'Universal',
+      description: 'Uses the most commonly used word for encoding\nCombines all known words for decoding.'
+    }
+    const variants = [universalVariant, ...(spec.variants || [])]
 
     variantSetting.setElements(variants.map(v => v.name), variants.map(v => v.label), variants.map(v => v.description), false)
+    variantSetting.setValue('universal')
+    this._applyVariantOverrides()
 
-    // Build encode/decode maps
+    return this
+  }
+
+  _getAlphabetSpec() {
+      const alphabetName = this.getSettingValue('alphabet');
+      const spec = this._alphabetSpecs.find(spec => spec.name === alphabetName);
+      if (spec === undefined) {
+        throw new Error(`Alphabet with name '${alphabetName}' is not defined`);
+      }
+      return spec;
+  }
+
+  _applyVariantOverrides () {
+    const spec = this._getAlphabetSpec()
+    const alphabetName = this.getSettingValue('alphabet');
+    const variantName = this.getSettingValue('variant');
     const characterMap = {};
     const wordMap = {}
 
-    this._variantOverridesMap = {}
-
     for (let mapping of spec.mappings) {
       const characters = wrapInArray(mapping.character)
-      const words = wrapInArray(mapping.word)
+      let words = wrapInArray(mapping.word)
       const overrides = wrapInArray(mapping.override)
 
+      let primaryWord = null
+      let secondaryWords = []
       for (let override of overrides) {
         const overrideWords = wrapInArray(override.word)
-        const variants = wrapInArray(override.variant)
-        const overrideWord = overrideWords[0]
-        words.push(...overrideWords)
-
-        for (let variant of variants) {
-          if (this._variantOverridesMap[variant] === undefined) {
-            this._variantOverridesMap[variant] = []
+        if (variantName === 'universal') {
+          secondaryWords.push(...overrideWords)
+        }
+        else {
+          const variants = wrapInArray(override.variant).filter(v => v === variantName || v.name === variantName)
+          if (variants.length > 1) {
+            throw new Error(`Alphabet with name '${alphabetName}' has override with word '${overrideWords[0]}' where variant '${variantName}' specified more than once`);
           }
-
-          for (let variantOverride of this._variantOverridesMap[variant]) {
-            const duplicatedCharacter = variantOverride.characters.find(character => characters.includes(character))
-            if (duplicatedCharacter) {
-              throw new Error(`Alphabet with name '${name}' has conflicting mappings for variant '${variant}' with duplicated character '${duplicatedCharacter}'`)
-            }
-
-            if (variantOverride.word === overrideWord) {
-              throw new Error(`Alphabet with name '${name}' has conflicting mappings for variant '${variant}' with duplicated word '${duplicatedCharacter}'`)
-            }
+          const variant = variants[0]
+          if (!variant) {
+            continue
           }
-          
-          this._variantOverridesMap[variant].push({
-            characters: characters,
-            word: overrideWord
-          })
+          const isPrimary = typeof variant === 'string' || variant.primary === true
+          if (isPrimary) {
+            if (primaryWord === null) {
+              primaryWord = overrideWords[0]
+              secondaryWords.push(...overrideWords.slice(1))
+            } else {
+              throw new Error(`Alphabet with name '${alphabetName}' has multiple primary words for variant '${variantName}'. Some of them: '${primaryWord}', '${overrideWords[0]}'`);
+            }
+          } else {
+            secondaryWords.push(...overrideWords)
+          }
         }
       }
 
+      if (variantName !== 'universal' && primaryWord !== null) {
+        words = [primaryWord]
+      }
+
+      words.push(...secondaryWords)
+
       for (let character of characters) {
         if (characterMap[character] !== undefined) {
-          throw new Error(`Alphabet with name '${name}' has multiple mappings with character '${character}'`)
+          throw new Error(`Alphabet with name '${alphabetName}' has multiple mappings with character '${character}'`)
         }
         characterMap[character] = words[0]
       }
 
       for (let word of words) {
         if (wordMap[word] !== undefined) {
-          throw new Error(`Alphabet with name '${name}' has multiple mappings with word '${word}'`)
+          throw new Error(`Alphabet with name '${alphabetName}' has multiple mappings with word '${word}'`)
         }
         wordMap[word] = characters[0]
       }
@@ -2507,29 +2527,5 @@ export default class SpellingAlphabetEncoder extends Encoder {
 
     this._characterMap = characterMap
     this._wordMap = wordMap
-
-    this._characterMapNoOverrides = {}
-    this._wordMapNoOverrides = {}
-    Object.assign(this._characterMapNoOverrides, this._characterMap)
-    Object.assign(this._wordMapNoOverrides, this._wordMap)
-
-    variantSetting.setValue(variants[0].name)
-
-    return this
-  }
-
-  _applyVariantOverrides () {
-    Object.assign(this._characterMap, this._characterMapNoOverrides)
-    Object.assign(this._wordMap, this._wordMapNoOverrides)
-    const variant = this.getSettingValue('variant')
-    let variantOverrides = this._variantOverridesMap[variant]
-    if (variantOverrides) {
-      for (let variantOverride of variantOverrides) {
-        for (let character of variantOverride.characters) {
-          this._characterMap[character] = variantOverride.word
-        }
-        this._wordMap[variantOverride.word] = variantOverride.characters[0]
-      }
-    }
   }
 }
