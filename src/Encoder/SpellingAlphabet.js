@@ -3368,7 +3368,8 @@ const defaultAlphabetSpecs = [
               'tel1942westernunion',
               'radtel1930arrl',
               'radtel1932arrl'
-            ]
+            ],
+            skipInUniversalEncoder: true
           },
           {
             word: 'Zeta',
@@ -4615,7 +4616,9 @@ export default class SpellingAlphabetEncoder extends Encoder {
       for (let override of overrides) {
         const overrideWords = wrapInArray(override.word)
         if (variantName === 'universal') {
-          secondaryWords.push(...overrideWords)
+          if (override.skipInUniversalEncoder !== true) {
+            secondaryWords.push(...overrideWords)
+          }
         }
         else {
           const variants = wrapInArray(override.variant).filter(v => v === variantName || v.name === variantName)
