@@ -4574,6 +4574,18 @@ const defaultAlphabetSpecs = [
   {
     name: 'swedish',
     label: 'Swedish',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'swedish',
+        label: 'Swedish Armed Forces radio alphabet',
+        description: 'Swedish Armed Forces radio alphabet'
+      }
+    ],
     mappings: [
       {
         character: ' ',
@@ -4645,7 +4657,14 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'q',
-        word: 'Qvintus'
+        word: 'Qvintus',
+        override: {
+          word: 'Quintus',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 'r',
