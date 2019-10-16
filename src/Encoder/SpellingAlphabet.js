@@ -9,6 +9,20 @@ const meta = {
   type: 'encoder'
 }
 
+/* Sources used:
+https://en.wikipedia.org/wiki/NATO_phonetic_alphabet
+https://en.wikipedia.org/wiki/Spelling_alphabet
+TODO https://en.wikipedia.org/wiki/Allied_military_phonetic_spelling_alphabets
+TODO https://en.wikipedia.org/wiki/APCO_radiotelephony_spelling_alphabet
+https://en.wikipedia.org/wiki/Finnish_Armed_Forces_radio_alphabet
+https://en.wikipedia.org/wiki/Greek_spelling_alphabet
+https://en.wikipedia.org/wiki/Japanese_radiotelephony_alphabet
+https://en.wikipedia.org/wiki/Korean_spelling_alphabet
+https://en.wikipedia.org/wiki/Russian_spelling_alphabet
+https://en.wikipedia.org/wiki/Swedish_Armed_Forces_radio_alphabet
+TODO http://spellout.org/alphabets
+TODO https://spellingalphabets.com/
+*/ 
 const defaultAlphabetSpecs = [
   {
     name: 'czech',
