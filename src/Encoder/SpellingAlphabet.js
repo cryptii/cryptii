@@ -145,6 +145,400 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'danish',
+    label: 'Danish',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(mellemrumstasten)'
+      },
+      {
+        character: 'a',
+        word: 'Anna'
+      },
+      {
+        character: 'å',
+        word: 'Åse'
+      },
+      {
+        character: 'æ',
+        word: 'Ægir'
+      },
+      {
+        character: 'b',
+        word: 'Bernhard'
+      },
+      {
+        character: 'c',
+        word: 'Cecilie'
+      },
+      {
+        character: 'd',
+        word: 'David'
+      },
+      {
+        character: 'e',
+        word: 'Erik'
+      },
+      {
+        character: 'f',
+        word: 'Frederik'
+      },
+      {
+        character: 'g',
+        word: 'Georg'
+      },
+      {
+        character: 'h',
+        word: 'Hans'
+      },
+      {
+        character: 'i',
+        word: 'Ida'
+      },
+      {
+        character: 'j',
+        word: 'Johan'
+      },
+      {
+        character: 'k',
+        word: 'Karen'
+      },
+      {
+        character: 'l',
+        word: 'Ludvig'
+      },
+      {
+        character: 'm',
+        word: 'Mari'
+      },
+      {
+        character: 'n',
+        word: 'Nikolaj'
+      },
+      {
+        character: 'o',
+        word: 'Odin'
+      },
+      {
+        character: 'ø',
+        word: [
+          'Øresund',
+          'Ødis'
+        ]
+      },
+      {
+        character: 'p',
+        word: 'Peter'
+      },
+      {
+        character: 'q',
+        word: 'Quintus'
+      },
+      {
+        character: 'r',
+        word: 'Rasmus'
+      },
+      {
+        character: 's',
+        word: 'Søren'
+      },
+      {
+        character: 't',
+        word: 'Theodor'
+      },
+      {
+        character: 'u',
+        word: 'Ulla'
+      },
+      {
+        character: 'v',
+        word: 'Viggo'
+      },
+      {
+        character: 'w',
+        word: 'William'
+      },
+      {
+        character: 'x',
+        word: 'Xerxes'
+      },
+      {
+        character: 'y',
+        word: 'Yrsa'
+      },
+      {
+        character: 'z',
+        word: 'Zackarias'
+      }
+    ]
+  },
+  {
+    name: 'dutch',
+    label: 'Dutch',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'orthography',
+        label: 'Orthography',
+        description: 'Orthography'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(spatiebalk)'
+      },
+      {
+        character: 'a',
+        word: 'Anton',
+        override: {
+          word: 'Anna',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
+      },
+      {
+        character: 'b',
+        word: 'Bernhard'
+      },
+      {
+        character: 'c',
+        word: 'Cornelis'
+      },
+      {
+        character: 'd',
+        word: 'Dirk'
+      },
+      {
+        character: 'e',
+        word: 'Eduard'
+      },
+      {
+        character: 'f',
+        word: 'Ferdinand'
+      },
+      {
+        character: 'g',
+        word: 'Gerard'
+      },
+      {
+        character: 'h',
+        word: 'Hendrik'
+      },
+      {
+        character: 'ij',
+        word: [
+          'IJmuiden',
+          'IJsbrand'
+        ]
+      },
+      {
+        character: 'i',
+        word: 'Izaak'
+      },
+      {
+        character: 'j',
+        word: [
+          'Johan',
+          'Jacob'
+        ],
+        override: {
+          word: 'Julius',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
+      },
+      {
+        character: 'k',
+        word: 'Karel'
+      },
+      {
+        character: 'l',
+        word: [
+          'Lodewijk',
+          'Leo'
+        ]
+      },
+      {
+        character: 'm',
+        word: 'Maria'
+      },
+      {
+        character: 'n',
+        word: 'Nico'
+      },
+      {
+        character: 'o',
+        word: 'Otto'
+      },
+      {
+        character: 'p',
+        word: 'Pieter'
+      },
+      {
+        character: 'q',
+        word: [
+          'Quirinius',
+          'Quinten'
+        ],
+        override: {
+          word: 'Quotiënt',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
+      },
+      {
+        character: 'r',
+        word: [
+          'Richard',
+          'Rudolf'
+        ]
+      },
+      {
+        character: 's',
+        word: 'Simon'
+      },
+      {
+        character: 't',
+        word: 'Theodoor'
+      },
+      {
+        character: 'u',
+        word: 'Utrecht'
+      },
+      {
+        character: 'v',
+        word: 'Victor'
+      },
+      {
+        character: 'w',
+        word: 'Willem'
+      },
+      {
+        character: 'x',
+        word: 'Xantippe'
+      },
+      {
+        character: 'y',
+        word: 'Ypsilon'
+      },
+      {
+        character: 'z',
+        word: 'Zacharias',
+        override: {
+          word: 'Zaandam',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
+      },
+      {
+        character: '0',
+        word: null,
+        override: {
+          word: 'Nul',
+          variant: 'full'
+        }
+      },
+      {
+        character: '1',
+        word: null,
+        override: {
+          word: 'Een',
+          variant: 'full'
+        }
+      },
+      {
+        character: '2',
+        word: null,
+        override: {
+          word: 'Twee',
+          variant: 'full'
+        }
+      },
+      {
+        character: '3',
+        word: null,
+        override: {
+          word: 'Drie',
+          variant: 'full'
+        }
+      },
+      {
+        character: '4',
+        word: null,
+        override: {
+          word: 'Vier',
+          variant: 'full'
+        }
+      },
+      {
+        character: '5',
+        word: null,
+        override: {
+          word: 'Vijf',
+          variant: 'full'
+        }
+      },
+      {
+        character: '6',
+        word: null,
+        override: {
+          word: 'Zes',
+          variant: 'full'
+        }
+      },
+      {
+        character: '7',
+        word: null,
+        override: {
+          word: 'Zeven',
+          variant: 'full'
+        }
+      },
+      {
+        character: '8',
+        word: null,
+        override: {
+          word: 'Acht',
+          variant: 'full'
+        }
+      },
+      {
+        character: '9',
+        word: null,
+        override: {
+          word: 'Negen',
+          variant: 'full'
+        }
+      }
+    ]
+  },
+  {
     name: 'english',
     label: 'English',
     variants: [
@@ -4153,400 +4547,6 @@ const defaultAlphabetSpecs = [
             'tel1947itc',
             'tel1958itc'
           ]
-        }
-      }
-    ]
-  },
-  {
-    name: 'danish',
-    label: 'Danish',
-    variants: [
-      {
-        name: 'full',
-        label: 'All Characters',
-        description: 'All possible characters'
-      },
-      {
-        name: 'alphabet',
-        label: 'Spelling alphabet',
-        description: 'Spelling alphabet'
-      }
-    ],
-    mappings: [
-      {
-        character: ' ',
-        word: '(mellemrumstasten)'
-      },
-      {
-        character: 'a',
-        word: 'Anna'
-      },
-      {
-        character: 'å',
-        word: 'Åse'
-      },
-      {
-        character: 'æ',
-        word: 'Ægir'
-      },
-      {
-        character: 'b',
-        word: 'Bernhard'
-      },
-      {
-        character: 'c',
-        word: 'Cecilie'
-      },
-      {
-        character: 'd',
-        word: 'David'
-      },
-      {
-        character: 'e',
-        word: 'Erik'
-      },
-      {
-        character: 'f',
-        word: 'Frederik'
-      },
-      {
-        character: 'g',
-        word: 'Georg'
-      },
-      {
-        character: 'h',
-        word: 'Hans'
-      },
-      {
-        character: 'i',
-        word: 'Ida'
-      },
-      {
-        character: 'j',
-        word: 'Johan'
-      },
-      {
-        character: 'k',
-        word: 'Karen'
-      },
-      {
-        character: 'l',
-        word: 'Ludvig'
-      },
-      {
-        character: 'm',
-        word: 'Mari'
-      },
-      {
-        character: 'n',
-        word: 'Nikolaj'
-      },
-      {
-        character: 'o',
-        word: 'Odin'
-      },
-      {
-        character: 'ø',
-        word: [
-          'Øresund',
-          'Ødis'
-        ]
-      },
-      {
-        character: 'p',
-        word: 'Peter'
-      },
-      {
-        character: 'q',
-        word: 'Quintus'
-      },
-      {
-        character: 'r',
-        word: 'Rasmus'
-      },
-      {
-        character: 's',
-        word: 'Søren'
-      },
-      {
-        character: 't',
-        word: 'Theodor'
-      },
-      {
-        character: 'u',
-        word: 'Ulla'
-      },
-      {
-        character: 'v',
-        word: 'Viggo'
-      },
-      {
-        character: 'w',
-        word: 'William'
-      },
-      {
-        character: 'x',
-        word: 'Xerxes'
-      },
-      {
-        character: 'y',
-        word: 'Yrsa'
-      },
-      {
-        character: 'z',
-        word: 'Zackarias'
-      }
-    ]
-  },
-  {
-    name: 'dutch',
-    label: 'Dutch',
-    variants: [
-      {
-        name: 'full',
-        label: 'All Characters',
-        description: 'All possible characters'
-      },
-      {
-        name: 'orthography',
-        label: 'Orthography',
-        description: 'Orthography'
-      }
-    ],
-    mappings: [
-      {
-        character: ' ',
-        word: '(spatiebalk)'
-      },
-      {
-        character: 'a',
-        word: 'Anton',
-        override: {
-          word: 'Anna',
-          variant: {
-            name: 'full',
-            primary: false
-          }
-        }
-      },
-      {
-        character: 'b',
-        word: 'Bernhard'
-      },
-      {
-        character: 'c',
-        word: 'Cornelis'
-      },
-      {
-        character: 'd',
-        word: 'Dirk'
-      },
-      {
-        character: 'e',
-        word: 'Eduard'
-      },
-      {
-        character: 'f',
-        word: 'Ferdinand'
-      },
-      {
-        character: 'g',
-        word: 'Gerard'
-      },
-      {
-        character: 'h',
-        word: 'Hendrik'
-      },
-      {
-        character: 'ij',
-        word: [
-          'IJmuiden',
-          'IJsbrand'
-        ]
-      },
-      {
-        character: 'i',
-        word: 'Izaak'
-      },
-      {
-        character: 'j',
-        word: [
-          'Johan',
-          'Jacob'
-        ],
-        override: {
-          word: 'Julius',
-          variant: {
-            name: 'full',
-            primary: false
-          }
-        }
-      },
-      {
-        character: 'k',
-        word: 'Karel'
-      },
-      {
-        character: 'l',
-        word: [
-          'Lodewijk',
-          'Leo'
-        ]
-      },
-      {
-        character: 'm',
-        word: 'Maria'
-      },
-      {
-        character: 'n',
-        word: 'Nico'
-      },
-      {
-        character: 'o',
-        word: 'Otto'
-      },
-      {
-        character: 'p',
-        word: 'Pieter'
-      },
-      {
-        character: 'q',
-        word: [
-          'Quirinius',
-          'Quinten'
-        ],
-        override: {
-          word: 'Quotiënt',
-          variant: {
-            name: 'full',
-            primary: false
-          }
-        }
-      },
-      {
-        character: 'r',
-        word: [
-          'Richard',
-          'Rudolf'
-        ]
-      },
-      {
-        character: 's',
-        word: 'Simon'
-      },
-      {
-        character: 't',
-        word: 'Theodoor'
-      },
-      {
-        character: 'u',
-        word: 'Utrecht'
-      },
-      {
-        character: 'v',
-        word: 'Victor'
-      },
-      {
-        character: 'w',
-        word: 'Willem'
-      },
-      {
-        character: 'x',
-        word: 'Xantippe'
-      },
-      {
-        character: 'y',
-        word: 'Ypsilon'
-      },
-      {
-        character: 'z',
-        word: 'Zacharias',
-        override: {
-          word: 'Zaandam',
-          variant: {
-            name: 'full',
-            primary: false
-          }
-        }
-      },
-      {
-        character: '0',
-        word: null,
-        override: {
-          word: 'Nul',
-          variant: 'full'
-        }
-      },
-      {
-        character: '1',
-        word: null,
-        override: {
-          word: 'Een',
-          variant: 'full'
-        }
-      },
-      {
-        character: '2',
-        word: null,
-        override: {
-          word: 'Twee',
-          variant: 'full'
-        }
-      },
-      {
-        character: '3',
-        word: null,
-        override: {
-          word: 'Drie',
-          variant: 'full'
-        }
-      },
-      {
-        character: '4',
-        word: null,
-        override: {
-          word: 'Vier',
-          variant: 'full'
-        }
-      },
-      {
-        character: '5',
-        word: null,
-        override: {
-          word: 'Vijf',
-          variant: 'full'
-        }
-      },
-      {
-        character: '6',
-        word: null,
-        override: {
-          word: 'Zes',
-          variant: 'full'
-        }
-      },
-      {
-        character: '7',
-        word: null,
-        override: {
-          word: 'Zeven',
-          variant: 'full'
-        }
-      },
-      {
-        character: '8',
-        word: null,
-        override: {
-          word: 'Acht',
-          variant: 'full'
-        }
-      },
-      {
-        character: '9',
-        word: null,
-        override: {
-          word: 'Negen',
-          variant: 'full'
         }
       }
     ]
