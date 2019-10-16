@@ -5389,8 +5389,8 @@ const defaultAlphabetSpecs = [
     ],
     mappings: [
       {
-        character: '(スペースバー)',
-        word: 'TODO'
+        character: ' ',
+        word: '(スペースバー)'
       },
       {
         character: 'あ',
