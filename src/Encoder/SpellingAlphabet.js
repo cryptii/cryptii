@@ -4974,6 +4974,10 @@ const defaultAlphabetSpecs = [
       {
         character: '9',
         word: 'Nia'
+      },
+      {
+        character: ',',
+        word: 'Komma'
       }
     ]
   },
