@@ -4971,7 +4971,571 @@ const defaultAlphabetSpecs = [
         word: 'Ωμέγα'
       }
     ]
-  }, 
+  },
+  {
+    name: 'japanese-hiragana',
+    label: 'Japanese Hiragana',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'radiotelephony',
+        label: 'Japanese radiotelephony alphabet',
+        description: 'Japanese radiotelephony alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: '(スペースバー)',
+        word: 'TODO'
+      },
+      {
+        character: 'あ',
+        word: '朝日のア'
+      },
+      {
+        character: 'い',
+        word: 'いろはのイ'
+      },
+      {
+        character: 'う',
+        word: '上野のウ'
+      },
+      {
+        character: 'え',
+        word: '英語のエ'
+      },
+      {
+        character: 'お',
+        word: '大阪のオ'
+      },
+      {
+        character: 'か',
+        word: '為替のカ'
+      },
+      {
+        character: 'き',
+        word: '切手のキ'
+      },
+      {
+        character: 'く',
+        word: 'クラブのク'
+      },
+      {
+        character: 'け',
+        word: '景色のケ'
+      },
+      {
+        character: 'こ',
+        word: '子供のコ'
+      },
+      {
+        character: 'さ',
+        word: '桜のサ'
+      },
+      {
+        character: 'し',
+        word: '新聞のシ'
+      },
+      {
+        character: 'す',
+        word: 'すずめのス'
+      },
+      {
+        character: 'せ',
+        word: '世界のセ'
+      },
+      {
+        character: 'そ',
+        word: 'そろばんのソ'
+      },
+      {
+        character: 'た',
+        word: '煙草のタ'
+      },
+      {
+        character: 'ち',
+        word: '千鳥のチ'
+      },
+      {
+        character: 'つ',
+        word: 'つるかめのツ'
+      },
+      {
+        character: 'て',
+        word: '手紙のテ'
+      },
+      {
+        character: 'と',
+        word: '東京のト'
+      },
+      {
+        character: 'な',
+        word: '名古屋のナ'
+      },
+      {
+        character: 'に',
+        word: '日本のニ'
+      },
+      {
+        character: 'ぬ',
+        word: '沼津のヌ'
+      },
+      {
+        character: 'ね',
+        word: 'ねずみのネ'
+      },
+      {
+        character: 'の',
+        word: '野原のノ'
+      },
+      {
+        character: 'は',
+        word: 'はがきのハ'
+      },
+      {
+        character: 'ひ',
+        word: '飛行機のヒ'
+      },
+      {
+        character: 'ふ',
+        word: '富士山のフ'
+      },
+      {
+        character: 'へ',
+        word: '平和のヘ'
+      },
+      {
+        character: 'ほ',
+        word: '保険のホ'
+      },
+      {
+        character: 'ま',
+        word: 'マッチのマ'
+      },
+      {
+        character: 'み',
+        word: '三笠のミ'
+      },
+      {
+        character: 'む',
+        word: '無線のム'
+      },
+      {
+        character: 'め',
+        word: '明治のメ'
+      },
+      {
+        character: 'も',
+        word: 'もみじのモ'
+      },
+      {
+        character: 'や',
+        word: '大和のヤ'
+      },
+      {
+        character: 'ゆ',
+        word: '弓矢のユ'
+      },
+      {
+        character: 'よ',
+        word: '吉野のヨ'
+      },
+      {
+        character: 'ら',
+        word: 'ラジオのラ'
+      },
+      {
+        character: 'り',
+        word: 'りんごのリ'
+      },
+      {
+        character: 'る',
+        word: '留守居のル'
+      },
+      {
+        character: 'れ',
+        word: 'れんげのレ'
+      },
+      {
+        character: 'ろ',
+        word: 'ローマのロ'
+      },
+      {
+        character: 'わ',
+        word: 'わらびのワ'
+      },
+      {
+        character: 'ゐ',
+        word: 'ゐどのヰ'
+      },
+      {
+        character: 'ゑ',
+        word: 'かぎのあるヱ'
+      },
+      {
+        character: 'を',
+        word: '尾張のヲ'
+      },
+      {
+        character: 'ん',
+        word: 'おしまいのン'
+      },
+      {
+        character: '゛',
+        word: '濁点'
+      },
+      {
+        character: '゜',
+        word: '半濁点'
+      },
+      {
+        character: '1',
+        word: '数字のひと'
+      },
+      {
+        character: '2',
+        word: '数字のに'
+      },
+      {
+        character: '3',
+        word: '数字のさん'
+      },
+      {
+        character: '4',
+        word: '数字のよん'
+      },
+      {
+        character: '5',
+        word: '数字のご'
+      },
+      {
+        character: '6',
+        word: '数字のろく'
+      },
+      {
+        character: '7',
+        word: '数字のなな'
+      },
+      {
+        character: '8',
+        word: '数字のはち'
+      },
+      {
+        character: '9',
+        word: '数字のきゅう'
+      },
+      {
+        character: '0',
+        word: '数字のまる'
+      },
+      {
+        character: 'ー',
+        word: '長音'
+      },
+      {
+        character: '、',
+        word: '区切り点'
+      },
+      {
+        character: '∟',
+        word: '段落'
+      },
+      {
+        character: '（',
+        word: '下向括弧'
+      },
+      {
+        character: '）',
+        word: '上向括弧'
+      }
+    ]
+  },
+  {
+    name: 'japanese-katakana',
+    label: 'Japanese Katakana',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'radiotelephony',
+        label: 'Japanese radiotelephony alphabet',
+        description: 'Japanese radiotelephony alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(スペースバー)'
+      },
+      {
+        character: 'ア',
+        word: '朝日のア'
+      },
+      {
+        character: 'イ',
+        word: 'いろはのイ'
+      },
+      {
+        character: 'ウ',
+        word: '上野のウ'
+      },
+      {
+        character: 'エ',
+        word: '英語のエ'
+      },
+      {
+        character: 'オ',
+        word: '大阪のオ'
+      },
+      {
+        character: 'カ',
+        word: '為替のカ'
+      },
+      {
+        character: 'キ',
+        word: '切手のキ'
+      },
+      {
+        character: 'ク',
+        word: 'クラブのク'
+      },
+      {
+        character: 'ケ',
+        word: '景色のケ'
+      },
+      {
+        character: 'コ',
+        word: '子供のコ'
+      },
+      {
+        character: 'サ',
+        word: '桜のサ'
+      },
+      {
+        character: 'シ',
+        word: '新聞のシ'
+      },
+      {
+        character: 'ス',
+        word: 'すずめのス'
+      },
+      {
+        character: 'セ',
+        word: '世界のセ'
+      },
+      {
+        character: 'ソ',
+        word: 'そろばんのソ'
+      },
+      {
+        character: 'タ',
+        word: '煙草のタ'
+      },
+      {
+        character: 'チ',
+        word: '千鳥のチ'
+      },
+      {
+        character: 'ツ',
+        word: 'つるかめのツ'
+      },
+      {
+        character: 'テ',
+        word: '手紙のテ'
+      },
+      {
+        character: 'ト',
+        word: '東京のト'
+      },
+      {
+        character: 'ナ',
+        word: '名古屋のナ'
+      },
+      {
+        character: 'ニ',
+        word: '日本のニ'
+      },
+      {
+        character: 'ヌ',
+        word: '沼津のヌ'
+      },
+      {
+        character: 'ネ',
+        word: 'ねずみのネ'
+      },
+      {
+        character: 'ノ',
+        word: '野原のノ'
+      },
+      {
+        character: 'ハ',
+        word: 'はがきのハ'
+      },
+      {
+        character: 'ヒ',
+        word: '飛行機のヒ'
+      },
+      {
+        character: 'フ',
+        word: '富士山のフ'
+      },
+      {
+        character: 'ヘ',
+        word: '平和のヘ'
+      },
+      {
+        character: 'ホ',
+        word: '保険のホ'
+      },
+      {
+        character: 'マ',
+        word: 'マッチのマ'
+      },
+      {
+        character: 'ミ',
+        word: '三笠のミ'
+      },
+      {
+        character: 'ム',
+        word: '無線のム'
+      },
+      {
+        character: 'メ',
+        word: '明治のメ'
+      },
+      {
+        character: 'モ',
+        word: 'もみじのモ'
+      },
+      {
+        character: 'ヤ',
+        word: '大和のヤ'
+      },
+      {
+        character: 'ユ',
+        word: '弓矢のユ'
+      },
+      {
+        character: 'ヨ',
+        word: '吉野のヨ'
+      },
+      {
+        character: 'ラ',
+        word: 'ラジオのラ'
+      },
+      {
+        character: 'リ',
+        word: 'りんごのリ'
+      },
+      {
+        character: 'ル',
+        word: '留守居のル'
+      },
+      {
+        character: 'レ',
+        word: 'れんげのレ'
+      },
+      {
+        character: 'ロ',
+        word: 'ローマのロ'
+      },
+      {
+        character: 'ワ',
+        word: 'わらびのワ'
+      },
+      {
+        character: 'ヰ',
+        word: 'ゐどのヰ'
+      },
+      {
+        character: 'ヱ',
+        word: 'かぎのあるヱ'
+      },
+      {
+        character: 'ヲ',
+        word: '尾張のヲ'
+      },
+      {
+        character: 'ン',
+        word: 'おしまいのン'
+      },
+      {
+        character: '゛',
+        word: '濁点'
+      },
+      {
+        character: '゜',
+        word: '半濁点'
+      },
+      {
+        character: '1',
+        word: '数字のひと'
+      },
+      {
+        character: '2',
+        word: '数字のに'
+      },
+      {
+        character: '3',
+        word: '数字のさん'
+      },
+      {
+        character: '4',
+        word: '数字のよん'
+      },
+      {
+        character: '5',
+        word: '数字のご'
+      },
+      {
+        character: '6',
+        word: '数字のろく'
+      },
+      {
+        character: '7',
+        word: '数字のなな'
+      },
+      {
+        character: '8',
+        word: '数字のはち'
+      },
+      {
+        character: '9',
+        word: '数字のきゅう'
+      },
+      {
+        character: '0',
+        word: '数字のまる'
+      },
+      {
+        character: 'ー',
+        word: '長音'
+      },
+      {
+        character: '、',
+        word: '区切り点'
+      },
+      {
+        character: '∟',
+        word: '段落'
+      },
+      {
+        character: '（',
+        word: '下向括弧'
+      },
+      {
+        character: '）',
+        word: '上向括弧'
+      }
+    ]
+  },
   {
     name: 'swedish',
     label: 'Swedish',
