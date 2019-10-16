@@ -224,7 +224,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'å',
-        word: 'Åse'
+        word: [
+          'Åse',
+          'Aase'
+        ]
       },
       {
         character: 'æ',
