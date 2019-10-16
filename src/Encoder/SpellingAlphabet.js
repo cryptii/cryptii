@@ -7056,6 +7056,164 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'serbian',
+    label: 'Serbian',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(razmaknica)',
+      },
+      {
+        character: 'a',
+        word: 'Avala'
+      },
+      {
+        character: 'b',
+        word: 'Beograd'
+      },
+      {
+        character: 'c',
+        word: 'Cetinje'
+      },
+      {
+        character: 'č',
+        word: 'Čačak'
+      },
+      {
+        character: 'ć',
+        word: 'Ćuprija'
+      },
+      {
+        character: 'd',
+        word: 'Dubrovnik'
+      },
+      {
+        character: 'dž',
+        word: 'Džamija'
+      },
+      {
+        character: 'đ',
+        word: 'Đakovo'
+      },
+      {
+        character: 'e',
+        word: 'Evropa'
+      },
+      {
+        character: 'f',
+        word: 'Foča'
+      },
+      {
+        character: 'g',
+        word: 'Gorica'
+      },
+      {
+        character: 'h',
+        word: 'Hercegovina'
+      },
+      {
+        character: 'i',
+        word: 'Istra'
+      },
+      {
+        character: 'j',
+        word: 'Jadran'
+      },
+      {
+        character: 'k',
+        word: 'Kosovo'
+      },
+      {
+        character: 'l',
+        word: 'Lika'
+      },
+      {
+        character: 'lj',
+        word: 'Ljubljana'
+      },
+      {
+        character: 'm',
+        word: 'Mostar'
+      },
+      {
+        character: 'n',
+        word: 'Niš'
+      },
+      {
+        character: 'nj',
+        word: 'Njegoš'
+      },
+      {
+        character: 'o',
+        word: 'Osijek'
+      },
+      {
+        character: 'p',
+        word: 'Pirot'
+      },
+      {
+        character: 'q',
+        word: 'Kvadrat'
+      },
+      {
+        character: 'r',
+        word: 'Rijeka'
+      },
+      {
+        character: 's',
+        word: 'Skopje'
+      },
+      {
+        character: 'š',
+        word: 'Šibenik'
+      },
+      {
+        character: 't',
+        word: 'Tuzla'
+      },
+      {
+        character: 'u',
+        word: 'Užice'
+      },
+      {
+        character: 'v',
+        word: 'Valjevo'
+      },
+      {
+        character: 'w',
+        word: 'Duplo ve'
+      },
+      {
+        character: 'x',
+        word: 'Iks'
+      },
+      {
+        character: 'y',
+        word: 'Ipsilon'
+      },
+      {
+        character: 'z',
+        word: 'Zagreb'
+      },
+      {
+        character: 'ž',
+        word: 'Žirovnic'
+      }
+    ]
+  },
+  {
     name: 'spanish',
     label: 'Spanish',
     variants: [
