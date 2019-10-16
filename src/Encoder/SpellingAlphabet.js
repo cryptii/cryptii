@@ -20,6 +20,7 @@ https://en.wikipedia.org/wiki/Russian_spelling_alphabet
 https://en.wikipedia.org/wiki/Swedish_Armed_Forces_radio_alphabet
 https://en.wikipedia.org/wiki/Dutch_orthography#Spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:French_spelling_alphabet
+https://de.wikipedia.org/wiki/Buchstabiertafel
 
 TODO
 https://en.wikipedia.org/wiki/Allied_military_phonetic_spelling_alphabets
@@ -5059,9 +5060,19 @@ const defaultAlphabetSpecs = [
         description: 'All possible characters'
       },
       {
-        name: 'orthography',
-        label: 'Orthography',
-        description: 'Orthography'
+        name: 'germany',
+        label: 'Germany',
+        description: 'Germany, DIN 5009'
+      },
+      {
+        name: 'austria',
+        label: 'Austria',
+        description: 'Austria, ÖNORM A 1081'
+      },
+      {
+        name: 'switzerland',
+        label: 'Switzerland',
+        description: 'Switzerland '
       }
     ],
     mappings: [
@@ -5071,18 +5082,30 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'a',
-        word: 'Anton'
+        word: 'Anton',
+        override: [
+          {
+            word: 'Anna',
+            variant: 'switzerland'
+          }
+        ]
       },
       {
         character: 'ä',
         word: 'Ärger',
-        override: {
-          word: 'Alfa-Echo',
-          variant: {
-            name: 'full',
-            primary: false
+        override: [
+          {
+            word: 'Alfa-Echo',
+            variant: {
+              name: 'full',
+              primary: false
+            }
+          },
+          {
+            word: ['Äsch', 'Aesch'],
+            variant: 'switzerland'
           }
-        }
+        ]
       },
       {
         character: 'b',
@@ -5090,15 +5113,38 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'c',
-        word: 'Cäsar'
+        word: 'Cäsar',
+        override: {
+          word: 'Charly',
+          variant: {
+            name: 'switzerland',
+            primary: false
+          }
+        }
       },
       {
         character: 'ch',
-        word: 'Charlotte'
+        word: 'Charlotte',
+        override: [
+          {
+            word: 'Chrisitine',
+            variant: 'austria',
+            primary: false
+          },
+          {
+            word: 'Charlie-Hotel',
+            variant: 'full',
+            primary: false
+          }
+        ]
       },
       {
         character: 'd',
-        word: 'Dora'
+        word: 'Dora',
+        override: {
+          word: 'Daniel',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'e',
@@ -5122,30 +5168,74 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'j',
-        word: 'Julius'
+        word: 'Julius',
+        override: [
+          {
+            word: 'Johann',
+            variant: {
+              name: 'austria',
+              primary: false
+            }
+          },
+          {
+            word: 'Jakob',
+            variant: 'switzerland'
+          }
+        ]
       },
       {
         character: 'k',
-        word: ['Kaufmann', 'Konrad'],
-        override: {
-          word: 'Kurfürst',
-          variant: {
-            name: 'full',
-            primary: false
+        word: 'Kaufmann',
+        override: [
+          {
+            word: 'Kaiser',
+            variant: 'switzerland'
+          },
+          {
+            word: 'Konrad',
+            variant: 'austria'
+          },
+          {
+            word: 'Kurfürst',
+            variant: {
+             name: 'full',
+             primary: false
+            }
           }
-        }
+        ]
       },
       {
         character: 'l',
-        word: 'Ludwig'
+        word: 'Ludwig',
+        override: {
+            word: 'Leopold',
+            variant: 'switzerland'
+        }
       },
       {
         character: 'm',
-        word: 'Martha'
+        word: 'Martha',
+        override: {
+            word: 'Marie',
+            variant: 'switzerland'
+        }
       },
       {
         character: 'n',
-        word: 'Nordpol'
+        word: 'Nordpol',
+        override: [
+          {
+            word: 'Norbert',
+            variant: {
+              name: 'austria',
+              primary: false
+            }
+          },
+          {
+              word: 'Niklaus',
+              variant: 'switzerland'
+          }
+        ]
       },
       {
         character: 'o',
@@ -5153,37 +5243,76 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ö',
-        word: [
-          'Ökonom',
-          'Österreich'
-        ],
-        override: {
-          word: 'Oscar-Echo',
-          variant: {
-            name: 'full',
-            primary: false
+        word: 'Ökonom',
+        override: [
+          {
+            word: 'Oscar-Echo',
+            variant: {
+              name: 'full',
+              primary: false
+            }
+          },
+          {
+            word: 'Österreich',
+            variant: 'austria'
+          },
+          {
+            word: ['Örlikon', 'Oerlikon'],
+            variant: 'switzerland'
           }
-        }
+        ]
       },
       {
         character: 'p',
-        word: 'Paula'
+        word: 'Paula',
+        override: {
+          word: 'Peter',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'q',
-        word: 'Quelle'
+        word: 'Quelle',
+        override: {
+          word: 'Quasi',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'r',
-        word: 'Richard'
+        word: 'Richard',
+        override: {
+          word: 'Rosa',
+          variant: 'switzerland'
+        }
       },
       {
         character: 's',
-        word: ['Samuel', 'Siegfried']
+        word: 'Samuel',
+        override: [
+          {
+            word: 'Siegfried',
+            variant: [
+              {
+                name: 'germany',
+                primary: false
+              },
+              'austria'
+            ]
+          },
+          {
+            word: 'Sophie',
+            variant: 'Switzerland'
+          }
+        ]
       },
       {
         character: 'sch',
-        word: 'Schule'
+        word: 'Schule',
+        override: {
+          word: null,
+          variant: 'switzerland'
+        }
       },
       {
         character: 'ß',
@@ -5191,13 +5320,19 @@ const defaultAlphabetSpecs = [
           'Eszett',
           'Scharfes S'
         ],
-        override: {
-          word: 'Sierra-Sierra',
-          variant: {
-            name: 'full',
-            primary: false
+        override: [
+          {
+            word: null,
+            variant: 'switzerland'
+          },
+          {
+            word: 'Sierra-Sierra',
+            variant: {
+              name: 'full',
+              primary: false
+            }
           }
-        }
+        ]
       },
       {
         character: 't',
@@ -5209,17 +5344,20 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ü',
-        word: [
-          'Übermut',
-          'Übel'
-        ],
-        override: {
-          word: 'Uniform-Echo',
-          variant: {
-            name: 'full',
-            primary: false
+        word: 'Übermut',
+        override: [
+          {
+            word: 'Uniform-Echo',
+            variant: {
+              name: 'full',
+              primary: false
+            }
+          },
+          {
+            word: 'Übel',
+            variant: 'austria'
           }
-        }
+        ]
       },
       {
         character: 'v',
@@ -5231,25 +5369,42 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'x',
-        word: ['Xanthippe', 'Xaver']
+        word: 'Xanthippe',
+        override: {
+          word: 'Xaver',
+          variant: ['austria', 'switzerland']
+        }
       },
       {
         character: 'y',
-        word: 'Ypsilon'
+        word: 'Ypsilon',
+        override: {
+          word: 'Yverdon',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'z',
-        word: [
-          'Zacharias',
-          'Zürich'
-        ],
-        override: {
-          word: 'Zeppelin',
-          variant: {
-            name: 'full',
-            primary: false
+        word: 'Zacharias',
+        override: [
+          {
+            word: 'Zürich',
+            variant: ['austria', 'switzerland']
+          },
+          {
+            word: 'Zeppelin',
+            variant: [
+              {
+                name: 'germany',
+                primary: false
+              },
+              {
+                name: 'austria',
+                primary: false
+              }
+            ]
           }
-        }
+        ]
       },
       {
         character: '0',
