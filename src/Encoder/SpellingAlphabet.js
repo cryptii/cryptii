@@ -11,6 +11,140 @@ const meta = {
 
 const defaultAlphabetSpecs = [
   {
+    name: 'czech',
+    label: 'Czech',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(Mezerník)'
+      },
+      {
+        character: 'a',
+        word: 'Adam'
+      },
+      {
+        character: 'b',
+        word: 'Božena'
+      },
+      {
+        character: 'c',
+        word: 'Cyril'
+      },
+      {
+        character: 'ch',
+        word: 'Chrudim'
+      },
+      {
+        character: 'd',
+        word: 'David'
+      },
+      {
+        character: 'e',
+        word: 'Emil'
+      },
+      {
+        character: 'f',
+        word: 'František'
+      },
+      {
+        character: 'g',
+        word: 'Gustav'
+      },
+      {
+        character: 'h',
+        word: 'Helena'
+      },
+      {
+        character: 'i',
+        word: 'Ivan'
+      },
+      {
+        character: 'j',
+        word: 'Josef'
+      },
+      {
+        character: 'k',
+        word: 'Karel'
+      },
+      {
+        character: 'l',
+        word: 'Ludvik'
+      },
+      {
+        character: 'm',
+        word: 'Marie'
+      },
+      {
+        character: 'n',
+        word: 'Norbert'
+      },
+      {
+        character: 'o',
+        word: 'Otakar'
+      },
+      {
+        character: 'p',
+        word: 'Petr'
+      },
+      {
+        character: 'q',
+        word: 'Quido'
+      },
+      {
+        character: 'r',
+        word: 'Rudolf'
+      },
+      {
+        character: 's',
+        word: 'Svatopluk'
+      },
+      {
+        character: 't',
+        word: 'Tomáš'
+      },
+      {
+        character: 'u',
+        word: 'Urban'
+      },
+      {
+        character: ['ů', 'uo'],
+        word: 'Uniform-Oscar'
+      },
+      {
+        character: 'v',
+        word: 'Václav'
+      },
+      {
+        character: 'w',
+        word: 'dvojité V'
+      },
+      {
+        character: 'x',
+        word: 'Xaver'
+      },
+      {
+        character: 'y',
+        word: 'Ypsilon'
+      },
+      {
+        character: 'z',
+        word: 'Zuzana'
+      }
+    ]
+  },
+  {
     name: 'english',
     label: 'English',
     variants: [
