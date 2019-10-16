@@ -8387,6 +8387,200 @@ const defaultAlphabetSpecs = [
         word: 'Zonguldak'
       }
     ]
+  },
+  {
+    name: 'ukrainian',
+    label: 'Ukrainian',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(пропуск)'
+      },
+      {
+        character: 'а',
+        word: 'Андрій'
+      },
+      {
+        character: 'б',
+        word: 'Богдан'
+      },
+      {
+        character: 'в',
+        word: 'Василь'
+      },
+      {
+        character: 'г',
+        word: 'Григорій'
+      },
+      {
+        character: 'д',
+        word: 'Дмитро'
+      },
+      {
+        character: 'е',
+        word: 'Еней'
+      },
+      {
+        character: 'ж',
+        word: 'Жук'
+      },
+      {
+        character: 'з',
+        word: 'Зиновій'
+      },
+      {
+        character: 'и',
+        word: 'Ігрек'
+      },
+      {
+        character: 'і',
+        word: 'Іван'
+      },
+      {
+        character: 'ї',
+        word: 'Їжак'
+      },
+      {
+        character: 'й',
+        word: 'Йосип'
+      },
+      {
+        character: 'к',
+        word: 'Кіловат'
+      },
+      {
+        character: 'л',
+        word: 'Левко'
+      },
+      {
+        character: 'м',
+        word: 'Марія'
+      },
+      {
+        character: 'н',
+        word: 'Наталка'
+      },
+      {
+        character: 'о',
+        word: 'Ольга'
+      },
+      {
+        character: 'п',
+        word: 'Павло'
+      },
+      {
+        character: 'р',
+        word: 'Роман'
+      },
+      {
+        character: 'с',
+        word: 'Степан'
+      },
+      {
+        character: 'т',
+        word: 'Тарас'
+      },
+      {
+        character: 'у',
+        word: 'Україна'
+      },
+      {
+        character: 'ф',
+        word: 'Федір'
+      },
+      {
+        character: 'х',
+        word: 'Христина'
+      },
+      {
+        character: 'ц',
+        word: 'Центр'
+      },
+      {
+        character: 'ч',
+        word: 'Чоловік'
+      },
+      {
+        character: 'ш',
+        word: 'Шура'
+      },
+      {
+        character: 'щ',
+        word: 'Щука'
+      },
+      {
+        character: 'ь',
+        word: 'Знак'
+      },
+      {
+        character: 'ю',
+        word: 'Юрій'
+      },
+      {
+        character: 'я',
+        word: 'Яків'
+      },
+      {
+        character: '0',
+        word: 'Нуль'
+      },
+      {
+        character: '1',
+        word: 'Один'
+      },
+      {
+        character: '2',
+        word: 'Два'
+      },
+      {
+        character: '3',
+        word: 'Три'
+      },
+      {
+        character: '4',
+        word: 'Чотири'
+      },
+      {
+        character: '5',
+        word: 'П\'ять'
+      },
+      {
+        character: '6',
+        word: 'Шість'
+      },
+      {
+        character: '7',
+        word: 'Сім'
+      },
+      {
+        character: '8',
+        word: 'Вісім'
+      },
+      {
+        character: '9',
+        word: 'Дев\'ять'
+      },
+      {
+        character: '.',
+        word: 'Крапка'
+      },
+      {
+        character: ',',
+        word: 'Кома'
+      }
+    ]
   }
 ]
 
