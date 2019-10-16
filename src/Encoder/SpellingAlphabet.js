@@ -4817,6 +4817,86 @@ const defaultAlphabetSpecs = [
       {
           character: 'ö',
           word: 'Öljy'
+      },
+      {
+        character: '0',
+        word: null,
+        override: {
+          word: 'Nolla',
+          variant: 'full'
+        }
+      },
+      {
+        character: '1',
+        word: null,
+        override: {
+          word: 'Yksi',
+          variant: 'full'
+        }
+      },
+      {
+        character: '2',
+        word: null,
+        override: {
+          word: 'Kaksi',
+          variant: 'full'
+        }
+      },
+      {
+        character: '3',
+        word: null,
+        override: {
+          word: 'Kolme',
+          variant: 'full'
+        }
+      },
+      {
+        character: '4',
+        word: null,
+        override: {
+          word: 'Neljä',
+          variant: 'full'
+        }
+      },
+      {
+        character: '5',
+        word: null,
+        override: {
+          word: 'Viisi',
+          variant: 'full'
+        }
+      },
+      {
+        character: '6',
+        word: null,
+        override: {
+          word: 'Kuusi',
+          variant: 'full'
+        }
+      },
+      {
+        character: '7',
+        word: null,
+        override: {
+          word: 'Seitsemän',
+          variant: 'full'
+        }
+      },
+      {
+        character: '8',
+        word: null,
+        override: {
+          word: 'Kahdeksan',
+          variant: 'full'
+        }
+      },
+      {
+        character: '9',
+        word: null,
+        override: {
+          word: 'Yhdeksän',
+          variant: 'full'
+        }
       }
     ]
   },
