@@ -5099,6 +5099,139 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'italian',
+    label: 'Italian',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(barra spaziatrice)'
+      },
+      {
+        character: 'a',
+        word: 'Ancona'
+      },
+      {
+        character: 'b',
+        word: 'Bologna'
+      },
+      {
+        character: 'c',
+        word: 'Como'
+      },
+      {
+        character: 'd',
+        word: 'Domodossola'
+      },
+      {
+        character: 'e',
+        word: 'Empoli'
+      },
+      {
+        character: 'f',
+        word: 'Firenze'
+      },
+      {
+        character: 'g',
+        word: 'Genova'
+      },
+      {
+        character: 'h',
+        word: 'Hotel'
+      },
+      {
+        character: 'i',
+        word: 'Imola'
+      },
+      {
+        character: 'j',
+        word: 'Jolly'
+      },
+      {
+        character: 'k',
+        word: 'Kappa'
+      },
+      {
+        character: 'l',
+        word: 'Livorno'
+      },
+      {
+        character: 'm',
+        word: 'Milano'
+      },
+      {
+        character: 'n',
+        word: 'Napoli'
+      },
+      {
+        character: 'o',
+        word: 'Otranto'
+      },
+      {
+        character: 'p',
+        word: 'Padova'
+      },
+      {
+        character: 'q',
+        word: 'Quadro'
+      },
+      {
+        character: 'r',
+        word: 'Roma'
+      },
+      {
+        character: 's',
+        word: 'Savona'
+      },
+      {
+        character: 't',
+        word: 'Torino'
+      },
+      {
+        character: 'u',
+        word: 'Udine'
+      },
+      {
+        character: 'v',
+        word: 'Venezia'
+      },
+      {
+        character: 'w',
+        word: 'Washington'
+      },
+      {
+        character: 'x',
+        word: [
+          'Ics',
+          'Xeres',
+          'Xilofono'
+        ]
+      },
+      {
+        character: 'y',
+        word: [
+          'York',
+          'Yacht'
+        ]
+      },
+      {
+        character: 'z',
+        word: 'Zara'
+      }
+    ]
+  },  
+  {
     name: 'japanese-hiragana',
     label: 'Japanese Hiragana',
     variants: [
@@ -6337,6 +6470,144 @@ const defaultAlphabetSpecs = [
           word: 'Точка',
           variant: 'full'
         }
+      }
+    ]
+  },
+  {
+    name: 'spanish',
+    label: 'Spanish',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(barra espaciadora)'
+      },
+      {
+        character: 'a',
+        word: 'Antonio'
+      },
+      {
+        character: 'b',
+        word: 'Burgos'
+      },
+      {
+        character: 'c',
+        word: 'Carmen'
+      },
+      {
+        character: 'ch',
+        word: 'Chocolate'
+      },
+      {
+        character: 'd',
+        word: 'David'
+      },
+      {
+        character: 'e',
+        word: 'España'
+      },
+      {
+        character: 'f',
+        word: 'Francia'
+      },
+      {
+        character: 'g',
+        word: 'Granada'
+      },
+      {
+        character: 'h',
+        word: 'Historia'
+      },
+      {
+        character: 'i',
+        word: 'Inés'
+      },
+      {
+        character: 'j',
+        word: 'José'
+      },
+      {
+        character: 'k',
+        word: 'Kilo'
+      },
+      {
+        character: 'l',
+        word: 'Lorenzo'
+      },
+      {
+        character: 'll',
+        word: 'Llave'
+      },
+      {
+        character: 'm',
+        word: 'Madrid'
+      },
+      {
+        character: 'n',
+        word: 'Navidad'
+      },
+      {
+        character: 'ñ',
+        word: 'Ñoño'
+      },
+      {
+        character: 'o',
+        word: 'Oviedo'
+      },
+      {
+        character: 'p',
+        word: 'París'
+      },
+      {
+        character: 'q',
+        word: 'Queso'
+      },
+      {
+        character: 'r',
+        word: 'Ramón'
+      },
+      {
+        character: 's',
+        word: 'Sábado'
+      },
+      {
+        character: 't',
+        word: 'Toledo'
+      },
+      {
+        character: 'u',
+        word: 'Ulises'
+      },
+      {
+        character: 'v',
+        word: 'Valencia'
+      },
+      {
+        character: 'w',
+        word: 'Washington'
+      },
+      {
+        character: 'x',
+        word: 'Xilófono'
+      },
+      {
+        character: 'y',
+        word: 'Yolanda'
+      },
+      {
+        character: 'z',
+        word: 'Zaragoza'
       }
     ]
   }
