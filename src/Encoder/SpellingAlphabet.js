@@ -22,7 +22,7 @@ https://en.wikipedia.org/wiki/Russian_spelling_alphabet
 https://en.wikipedia.org/wiki/Swedish_Armed_Forces_radio_alphabet
 TODO http://spellout.org/alphabets
 TODO https://spellingalphabets.com/
-TODO http://web.archive.org/web/20090608141738/http://montgomery.cas.muohio.edu:16080/MEYERSDE/kitchensink/alphabets/
+TODO https://sites.google.com/view/meyersde/phonetic-alphabets
 TODO http://www.bckelk.ukfsn.org/phon.full.html
 */ 
 const defaultAlphabetSpecs = [
