@@ -4277,6 +4277,158 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'finnish',
+    label: 'Finnish',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Armed Forces radio alphabet',
+        description: 'Finnish Armed Forces radio alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(välilyöntinäppäin)'
+      },
+      {
+        character: 'a',
+        word: 'Aarne'
+      },
+      {
+          character: 'b',
+          word: 'Bertta'
+      },
+      {
+          character: 'c',
+          word: 'Celsius'
+      },
+      {
+          character: 'd',
+          word: 'Daavid'
+      },
+      {
+          character: 'e',
+          word: 'Eemeli'
+      },
+      {
+          character: 'f',
+          word: 'Faarao'
+      },
+      {
+          character: 'g',
+          word: 'Gideon'
+      },
+      {
+          character: 'h',
+          word: 'Heikki'
+      },
+      {
+          character: 'i',
+          word: 'Iivari'
+      },
+      {
+          character: 'j',
+          word: 'Jussi'
+      },
+      {
+          character: 'k',
+          word: 'Kalle'
+      },
+      {
+          character: 'l',
+          word: 'Lauri'
+      },
+      {
+          character: 'm',
+          word: 'Matti'
+      },
+      {
+          character: 'n',
+          word: 'Niilo'
+      },
+      {
+          character: 'o',
+          word: 'Otto'
+      },
+      {
+          character: 'p',
+          word: 'Paavo'
+      },
+      {
+          character: 'q',
+          word: 'Kuu'
+      },
+      {
+          character: 'r',
+          word: 'Risto'
+      },
+      {
+          character: 's',
+          word: 'Sakari'
+      },
+      {
+          character: 't',
+          word: 'Tyyne'
+      },
+      {
+          character: 'u',
+          word: 'Urho'
+      },
+      {
+          character: 'v',
+          word: 'Vihtori'
+      },
+      {
+          character: 'w',
+          word: 'Viski',
+          override: {
+            word: 'Wiski',
+            variant: {
+              name: 'full',
+              primary: false
+            }
+          }
+      },
+      {
+          character: 'x',
+          word: 'Äksä'
+      },
+      {
+          character: 'y',
+          word: 'Yrjö'
+      },
+      {
+          character: 'z',
+          word: 'Zeta',
+          override: {
+            word: 'Tseta',
+            variant: {
+              name: 'full',
+              primary: false
+            }
+          }
+      },
+      {
+          character: 'å',
+          word: 'Åke'
+      },
+      {
+          character: 'ä',
+          word: 'Äiti'
+      },
+      {
+          character: 'ö',
+          word: 'Öljy'
+      }
+    ]
+  },
+  {
     name: 'german',
     label: 'German',
     variants: [
