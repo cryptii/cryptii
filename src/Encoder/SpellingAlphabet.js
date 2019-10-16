@@ -19,6 +19,7 @@ https://en.wikipedia.org/wiki/Korean_spelling_alphabet
 https://en.wikipedia.org/wiki/Russian_spelling_alphabet
 https://en.wikipedia.org/wiki/Swedish_Armed_Forces_radio_alphabet
 https://en.wikipedia.org/wiki/Dutch_orthography#Spelling_alphabet
+https://en.wiktionary.org/wiki/Appendix:French_spelling_alphabet
 
 TODO
 https://en.wikipedia.org/wiki/Allied_military_phonetic_spelling_alphabets
@@ -4922,31 +4923,31 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'a',
-        word: 'Anatole'
+        word: ['Anatole', 'Alain', 'André', 'Albert']
       },
       {
         character: 'b',
-        word: 'Berthe'
+        word: ['Berthe', 'Bernard', 'Bertrand']
       },
       {
         character: 'c',
-        word: 'Célestin'
+        word: ['Célestin', 'Christian', 'Catherine']
       },
       {
         character: 'd',
-        word: 'Désiré'
+        word: ['Désiré', 'Daniel', 'Didier']
       },
       {
         character: 'e',
-        word: 'Eugène'
+        word: ['Eugène', 'Émile', 'Étienne']
       },
       {
         character: 'f',
-        word: 'François'
+        word: ['François', 'Franck']
       },
       {
         character: 'g',
-        word: 'Gaston'
+        word: ['Gaston', 'Georges', 'Gauthier']
       },
       {
         character: 'h',
@@ -4954,15 +4955,15 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'i',
-        word: 'Irma'
+        word: ['Irma', 'Isabelle', 'Isidore']
       },
       {
         character: 'j',
-        word: 'Joseph'
+        word: ['Joseph', 'Jules', 'Jean']
       },
       {
         character: 'k',
-        word: 'Kléber'
+        word: ['Kléber', 'koala']
       },
       {
         character: 'l',
@@ -4970,35 +4971,35 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'm',
-        word: 'Marcel'
+        word: ['Marcel', 'Marc', 'Michel', 'Mathieu']
       },
       {
         character: 'n',
-        word: 'Nicolas'
+        word: ['Nicolas', 'Noémie']
       },
       {
         character: 'o',
-        word: 'Oscar'
+        word: ['Oscar', 'Olivier']
       },
       {
         character: 'p',
-        word: 'Pierre'
+        word: ['Pierre', 'Patrick', 'Papa']
       },
       {
         character: 'q',
-        word: 'Quintal'
+        word: ['Quintal', 'Quartier', 'Quentin']
       },
       {
         character: 'r',
-        word: 'Raoul'
+        word: ['Raoul', 'René', 'Robert', 'Rémi']
       },
       {
         character: 's',
-        word: 'Suzanne'
+        word: ['Suzanne', 'Stéphane', 'Sophie', 'Sarah']
       },
       {
         character: 't',
-        word: 'Thérèse'
+        word: ['Thérèse', 'Thierry']
       },
       {
         character: 'u',
@@ -5006,11 +5007,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'v',
-        word: 'Victor'
+        word: ['Victor', 'Valérie', 'Véronique']
       },
       {
         character: 'w',
-        word: 'William'
+        word: ['William', 'Walter']
       },
       {
         character: 'x',
@@ -5018,12 +5019,52 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'y',
-        word: 'Yvonne'
+        word: ['Yvonne', 'Yves']
       },
       {
         character: 'z',
         word: 'Zoé'
-      }
+      },
+      {
+        character: '0',
+        word: 'Zéro'
+      },
+      {
+        character: '1',
+        word: 'Un'
+      },
+      {
+        character: '2',
+        word: 'Deux'
+      },
+      {
+        character: '3',
+        word: 'Trois'
+      },
+      {
+        character: '4',
+        word: 'Quatre'
+      },
+      {
+        character: '5',
+        word: 'Cinq'
+      },
+      {
+        character: '6',
+        word: 'Six'
+      },
+      {
+        character: '7',
+        word: 'Sept'
+      },
+      {
+        character: '8',
+        word: 'Huit'
+      },
+      {
+        character: '9',
+        word: 'Neuf'
+      } 
     ]
   },
   {
