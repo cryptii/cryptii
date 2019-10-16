@@ -5757,9 +5757,14 @@ const defaultAlphabetSpecs = [
         description: 'All possible characters'
       },
       {
-        name: 'alphabet',
-        label: 'Spelling alphabet',
-        description: 'Spelling alphabet'
+        name: 'italy',
+        label: 'Italy',
+        description: 'Italy'
+      },
+      {
+        name: 'switzerland',
+        label: 'Switzerland',
+        description: 'Switzerland'
       }
     ],
     mappings: [
@@ -5769,110 +5774,220 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'a',
-        word: 'Ancona'
+        word: 'Ancona',
+        override: {
+          word: 'Anna',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'b',
-        word: 'Bologna'
+        word: ['Bari', 'Bologna'],
+        override: {
+          word: 'Battista',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'c',
-        word: 'Como'
+        word: 'Como',
+        override: {
+          word: 'Carlo',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'd',
-        word: 'Domodossola'
+        word: 'Domodossola',
+        override: {
+          word: 'Davide',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'e',
-        word: 'Empoli'
+        word: 'Empoli',
+        override: {
+          word: 'Ernesto',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'f',
-        word: 'Firenze'
+        word: 'Firenze',
+        override: {
+          word: 'Federico',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'g',
-        word: 'Genova'
+        word: 'Genova',
+        override: {
+          word: 'Giovanni',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'h',
-        word: 'Hotel'
+        word: 'Hotel',
+        override: {
+          word: 'Acca',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'i',
-        word: 'Imola'
+        word: ['Imola', 'Imperia'],
+        override: {
+          word: 'Isidoro',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'j',
-        word: 'Jolly'
+        word: ['Jesolo', 'Jersey', 'Jolly'],
+        override: {
+          word: 'I lunga',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'k',
-        word: 'Kappa'
+        word: ['Kursal', 'Cappa'],
+        override: {
+          word: 'Kappa',
+          variant: [
+            {
+              name: 'italy',
+              primary: false
+            },
+            'switzerland'
+          ]
+        }
       },
       {
         character: 'l',
-        word: 'Livorno'
+        word: 'Livorno',
+        override: {
+          word: 'Luigi',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'm',
-        word: 'Milano'
+        word: 'Milano',
+        override: {
+          word: 'Maria',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'n',
-        word: 'Napoli'
+        word: 'Napoli',
+        override: {
+          word: 'Nicola',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'o',
-        word: 'Otranto'
+        word: 'Otranto',
+        override: {
+          word: 'Olga',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'p',
-        word: 'Padova'
+        word: ['Padova', 'Palermo'],
+        override: {
+          word: 'Pietro',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'q',
-        word: 'Quadro'
+        word: ['Quarto', 'Quadro'],
+        override: {
+          word: 'Quintino',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'r',
-        word: 'Roma'
+        word: 'Roma',
+        override: {
+          word: 'Rodolfo',
+          variant: 'switzerland'
+        }
       },
       {
         character: 's',
-        word: 'Savona'
+        word: ['Salerno', 'Savona'],
+        override: {
+          word: 'Susanna',
+          variant: 'switzerland'
+        }
       },
       {
         character: 't',
-        word: 'Torino'
+        word: ['Taranto', 'Torino'],
+        override: {
+          word: 'Teresa',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'u',
-        word: 'Udine'
+        word: 'Udine',
+        override: {
+          word: 'Umberto',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'v',
-        word: 'Venezia'
+        word: 'Venezia',
+        override: {
+          word: 'Vittorio',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'w',
-        word: 'Washington'
+        word: 'Washington',
+        override: {
+          word: 'Vu doppia',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'x',
-        word: ['Ics', 'Xeres', 'Xilofono']
+        word: ['Xeres', 'Xilofono'],
+        override: {
+          word: 'Ics',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'y',
-        word: ['York', 'Yacht']
+        word: ['Yacht', 'York'],
+        override: {
+          word: 'Ipsilon',
+          variant: 'switzerland'
+        }
       },
       {
         character: 'z',
-        word: 'Zara'
+        word: 'Zara',
+        override: {
+          word: 'Zurigo',
+          variant: 'switzerland'
+        }
       }
     ]
-  },  
+  },
   {
     name: 'japanese-hiragana',
     label: 'Japanese Hiragana',
