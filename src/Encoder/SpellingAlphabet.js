@@ -35,12 +35,20 @@ const defaultAlphabetSpecs = [
         word: 'Adam'
       },
       {
+        character: 'á',
+        word: 'Dlouhé á'
+      },
+      {
         character: 'b',
         word: 'Božena'
       },
       {
         character: 'c',
         word: 'Cyril'
+      },
+      {
+        character: 'č',
+        word: 'Čenek'
       },
       {
         character: 'ch',
@@ -51,8 +59,16 @@ const defaultAlphabetSpecs = [
         word: 'David'
       },
       {
+        character: 'é',
+        word: 'Emil'
+      },
+      {
         character: 'e',
         word: 'Emil'
+      },
+      {
+        character: 'é',
+        word: 'É s háčkem'
       },
       {
         character: 'f',
@@ -69,6 +85,10 @@ const defaultAlphabetSpecs = [
       {
         character: 'i',
         word: 'Ivan'
+      },
+      {
+        character: 'í',
+        word: 'Dlouhé í'
       },
       {
         character: 'j',
@@ -91,8 +111,19 @@ const defaultAlphabetSpecs = [
         word: 'Norbert'
       },
       {
+        character: 'ň',
+        word: 'Ňina'
+      },
+      {
         character: 'o',
-        word: 'Otakar'
+        word: [
+          'Otakar',
+          'Oto'
+        ]
+      },
+      {
+        character: 'ó',
+        word: 'dlouhé ó'
       },
       {
         character: 'p',
@@ -107,6 +138,10 @@ const defaultAlphabetSpecs = [
         word: 'Rudolf'
       },
       {
+        character: 'ř',
+        word: 'Řehoř'
+      },
+      {
         character: 's',
         word: 'Svatopluk'
       },
@@ -115,12 +150,23 @@ const defaultAlphabetSpecs = [
         word: 'Tomáš'
       },
       {
+        character: 'ť',
+        word: 'Těšnov'
+      },
+      {
         character: 'u',
         word: 'Urban'
       },
       {
+        character: 'ú',
+        word: 'Dlouhé ú'
+      },
+      {
         character: ['ů', 'uo'],
-        word: 'Uniform-Oscar'
+        word: [
+          'Ů s kroužkem',
+          'Uniform-Oscar'
+        ]
       },
       {
         character: 'v',
@@ -128,7 +174,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'w',
-        word: 'dvojité V'
+        word: 'Dvojité V'
       },
       {
         character: 'x',
@@ -139,8 +185,16 @@ const defaultAlphabetSpecs = [
         word: 'Ypsilon'
       },
       {
+        character: 'ý',
+        word: 'Dlouhé ypsilon'
+      },
+      {
         character: 'z',
         word: 'Zuzana'
+      },
+      {
+        character: 'ž',
+        word: 'Žofie'
       }
     ]
   },
