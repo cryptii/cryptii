@@ -4302,7 +4302,14 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ä',
-        word: 'Ärger'
+        word: 'Ärger',
+        override: {
+          word: 'Alfa-Echo',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 'b',
@@ -4379,7 +4386,14 @@ const defaultAlphabetSpecs = [
         word: [
           'Ökonom',
           'Österreich'
-        ]
+        ],
+        override: {
+          word: 'Oscar-Echo',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 'p',
@@ -4409,7 +4423,14 @@ const defaultAlphabetSpecs = [
         word: [
           'Eszett',
           'Scharfes S'
-        ]
+        ],
+        override: {
+          word: 'Sierra-Sierra',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 't',
@@ -4424,7 +4445,14 @@ const defaultAlphabetSpecs = [
         word: [
           'Übermut',
           'Übel'
-        ]
+        ],
+        override: {
+          word: 'Uniform-Echo',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 'v',
@@ -4929,11 +4957,25 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ä',
-        word: 'Ärlig'
+        word: 'Ärlig',
+        override: {
+          word: 'Alfa-Echo',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 'ö',
-        word: 'Östen'
+        word: 'Östen',
+        override: {
+          word: 'Oscar-Echo',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '0',
