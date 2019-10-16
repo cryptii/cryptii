@@ -355,6 +355,46 @@ const defaultAlphabetSpecs = [
       {
         character: 'z',
         word: 'Zackarias'
+      },
+      {
+        character: '0',
+        word: 'Nul'
+      },
+      {
+        character: '1',
+        word: 'En'
+      },
+      {
+        character: '2',
+        word: 'To'
+      },
+      {
+        character: '3',
+        word: 'Tre'
+      },
+      {
+        character: '4',
+        word: 'Fire'
+      },
+      {
+        character: '5',
+        word: 'Fem'
+      },
+      {
+        character: '6',
+        word: 'Seks'
+      },
+      {
+        character: '7',
+        word: 'Syv'
+      },
+      {
+        character: '8',
+        word: 'Otte'
+      },
+      {
+        character: '9',
+        word: 'Ni'
       }
     ]
   },
