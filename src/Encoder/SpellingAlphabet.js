@@ -4026,6 +4026,18 @@ const defaultAlphabetSpecs = [
   {
     name: 'dutch',
     label: 'Dutch',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'dutch-orthography',
+        label: 'Dutch orthography',
+        description: 'Dutch orthography'
+      }
+    ],
     mappings: [
       {
         character: ' ',
@@ -4033,7 +4045,14 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'a',
-        word: 'Anton'
+        word: 'Anton',
+        override: {
+          word: 'Anna',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 'b',
@@ -4079,7 +4098,14 @@ const defaultAlphabetSpecs = [
         word: [
           'Johan',
           'Jacob'
-        ]
+        ],
+        override: {
+          word: 'Julius',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 'k',
@@ -4113,7 +4139,14 @@ const defaultAlphabetSpecs = [
         word: [
           'Quirinius',
           'Quinten'
-        ]
+        ],
+        override: {
+          word: 'Quotiënt',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 'r',
@@ -4152,7 +4185,14 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'z',
-        word: 'Zacharias'
+        word: 'Zacharias',
+        override: {
+          word: 'Zaandam',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '0',
@@ -4160,39 +4200,75 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '1',
-        word: 'Een'
+        word: null,
+        override: {
+          word: 'Een',
+          variant: 'full'
+        }
       },
       {
         character: '2',
-        word: 'Twee'
+        word: null,
+        override: {
+          word: 'Twee',
+          variant: 'full'
+        }
       },
       {
         character: '3',
-        word: 'Drie'
+        word: null,
+        override: {
+          word: 'Drie',
+          variant: 'full'
+        }
       },
       {
         character: '4',
-        word: 'Vier'
+        word: null,
+        override: {
+          word: 'Vier',
+          variant: 'full'
+        }
       },
       {
         character: '5',
-        word: 'Vijf'
+        word: null,
+        override: {
+          word: 'Vijf',
+          variant: 'full'
+        }
       },
       {
         character: '6',
-        word: 'Zes'
+        word: null,
+        override: {
+          word: 'Zes',
+          variant: 'full'
+        }
       },
       {
         character: '7',
-        word: 'Zeven'
+        word: null,
+        override: {
+          word: 'Zeven',
+          variant: 'full'
+        }
       },
       {
         character: '8',
-        word: 'Acht'
+        word: null,
+        override: {
+          word: 'Acht',
+          variant: 'full'
+        }
       },
       {
         character: '9',
-        word: 'Negen'
+        word: null,
+        override: {
+          word: 'Negen',
+          variant: 'full'
+        }
       }
     ]
   },
