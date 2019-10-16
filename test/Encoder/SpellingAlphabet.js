@@ -64,7 +64,7 @@ describe('SpellingAlphabetEncoder', () => {
       settings: { alphabet: 'swedish' },
       content: 'yxskaftbud, ge vår wc-zonmö iq-hjälp.',
       expectedResult:
-        'Yngve Xerxes Sigurd Kalle Adam Filip Tore Bertil Urban David , ' +
+        'Yngve Xerxes Sigurd Kalle Adam Filip Tore Bertil Urban David Komma ' +
         '(mellanslag) Gustav Erik (mellanslag) Viktor Åke Rudolf (mellanslag) Wilhelm Caesar ' +
         '- Zäta Olof Niklas Martin Östen (mellanslag) Ivar Qvintus - Helge Johan ' +
         'Ärlig Ludvig Petter .'
