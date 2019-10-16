@@ -6241,6 +6241,233 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'portuguese',
+    label: 'Portuguese',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'european',
+        label: 'European Portuguese',
+        description: 'European Portuguese'
+      },
+      {
+        name: 'brazilian',
+        label: 'Brazilian Portuguese',
+        description: 'Brazilian Portuguese'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(barra de espaço)'
+      },
+      {
+          character: 'a',
+          word: 'Aveiro',
+          override: {
+            word: 'Amor',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'b',
+          word: 'Braga',
+          override: {
+            word: 'Bandeira',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'c',
+          word: 'Coimbra',
+          override: {
+            word: 'Cobra',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'd',
+          word: 'Dafundo',
+          override: {
+            word: 'Dado',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'e',
+          word: 'Évora',
+          override: {
+            word: 'Estrela',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'f',
+          word: 'Faro',
+          override: {
+            word: 'Feira',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'g',
+          word: 'Guarda',
+          override: {
+            word: 'Goiaba',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'h',
+          word: 'Horta',
+          override: {
+            word: 'Hotel',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'i',
+          word: 'Itália',
+          override: {
+            word: 'Índio',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'j',
+          word: 'José'
+      },
+      {
+          character: 'k',
+          word: 'Kodak',
+          override: {
+            word: 'Kiwi',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'l',
+          word: 'Lisboa',
+          override: {
+            word: 'Lua',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'm',
+          word: 'Maria'
+      },
+      {
+          character: 'n',
+          word: 'Nazaré',
+          override: {
+            word: 'Navio',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'o',
+          word: 'Ovar',
+          override: {
+            word: 'Ouro',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'p',
+          word: 'Porto',
+          override: {
+            word: 'Pipa',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'q',
+          word: 'Queluz',
+          override: {
+            word: 'Quilombo',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'r',
+          word: 'Rossio',
+          override: {
+            word: 'Raiz',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 's',
+          word: 'Setúbal',
+          override: {
+            word: 'Saci',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 't',
+          word: 'Tavira',
+          override: {
+            word: 'Tatu',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'u',
+          word: 'Unidade',
+          override: {
+            word: 'Uva',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'v',
+          word: 'Vidago',
+          override: {
+            word: 'Vitória',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'w',
+          word: 'Waldemar',
+          override: {
+            word: 'Wilson',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'x',
+          word: 'Xavier',
+          override: {
+            word: 'Xadrez',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'y',
+          word: 'York',
+          override: {
+            word: 'Yolanda',
+            variant: 'brazilian'
+          }
+      },
+      {
+          character: 'z',
+          word: 'Zulmira',
+          override: {
+            word: 'Zebra',
+            variant: 'brazilian'
+          }
+      }
+    ]
+  },
+  {
     name: 'russian',
     label: 'Russian',
     variants: [
