@@ -8355,7 +8355,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
       const overrides = wrapInArray(mapping.override)
 
       const processVariant = currentVariantName => {
-        let primaryWord = null
+        let primaryWord = undefined
         let secondaryWords = []
 
         for (let override of overrides) {
@@ -8373,8 +8373,8 @@ export default class SpellingAlphabetEncoder extends Encoder {
           }
           const isPrimary = typeof variant === 'string' || variant.primary === true
           if (isPrimary) {
-            if (primaryWord === null) {
-              primaryWord = overrideWords[0]
+            if (primaryWord === undefined) {
+              primaryWord = overrideWords[0] || null
               secondaryWords.push(...overrideWords.slice(1))
             } else {
               throw new Error(`Alphabet with name '${alphabetName}' has multiple primary words for variant '${currentVariantName}'. Some of them: '${primaryWord}', '${overrideWords[0]}'`);
@@ -8390,7 +8390,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
       if (variantName === 'universal') {
         for (let currentVariantName of wrapInArray(spec.variants).map(v => v.name)) {
           let [primaryWord, secondaryWords] = processVariant(currentVariantName)
-          if (primaryWord !== null) {
+          if (primaryWord !== undefined && primaryWord !== null) {
             words.push(primaryWord)
           }
           words.push(...secondaryWords)
@@ -8398,7 +8398,9 @@ export default class SpellingAlphabetEncoder extends Encoder {
       }
       else {
         let [primaryWord, secondaryWords] = processVariant(variantName)
-        if (primaryWord !== null) {
+        if (primaryWord === null) {
+          words = []
+        } else if (primaryWord !== undefined) {
           words = [primaryWord]
         }
         words.push(...secondaryWords)
