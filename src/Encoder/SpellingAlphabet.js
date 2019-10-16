@@ -7267,29 +7267,44 @@ const defaultAlphabetSpecs = [
         character: 'а',
         word: 'Анна',
         override: {
-          word: 'Антон',
+          word: ['Антон', 'Алексей'],
           variant: 'unofficial'
         }
       },
       {
         character: 'б',
-        word: 'Борис'
+        word: 'Борис',
+        override: {
+          word: 'Боря',
+          variant: {
+            name: 'unofficial',
+            primary: false
+          }
+        }
       },
       {
         character: 'в',
-        word: 'Василий'
+        word: 'Василий',
+        override: {
+          word: ['Владимир', 'Виктор', 'Вася'],
+          variant: 'unofficial'
+        }
       },
       {
         character: 'г',
         word: 'Григорий',
         override: {
-          word: 'Галина',
+          word: ['Галина', 'Гриша', 'Галя'],
           variant: 'unofficial'
         }
       },
       {
         character: 'д',
-        word: 'Дмитрий'
+        word: 'Дмитрий',
+        override: {
+          word: ['Дарья', 'Дима'],
+          variant: 'unofficial'
+        }
       },
       {
         character: 'е',
@@ -7299,7 +7314,7 @@ const defaultAlphabetSpecs = [
         character: 'ё',
         word: null,
         override: {
-          word: 'Ёлка',
+          word: ['Ёлка', 'Ёж'],
           variant: [
             'full',
             'unofficial'
@@ -7318,19 +7333,23 @@ const defaultAlphabetSpecs = [
         character: 'з',
         word: 'Зинаида',
         override: {
-          word: 'Зоя',
+          word: ['Зоя', 'Зина'],
           variant: 'unofficial'
         }
       },
       {
         character: 'и',
-        word: 'Иван'
+        word: 'Иван',
+        override: {
+          word: ['Ирина', 'Игорь'],
+          variant: 'unofficial'
+        }
       },
       {
         character: 'й',
         word: 'Иван краткий',
         override: {
-          word: 'Йот',
+          word: ['Йот', 'Йод'],
           variant: 'unofficial'
         }
       },
@@ -7338,39 +7357,55 @@ const defaultAlphabetSpecs = [
         character: 'к',
         word: 'Константин',
         override: {
-          word: 'Киловатт',
+          word: ['Киловатт', 'Костя'],
           variant: 'unofficial'
         }
       },
       {
         character: 'л',
-        word: 'Леонид'
+        word: 'Леонид',
+        override: {
+          word: ['Любовь', 'Лёня', 'Люба'],
+          variant: 'unofficial'
+        }
       },
       {
         character: 'м',
         word: 'Михаил',
         override: {
-          word: 'Мария',
+          word: ['Мария', 'Миша', 'Маша'],
           variant: 'unofficial'
         }
       },
       {
         character: 'н',
-        word: 'Николай'
+        word: 'Николай',
+        override: {
+          word: ['Надежда', 'Наташа', 'Нина', 'Надя'],
+          variant: 'unofficial'
+        }
       },
       {
         character: 'о',
-        word: 'Ольга'
+        word: 'Ольга',
+        override: {
+          word: 'Олег',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'п',
-        word: 'Павел'
+        word: 'Павел',
+        override: {
+          word: ['Полип', 'Полина', 'Пётр', 'Паша'],
+          variant: 'unofficial'
+        }
       },
       {
         character: 'р',
         word: 'Роман',
         override: {
-          word: 'Радио',
+          word: ['Радио', 'Руслан', 'Рома'],
           variant: 'unofficial'
         }
       },
@@ -7378,7 +7413,7 @@ const defaultAlphabetSpecs = [
         character: 'с',
         word: 'Семён',
         override: {
-          word: 'Сергей',
+          word: ['Сергей', 'Саша'],
           variant: 'unofficial'
         }
       },
@@ -7386,33 +7421,52 @@ const defaultAlphabetSpecs = [
         character: 'т',
         word: 'Татьяна',
         override: {
-          word: 'Тамара',
+          word: ['Тамара', 'Таня'],
           variant: 'unofficial'
         }
       },
       {
         character: 'у',
-        word: 'Ульяна'
+        word: 'Ульяна',
+        override: {
+          word: ['Украина', 'Уля'],
+          variant: 'unofficial'
+        }
       },
       {
         character: 'ф',
-        word: 'Фёдор'
+        word: 'Фёдор',
+        override: {
+          word: 'Федя',
+          variant: {
+            name: 'unofficial',
+            primary: false
+          }
+        }
       },
       {
         character: 'х',
-        word: 'Харитон'
+        word: 'Харитон',
+        override: {
+          word: 'Харьков',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'ц',
         word: 'Цапля',
         override: {
-          word: 'Центр',
+          word: ['Центр', 'Царица'],
           variant: 'unofficial'
         }
       },
       {
         character: 'ч',
-        word: 'Человек'
+        word: ['Человек', 'Чайка'],
+        override: {
+          word: 'Чехов',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'ш',
@@ -7436,23 +7490,35 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ь',
-        word: 'Мягкий знак'
+        word: 'Мягкий знак',
+        override: {
+          word: ['знак', 'икс'],
+          variant: 'unofficial'
+        }
       },
       {
         character: 'э',
         word: 'Эхо',
         override: {
-          word: 'Эмма',
+          word: ['Эмма', 'Эмилия', 'Эрик', 'Эдуард'],
           variant: 'unofficial'
         }
       },
       {
         character: 'ю',
-        word: 'Юрий'
+        word: 'Юрий',
+        override: {
+          word: ['Юлиана', 'Юля'],
+          variant: 'unofficial'
+        }
       },
       {
         character: 'я',
-        word: 'Яков'
+        word: 'Яков',
+        override: {
+          word: ['Яна', 'Яша'],
+          variant: 'unofficial'
+        }
       },
       {
         character: '0',
