@@ -6889,6 +6889,144 @@ const defaultAlphabetSpecs = [
         word: 'Zaragoza'
       }
     ]
+  },
+  {
+    name: 'turkish',
+    label: 'Turkish',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(boşluk)'
+      },
+      {
+        character: 'a',
+        word: 'Adana'
+      },
+      {
+        character: 'b',
+        word: 'Bolu'
+      },
+      {
+        character: 'c',
+        word: 'Ceyhan'
+      },
+      {
+        character: 'ç',
+        word: 'Çanakkale'
+      },
+      {
+        character: 'd',
+        word: 'Denizli'
+      },
+      {
+        character: 'e',
+        word: 'Edirne'
+      },
+      {
+        character: 'f',
+        word: 'Fatsa'
+      },
+      {
+        character: 'g',
+        word: 'Giresun'
+      },
+      {
+        character: 'ğ',
+        word: 'Yumuşak G'
+      },
+      {
+        character: 'h',
+        word: 'Hatay'
+      },
+      {
+        character: 'i',
+        word: 'Isparta'
+      },
+      {
+        character: 'i̇',
+        word: 'İzmir'
+       },
+      {
+        character: 'j',
+        word: 'Jandarma'
+      },
+      {
+        character: 'k',
+        word: 'Kars'
+      },
+      {
+        character: 'l',
+        word: 'Lüleburgaz'
+      },
+      {
+        character: 'm',
+        word: 'Muş'
+      },
+      {
+        character: 'n',
+        word: 'Niğde'
+      },
+      {
+        character: 'o',
+        word: 'Ordu'
+      },
+      {
+        character: 'ö',
+        word: 'Ödemiş'
+      },
+      {
+        character: 'p',
+        word: 'Polatlı'
+      },
+      {
+        character: 'r',
+        word: 'Rize'
+      },
+      {
+        character: 's',
+        word: 'Sinop'
+      },
+      {
+        character: 'ş',
+        word: 'Şırnak'
+      },
+      {
+        character: 't',
+        word: 'Tokat'
+      },
+      {
+        character: 'u',
+        word: 'Uşak'
+      },
+      {
+        character: 'ü',
+        word: 'Ünye'
+      },
+      {
+        character: 'v',
+        word: 'Van'
+      },
+      {
+        character: 'y',
+        word: 'Yozgat'
+      },
+      {
+        character: 'z',
+        word: 'Zonguldak'
+      }
+    ]
   }
 ]
 
