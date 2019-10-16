@@ -248,7 +248,7 @@ describe('SpellingAlphabetEncoder', () => {
     }).then(done, done)
   })
 
-  it('should ignore mappings wher words set to null', done => {
+  it('should ignore mappings when words set to null', done => {
     const alphabetSpecs = [
       {
         name: 'Alphabet',
