@@ -21,6 +21,14 @@ https://en.wikipedia.org/wiki/Swedish_Armed_Forces_radio_alphabet
 https://en.wikipedia.org/wiki/Dutch_orthography#Spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:French_spelling_alphabet
 https://de.wikipedia.org/wiki/Buchstabiertafel
+https://en.wiktionary.org/wiki/Appendix:Italian_spelling_alphabet
+https://en.wiktionary.org/wiki/Appendix:Finnish_spelling_alphabet
+https://en.wiktionary.org/wiki/Appendix:German_spelling_alphabet
+https://en.wiktionary.org/wiki/Appendix:Korean_spelling_alphabet
+https://en.wiktionary.org/wiki/Appendix:Portuguese_spelling_alphabet
+https://en.wiktionary.org/wiki/Appendix:Russian_spelling_alphabet
+https://en.wiktionary.org/wiki/Appendix:Spanish_spelling_alphabet
+https://en.wiktionary.org/wiki/Appendix:Swedish_spelling_alphabet
 
 TODO
 https://en.wikipedia.org/wiki/Allied_military_phonetic_spelling_alphabets
