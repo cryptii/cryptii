@@ -165,249 +165,249 @@ const defaultAlphabetSpecs = [
         description: 'Airports that have a majority of Delta Air Lines flights\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
       },
       {
-        name: 'flaghoist1908',
-        label: 'flaghoist1908',
-        description: 'flaghoist1908'
-      },
-      {
-        name: 'flaghoist1908v2',
-        label: 'flaghoist1908v2',
-        description: 'flaghoist1908v2'
-      },
-      {
-        name: 'flaghoist1920',
-        label: 'flaghoist1920',
-        description: 'flaghoist1920'
+        name: 'flaghoist1969',
+        label: 'Flaghoist, 1969',
+        description: '1969\nFlaghoist spelling alphabet'
       },
       {
         name: 'flaghoist1942',
-        label: 'flaghoist1942',
-        description: 'flaghoist1942'
+        label: 'Flaghoist, 1942',
+        description: '1942\nFlaghoist spelling alphabet'
       },
       {
-        name: 'flaghoist1969',
-        label: 'flaghoist1969',
-        description: 'flaghoist1969'
+        name: 'flaghoist1920',
+        label: 'Flaghoist, 1920',
+        description: '1920\nFlaghoist spelling alphabet'
       },
       {
-        name: 'tel1904british-army',
-        label: 'tel1904british-army',
-        description: 'tel1904british-army'
+        name: 'flaghoist1908',
+        label: 'Flaghoist, 1908',
+        description: '1908\nFlaghoist spelling alphabet'
       },
       {
-        name: 'tel1908tasmania',
-        label: 'tel1908tasmania',
-        description: 'tel1908tasmania'
-      },
-      {
-        name: 'tel1912western-union',
-        label: 'tel1912western-union',
-        description: 'tel1912western-union'
-      },
-      {
-        name: 'tel1914british-post-office',
-        label: 'tel1914british-post-office',
-        description: 'tel1914british-post-office'
-      },
-      {
-        name: 'tel1917at-t',
-        label: 'tel1917at-t',
-        description: 'tel1917at-t'
-      },
-      {
-        name: 'tel1917at-t-overseas',
-        label: 'tel1917at-t-overseas',
-        description: 'tel1917at-t-overseas'
-      },
-      {
-        name: 'tel1918western-union',
-        label: 'tel1918western-union',
-        description: 'tel1918western-union'
-      },
-      {
-        name: 'tel1928western-union',
-        label: 'tel1928western-union',
-        description: 'tel1928western-union'
-      },
-      {
-        name: 'tel1932itu-t-iits-code-a-french',
-        label: 'tel1932itu-t-iits-code-a-french',
-        description: 'tel1932itu-t-iits-code-a-french'
-      },
-      {
-        name: 'tel1932itu-t-iits-code-b-english',
-        label: 'tel1932itu-t-iits-code-b-english',
-        description: 'tel1932itu-t-iits-code-b-english'
-      },
-      {
-        name: 'tel1942westernunion',
-        label: 'tel1942westernunion',
-        description: 'tel1942westernunion'
-      },
-      {
-        name: 'tel1947itc',
-        label: 'tel1947itc',
-        description: 'tel1947itc'
+        name: 'flaghoist1908v2',
+        label: 'Flaghoist, 1908 v2',
+        description: '1908 v2\nFlaghoist spelling alphabet'
       },
       {
         name: 'tel1958itc',
-        label: 'tel1958itc',
-        description: 'tel1958itc'
+        label: 'Telephone, 1958 ITC',
+        description: '1958 International Telecommunications Convention\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1915british-army',
-        label: 'radtel1915british-army',
-        description: 'radtel1915british-army'
+        name: 'tel1947itc',
+        label: 'Telephone, 1947 ITC',
+        description: '1947 International Telecommunications Convention\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1917royal-navy',
-        label: 'radtel1917royal-navy',
-        description: 'radtel1917royal-navy'
+        name: 'tel1942westernunion',
+        label: 'Telephone, 1942 Western Union',
+        description: '1942 Western Union\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1918british-army',
-        label: 'radtel1918british-army',
-        description: 'radtel1918british-army'
+        name: 'tel1932itu-t-iits-code-a-french',
+        label: 'Telephone, 1932 ITU-T IITS Article 40 (Code A; French)',
+        description: '1932 ITU-T IITS Article 40 (Code A; French)\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1919us-air-service',
-        label: 'radtel1919us-air-service',
-        description: 'radtel1919us-air-service'
+        name: 'tel1932itu-t-iits-code-b-english',
+        label: 'Telephone, 1932 ITU-T IITS Article 40 (Code B; English)',
+        description: '1932 ITU-T IITS Article 40 (Code B; English)\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1920uecu',
-        label: 'radtel1920uecu',
-        description: 'radtel1920uecu'
+        name: 'tel1928western-union',
+        label: 'Telephone, 1928 Western Union',
+        description: '1928 Western Union\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1927ccir',
-        label: 'radtel1927ccir',
-        description: 'radtel1927ccir'
+        name: 'tel1918western-union',
+        label: 'Telephone, 1918 Western Union',
+        description: '1918 Western Union\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1930arrl',
-        label: 'radtel1930arrl',
-        description: 'radtel1930arrl'
+        name: 'tel1917at-t',
+        label: 'Telephone, 1917 AT&T',
+        description: '1917 AT&T\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1932ccir',
-        label: 'radtel1932ccir',
-        description: 'radtel1932ccir'
+        name: 'tel1917at-t-overseas',
+        label: 'Telephone, 1917 AT&T Overseas',
+        description: '1917 AT&T Overseas\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1932arrl',
-        label: 'radtel1932arrl',
-        description: 'radtel1932arrl'
+        name: 'tel1914british-post-office',
+        label: 'Telephone, 1914 British Post Office',
+        description: '1914 British Post Office\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1936arrl',
-        label: 'radtel1936arrl',
-        description: 'radtel1936arrl'
+        name: 'tel1912western-union',
+        label: 'Telephone, 1912 Western Union',
+        description: '1912 Western Union\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1938cairo',
-        label: 'radtel1938cairo',
-        description: 'radtel1938cairo'
+        name: 'tel1908tasmania',
+        label: 'Telephone, 1908 Tasmania',
+        description: '1908 Tasmania\nTelephone spelling alphabets'
       },
       {
-        name: 'radtel1914royal-navy',
-        label: 'radtel1914royal-navy',
-        description: 'radtel1914royal-navy'
-      },
-      {
-        name: 'radtel1924raf',
-        label: 'radtel1924raf',
-        description: 'radtel1924raf'
-      },
-      {
-        name: 'radtel1943raf',
-        label: 'radtel1943raf',
-        description: 'radtel1943raf'
-      },
-      {
-        name: 'radtel1927navy',
-        label: 'radtel1927navy',
-        description: 'radtel1927navy'
-      },
-      {
-        name: 'radtel1941joint-army',
-        label: 'radtel1941joint-army',
-        description: 'radtel1941joint-army'
-      },
-      {
-        name: 'radtel1946arrl',
-        label: 'radtel1946arrl',
-        description: 'radtel1946arrl'
-      },
-      {
-        name: 'radtel1947ac',
-        label: 'radtel1947ac',
-        description: 'radtel1947ac'
-      },
-      {
-        name: 'radtel1949icao',
-        label: 'radtel1949icao',
-        description: 'radtel1949icao'
-      },
-      {
-        name: 'radtel1951iata-v2',
-        label: 'radtel1951iata-v2',
-        description: 'radtel1951iata-v2'
-      },
-      {
-        name: 'radtel1957aarl',
-        label: 'radtel1957aarl',
-        description: 'radtel1957aarl'
-      },
-      {
-        name: 'radtel1959arc',
-        label: 'radtel1959arc',
-        description: 'radtel1959arc'
-      },
-      {
-        name: 'radtel1969',
-        label: 'radtel1969',
-        description: 'radtel1969'
-      },
-      {
-        name: 'radtel1932itu-ican',
-        label: 'radtel1932itu-ican',
-        description: 'radtel1932itu-ican'
-      },
-      {
-        name: 'radtel1951iata',
-        label: 'radtel1951iata',
-        description: 'radtel1951iata'
-      },
-      {
-        name: 'radtel1956icao',
-        label: 'radtel1956icao',
-        description: 'radtel1956icao'
-      },
-      {
-        name: 'radtel1957apco-project2',
-        label: 'radtel1957apco-project2',
-        description: 'radtel1957apco-project2'
+        name: 'tel1904british-army',
+        label: 'Telephone, 1904 British Army',
+        description: '1904 British Army (Signalling Regulations)\nTelephone spelling alphabets'
       },
       {
         name: 'radtel1974apco-project14',
-        label: 'radtel1974apco-project14',
-        description: 'radtel1974apco-project14'
+        label: 'Radiotelephony, 1974, APCO Project 14',
+        description: '1974, APCO Project 14\nLaw enforcement\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1957apco-project2',
+        label: 'Radiotelephony, 1967 APCO Project 2',
+        description: 'APCO Project 2, 1967\nLaw enforcement\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1956icao',
+        label: 'Radiotelephony, ICAO, 1956-present ICAO',
+        description: '1956-present ICAO Phonetic\nICAO Radiotelephone Spelling Alphabet\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1951iata',
+        label: 'Radiotelephony, ICAO, 1951 IATA',
+        description: '1951 IATA Phonetic\nICAO Radiotelephone Spelling Alphabet\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1932itu-ican',
+        label: 'Radiotelephony, ICAO, 1932 ITU/ICAN',
+        description: '1932 ITU/ICAN Phonetic\nICAO Radiotelephone Spelling Alphabet\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1969',
+        label: 'Radiotelephony, 1969-present',
+        description: '1969-present Phonetic\nPost-WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1959arc',
+        label: 'Radiotelephony, 1959 Geneva AARC',
+        description: '1959 (Geneva) Administrative Radio Conference code words\nPost-WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1957aarl',
+        label: 'Radiotelephony, 1957 AARC, 1917 AT&T',
+        description: '1957 American Association of Railroads (same as 1917 AT&T)\nPost-WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1951iata-v2',
+        label: 'Radiotelephony, 1951 IATA',
+        description: '1951 IATA code words\nPost-WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1949icao',
+        label: 'Radiotelephony, 1949 ICAO',
+        description: '1949 ICAO\nPost-WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1947ac',
+        label: 'Radiotelephony, 1947 Atlantic City',
+        description: '1947 (Atlantic City) International Radio Conference\nPost-WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1946arrl',
+        label: 'Radiotelephony, 1946 ARRL',
+        description: '1946 ARRL\nPost-WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1943raf',
+        label: 'Radiotelephony, 1943-1956 British RAF',
+        description: '1943-1956\nJoint Army/Navy phonetic alphabet\nUS\nAllied military alphabet history\nDuring WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1941joint-army',
+        label: 'Radiotelephony, 1941-1956 US Joint Army/Navy',
+        description: '1941-1956\nJoint Army/Navy phonetic alphabet\nUS\nAllied military alphabet history\nDuring WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1938cairo',
+        label: 'Radiotelephony, 1938 Cairo IRC',
+        description: '1938 (Cairo) International Radiocommunication Conference code words\nBetween WWI and WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1927navy',
+        label: 'Radiotelephony, 1927-1937 US Navy Department',
+        description: '1927-1937\nNavy Department\nUS\nAllied military alphabet history\nDuring WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1924raf',
+        label: 'Radiotelephony, 1924-1942 British RAF',
+        description: '1924-1942\nRAF phonetic alphabet\nBritish\nAllied military alphabet history\nDuring WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1914royal-navy',
+        label: 'Radiotelephony, 1914-1918 British Royal Navy',
+        description: '1914-1918 (World War I)\nRoyal Navy\nBritish\nAllied military alphabet history\nDuring WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1936arrl',
+        label: 'Radiotelephony, 1936 ARRL',
+        description: '1936 ARRL\nBetween WWI and WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1932arrl',
+        label: 'Radiotelephony, 1932 ARRL, 1918 Western Union',
+        description: '1932 American Association of Railroads (same as 1918 Western Union)\nBetween WWI and WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1932ccir',
+        label: 'Radiotelephony, 1932 CCIR/ICAN',
+        description: '1932 General Radiocommunication and Additional Regulations (CCIR/ICAN)\nBetween WWI and WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1930arrl',
+        label: 'Radiotelephony, 1930 ARRL, 1918 Western Union',
+        description: '1930 ARRL List (same as 1918 Western Union)\nBetween WWI and WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1927ccir',
+        label: 'Radiotelephony, 1927 CCIR',
+        description: '1927 (Washington, D.C.) International Radiotelegraph Convention (CCIR)\nBetween WWI and WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1920uecu',
+        label: 'Radiotelephony, 1920 UECU Proposal (never adopted)',
+        description: '1920 UECU Proposal (never adopted)\nBetween WWI and WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1919us-air-service',
+        label: 'Radiotelephony, 1919 U.S. Air Service',
+        description: '1919 U.S. Air Service\nBetween WWI and WWII\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1918british-army',
+        label: 'Radiotelephony, 1918 British Army',
+        description: '1918 British Army\nDuring WWI\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1917royal-navy',
+        label: 'Radiotelephony, 1917 Royal Navy',
+        description: '1917 Royal Navy\nDuring WWI\nRadiotelephony spelling alphabets'
+      },
+      {
+        name: 'radtel1915british-army',
+        label: 'Radiotelephony, 1915 British Army',
+        description: '1915 British Army\nDuring WWI\nRadiotelephony spelling alphabets'
       },
       {
         name: 'radtel1970arrl',
-        label: 'radtel1970arrl',
-        description: 'radtel1970arrl'
+        label: 'Radiotelephony, Amateur radio, 1970 ARRL ICAO',
+        description: '1970-present ARRL (ICAO)\nAmateur radio\nRadiotelephony spelling alphabets'
       },
       {
         name: 'radtel-dx',
-        label: 'radtel-dx',
-        description: 'radtel-dx'
+        label: 'Radiotelephony, Amateur radio, DX',
+        description: 'DX\nAmateur radio\nRadiotelephony spelling alphabets'
       },
       {
         name: 'radtel-dx-alternate',
-        label: 'radtel-dx-alternate',
-        description: 'radtel-dx-alternate'
+        label: 'Radiotelephony, Amateur radio, DX alternate',
+        description: 'DX alternate\nAmateur radio\nRadiotelephony spelling alphabets'
       }
     ],
     mappings: [
