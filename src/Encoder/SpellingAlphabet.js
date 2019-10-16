@@ -4024,6 +4024,147 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'danish',
+    label: 'Danish',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(mellemrumstasten)'
+      },
+      {
+        character: 'a',
+        word: 'Anna'
+      },
+      {
+        character: 'å',
+        word: 'Åse'
+      },
+      {
+        character: 'æ',
+        word: 'Ægir'
+      },
+      {
+        character: 'b',
+        word: 'Bernhard'
+      },
+      {
+        character: 'c',
+        word: 'Cecilie'
+      },
+      {
+        character: 'd',
+        word: 'David'
+      },
+      {
+        character: 'e',
+        word: 'Erik'
+      },
+      {
+        character: 'f',
+        word: 'Frederik'
+      },
+      {
+        character: 'g',
+        word: 'Georg'
+      },
+      {
+        character: 'h',
+        word: 'Hans'
+      },
+      {
+        character: 'i',
+        word: 'Ida'
+      },
+      {
+        character: 'j',
+        word: 'Johan'
+      },
+      {
+        character: 'k',
+        word: 'Karen'
+      },
+      {
+        character: 'l',
+        word: 'Ludvig'
+      },
+      {
+        character: 'm',
+        word: 'Mari'
+      },
+      {
+        character: 'n',
+        word: 'Nikolaj'
+      },
+      {
+        character: 'o',
+        word: 'Odin'
+      },
+      {
+        character: 'ø',
+        word: [
+          'Øresund',
+          'Ødis'
+        ]
+      },
+      {
+        character: 'p',
+        word: 'Peter'
+      },
+      {
+        character: 'q',
+        word: 'Quintus'
+      },
+      {
+        character: 'r',
+        word: 'Rasmus'
+      },
+      {
+        character: 's',
+        word: 'Søren'
+      },
+      {
+        character: 't',
+        word: 'Theodor'
+      },
+      {
+        character: 'u',
+        word: 'Ulla'
+      },
+      {
+        character: 'v',
+        word: 'Viggo'
+      },
+      {
+        character: 'w',
+        word: 'William'
+      },
+      {
+        character: 'x',
+        word: 'Xerxes'
+      },
+      {
+        character: 'y',
+        word: 'Yrsa'
+      },
+      {
+        character: 'z',
+        word: 'Zackarias'
+      }
+    ]
+  },
+  {
     name: 'dutch',
     label: 'Dutch',
     variants: [
