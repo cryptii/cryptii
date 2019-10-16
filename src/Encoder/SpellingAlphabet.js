@@ -12,18 +12,21 @@ const meta = {
 /* Sources used:
 https://en.wikipedia.org/wiki/NATO_phonetic_alphabet
 https://en.wikipedia.org/wiki/Spelling_alphabet
-TODO https://en.wikipedia.org/wiki/Allied_military_phonetic_spelling_alphabets
-TODO https://en.wikipedia.org/wiki/APCO_radiotelephony_spelling_alphabet
 https://en.wikipedia.org/wiki/Finnish_Armed_Forces_radio_alphabet
 https://en.wikipedia.org/wiki/Greek_spelling_alphabet
 https://en.wikipedia.org/wiki/Japanese_radiotelephony_alphabet
 https://en.wikipedia.org/wiki/Korean_spelling_alphabet
 https://en.wikipedia.org/wiki/Russian_spelling_alphabet
 https://en.wikipedia.org/wiki/Swedish_Armed_Forces_radio_alphabet
-TODO http://spellout.org/alphabets
-TODO https://spellingalphabets.com/
-TODO https://sites.google.com/view/meyersde/phonetic-alphabets
-TODO http://www.bckelk.ukfsn.org/phon.full.html
+https://en.wikipedia.org/wiki/Dutch_orthography#Spelling_alphabet
+
+TODO
+https://en.wikipedia.org/wiki/Allied_military_phonetic_spelling_alphabets
+https://en.wikipedia.org/wiki/APCO_radiotelephony_spelling_alphabet
+http://spellout.org/alphabets
+https://spellingalphabets.com/
+https://sites.google.com/view/meyersde/phonetic-alphabets
+http://www.bckelk.ukfsn.org/phon.full.html
 */ 
 const defaultAlphabetSpecs = [
   {
