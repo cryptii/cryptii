@@ -541,6 +541,7 @@ const defaultAlphabetSpecs = [
   {
     name: 'english',
     label: 'English',
+    isDefault: true,
     variants: [
       {
         name: 'full',
@@ -7578,7 +7579,13 @@ export default class SpellingAlphabetEncoder extends Encoder {
       randomizable: false
     })
 
-    this.buildTranslationMap()
+    const defaultAlphabet = alphabetSpecs.find(alphabet => alphabet.isDefault === true)
+
+    if (defaultAlphabet !== undefined) {
+      this.setSettingValue('alphabet', defaultAlphabet.name)
+    } else {
+      this.buildTranslationMap()
+    }
   }
 
   /**
