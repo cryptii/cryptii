@@ -4572,6 +4572,227 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'greek',
+    label: 'Greek',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      },
+      {
+        name: 'radiotelephone',
+        label: 'Radiotelephone',
+        description: 'Radiotelephone'
+      },
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(πλήκτρο διαστήματος)'
+      },
+      {
+        character: 'α',
+        word: 'Αστήρ',
+        override: {
+          word: 'Αθανασιος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'β',
+        word: 'Βύρων',
+        override: {
+          word: 'Βασιλειος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'γ',
+        word: 'Γαλή',
+        override: {
+          word: 'Γεωργιος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'δ',
+        word: 'Δόξα',
+        override: {
+          word: 'Δημητριος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'ε',
+        word: 'Ερμής',
+        override: {
+          word: 'Ελενη',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'ζ',
+        word: [
+          'Ζεύς',
+          'Ζωή'
+        ],
+        override: {
+          word: 'Ζηνοβια',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'η',
+        word: 'Ηρώ',
+        override: {
+          word: 'Ηρακλης',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'θ',
+        word: 'Θεά',
+        override: {
+          word: 'Θεοδωρος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'ι',
+        word: 'Ίσκιος',
+        override: {
+          word: 'Ιωαννης',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'κ',
+        word: 'Κενόν',
+        override: {
+          word: 'Κωνσταντινος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'λ',
+        word: 'Λάμα',
+        override: {
+          word: 'Λεωνιδας',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'μ',
+        word: 'Μέλι',
+        override: {
+          word: 'Μενελαος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'ν',
+        word: 'Ναός',
+        override: {
+          word: 'Νικολαος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'ξ',
+        word: 'Ξέρξης',
+        override: {
+          word: 'Ξενοφων',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'ο',
+        word: 'Οσμή',
+        override: {
+          word: 'Οδυσσευς',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'π',
+        word: 'Πέτρος',
+        override: {
+          word: 'Παναγιωτης',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'ρ',
+        word: 'Ρήγας',
+        override: {
+          word: 'Ρωξανη',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: [
+          'σ',
+          'ς'
+        ],
+        word: 'Σοφός',
+        override: {
+          word: 'Σωτηριος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'τ',
+        word: 'Τίγρης',
+        override: {
+          word: 'Τιμολεων',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'υ',
+        word: 'Ύμνος',
+        override: {
+          word: 'Υψηλαντης',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'φ',
+        word: 'Φωφώ',
+        override: {
+          word: 'Φωτιος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'χ',
+        word: 'Χαρά',
+        override: {
+          word: 'Χαραλαμπος',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'ψ',
+        word: 'Ψυχή',
+        override: {
+          word: 'Ψαλτης',
+          variant: 'radiotelephone'
+        }
+      },
+      {
+        character: 'ω',
+        word: 'Ωμέγα'
+      }
+    ]
+  }, 
+  {
     name: 'swedish',
     label: 'Swedish',
     variants: [
