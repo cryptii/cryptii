@@ -270,4 +270,40 @@ describe('SpellingAlphabetEncoder', () => {
       assert.strictEqual(result.getString(), 'a Bravo')
     }).then(done, done)
   })
+
+  it('should remove mappings when words overriden to null', done => {
+    const alphabetSpecs = [
+      {
+        name: 'Alphabet',
+        variants: [
+          {
+            name: 'someVariant',
+            label: 'someVariant',
+            description: 'someVariant'
+          },
+          {
+            name: 'someOtherVariant',
+            label: 'someOtherVariant',
+            description: 'someOtherVariant'
+          }
+        ],
+        mappings: [
+          {
+            character: 'a',
+            word: 'Word',
+            override: {
+              word: null,
+              variant: 'someOtherVariant'
+            }
+          }
+        ]
+      }
+    ]
+
+    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
+    encoder.setSettingValue('variant', 'someOtherVariant')
+    encoder.encode('aaa').then(result => {
+      assert.strictEqual(result.getString(), 'a a a')
+    }).then(done, done)
+  })
 })
