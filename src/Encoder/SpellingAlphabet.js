@@ -20,7 +20,12 @@ https://en.wikipedia.org/wiki/Russian_spelling_alphabet
 https://en.wikipedia.org/wiki/Swedish_Armed_Forces_radio_alphabet
 https://en.wikipedia.org/wiki/Dutch_orthography#Spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:French_spelling_alphabet
+https://en.wikipedia.org/wiki/Allied_military_phonetic_spelling_alphabets
+https://en.wikipedia.org/wiki/APCO_radiotelephony_spelling_alphabet
+
 https://de.wikipedia.org/wiki/Buchstabiertafel
+https://ru.wikipedia.org/wiki/%D0%A4%D0%BE%D0%BD%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%B0%D0%BB%D1%84%D0%B0%D0%B2%D0%B8%D1%82
+
 https://en.wiktionary.org/wiki/Appendix:Italian_spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:Finnish_spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:German_spelling_alphabet
@@ -29,8 +34,7 @@ https://en.wiktionary.org/wiki/Appendix:Portuguese_spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:Russian_spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:Spanish_spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:Swedish_spelling_alphabet
-https://en.wikipedia.org/wiki/Allied_military_phonetic_spelling_alphabets
-https://en.wikipedia.org/wiki/APCO_radiotelephony_spelling_alphabet
+
 http://spellout.org/alphabets
 https://spellingalphabets.com/
 https://sites.google.com/view/meyersde/phonetic-alphabets
