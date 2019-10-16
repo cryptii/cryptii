@@ -7214,6 +7214,144 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'slovenian',
+    label: 'Slovenian',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(preslednica)'
+      },
+      {
+        character: 'a',
+        word: 'Ankaran'
+      },
+      {
+        character: 'b',
+        word: 'Bled'
+      },
+      {
+        character: 'c',
+        word: 'Celje'
+      },
+      {
+        character: 'č',
+        word: 'Čatež'
+      },
+      {
+        character: 'd',
+        word: 'Drava'
+      },
+      {
+        character: 'e',
+        word: 'Evropa'
+      },
+      {
+        character: 'f',
+        word: 'Fala'
+      },
+      {
+        character: 'g',
+        word: 'Gorica'
+      },
+      {
+        character: 'h',
+        word: 'Hrastnik'
+      },
+      {
+        character: 'i',
+        word: 'Izola'
+      },
+      {
+        character: 'j',
+        word: 'Jadran'
+      },
+      {
+        character: 'k',
+        word: 'Kamnik'
+      },
+      {
+        character: 'l',
+        word: 'Ljubljana'
+      },
+      {
+        character: 'm',
+        word: 'Maribor'
+      },
+      {
+        character: 'n',
+        word: 'Nanos'
+      },
+      {
+        character: 'o',
+        word: 'Ormož'
+      },
+      {
+        character: 'p',
+        word: 'Piran'
+      },
+      {
+        character: 'q',
+        word: 'Queen'
+      },
+      {
+        character: 'r',
+        word: 'Ravne'
+      },
+      {
+        character: 's',
+        word: 'Soča'
+      },
+      {
+        character: 'š',
+        word: 'Šmarje'
+      },
+      {
+        character: 't',
+        word: 'Triglav'
+      },
+      {
+        character: 'u',
+        word: 'Unec'
+      },
+      {
+        character: 'v',
+        word: 'Velenje'
+      },
+      {
+        character: 'w',
+        word: 'Dvojni v'
+      },
+      {
+        character: 'x',
+        word: 'Iks'
+      },
+      {
+        character: 'y',
+        word: 'Ipsilon'
+      },
+      {
+        character: 'z',
+        word: 'Zalog'
+      },
+      {
+        character: 'ž',
+        word: 'Žalec'
+      }
+    ]
+  },
+  {
     name: 'spanish',
     label: 'Spanish',
     variants: [
