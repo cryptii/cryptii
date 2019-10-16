@@ -21,8 +21,8 @@ const defaultAlphabetSpecs = [
       },
       {
         name: 'icao2008',
-        label: 'NATO/ICAO, 2008 - Present',
-        description: '2008 – present ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+        label: 'NATO/ICAO, 2008-present',
+        description: '2008-present ICAO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
       },
       {
         name: 'icao1959',
@@ -96,8 +96,8 @@ const defaultAlphabetSpecs = [
       },
       {
         name: 'ia1956',
-        label: 'International aviation, 1956 - Present',
-        description: '1956 – present ICAO\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+        label: 'International aviation, 1956-present',
+        description: '1956-present ICAO\nInternational aviation\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
       },
       {
         name: 'ia1951',
@@ -141,8 +141,8 @@ const defaultAlphabetSpecs = [
       },
       {
         name: 'imms2000',
-        label: 'International maritime mobile service, 2000 - Present, IMO SMCP',
-        description: '2000 – present IMO SMCP\nInternational maritime mobile service\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+        label: 'International maritime mobile service, 2000-present, IMO SMCP',
+        description: '2000-present IMO SMCP\nInternational maritime mobile service\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
       },
       {
         name: 'imms1967',
@@ -151,13 +151,13 @@ const defaultAlphabetSpecs = [
       },
       {
         name: 'imms1965',
-        label: 'International maritime mobile service, 1965 - Present, WRC-03',
-        description: '1965 – present (WRC-03) IMO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+        label: 'International maritime mobile service, 1965-present, WRC-03',
+        description: '1965-present (WRC-03) IMO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
       },
       {
         name: 'imms1932',
-        label: 'International maritime mobile service, 1932 - 1965, IMO',
-        description: '1932 - 1965 IMO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
+        label: 'International maritime mobile service, 1932-1965, IMO',
+        description: '1932-1965 IMO\nNATO phonetic alphabet\nInternational Radiotelephony Spelling Alphabet\nICAO phonetic alphabet\nITU phonetic alphabet and figure code'
       },
       {
         name: 'deltaairlines',
