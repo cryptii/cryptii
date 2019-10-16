@@ -4759,6 +4759,23 @@ const defaultAlphabetSpecs = [
   {
     name: 'russian',
     label: 'Russian',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'official',
+        label: 'Official',
+        description: 'Official spelling alphabet'
+      },
+      {
+        name: 'unofficial',
+        label: 'Unofficial',
+        description: 'Unofficial spelling alphabet'
+      }
+    ],
     mappings: [
       {
         character: ' ',
@@ -4766,10 +4783,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'а',
-        word: [
-          'Анна',
-          'Антон'
-        ]
+        word: 'Анна',
+        override: {
+          word: 'Антон',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'б',
@@ -4781,10 +4799,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'г',
-        word: [
-          'Григорий',
-          'Галина'
-        ]
+        word: 'Григорий',
+        override: {
+          word: 'Галина',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'д',
@@ -4796,21 +4815,30 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ё',
-        word: 'Ёлка'
+        word: null,
+        override: {
+          word: 'Ёлка',
+          variant: [
+            'full',
+            'unofficial'
+          ]
+        }
       },
       {
         character: 'ж',
-        word: [
-          'Женя',
-          'Жук'
-        ]
+        word: 'Женя',
+        override: {
+          word: 'Жук',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'з',
-        word: [
-          'Зинаида',
-          'Зоя'
-        ]
+        word: 'Зинаида',
+        override: {
+          word: 'Зоя',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'и',
@@ -4818,17 +4846,19 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'й',
-        word: [
-          'Иван краткий',
-          'Йот'
-        ]
+        word: 'Иван краткий',
+        override: {
+          word: 'Йот',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'к',
-        word: [
-          'Константин',
-          'Киловатт'
-        ]
+        word: 'Константин',
+        override: {
+          word: 'Киловатт',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'л',
@@ -4836,10 +4866,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'м',
-        word: [
-          'Михаил',
-          'Мария'
-        ]
+        word: 'Михаил',
+        override: {
+          word: 'Мария',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'н',
@@ -4855,24 +4886,27 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'р',
-        word: [
-          'Роман',
-          'Радио'
-        ]
+        word: 'Роман',
+        override: {
+          word: 'Радио',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'с',
-        word: [
-          'Семён',
-          'Сергей'
-        ]
+        word: 'Семён',
+        override: {
+          word: 'Сергей',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'т',
-        word: [
-          'Татьяна',
-          'Тамара'
-        ]
+        word: 'Татьяна',
+        override: {
+          word: 'Тамара',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'у',
@@ -4888,10 +4922,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ц',
-        word: [
-          'Цапля',
-          'Центр'
-        ]
+        word: 'Цапля',
+        override: {
+          word: 'Центр',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'ч',
@@ -4911,10 +4946,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ы',
-        word: [
-          'Еры',
-          'Игрек'
-        ]
+        word: 'Еры',
+        override: {
+          word: 'Игрек',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'ь',
@@ -4922,10 +4958,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'э',
-        word: [
-          'Эхо',
-          'Эмма'
-        ]
+        word: 'Эхо',
+        override: {
+          word: 'Эмма',
+          variant: 'unofficial'
+        }
       },
       {
         character: 'ю',
@@ -4937,47 +4974,94 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '0',
-        word: 'Ноль'
+        word: null,
+        override: {
+          word: [
+            'Ноль',
+            'Нуль'
+          ],
+          variant: 'full'
+        }
       },
       {
         character: '1',
-        word: 'Один'
+        word: null,
+        override: {
+          word: 'Один',
+          variant: 'full'
+        }
       },
       {
         character: '2',
-        word: 'Два'
+        word: null,
+        override: {
+          word: 'Два',
+          variant: 'full'
+        }
       },
       {
         character: '3',
-        word: 'Три'
+        word: null,
+        override: {
+          word: 'Три',
+          variant: 'full'
+        }
       },
       {
         character: '4',
-        word: 'Четыре'
+        word: null,
+        override: {
+          word: 'Четыре',
+          variant: 'full'
+        }
       },
       {
         character: '5',
-        word: 'Пять'
+        word: null,
+        override: {
+          word: 'Пять',
+          variant: 'full'
+        }
       },
       {
         character: '6',
-        word: 'Шесть'
+        word: null,
+        override: {
+          word: 'Шесть',
+          variant: 'full'
+        }
       },
       {
         character: '7',
-        word: 'Семь'
+        word: null,
+        override: {
+          word: 'Семь',
+          variant: 'full'
+        }
       },
       {
         character: '8',
-        word: 'Восемь'
+        word: null,
+        override: {
+          word: 'Восемь',
+          variant: 'full'
+        }
       },
       {
         character: '9',
-        word: 'Девять'
+        word: null,
+        override: {
+          word: 'Девять',
+          variant: 'full'
+        }
       },
       {
         character: '.',
-        word: 'Точка'
+        word: null,
+        override: {
+          word: 'Точка',
+          variant: 'full'
+        }
       }
     ]
   }
