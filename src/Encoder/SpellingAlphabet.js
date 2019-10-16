@@ -6103,6 +6103,144 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'norwegian',
+    label: 'Norwegian',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(mellomromstasten)'
+      },
+      {
+        character: 'a',
+        word: 'Anna'
+      },
+      {
+        character: 'å',
+        word: 'Åse'
+      },
+      {
+        character: 'æ',
+        word: 'Ærlig'
+      },
+      {
+        character: 'b',
+        word: 'Bernhard'
+      },
+      {
+        character: 'c',
+        word: 'Caesar'
+      },
+      {
+        character: 'd',
+        word: 'David'
+      },
+      {
+        character: 'e',
+        word: 'Edith'
+      },
+      {
+        character: 'f',
+        word: 'Fredrik'
+      },
+      {
+        character: 'g',
+        word: 'Gustav'
+      },
+      {
+        character: 'h',
+        word: 'Harald'
+      },
+      {
+        character: 'i',
+        word: 'Ivar'
+      },
+      {
+        character: 'j',
+        word: 'Johan'
+      },
+      {
+        character: 'k',
+        word: 'Karin'
+      },
+      {
+        character: 'l',
+        word: 'Ludvig'
+      },
+      {
+        character: 'm',
+        word: 'Martin'
+      },
+      {
+        character: 'n',
+        word: 'Nils'
+      },
+      {
+        character: 'o',
+        word: 'Olivia'
+      },
+      {
+        character: 'ø',
+        word: 'Østen'
+      },
+      {
+        character: 'p',
+        word: 'Petter'
+      },
+      {
+        character: 'q',
+        word: 'Quintus'
+      },
+      {
+        character: 'r',
+        word: 'Rikard'
+      },
+      {
+        character: 's',
+        word: 'Sigrid'
+      },
+      {
+        character: 't',
+        word: 'Teodor'
+      },
+      {
+        character: 'u',
+        word: 'Ulrik'
+      },
+      {
+        character: 'v',
+        word: 'Enkelt-V'
+      },
+      {
+        character: 'w',
+        word: 'Dobbelt-W[Note 2]'
+      },
+      {
+        character: 'x',
+        word: 'Xerxes'
+      },
+      {
+        character: 'y',
+        word: 'Yngling'
+      },
+      {
+        character: 'z',
+        word: 'Zakarias'
+      }
+    ]
+  },
+  {
     name: 'swedish',
     label: 'Swedish',
     variants: [
