@@ -4429,6 +4429,132 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'french',
+    label: 'French',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(barre d\'espace)'
+      },
+      {
+        character: 'a',
+        word: 'Anatole'
+      },
+      {
+        character: 'b',
+        word: 'Berthe'
+      },
+      {
+        character: 'c',
+        word: 'Célestin'
+      },
+      {
+        character: 'd',
+        word: 'Désiré'
+      },
+      {
+        character: 'e',
+        word: 'Eugène'
+      },
+      {
+        character: 'f',
+        word: 'François'
+      },
+      {
+        character: 'g',
+        word: 'Gaston'
+      },
+      {
+        character: 'h',
+        word: 'Henri'
+      },
+      {
+        character: 'i',
+        word: 'Irma'
+      },
+      {
+        character: 'j',
+        word: 'Joseph'
+      },
+      {
+        character: 'k',
+        word: 'Kléber'
+      },
+      {
+        character: 'l',
+        word: 'Louis'
+      },
+      {
+        character: 'm',
+        word: 'Marcel'
+      },
+      {
+        character: 'n',
+        word: 'Nicolas'
+      },
+      {
+        character: 'o',
+        word: 'Oscar'
+      },
+      {
+        character: 'p',
+        word: 'Pierre'
+      },
+      {
+        character: 'q',
+        word: 'Quintal'
+      },
+      {
+        character: 'r',
+        word: 'Raoul'
+      },
+      {
+        character: 's',
+        word: 'Suzanne'
+      },
+      {
+        character: 't',
+        word: 'Thérèse'
+      },
+      {
+        character: 'u',
+        word: 'Ursule'
+      },
+      {
+        character: 'v',
+        word: 'Victor'
+      },
+      {
+        character: 'w',
+        word: 'William'
+      },
+      {
+        character: 'x',
+        word: 'Xavier'
+      },
+      {
+        character: 'y',
+        word: 'Yvonne'
+      },
+      {
+        character: 'z',
+        word: 'Zoé'
+      }
+    ]
+  },
+  {
     name: 'german',
     label: 'German',
     variants: [
