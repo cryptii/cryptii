@@ -4275,6 +4275,18 @@ const defaultAlphabetSpecs = [
   {
     name: 'german',
     label: 'German',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'orthography',
+        label: 'Orthography',
+        description: 'Orthography'
+      }
+    ],
     mappings: [
       {
         character: ' ',
@@ -4285,12 +4297,20 @@ const defaultAlphabetSpecs = [
         word: 'Anton'
       },
       {
+        character: 'ä',
+        word: 'Ärger'
+      },
+      {
         character: 'b',
         word: 'Berta'
       },
       {
         character: 'c',
         word: 'Cäsar'
+      },
+      {
+        character: 'ch',
+        word: 'Charlotte'
       },
       {
         character: 'd',
@@ -4325,7 +4345,14 @@ const defaultAlphabetSpecs = [
         word: [
           'Kaufmann',
           'Konrad'
-        ]
+        ],
+        override: {
+          word: 'Kurfürst',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: 'l',
@@ -4342,6 +4369,13 @@ const defaultAlphabetSpecs = [
       {
         character: 'o',
         word: 'Otto'
+      },
+      {
+        character: 'ö',
+        word: [
+          'Ökonom',
+          'Österreich'
+        ]
       },
       {
         character: 'p',
@@ -4363,12 +4397,30 @@ const defaultAlphabetSpecs = [
         ]
       },
       {
+        character: 'sch',
+        word: 'Schule'
+      },
+      {
+        character: 'ß',
+        word: [
+          'Eszett',
+          'Scharfes S'
+        ]
+      },
+      {
         character: 't',
         word: 'Theodor'
       },
       {
         character: 'u',
         word: 'Ulrich'
+      },
+      {
+        character: 'ü',
+        word: [
+          'Übermut',
+          'Übel'
+        ]
       },
       {
         character: 'v',
@@ -4394,72 +4446,124 @@ const defaultAlphabetSpecs = [
         word: [
           'Zacharias',
           'Zürich'
-        ]
-      },
-      {
-        character: 'ä',
-        word: 'Ärger'
-      },
-      {
-        character: 'ö',
-        word: [
-          'Ökonom',
-          'Österreich'
-        ]
-      },
-      {
-        character: 'ü',
-        word: [
-          'Übermut',
-          'Übel'
-        ]
-      },
-      {
-        character: 'ß',
-        word: [
-          'Eszett',
-          'Scharfes S'
-        ]
+        ],
+        override: {
+          word: 'Zeppelin',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '0',
-        word: 'Null'
+        word: null,
+        override: {
+          word: 'Null',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '1',
-        word: 'Eins'
+        word: null,
+        override: {
+          word: 'Eins',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '2',
-        word: 'Zwei'
+        word: null,
+        override: {
+          word: 'Zwei',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '3',
-        word: 'Drei'
+        word: null,
+        override: {
+          word: 'Drei',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '4',
-        word: 'Vier'
+        word: null,
+        override: {
+          word: 'Vier',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '5',
-        word: 'Fünf'
+        word: null,
+        override: {
+          word: 'Fünf',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '6',
-        word: 'Sechs'
+        word: null,
+        override: {
+          word: 'Sechs',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '7',
-        word: 'Sieben'
+        word: null,
+        override: {
+          word: 'Sieben',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '8',
-        word: 'Acht'
+        word: null,
+        override: {
+          word: 'Acht',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       },
       {
         character: '9',
-        word: 'Neun'
+        word: null,
+        override: {
+          word: 'Neun',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
       }
     ]
   },
