@@ -6468,6 +6468,150 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'romanian',
+    label: 'Romanian',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Spelling alphabet',
+        description: 'Spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(spatiu)'
+      },
+      {
+        character: 'a',
+        word: 'Ana'
+      },
+      {
+        character: 'b',
+        word: 'Barbu'
+      },
+      {
+        character: 'c',
+        word: 'Costică'
+      },
+      {
+        character: 'd',
+        word: 'Dumitru'
+      },
+      {
+        character: 'e',
+        word: 'Elena'
+      },
+      {
+        character: 'f',
+        word: 'Florică'
+      },
+      {
+        character: 'g',
+        word: 'Gheorghe'
+      },
+      {
+        character: 'h',
+        word: 'Horia'
+      },
+      {
+        character: 'i',
+        word: 'Ilie'
+      },
+      {
+        character: 'j',
+        word: 'Jean'
+      },
+      {
+        character: 'k',
+        word: [
+            'Kappa',
+            'Kilogram'
+        ]
+      },
+      {
+        character: 'l',
+        word: [
+            'Lazăr',
+            'Lenuța'
+        ]
+      },
+      {
+        character: 'm',
+        word: 'Maria'
+      },
+      {
+        character: 'n',
+        word: [
+            'Nicolae',
+            'Nae'
+        ]
+      },
+      {
+        character: 'o',
+        word: 'Olga'
+      },
+      {
+        character: 'p',
+        word: 'Petrică'
+      },
+      {
+        character: 'q',
+        word: 'Q'
+      },
+      {
+        character: 'r',
+        word: [
+            'Radu',
+            'Rodica'
+        ]
+      },
+      {
+        character: 's',
+        word: 'Sandu'
+      },
+      {
+        character: 't',
+        word: 'Tudor'
+      },
+      {
+        character: 'u',
+        word: 'Udrea'
+      },
+      {
+        character: 'v',
+        word: 'Vasile'
+      },
+      {
+        character: 'w',
+        word: [
+            'Walter',
+            'Dublu-v'
+        ]
+      },
+      {
+        character: 'x',
+        word: [
+            'Xenia',
+            'Ics'
+        ]
+      },
+      {
+        character: 'y',
+        word: 'I-grec'
+      },
+      {
+        character: 'z',
+        word: 'Zoe'
+      }
+    ]
+  },
+  {
     name: 'russian',
     label: 'Russian',
     variants: [
