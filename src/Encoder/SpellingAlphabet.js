@@ -5537,6 +5537,172 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
+    name: 'korean',
+    label: 'Korean',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'alphabet',
+        label: 'Korean spelling alphabet',
+        description: 'Korean spelling alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(스페이스 바)'
+      },
+      {
+        character: 'ㄱ',
+        word: '기러기'
+      },
+      {
+        character: 'ㄴ',
+        word: '나폴리 '
+      },
+      {
+        character: 'ㄷ',
+        word: '도라지'
+      },
+      {
+        character: 'ㄹ',
+        word: '로마'
+      },
+      {
+        character: 'ㅁ',
+        word: '미나리'
+      },
+      {
+        character: 'ㅂ',
+        word: '바가지'
+      },
+      {
+        character: 'ㅅ',
+        word: '서울'
+      },
+      {
+        character: 'ㅇ',
+        word: '잉어'
+      },
+      {
+        character: 'ㅈ',
+        word: '지게'
+      },
+      {
+        character: 'ㅊ',
+        word: '치마'
+      },
+      {
+        character: 'ㅋ',
+        word: '키다리'
+      },
+      {
+        character: 'ㅌ',
+        word: '통신'
+      },
+      {
+        character: 'ㅍ',
+        word: '파고다'
+      },
+      {
+        character: 'ㅎ',
+        word: '한강'
+      },
+      {
+        character: 'ㅏ',
+        word: '아버지'
+      },
+      {
+        character: 'ㅑ',
+        word: '야자수'
+      },
+      {
+        character: 'ㅓ',
+        word: '어머니'
+      },
+      {
+        character: 'ㅕ',
+        word: '연못'
+      },
+      {
+        character: 'ㅗ',
+        word: '오징어'
+      },
+      {
+        character: 'ㅛ',
+        word: '요지경'
+      },
+      {
+        character: 'ㅜ',
+        word: '우편'
+      },
+      {
+        character: 'ㅠ',
+        word: '유달산'
+      },
+      {
+        character: 'ㅡ',
+        word: '은방울'
+      },
+      {
+        character: 'ㅣ',
+        word: '이순신'
+      },
+      {
+        character: 'ㅐ',
+        word: '앵무새'
+      },
+      {
+        character: 'ㅔ',
+        word: '엑스레이'
+      },
+      {
+        character: '1',
+        word: '하나'
+      },
+      {
+        character: '2',
+        word: '둘'
+      },
+      {
+        character: '3',
+        word: '삼'
+      },
+      {
+        character: '4',
+        word: '넷'
+      },
+      {
+        character: '5',
+        word: '오'
+      },
+      {
+        character: '6',
+        word: '여섯'
+      },
+      {
+        character: '7',
+        word: '칠'
+      },
+      {
+        character: '8',
+        word: '팔'
+      },
+      {
+        character: '9',
+        word: '아홉'
+      },
+      {
+        character: '0',
+        word: '공'
+      }
+    ]
+  },
+  {
     name: 'swedish',
     label: 'Swedish',
     variants: [
