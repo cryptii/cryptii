@@ -4769,7 +4769,7 @@ const defaultAlphabetSpecs = [
         name: 'radiotelephone',
         label: 'Radiotelephone',
         description: 'Radiotelephone'
-      },
+      }
     ],
     mappings: [
       {
