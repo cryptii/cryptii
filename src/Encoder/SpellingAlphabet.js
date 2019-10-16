@@ -29,8 +29,6 @@ https://en.wiktionary.org/wiki/Appendix:Portuguese_spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:Russian_spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:Spanish_spelling_alphabet
 https://en.wiktionary.org/wiki/Appendix:Swedish_spelling_alphabet
-
-TODO
 https://en.wikipedia.org/wiki/Allied_military_phonetic_spelling_alphabets
 https://en.wikipedia.org/wiki/APCO_radiotelephony_spelling_alphabet
 http://spellout.org/alphabets
