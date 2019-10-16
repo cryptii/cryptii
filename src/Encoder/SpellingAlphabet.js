@@ -6263,11 +6263,17 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'å',
-        word: 'Åse'
+        word: [
+          'Åse',
+          'Ågot'
+        ]
       },
       {
         character: 'æ',
-        word: 'Ærlig'
+        word: [
+          'Ærlig',
+          'Ægir'
+        ]
       },
       {
         character: 'b',
@@ -6327,7 +6333,10 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ø',
-        word: 'Østen'
+        word: [
+          'Østen',
+          'Ørnulf'
+        ]
       },
       {
         character: 'p',
