@@ -1392,6 +1392,10 @@ const defaultAlphabetSpecs = [
             variant: [
               'icao1947arrl',
               'ia1947arrl',
+              {
+                name: 'tel1912western-union',
+                primary: false
+              },
               'tel1917at-t',
               'tel1918western-union',
               'tel1928western-union',
@@ -1435,7 +1439,7 @@ const defaultAlphabetSpecs = [
             variant: 'tel1908tasmania'
           },
           {
-            word: 'Ireland (late 1912=ida)',
+            word: 'Ireland',
             variant: 'tel1912western-union'
           },
           {
