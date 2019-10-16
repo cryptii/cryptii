@@ -4033,9 +4033,9 @@ const defaultAlphabetSpecs = [
         description: 'All possible characters'
       },
       {
-        name: 'dutch-orthography',
-        label: 'Dutch orthography',
-        description: 'Dutch orthography'
+        name: 'orthography',
+        label: 'Orthography',
+        description: 'Orthography'
       }
     ],
     mappings: [
@@ -4196,7 +4196,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: '0',
-        word: 'Nul'
+        word: null,
+        override: {
+          word: 'Nul',
+          variant: 'full'
+        }
       },
       {
         character: '1',
