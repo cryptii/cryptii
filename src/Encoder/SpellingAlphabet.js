@@ -6241,209 +6241,6 @@ const defaultAlphabetSpecs = [
     ]
   },
   {
-    name: 'swedish',
-    label: 'Swedish',
-    variants: [
-      {
-        name: 'full',
-        label: 'All Characters',
-        description: 'All possible characters'
-      },
-      {
-        name: 'swedish',
-        label: 'Swedish Armed Forces radio alphabet',
-        description: 'Swedish Armed Forces radio alphabet'
-      }
-    ],
-    mappings: [
-      {
-        character: ' ',
-        word: '(mellanslag)'
-      },
-      {
-        character: 'a',
-        word: 'Adam'
-      },
-      {
-        character: 'b',
-        word: 'Bertil'
-      },
-      {
-        character: 'c',
-        word: 'Caesar'
-      },
-      {
-        character: 'd',
-        word: 'David'
-      },
-      {
-        character: 'e',
-        word: 'Erik'
-      },
-      {
-        character: 'f',
-        word: 'Filip'
-      },
-      {
-        character: 'g',
-        word: 'Gustav'
-      },
-      {
-        character: 'h',
-        word: 'Helge'
-      },
-      {
-        character: 'i',
-        word: 'Ivar'
-      },
-      {
-        character: 'j',
-        word: 'Johan'
-      },
-      {
-        character: 'k',
-        word: 'Kalle'
-      },
-      {
-        character: 'l',
-        word: 'Ludvig'
-      },
-      {
-        character: 'm',
-        word: 'Martin'
-      },
-      {
-        character: 'n',
-        word: 'Niklas'
-      },
-      {
-        character: 'o',
-        word: 'Olof'
-      },
-      {
-        character: 'p',
-        word: 'Petter'
-      },
-      {
-        character: 'q',
-        word: 'Qvintus',
-        override: {
-          word: 'Quintus',
-          variant: {
-            name: 'full',
-            primary: false
-          }
-        }
-      },
-      {
-        character: 'r',
-        word: 'Rudolf'
-      },
-      {
-        character: 's',
-        word: 'Sigurd'
-      },
-      {
-        character: 't',
-        word: 'Tore'
-      },
-      {
-        character: 'u',
-        word: 'Urban'
-      },
-      {
-        character: 'v',
-        word: 'Viktor'
-      },
-      {
-        character: 'w',
-        word: 'Wilhelm'
-      },
-      {
-        character: 'x',
-        word: 'Xerxes'
-      },
-      {
-        character: 'y',
-        word: 'Yngve'
-      },
-      {
-        character: 'z',
-        word: 'Zäta'
-      },
-      {
-        character: 'å',
-        word: 'Åke'
-      },
-      {
-        character: 'ä',
-        word: 'Ärlig',
-        override: {
-          word: 'Alfa-Echo',
-          variant: {
-            name: 'full',
-            primary: false
-          }
-        }
-      },
-      {
-        character: 'ö',
-        word: 'Östen',
-        override: {
-          word: 'Oscar-Echo',
-          variant: {
-            name: 'full',
-            primary: false
-          }
-        }
-      },
-      {
-        character: '0',
-        word: 'Nolla'
-      },
-      {
-        character: '1',
-        word: 'Ett'
-      },
-      {
-        character: '2',
-        word: 'Tvåa'
-      },
-      {
-        character: '3',
-        word: 'Trea'
-      },
-      {
-        character: '4',
-        word: 'Fyra'
-      },
-      {
-        character: '5',
-        word: 'Femma'
-      },
-      {
-        character: '6',
-        word: 'Sexa'
-      },
-      {
-        character: '7',
-        word: 'Sju'
-      },
-      {
-        character: '8',
-        word: 'Åtta'
-      },
-      {
-        character: '9',
-        word: 'Nia'
-      },
-      {
-        character: ',',
-        word: 'Komma'
-      }
-    ]
-  },
-  {
     name: 'russian',
     label: 'Russian',
     variants: [
@@ -6887,6 +6684,209 @@ const defaultAlphabetSpecs = [
       {
         character: 'z',
         word: 'Zaragoza'
+      }
+    ]
+  },
+  {
+    name: 'swedish',
+    label: 'Swedish',
+    variants: [
+      {
+        name: 'full',
+        label: 'All Characters',
+        description: 'All possible characters'
+      },
+      {
+        name: 'swedish',
+        label: 'Swedish Armed Forces radio alphabet',
+        description: 'Swedish Armed Forces radio alphabet'
+      }
+    ],
+    mappings: [
+      {
+        character: ' ',
+        word: '(mellanslag)'
+      },
+      {
+        character: 'a',
+        word: 'Adam'
+      },
+      {
+        character: 'b',
+        word: 'Bertil'
+      },
+      {
+        character: 'c',
+        word: 'Caesar'
+      },
+      {
+        character: 'd',
+        word: 'David'
+      },
+      {
+        character: 'e',
+        word: 'Erik'
+      },
+      {
+        character: 'f',
+        word: 'Filip'
+      },
+      {
+        character: 'g',
+        word: 'Gustav'
+      },
+      {
+        character: 'h',
+        word: 'Helge'
+      },
+      {
+        character: 'i',
+        word: 'Ivar'
+      },
+      {
+        character: 'j',
+        word: 'Johan'
+      },
+      {
+        character: 'k',
+        word: 'Kalle'
+      },
+      {
+        character: 'l',
+        word: 'Ludvig'
+      },
+      {
+        character: 'm',
+        word: 'Martin'
+      },
+      {
+        character: 'n',
+        word: 'Niklas'
+      },
+      {
+        character: 'o',
+        word: 'Olof'
+      },
+      {
+        character: 'p',
+        word: 'Petter'
+      },
+      {
+        character: 'q',
+        word: 'Qvintus',
+        override: {
+          word: 'Quintus',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
+      },
+      {
+        character: 'r',
+        word: 'Rudolf'
+      },
+      {
+        character: 's',
+        word: 'Sigurd'
+      },
+      {
+        character: 't',
+        word: 'Tore'
+      },
+      {
+        character: 'u',
+        word: 'Urban'
+      },
+      {
+        character: 'v',
+        word: 'Viktor'
+      },
+      {
+        character: 'w',
+        word: 'Wilhelm'
+      },
+      {
+        character: 'x',
+        word: 'Xerxes'
+      },
+      {
+        character: 'y',
+        word: 'Yngve'
+      },
+      {
+        character: 'z',
+        word: 'Zäta'
+      },
+      {
+        character: 'å',
+        word: 'Åke'
+      },
+      {
+        character: 'ä',
+        word: 'Ärlig',
+        override: {
+          word: 'Alfa-Echo',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
+      },
+      {
+        character: 'ö',
+        word: 'Östen',
+        override: {
+          word: 'Oscar-Echo',
+          variant: {
+            name: 'full',
+            primary: false
+          }
+        }
+      },
+      {
+        character: '0',
+        word: 'Nolla'
+      },
+      {
+        character: '1',
+        word: 'Ett'
+      },
+      {
+        character: '2',
+        word: 'Tvåa'
+      },
+      {
+        character: '3',
+        word: 'Trea'
+      },
+      {
+        character: '4',
+        word: 'Fyra'
+      },
+      {
+        character: '5',
+        word: 'Femma'
+      },
+      {
+        character: '6',
+        word: 'Sexa'
+      },
+      {
+        character: '7',
+        word: 'Sju'
+      },
+      {
+        character: '8',
+        word: 'Åtta'
+      },
+      {
+        character: '9',
+        word: 'Nia'
+      },
+      {
+        character: ',',
+        word: 'Komma'
       }
     ]
   },
