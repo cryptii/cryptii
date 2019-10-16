@@ -136,10 +136,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'o',
-        word: [
-          'Otakar',
-          'Oto'
-        ]
+        word: ['Otakar', 'Oto']
       },
       {
         character: 'ó',
@@ -463,10 +460,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'ij',
-        word: [
-          'IJmuiden',
-          'IJsbrand'
-        ]
+        word: ['IJmuiden', 'IJsbrand']
       },
       {
         character: 'i',
@@ -474,10 +468,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'j',
-        word: [
-          'Johan',
-          'Jacob'
-        ],
+        word: ['Johan', 'Jacob'],
         override: {
           word: 'Julius',
           variant: {
@@ -492,10 +483,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'l',
-        word: [
-          'Lodewijk',
-          'Leo'
-        ]
+        word: ['Lodewijk', 'Leo']
       },
       {
         character: 'm',
@@ -515,10 +503,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'q',
-        word: [
-          'Quirinius',
-          'Quinten'
-        ],
+        word: ['Quirinius', 'Quinten'],
         override: {
           word: 'Quotiënt',
           variant: {
@@ -529,10 +514,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'r',
-        word: [
-          'Richard',
-          'Rudolf'
-        ]
+        word: ['Richard', 'Rudolf']
       },
       {
         character: 's',
@@ -5144,10 +5126,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'k',
-        word: [
-          'Kaufmann',
-          'Konrad'
-        ],
+        word: ['Kaufmann', 'Konrad'],
         override: {
           word: 'Kurfürst',
           variant: {
@@ -5200,10 +5179,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 's',
-        word: [
-          'Samuel',
-          'Siegfried'
-        ]
+        word: ['Samuel', 'Siegfried']
       },
       {
         character: 'sch',
@@ -5255,10 +5231,7 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'x',
-        word: [
-          'Xanthippe',
-          'Xaver'
-        ]
+        word: ['Xanthippe', 'Xaver']
       },
       {
         character: 'y',
@@ -5725,18 +5698,11 @@ const defaultAlphabetSpecs = [
       },
       {
         character: 'x',
-        word: [
-          'Ics',
-          'Xeres',
-          'Xilofono'
-        ]
+        word: ['Ics', 'Xeres', 'Xilofono']
       },
       {
         character: 'y',
-        word: [
-          'York',
-          'Yacht'
-        ]
+        word: ['York', 'Yacht']
       },
       {
         character: 'z',
