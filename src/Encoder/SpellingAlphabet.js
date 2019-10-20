@@ -77,6 +77,38 @@ const alphabetSpecs = [
       'Ett',        'Tvåa',       'Trea',       'Fyra',       'Femma',
       'Sexa',       'Sju',        'Åtta',       'Nia'
     ]
+  },
+  {
+    name: 'russian',
+    label: 'Russian spelling alphabet (official, excludes Ё)',
+    characters: 'абвгдежзийклмнопрстуфхцчшщъыьэюя0123456789.',
+    words: [
+      'Анна',       'Борис',        'Василий', 'Григорий',    'Дмитрий',
+      'Елена',      'Женя',         'Зинаида', 'Иван',        'Иван краткий',
+      'Константин', 'Леонид',       'Михаил',  'Николай',     'Ольга',
+      'Павел',      'Роман',        'Семён',   'Татьяна',     'Ульяна',
+      'Фёдор',      'Харитон',      'Цапля',   'Человек',     'Шура',
+      'Щука',       'Твёрдый знак', 'Еры',     'Мягкий знак', 'Эхо',
+      'Юрий',       'Яков',         'Ноль',    'Один',        'Два',
+      'Три',        'Четыре',       'Пять',    'Шесть',       'Семь',
+      'Восемь',     'Девять',       'Точка'
+    ]
+  },
+  {
+    name: 'russian-unofficial',
+    label: 'Russian spelling alphabet (unofficial, includes Ё)',
+    characters: 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789.',
+    words: [
+      'Антон',  'Борис',    'Василий',      'Галина', 'Дмитрий',
+      'Елена',  'Ёлка',     'Жук',          'Зоя',    'Иван',
+      'Йот',    'Киловатт', 'Леонид',       'Мария',  'Николай',
+      'Ольга',  'Павел',    'Радио',        'Сергей', 'Тамара',
+      'Ульяна', 'Фёдор',    'Харитон',      'Центр',  'Человек',
+      'Шура',   'Щука',     'Твёрдый знак', 'Игрек',  'Мягкий знак',
+      'Эмма',   'Юрий',     'Яков',         'Ноль',   'Один',
+      'Два',    'Три',      'Четыре',       'Пять',   'Шесть',
+      'Семь',   'Восемь',   'Девять',       'Точка'
+    ]
   }
   /* eslint-enable no-multi-spaces */
 ]
@@ -128,18 +160,18 @@ export default class SpellingAlphabetEncoder extends Encoder {
 
     // Alphabet characters
     const replacementMap = isEncode ? this._characterMap : this._wordMap
-    const searchValues = Object.keys(replacementMap)
+    const searchValues = Object.keys(replacementMap).sort((a, b) => b.length - a.length);
 
     let index = 0
     const resultValues = []
 
     while (index < string.length) {
       // Find next occurance in string
-      const searchValue = searchValues.find(char =>
-        string.substr(index, char.length).toLowerCase() === char)
+      const searchValue = searchValues.find(value =>
+        string.substr(index, value.length).toLowerCase() === value)
 
       if (searchValue !== undefined) {
-        // Append word to result
+        // Append char (in encode mode) or word (in decode mode) to result
         resultValues.push(replacementMap[searchValue])
         index += searchValue.length
       } else {
