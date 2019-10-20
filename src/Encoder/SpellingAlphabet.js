@@ -23,7 +23,8 @@ const alphabetSpecs = [
       'Xray',     'Yankee',   'Zulu',     'Zero',     'One',      'Two',
       'Three',    'Four',     'Five',     'Six',      'Seven',    'Eight',
       'Nine',     'Stop'
-    ]
+    ],
+    spaceWord: '(space)'
   },
   {
     name: 'dutch',
@@ -44,7 +45,8 @@ const alphabetSpecs = [
       'Ypsilon',    'Zacharias',  'Nul',        'Een',        'Twee',
       'Drie',       'Vier',       'Vijf',       'Zes',        'Zeven',
       'Acht',       'Negen'
-    ]
+    ],
+    spaceWord: '(spatiebalk)'
   },
   {
     name: 'german',
@@ -61,7 +63,8 @@ const alphabetSpecs = [
       'Eszett',     'Scharfes S', 'Null',       'Eins',       'Zwei',
       'Drei',       'Vier',       'Fünf',       'Sechs',      'Sieben',
       'Acht',       'Neun'
-    ]
+    ],
+    spaceWord: '(Leertaste)'
   },
   {
     name: 'swedish',
@@ -76,7 +79,8 @@ const alphabetSpecs = [
       'Zäta',       'Åke',        'Ärlig',      'Östen',      'Nolla',
       'Ett',        'Tvåa',       'Trea',       'Fyra',       'Femma',
       'Sexa',       'Sju',        'Åtta',       'Nia'
-    ]
+    ],
+    spaceWord: '(mellanslag)'
   },
   {
     name: 'russian',
@@ -92,7 +96,8 @@ const alphabetSpecs = [
       'Юрий',       'Яков',         'Ноль',    'Один',        'Два',
       'Три',        'Четыре',       'Пять',    'Шесть',       'Семь',
       'Восемь',     'Девять',       'Точка'
-    ]
+    ],
+    spaceWord: '(пробел)'
   },
   {
     name: 'russian-unofficial',
@@ -108,12 +113,13 @@ const alphabetSpecs = [
       'Эмма',   'Юрий',     'Яков',         'Ноль',   'Один',
       'Два',    'Три',      'Четыре',       'Пять',   'Шесть',
       'Семь',   'Восемь',   'Девять',       'Точка'
-    ]
+    ],
+    spaceWord: '(пробел)'
   }
   /* eslint-enable no-multi-spaces */
 ]
 
-const spaceWord = '(space)'
+const defaultSpaceWord = '(space)'
 
 /**
  * Encoder brick translating characters into words of given spelling alphabet.
@@ -168,7 +174,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
     while (index < string.length) {
       // Find next occurance in string
       const searchValue = searchValues.find(value =>
-        string.substr(index, value.length).toLowerCase() === value)
+        string.substr(index, value.length).toLowerCase() === value.toLowerCase())
 
       if (searchValue !== undefined) {
         // Append char (in encode mode) or word (in decode mode) to result
@@ -239,6 +245,8 @@ export default class SpellingAlphabetEncoder extends Encoder {
         wordMap[word] = characters[index]
       }
     })
+
+    const spaceWord = spec.spaceWord || defaultSpaceWord
 
     // Add space character
     characterMap[' '] = spaceWord
