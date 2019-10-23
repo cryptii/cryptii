@@ -51,6 +51,8 @@ export default class RailFenceCipherEncoder extends Encoder {
     const n = content.getLength()
     const result = new Array(n)
 
+    // create the matrix to cipher plain text
+    // key = no. of rows in matrix
     const rail = new Array(key)
     for (let i = 0; i < key; i++) {
       rail[i] = new Array(n)
@@ -61,20 +63,29 @@ export default class RailFenceCipherEncoder extends Encoder {
     let col = 0
 
     if (isEncode) {
+      // filling the rail matrix to distinguish
+      // filled spaces from blank ones
       for (let i = 0; i < n; i++) {
+        // check the direction of flow
+        // reverse the direction if we've just
+        // filled the top or bottom rail
         if (row === 0 || row === key - 1) {
           dirDown = !dirDown
         }
+
+        // fill the corresponding alphabet
         rail[row][col] = content.getCodePointAt(i)
 
         col++
 
+        // find the next row using direction flag
         if (dirDown) {
           row++
         } else {
           row--
         }
       }
+      // construct the cipher using the rail matrix
       let index = 0
       for (let i = 0; i < key; i++) {
         for (let j = 0; j < n; j++) {
@@ -87,22 +98,26 @@ export default class RailFenceCipherEncoder extends Encoder {
       return result
     }
 
+    // decoder
+
     for (let i = 0; i < n; i++) {
       if (row === 0) {
         dirDown = true
       } else if (row === key - 1) {
         dirDown = false
       }
+      // place the marker
       rail[row][col] = '*'
       col++
 
+      // find the next row using direction flag
       if (dirDown) {
         row++
       } else {
         row--
       }
     }
-
+    // construct the fill the rail matrix
     let index = 0
     for (let i = 0; i < key; i++) {
       for (let j = 0; j < n; j++) {
@@ -116,6 +131,9 @@ export default class RailFenceCipherEncoder extends Encoder {
     index = 0
     row = 0
     col = 0
+
+    // read the matrix in zig-zag manner
+    // to construct the plain text
     for (let i = 0; i < n; i++) {
       if (row === 0) {
         dirDown = true
