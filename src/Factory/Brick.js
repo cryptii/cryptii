@@ -37,6 +37,7 @@ import TrifidCipherEncoder from '../Encoder/TrifidCipher'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import URLEncoder from '../Encoder/URL'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
+import RailFenceCipherEncoder from '../Encoder/RailFence'
 
 // Singleton instance
 let instance = null
@@ -77,6 +78,7 @@ export default class BrickFactory extends Factory {
       VigenereCipherEncoder,
       BaconCipherEncoder,
       AlphabeticalSubstitutionEncoder,
+      RailFenceCipherEncoder,
 
       // Polybius square ciphers
       PolybiusSquareEncoder,
