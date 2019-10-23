@@ -26,6 +26,7 @@ import NihilistCipherEncoder from '../Encoder/NihilistCipher'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import PolybiusSquareEncoder from '../Encoder/PolybiusSquare'
 import PunycodeEncoder from '../Encoder/Punycode'
+import RailFenceCipherEncoder from '../Encoder/RailFenceCipher'
 import RC4Encoder from '../Encoder/RC4'
 import ReplaceEncoder from '../Encoder/Replace'
 import ReverseEncoder from '../Encoder/Reverse'
@@ -37,7 +38,6 @@ import TrifidCipherEncoder from '../Encoder/TrifidCipher'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import URLEncoder from '../Encoder/URL'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
-import RailFenceCipherEncoder from '../Encoder/RailFenceCipher'
 
 // Singleton instance
 let instance = null
