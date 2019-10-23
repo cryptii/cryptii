@@ -37,7 +37,7 @@ import TrifidCipherEncoder from '../Encoder/TrifidCipher'
 import UnicodeCodePointsEncoder from '../Encoder/UnicodeCodePoints'
 import URLEncoder from '../Encoder/URL'
 import VigenereCipherEncoder from '../Encoder/VigenereCipher'
-import RailFenceCipherEncoder from '../Encoder/RailFence'
+import RailFenceCipherEncoder from '../Encoder/RailFenceCipher'
 
 // Singleton instance
 let instance = null
