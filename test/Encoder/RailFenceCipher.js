@@ -20,5 +20,10 @@ describe('RailFenceCipherEncoder', () => EncoderTester.test(RailFenceCipherEncod
     settings: { key: 2 },
     content: 'WEAREDISCOVEREDFLEEATONCE',
     expectedResult: 'WAEICVRDLETNEERDSOEEFEAOC'
+  },
+  {
+    settings: { key: 7, offset: 3 },
+    content: 'WEAREDISCOVEREDFLEEATONCE',
+    expectedResult: 'OOCVTNSEACWIREEEDEEAEDLRF'
   }
 ]))

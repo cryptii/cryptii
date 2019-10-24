@@ -8,10 +8,8 @@ const meta = {
   type: 'encoder'
 }
 
-const defaultKey = 2
-
 /**
- * Encoder brick for RailFence Cipher encoding and decoding
+ * Encoder brick for Rail fence cipher encoding and decoding
  */
 export default class RailFenceCipherEncoder extends Encoder {
   /**
@@ -31,11 +29,16 @@ export default class RailFenceCipherEncoder extends Encoder {
       {
         name: 'key',
         type: 'number',
-        label: 'Key',
-        priority: 10,
-        value: defaultKey,
+        value: 2,
         integer: true,
         min: 2
+      },
+      {
+        name: 'offset',
+        type: 'number',
+        value: 0,
+        integer: true,
+        min: 0
       }
     ])
   }
@@ -47,52 +50,32 @@ export default class RailFenceCipherEncoder extends Encoder {
    * @return {number[]|string|Uint8Array|Chain} Encoded content
    */
   performEncode (content) {
-    const { key } =
-            this.getSettingValues()
-    const n = content.getLength()
-    const result = new Array(n)
+    const { key: rows, offset } = this.getSettingValues()
+    const length = content.getLength()
 
-    // Create the rail matrix
-    // Here, key = number of rows in the matrix
-    const rail = new Array(key)
-    for (let i = 0; i < key; i++) {
-      rail[i] = new Array(n)
+    // Cycle after which fence matrix repeats
+    const cycle = rows * 2 - 2
+
+    // Prepare an empty string for each row
+    const fenceRows = new Array(rows).fill('')
+
+    // X -->
+    //   W     I     R     E     E
+    // Y  E   D S   E E   E A   C
+    // |   A E   C V   D L   T N
+    // V    R     O     F     O
+    let x, y
+
+    // Go through plaintext characters
+    for (x = 0; x < length; x++) {
+      // Calculate at what y position the fence is for the current x position
+      y = rows - 1 - Math.abs(cycle / 2 - (x + offset) % cycle)
+      // Append the the current plaintext character to the respective fence row
+      fenceRows[y] += content.getCharAt(x)
     }
 
-    let dirDown = false
-    let row = 0
-    let col = 0
-
-    // Filling the rail matrix to distinguish filled spaces from blank ones
-    for (let i = 0; i < n; i++) {
-      // Reverse the direction if we've just filled the top or bottom rail
-      if (row === 0 || row === key - 1) {
-        dirDown = !dirDown
-      }
-
-      // Fill the corresponding alphabet
-      rail[row][col] = content.getCodePointAt(i)
-
-      col++
-
-      // Find the next row using direction flag
-      if (dirDown) {
-        row++
-      } else {
-        row--
-      }
-    }
-    // Construct the cipher using the rail matrix
-    let index = 0
-    for (let i = 0; i < key; i++) {
-      for (let j = 0; j < n; j++) {
-        if (rail[i][j] !== undefined) {
-          result[index] = rail[i][j]
-          index++
-        }
-      }
-    }
-    return result
+    // Glue fence rows together
+    return fenceRows.join('')
   }
 
   /**
@@ -102,71 +85,26 @@ export default class RailFenceCipherEncoder extends Encoder {
    * @return {number[]|string|Uint8Array|Chain} Decoded content
    */
   performDecode (content) {
-    const { key } =
-        this.getSettingValues()
-    const n = content.getLength()
-    const result = new Array(n)
+    const { key: rows, offset } = this.getSettingValues()
+    const length = content.getLength()
 
-    // Create the rail matrix
-    // Here, key = number of rows in the matrix
-    const rail = new Array(key)
-    for (let i = 0; i < key; i++) {
-      rail[i] = new Array(n)
-    }
+    // Cycle after which fence matrix repeats
+    const cycle = rows * 2 - 2
 
-    let dirDown = false
-    let row = 0
-    let col = 0
+    // Create result array of code points
+    const result = new Array(length)
 
-    for (let i = 0; i < n; i++) {
-      if (row === 0) {
-        dirDown = true
-      } else if (row === key - 1) {
-        dirDown = false
-      }
-      // Place the marker
-      rail[row][col] = '*'
-      col++
+    let j = -1
+    let x, y
 
-      // Find the next row using direction flag
-      if (dirDown) {
-        row++
-      } else {
-        row--
-      }
-    }
-    // Construct the fill the rail matrix
-    let index = 0
-    for (let i = 0; i < key; i++) {
-      for (let j = 0; j < n; j++) {
-        if (rail[i][j] === '*' && index < n) {
-          rail[i][j] = content.getCodePointAt(index)
-          index++
+    // Go through virtual matrix rows (y) and cols (x)
+    for (y = 0; y < rows; y++) {
+      for (x = 0; x < length; x++) {
+        // Check if the current x-y-position is situated on the zigzag fence
+        if ((y + x + offset) % cycle === 0 || (y - x - offset) % cycle === 0) {
+          // Set result for the current x-position
+          result[x] = content.getCodePointAt(++j)
         }
-      }
-    }
-
-    index = 0
-    row = 0
-    col = 0
-
-    // Read the matrix in zig-zag manner to construct the plain text
-    for (let i = 0; i < n; i++) {
-      if (row === 0) {
-        dirDown = true
-      } else if (row === key - 1) {
-        dirDown = false
-      }
-
-      if (rail[row][col] !== '*') {
-        result[index] = rail[row][col]
-        index++
-        col++
-      }
-      if (dirDown) {
-        row++
-      } else {
-        row--
       }
     }
 
