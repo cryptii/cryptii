@@ -1,6 +1,7 @@
 
 import Encoder from '../Encoder'
 import StringUtil from '../StringUtil'
+import ResourceLoader from '../ResourceLoader'
 
 const meta = {
   name: 'spelling-alphabet',
@@ -37,7 +38,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
     }
 
     if (this._alphabetSpecs === undefined) {
-      this._alphabetSpecs = require('../../resources/SpellingAlphabets.json')
+      this._alphabetSpecs = await ResourceLoader.loadJson('SpellingAlphabets.json')
     }
 
     this._characterMap = {}
