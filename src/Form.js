@@ -27,7 +27,7 @@ export default class Form extends Viewable {
   static async createAsync(fieldsOrSpecs = [], fieldFactory = null) {
     const self = new this(fieldsOrSpecs, fieldFactory)
     await this.addFields(fieldsOrSpecs)
-    return async
+    return self
   }
 
   /**
