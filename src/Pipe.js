@@ -205,8 +205,8 @@ export default class Pipe extends Viewable {
    * to be added to the pipe
    * @return {Pipe} Fluent interface
    */
-  addBrick (brick) {
-    this.spliceBricks(-1, 0, [brick])
+  async addBrick (brick) {
+    await this.spliceBricks(-1, 0, [brick])
     return this
   }
 
@@ -217,8 +217,8 @@ export default class Pipe extends Viewable {
    * objects to be added to the pipe
    * @return {Pipe} Fluent interface
    */
-  addBricks (bricks) {
-    this.spliceBricks(-1, 0, bricks)
+  async addBricks (bricks) {
+    await this.spliceBricks(-1, 0, bricks)
     return this
   }
 
@@ -229,14 +229,14 @@ export default class Pipe extends Viewable {
    * the copy after the original brick if omitted
    * @return {Pipe} Fluent interface
    */
-  duplicateBrick (brick, index = null) {
+  async duplicateBrick (brick, index = null) {
     if (!this.containsBrick(brick)) {
       throw new Error(`Brick is not part of the pipe.`)
     }
     if (index === null) {
       index = this._bricks.indexOf(brick)
     }
-    this.spliceBricks(index, 0, [brick.copy()])
+    await this.spliceBricks(index, 0, [brick.copy()])
     return this
   }
 
@@ -246,7 +246,7 @@ export default class Pipe extends Viewable {
    * @param {number} index Index the brick should be moved to
    * @return {Pipe} Fluent interface
    */
-  moveBrick (brick, index) {
+  async moveBrick (brick, index) {
     const fromIndex = this._bricks.indexOf(brick)
     if (fromIndex === -1) {
       throw new Error(`Brick is not part of the pipe.`)
@@ -254,8 +254,8 @@ export default class Pipe extends Viewable {
     if (index > fromIndex) {
       index--
     }
-    this.spliceBricks(fromIndex, 1)
-    this.spliceBricks(index, 0, [brick])
+    await this.spliceBricks(fromIndex, 1)
+    await this.spliceBricks(index, 0, [brick])
     return this
   }
 
@@ -266,7 +266,7 @@ export default class Pipe extends Viewable {
    * @throws {Error} If brick is not part of the pipe.
    * @return {Pipe} Fluent interface
    */
-  removeBrick (brickOrIndex) {
+  async removeBrick (brickOrIndex) {
     let index = brickOrIndex
     if (brickOrIndex instanceof Brick) {
       index = this._bricks.indexOf(brickOrIndex)
@@ -275,7 +275,7 @@ export default class Pipe extends Viewable {
           `Brick is not part of the pipe and thus can't be removed.`)
       }
     }
-    this.spliceBricks(index, 1)
+    await this.spliceBricks(index, 1)
     return this
   }
 
@@ -287,7 +287,7 @@ export default class Pipe extends Viewable {
    * @throws {Error} If one of the bricks is not part of the pipe.
    * @return {Pipe} Fluent interface
    */
-  removeBricks (bricksOrIndexes) {
+  async removeBricks (bricksOrIndexes) {
     bricksOrIndexes
       // Map brick instances to indexes
       .map(brickOrIndex => {
@@ -304,7 +304,7 @@ export default class Pipe extends Viewable {
       // Sort indexes in descending order
       .sort((a, b) => b - a)
       // Remove each
-      .forEach(index => this.spliceBricks(index, 1))
+      .forEach(async index => await this.spliceBricks(index, 1))
     return this
   }
 
@@ -317,12 +317,12 @@ export default class Pipe extends Viewable {
    * @throws {Error} If needle is not part of the pipe.
    * @return {Pipe} Fluent interface
    */
-  replaceBrick (needle, replacement) {
+  async replaceBrick (needle, replacement) {
     const index = this._bricks.indexOf(needle)
     if (index === -1) {
       throw new Error(`Can't replace a brick not being part of the pipe.`)
     }
-    this.spliceBricks(index, 1, [replacement])
+    await this.spliceBricks(index, 1, [replacement])
     return this
   }
 
@@ -844,7 +844,7 @@ export default class Pipe extends Viewable {
    * @param {Encoder} brick Sender brick
    * @param {boolean} reverse Wether to reverse translation
    */
-  encoderDidReverse (brick, reverse) {
+  async encoderDidReverse (brick, reverse) {
     if (
       this._bricks.length === 3 &&
       this._bricks[0].getMeta().type === 'viewer' &&
@@ -854,10 +854,10 @@ export default class Pipe extends Viewable {
       // Having this constellation, swap source and result viewer
       // when reversing the encoder brick in the middle
       const resultContent = this.getContent(1, false)
-      const bricks = this.spliceBricks(0, 3)
+      const bricks = await this.spliceBricks(0, 3)
       bricks.reverse()
       this.setContent(resultContent, 0)
-      this.spliceBricks(0, 0, bricks)
+      await this.spliceBricks(0, 0, bricks)
     } else {
       // Treat other scenarios like setting change events
       this.brickSettingDidChange(brick)
@@ -939,7 +939,7 @@ export default class Pipe extends Viewable {
 
     // Create brick and add it to the pipe
     const brick = await factory.create(name)
-    this.spliceBricks(index, 0, [brick])
+    await this.spliceBricks(index, 0, [brick])
   }
 
   /**
@@ -949,7 +949,7 @@ export default class Pipe extends Viewable {
    * @param {Brick|object} brick Brick instance or serialized brick object
    * @param {boolean} copy Wether to copy or move the brick
    */
-  viewBrickDidDrop (view, index, brick, copy = false) {
+  async viewBrickDidDrop (view, index, brick, copy = false) {
     if (brick instanceof Brick) {
       if (copy) {
         this.duplicateBrick(brick, index)
@@ -957,7 +957,7 @@ export default class Pipe extends Viewable {
         this.moveBrick(brick, index)
       }
     } else {
-      this.spliceBricks(index, 0, [brick])
+      await this.spliceBricks(index, 0, [brick])
     }
     // Track action
     EventManager.trigger('pipeBrickDrop', { pipe: this, index, brick, copy })

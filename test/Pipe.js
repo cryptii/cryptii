@@ -145,12 +145,12 @@ describe('Pipe', () => {
     })
   })
   /** @test {Pipe.spliceBricks} */
-  describe('spliceBricks()', () => {
+  describe('spliceBricks()', async () => {
     it('should return removed bricks', () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract(examplePipeData, factory)
       const removingBrick = pipe.getBricks()[1]
-      const removedBricks = pipe.spliceBricks(1, 1)
+      const removedBricks = await pipe.spliceBricks(1, 1)
       assert.strictEqual(removedBricks[0], removingBrick)
     })
     it('should replace the second encoder whilst maintaining result and direction (case 1 & 2)', async () => {
@@ -170,7 +170,7 @@ describe('Pipe', () => {
       const a = await pipe.getContent(2)
       assert.strictEqual(a.getString(), 'xrw ceyim bjosh doz feavq olwj 13 tung pokq')
       // Replace second encoder, the last bucket should update
-      pipe.spliceBricks(2, 1, [atbashBrick])
+      await pipe.spliceBricks(2, 1, [atbashBrick])
       assert.strictEqual(pipe.getBricks()[2] instanceof AlphabeticalSubstitutionEncoder, true)
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'pvq kioea ldyuf jyn himrw ybqd 13 tszg xycw')
@@ -179,7 +179,7 @@ describe('Pipe', () => {
       const c = await pipe.getContent(0)
       assert.strictEqual(c.getString(), 'pslli aiflt')
       // Replace second encoder, the first bucket should update
-      pipe.spliceBricks(2, 1, [{ name: 'rot13' }])
+      await pipe.spliceBricks(2, 1, [{ name: 'rot13' }])
       assert.strictEqual(pipe.getBricks()[2] instanceof ROT13Encoder, true)
       const d = await pipe.getContent(0)
       assert.strictEqual(d.getString(), 'hello world')
@@ -206,7 +206,7 @@ describe('Pipe', () => {
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'uryyb jbeyq')
       // Replace both encoders, only the last bucket should update
-      pipe.spliceBricks(1, 3, [{ name: 'rot13' }, { name: 'text' }, atbashBrick])
+      await pipe.spliceBricks(1, 3, [{ name: 'rot13' }, { name: 'text' }, atbashBrick])
       const c = await pipe.getContent(0)
       assert.strictEqual(c.getString(), 'ahiib rbuis')
       const d = await pipe.getContent(2)
@@ -232,7 +232,7 @@ describe('Pipe', () => {
       const a = await pipe.getContent(0)
       assert.strictEqual(a.getString(), 'drdmf iqtkl')
       // Replace first encoder by two new ones, the first bucket should update
-      pipe.spliceBricks(1, 1, [{ name: 'rot13' }, { name: 'text' }, { name: 'vigenere-cipher' }])
+      await pipe.spliceBricks(1, 1, [{ name: 'rot13' }, { name: 'text' }, { name: 'vigenere-cipher' }])
       const b = await pipe.getContent(3)
       assert.strictEqual(b.getString(), 'jvjah ewtcb')
       const c = await pipe.getContent(0)
@@ -260,7 +260,7 @@ describe('Pipe', () => {
       const a = await pipe.getContent(0)
       assert.strictEqual(a.getString(), 'hello world')
       // Replace first two encoders by a single new one
-      pipe.spliceBricks(1, 3, [atbashBrick])
+      await pipe.spliceBricks(1, 3, [atbashBrick])
       const b = await pipe.getContent(2)
       assert.strictEqual(b.getString(), 'jvjah ewtcb')
       const c = await pipe.getContent(0)
