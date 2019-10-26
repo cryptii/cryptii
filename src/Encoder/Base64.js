@@ -68,12 +68,9 @@ export default class Base64Encoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'variant',
         type: 'enum',
@@ -113,6 +110,8 @@ export default class Base64Encoder extends Encoder {
         width: 6
       }
     ])
+
+    return self
   }
 
   /**

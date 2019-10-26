@@ -27,12 +27,9 @@ export default class BootstringEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'basicRangeStart',
         label: 'Basic Start',
@@ -65,7 +62,7 @@ export default class BootstringEncoder extends Encoder {
         uniqueChars: true,
         minLength: 2,
         caseSensitivity: false,
-        validateValue: this.validateDigitMappingValue.bind(this),
+        validateValue: self.validateDigitMappingValue.bind(self),
         randomizable: false
       },
       {
@@ -76,7 +73,7 @@ export default class BootstringEncoder extends Encoder {
         minLength: 1,
         maxLength: 1,
         caseSensitivity: false,
-        validateValue: this.validateDelimiterValue.bind(this),
+        validateValue: self.validateDelimiterValue.bind(self),
         randomizable: false
       },
       {
@@ -92,7 +89,7 @@ export default class BootstringEncoder extends Encoder {
         value: 72,
         integer: true,
         width: 6,
-        validateValue: this.validateInitialBiasValue.bind(this),
+        validateValue: self.validateInitialBiasValue.bind(self),
         randomizable: false
       },
       {
@@ -145,6 +142,8 @@ export default class BootstringEncoder extends Encoder {
         randomizable: false
       }
     ])
+
+    return self
   }
 
   /**

@@ -39,7 +39,7 @@ export default class BifidCipherEncoder extends Encoder {
     })
 
     // Create internal Polybius square encoder instance
-    self._polybiusSquare = new PolybiusSquareEncoder()
+    self._polybiusSquare = await PolybiusSquareEncoder.createAsync()
     self._polybiusSquare.setSettingValues({
       alphabet: alphabet,
       rows: '12345',

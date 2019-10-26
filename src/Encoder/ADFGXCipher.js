@@ -56,12 +56,9 @@ export default class ADFGVXCipherEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'variant',
         type: 'enum',
@@ -91,9 +88,9 @@ export default class ADFGVXCipherEncoder extends Encoder {
     ])
 
     // Create internal Polybius square encoder instance
-    const variant = this.constructor.getVariant(defaultVariantName)
-    this._polybiusSquare = new PolybiusSquareEncoder()
-    this._polybiusSquare.setSettingValues({
+    const variant = self.constructor.getVariant(defaultVariantName)
+    self._polybiusSquare = await PolybiusSquareEncoder.createAsync()
+    self._polybiusSquare.setSettingValues({
       alphabet: alphabet,
       rows: variant.squarePositions,
       columns: variant.squarePositions,
@@ -101,6 +98,8 @@ export default class ADFGVXCipherEncoder extends Encoder {
       caseSensitivity: false,
       includeForeignChars: false
     })
+
+    return self
   }
 
   /**

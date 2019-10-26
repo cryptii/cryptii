@@ -52,12 +52,9 @@ export default class NumeralSystemEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'from',
         label: 'Read',
@@ -79,6 +76,8 @@ export default class NumeralSystemEncoder extends Encoder {
         style: 'radio'
       }
     ])
+
+    return self
   }
 
   /**

@@ -44,12 +44,9 @@ export default class MorseCodeEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'variant',
         type: 'enum',
@@ -74,7 +71,7 @@ export default class MorseCodeEncoder extends Encoder {
         value: '.',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateCodeMarkSettingValue.bind(this)
+        validateValue: this.validateCodeMarkSettingValue.bind(self)
       },
       {
         name: 'longerMark',
@@ -84,7 +81,7 @@ export default class MorseCodeEncoder extends Encoder {
         value: '-',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateCodeMarkSettingValue.bind(this)
+        validateValue: this.validateCodeMarkSettingValue.bind(self)
       },
       {
         name: 'spaceMark',
@@ -94,7 +91,7 @@ export default class MorseCodeEncoder extends Encoder {
         value: '/',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateCodeMarkSettingValue.bind(this)
+        validateValue: this.validateCodeMarkSettingValue.bind(self)
       },
       {
         name: 'signalOnMark',
@@ -105,7 +102,7 @@ export default class MorseCodeEncoder extends Encoder {
         value: '=',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateTimingMarkSettingValue.bind(this)
+        validateValue: this.validateTimingMarkSettingValue.bind(self)
       },
       {
         name: 'signalOffMark',
@@ -116,9 +113,11 @@ export default class MorseCodeEncoder extends Encoder {
         value: '.',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateTimingMarkSettingValue.bind(this)
+        validateValue: this.validateTimingMarkSettingValue.bind(self)
       }
     ])
+
+    return self
   }
 
   /**

@@ -12,13 +12,11 @@ const BlockToCharacterMode = 1
  * @abstract
  */
 export default class CharacterBlockEncoder extends Encoder {
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this._mode = CharacterToBlockMode
-    this.registerSeparatorSetting()
+  static async createAsync() {
+    const self = new this()
+    self._mode = CharacterToBlockMode
+    self.registerSeparatorSetting()
+    return self
   }
 
   /**

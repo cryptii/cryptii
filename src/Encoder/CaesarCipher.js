@@ -24,12 +24,9 @@ export default class CaesarCipherEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'shift',
         type: 'number',
@@ -37,8 +34,8 @@ export default class CaesarCipherEncoder extends Encoder {
         priority: 10,
         value: defaultShift,
         integer: true,
-        describeValue: this.describeShiftValue.bind(this),
-        randomizeValue: this.randomizeShiftValue.bind(this)
+        describeValue: self.describeShiftValue.bind(self),
+        randomizeValue: self.randomizeShiftValue.bind(self)
       },
       {
         name: 'alphabet',
@@ -69,6 +66,8 @@ export default class CaesarCipherEncoder extends Encoder {
         randomizable: false
       }
     ])
+
+    return self
   }
 
   /**

@@ -20,12 +20,9 @@ export default class A1Z26Encoder extends CharacterBlockEncoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'alphabet',
         type: 'text',
@@ -40,6 +37,7 @@ export default class A1Z26Encoder extends CharacterBlockEncoder {
         randomizable: false
       }
     ])
+    return self
   }
 
   /**

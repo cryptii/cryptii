@@ -24,12 +24,9 @@ export default class VigenereCipherEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'variant',
         type: 'enum',
@@ -99,6 +96,8 @@ export default class VigenereCipherEncoder extends Encoder {
         falseLabel: 'Ignore'
       }
     ])
+
+    return self
   }
 
   /**

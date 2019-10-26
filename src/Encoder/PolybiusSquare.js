@@ -22,19 +22,16 @@ export default class PolybiusSquareEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'alphabet',
         type: 'text',
         value: 'abcdefghiklmnopqrstuvwxyz',
         uniqueChars: true,
         minLength: 2,
-        validateValue: this.validateAlphabetValue.bind(this),
+        validateValue: this.validateAlphabetValue.bind(self),
         caseSensitivity: false
       },
       {
@@ -63,7 +60,7 @@ export default class PolybiusSquareEncoder extends Encoder {
         value: '',
         randomizable: false,
         caseSensitivity: false,
-        validateValue: this.validateSeparatorValue.bind(this)
+        validateValue: this.validateSeparatorValue.bind(self)
       },
       {
         name: 'caseSensitivity',
@@ -83,6 +80,8 @@ export default class PolybiusSquareEncoder extends Encoder {
         falseLabel: 'Ignore'
       }
     ])
+
+    return self
   }
 
   /**

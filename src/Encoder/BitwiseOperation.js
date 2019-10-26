@@ -30,12 +30,9 @@ export default class BitwiseOperationEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  static async createAsync() {
+    const self = new this()
+    await self.addSettings([
       {
         name: 'operation',
         type: 'enum',
@@ -70,6 +67,8 @@ export default class BitwiseOperationEncoder extends Encoder {
         visible: false
       }
     ])
+
+    return self
   }
 
   /**

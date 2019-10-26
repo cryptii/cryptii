@@ -23,16 +23,13 @@ export default class AffineCipherEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
+  static async createAsync() {
+    const self = new this()
 
     // Linear function
     // f(x) = ax + b
 
-    this.addSettings([
+    await self.addSettings([
       {
         name: 'a',
         type: 'number',
@@ -40,8 +37,8 @@ export default class AffineCipherEncoder extends Encoder {
         value: 5,
         integer: true,
         min: 1,
-        validateValue: this.validateSlopeValue.bind(this),
-        randomizeValue: this.randomizeSlopeValue.bind(this),
+        validateValue: self.validateSlopeValue.bind(self),
+        randomizeValue: self.randomizeSlopeValue.bind(self),
         width: 6
       },
       {
@@ -51,7 +48,7 @@ export default class AffineCipherEncoder extends Encoder {
         value: 8,
         integer: true,
         min: 1,
-        randomizeValue: this.randomizeInterceptValue.bind(this),
+        randomizeValue: self.randomizeInterceptValue.bind(self),
         width: 6
       },
       {
@@ -83,6 +80,8 @@ export default class AffineCipherEncoder extends Encoder {
         randomizable: false
       }
     ])
+
+    return self
   }
 
   /**
