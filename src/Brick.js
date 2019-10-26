@@ -370,7 +370,7 @@ export default class Brick extends Viewable {
    * @throws {Error} If data is malformed.
    * @return {Brick} Extracted brick
    */
-  static extract (data, brickFactory) {
+  static async extract (data, brickFactory) {
     // Verify name
     if (typeof data.name !== 'string') {
       throw new Error(
@@ -386,7 +386,7 @@ export default class Brick extends Viewable {
     }
 
     // Create brick instance
-    const brick = brickFactory.create(name)
+    const brick = await brickFactory.create(name)
 
     // Handle title property
     if (data.title !== undefined) {

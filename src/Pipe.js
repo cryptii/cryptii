@@ -906,7 +906,7 @@ export default class Pipe extends Viewable {
 
     // Replace brick only if a different one is selected
     if (name !== brick.getMeta().name) {
-      const replacement = this.getBrickFactory().create(name)
+      const replacement = await this.getBrickFactory().create(name)
       if ((brick instanceof Encoder) && (replacement instanceof Encoder)) {
         // Apply the same reverse state on the replacement brick
         replacement.setReverse(brick.isReverse())
@@ -938,7 +938,7 @@ export default class Pipe extends Viewable {
     }
 
     // Create brick and add it to the pipe
-    const brick = factory.create(name)
+    const brick = await factory.create(name)
     this.spliceBricks(index, 0, [brick])
   }
 

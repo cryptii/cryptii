@@ -39,7 +39,7 @@ export default class FieldFactory extends Factory {
   /**
    * Configure a field object based on the provided specification.
    * @example
-   * let variantField = FieldFactory.getInstance().create({
+   * let variantField = await FieldFactory.getInstance().create({
    *   name: 'variant',
    *   type: 'enum'
    * })
@@ -50,7 +50,7 @@ export default class FieldFactory extends Factory {
    * @throws If field type is unknown.
    * @return {Field} Configured field object
    */
-  create (spec) {
+  async create (spec) {
     // Validate name
     if (!spec.name) {
       throw new Error(`Field specification requires a 'name' field.`)
@@ -64,7 +64,7 @@ export default class FieldFactory extends Factory {
     }
 
     // Create field object
-    return super.create(spec.type, spec.name, spec)
+    return await super.create(spec.type, spec.name, spec)
   }
 
   /**

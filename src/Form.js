@@ -75,7 +75,7 @@ export default class Form extends Viewable {
    * @throws {Error} If field name is already assigned.
    * @return {Form} Fluent interface
    */
-  addField (fieldOrSpec) {
+  async addField (fieldOrSpec) {
     // Retrieve field instance
     let field = fieldOrSpec
     if (!(fieldOrSpec instanceof Field)) {
@@ -86,7 +86,7 @@ export default class Form extends Viewable {
         spec.priority = this._calculateDefaultPriority()
       }
       // Let the factory create an instance from given spec
-      field = this.getFieldFactory().create(spec)
+      field = await this.getFieldFactory().create(spec)
     }
 
     // Verify that given field name is not already assigned

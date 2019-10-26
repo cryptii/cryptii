@@ -45,18 +45,18 @@ describe('Factory', () => {
   describe('create()', () => {
     it('should throw an error if requested identifier does not exist', () => {
       const factory = new Factory()
-      assert.throws(() => { factory.create('cat') }, Error)
+      assert.rejects(async () => { await factory.create('cat') }, Error)
     })
-    it('should create an object using a registered invokable', () => {
+    it('should create an object using a registered invokable', async () => {
       const factory = new Factory()
       factory.register('cat', Cat)
-      const cat = factory.create('cat')
+      const cat = await factory.create('cat')
       assert.strictEqual(cat instanceof Cat, true)
     })
-    it('should inject given args into object constructor', () => {
+    it('should inject given args into object constructor', async () => {
       const factory = new Factory()
       factory.register('cat', Cat)
-      const cat = factory.create('cat', 'Lilo', 7)
+      const cat = await factory.create('cat', 'Lilo', 7)
       assert.strictEqual(cat instanceof Cat, true)
       assert.strictEqual(cat.name, 'Lilo')
       assert.strictEqual(cat.age, 7)
