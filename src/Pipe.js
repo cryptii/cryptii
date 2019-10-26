@@ -911,7 +911,7 @@ export default class Pipe extends Viewable {
         // Apply the same reverse state on the replacement brick
         replacement.setReverse(brick.isReverse())
       }
-      this.replaceBrick(brick, replacement)
+      await this.replaceBrick(brick, replacement)
     }
   }
 

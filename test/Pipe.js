@@ -129,7 +129,7 @@ describe('Pipe', () => {
       const a = await pipe.getContent(0)
       assert.strictEqual(a.getString(), 'the quick brown fox jumps over 13 lazy dogs.')
       // Replace encoder, the first bucket should update
-      pipe.replaceBrick(pipe.getBrick(1), { name: 'vigenere-cipher' })
+      await pipe.replaceBrick(pipe.getBrick(1), { name: 'vigenere-cipher' })
       assert.strictEqual(pipe.getBricks()[1] instanceof VigenereCipherEncoder, true)
       const b = await pipe.getContent(0)
       assert.strictEqual(b.getString(), 'inl aydnx xymmm izv ucuav zhlh 13 nzsr ldik.')
@@ -138,7 +138,7 @@ describe('Pipe', () => {
       const c = await pipe.getContent(1)
       assert.strictEqual(c.getString(), 'wiwnu rjgpo')
       // Replace encoder, the second bucket should update
-      pipe.replaceBrick(pipe.getBrick(1), { name: 'rot13' })
+      await pipe.replaceBrick(pipe.getBrick(1), { name: 'rot13' })
       assert.strictEqual(pipe.getBricks()[1] instanceof ROT13Encoder, true)
       const d = await pipe.getContent(1)
       assert.strictEqual(d.getString(), 'hello world')
