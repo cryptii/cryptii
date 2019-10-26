@@ -415,7 +415,7 @@ export default class Brick extends Viewable {
         throw new Error(
           `Optional brick property 'reverse' is expected to be of type 'boolean'`)
       }
-      brick.setReverse(data.reverse)
+      await brick.setReverse(data.reverse)
     }
 
     // Apply setting values

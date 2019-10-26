@@ -909,7 +909,7 @@ export default class Pipe extends Viewable {
       const replacement = await this.getBrickFactory().create(name)
       if ((brick instanceof Encoder) && (replacement instanceof Encoder)) {
         // Apply the same reverse state on the replacement brick
-        replacement.setReverse(brick.isReverse())
+        await replacement.setReverse(brick.isReverse())
       }
       await this.replaceBrick(brick, replacement)
     }

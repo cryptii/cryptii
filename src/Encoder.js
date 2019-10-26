@@ -172,9 +172,9 @@ export default class Encoder extends Brick {
    * Creates a copy of this brick.
    * @return {Brick} Brick copy instance
    */
-  copy () {
+  async copy () {
     const copy = super.copy()
-    copy.setReverse(this.isReverse())
+    await copy.setReverse(this.isReverse())
     return copy
   }
 
@@ -281,9 +281,9 @@ export default class Encoder extends Brick {
    * Triggered when the encoder has been reversed.
    * @param {EncoderView} view Sender
    */
-  viewDidReverse (view) {
+  async viewDidReverse (view) {
     // Reverse self
-    this.setReverse(!this.isReverse())
+    await this.setReverse(!this.isReverse())
     // Track action
     EventManager.trigger('encoderReverse', {
       encoder: this,
