@@ -1,0 +1,5 @@
+{
+    "mocha.requires": [
+        "@babel/register"
+    ]
+}

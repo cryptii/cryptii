@@ -288,7 +288,7 @@ export default class Pipe extends Viewable {
    * @return {Pipe} Fluent interface
    */
   async removeBricks (bricksOrIndexes) {
-    bricksOrIndexes
+    const indexes = bricksOrIndexes
       // Map brick instances to indexes
       .map(brickOrIndex => {
         let index = brickOrIndex
@@ -303,8 +303,12 @@ export default class Pipe extends Viewable {
       })
       // Sort indexes in descending order
       .sort((a, b) => b - a)
-      // Remove each
-      .forEach(async index => await this.spliceBricks(index, 1))
+
+      for (let index of indexes) {
+        // Remove each
+        await this.spliceBricks(index, 1)
+      }
+
     return this
   }
 
