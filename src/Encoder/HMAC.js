@@ -31,7 +31,7 @@ export default class HMACEncoder extends Encoder {
     this._hashEncoder = await new HashEncoder().initAsync()
     const hashAlgorithmSetting = this._hashEncoder.getSetting('algorithm')
 
-    this.addSettings([
+    await this.addSettings([
       {
         name: 'key',
         type: 'bytes',
