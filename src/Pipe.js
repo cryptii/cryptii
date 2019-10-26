@@ -1050,7 +1050,7 @@ export default class Pipe extends Viewable {
    * @throws {Error} Throws an error if structured data is malformed.
    * @return {Pipe} Extracted pipe
    */
-  static extract (data, brickFactory) {
+  static async extract (data, brickFactory) {
     // Verify items
     if (!Array.isArray(data.items) || data.items.length === 0) {
       throw new Error(
@@ -1061,7 +1061,7 @@ export default class Pipe extends Viewable {
     // Create pipe instance
     const pipe = new Pipe()
     pipe.setBrickFactory(brickFactory)
-    pipe.addBricks(data.items)
+    await pipe.addBricks(data.items)
 
     // Handle id property
     if (data.id !== undefined && data.id !== null) {
