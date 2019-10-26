@@ -62,19 +62,19 @@ describe('Pipe', () => {
     })
   })
   /** @test {Pipe.addBrick} */
-  describe('addBrick()', () => {
+  describe('addBrick()', async () => {
     it('should add first brick to an empty pipe', () => {
       const pipe = new Pipe()
       const viewer = new TextViewer()
-      pipe.addBrick(viewer)
+      await pipe.addBrick(viewer)
       assert.strictEqual(pipe.getBricks()[0], viewer)
       assert.strictEqual(pipe.hasView(), false)
     })
-    it('should add brick to the end of a pipe', () => {
+    it('should add brick to the end of a pipe', async () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract(examplePipeData, factory)
       const viewer = new TextViewer()
-      pipe.addBrick(viewer)
+      await pipe.addBrick(viewer)
       assert.strictEqual(pipe.getBricks()[3], viewer)
     })
   })
