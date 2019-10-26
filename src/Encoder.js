@@ -112,11 +112,11 @@ export default class Encoder extends Brick {
    * @param {boolean} reverse
    * @return {Encoder} Fluent interface
    */
-  setReverse (reverse) {
+  async setReverse (reverse) {
     if (this._reverse !== reverse) {
       this._reverse = reverse
       this.updateView()
-      this.hasPipe() && this.getPipe().encoderDidReverse(this, reverse)
+      this.hasPipe() && await this.getPipe().encoderDidReverse(this, reverse)
     }
     return this
   }
