@@ -93,7 +93,7 @@ describe('SpellingAlphabetEncoder', () => {
     }
   ])
 
-  it('should fail on selection of the alphabet with duplicated characters', () => {
+  it('should fail on selection of the alphabet with duplicated characters', async () => {
     const alphabetSpecs = [
       {
         name: 'GoodAlphabet',
@@ -123,13 +123,13 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
+    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
     assert.throws(() => encoder.setSettingValue('alphabet', 'BadAlphabet'), error =>
       error.message.includes('\'BadAlphabet\'') && error.message.includes('\'b\'')
     )
   })
 
-  it('should fail on selection of the alphabet with duplicated words', () => {
+  it('should fail on selection of the alphabet with duplicated words', async () => {
     const alphabetSpecs = [
       {
         name: 'GoodAlphabet',
@@ -159,13 +159,13 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
+    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
     assert.throws(() => encoder.setSettingValue('alphabet', 'BadAlphabet'), error =>
       error.message.includes('\'BadAlphabet\'') && error.message.includes('\'BadWord\'')
     )
   })
 
-  it('should take overrides from specified variant', done => {
+  it('should take overrides from specified variant', async () => {
     const alphabetSpecs = [
       {
         name: 'Alphabet',
@@ -210,14 +210,13 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
+    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
     encoder.setSettingValue('variant', 'someVariant')
-    encoder.encode('xyz').then(result => {
-      assert.strictEqual(result.getString(), 'OverriddenWord1 Word2 OverriddenWord3')
-    }).then(done, done)
+    const result = encoder.encode('xyz')
+    assert.strictEqual(result.getString(), 'OverriddenWord1 Word2 OverriddenWord3')
   })
 
-  it('should use overridden secondary words on decode', done => {
+  it('should use overridden secondary words on decode', async () => {
     const alphabetSpecs = [
       {
         name: 'Alphabet',
@@ -241,14 +240,13 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
+    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
     encoder.setSettingValue('variant', 'someVariant')
-    encoder.decode('OverriddenWord3 AnotherOverriddenWordThree').then(result => {
-      assert.strictEqual(result.getString(), 'zz')
-    }).then(done, done)
+    const result = encoder.decode('OverriddenWord3 AnotherOverriddenWordThree')
+    assert.strictEqual(result.getString(), 'zz')
   })
 
-  it('should ignore mappings when words set to null', done => {
+  it('should ignore mappings when words set to null', async () => {
     const alphabetSpecs = [
       {
         name: 'Alphabet',
@@ -265,13 +263,12 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
-    encoder.encode('ab').then(result => {
-      assert.strictEqual(result.getString(), 'a Bravo')
-    }).then(done, done)
+    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
+    const result = encoder.encode('ab')
+    assert.strictEqual(result.getString(), 'a Bravo')
   })
 
-  it('should remove mappings when words overriden to null', done => {
+  it('should remove mappings when words overriden to null', async () => {
     const alphabetSpecs = [
       {
         name: 'Alphabet',
@@ -300,10 +297,9 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = new SpellingAlphabetEncoder(alphabetSpecs)
+    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
     encoder.setSettingValue('variant', 'someOtherVariant')
-    encoder.encode('aaa').then(result => {
-      assert.strictEqual(result.getString(), 'a a a')
-    }).then(done, done)
+    const result = encoder.encode('aaa')
+    assert.strictEqual(result.getString(), 'a a a')
   })
 })
