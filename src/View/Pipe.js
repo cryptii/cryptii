@@ -369,7 +369,7 @@ export default class PipeView extends View {
    * Triggered when the user drops something on the pipe.
    * @param {DragEvent} evt
    */
-  dragDidDrop (evt) {
+  async dragDidDrop (evt) {
     if (this.isBrickDragEvent(evt)) {
       // Handle brick drop
       evt.preventDefault()
@@ -379,10 +379,10 @@ export default class PipeView extends View {
 
       if (this._draggingBrickView !== null) {
         const brick = this._draggingBrickView.getModel()
-        this.getModel().viewBrickDidDrop(this, insertIndex, brick, copy)
+        await this.getModel().viewBrickDidDrop(this, insertIndex, brick, copy)
       } else {
         const brickData = JSON.parse(evt.dataTransfer.getData(brickMimeType))
-        this.getModel().viewBrickDidDrop(this, insertIndex, brickData, copy)
+        await this.getModel().viewBrickDidDrop(this, insertIndex, brickData, copy)
       }
     }
   }
