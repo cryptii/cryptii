@@ -28,9 +28,11 @@ export default class TapCodeEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync() {
-    const self = new this()
-    await self.addSettings([
+  async initAsync() {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+    await this.addSettings([
       {
         name: 'tapMark',
         label: 'Tap',
@@ -61,8 +63,8 @@ export default class TapCodeEncoder extends Encoder {
     ])
 
     // Create internal Polybius square encoder instance
-    self._polybiusSquare = await PolybiusSquareEncoder.createAsync()
-    self._polybiusSquare.setSettingValues({
+    this._polybiusSquare = await new PolybiusSquareEncoder().initAsync()
+    this._polybiusSquare.setSettingValues({
       alphabet: alphabet,
       rows: '12345',
       columns: '12345',
@@ -71,7 +73,7 @@ export default class TapCodeEncoder extends Encoder {
       includeForeignChars: false
     })
 
-    return self
+    return this
   }
 
   /**

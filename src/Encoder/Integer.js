@@ -33,9 +33,11 @@ export default class IntegerEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync() {
-    const self = new this()
-    await self.addSettings([
+  async initAsync() {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+    await this.addSettings([
       {
         name: 'format',
         type: 'enum',
@@ -83,7 +85,7 @@ export default class IntegerEncoder extends Encoder {
       }
     ])
 
-    return self
+    return this
   }
 
   /**

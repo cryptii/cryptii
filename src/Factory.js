@@ -77,12 +77,12 @@ export default class Factory {
     const index = this._identifiers.indexOf(identifier)
     const invokable = this._invokables[index]
 
-    if (invokable.createAsync) {
-      return await invokable.createAsync(args)
-    }
     // the following lines do basically this: new invokable(...args)
     args.splice(0, 0, invokable)
     const instance = new (Function.prototype.bind.apply(invokable, args))()
+    if (instance.initAsync) {
+      await instance.initAsync()
+    }
     return instance
   }
 

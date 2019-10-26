@@ -75,15 +75,17 @@ export default class BlockCipherEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync() {
-    const self = new this()
+  async initAsync() {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
 
     const algorithms = BlockCipherEncoder.getAlgorithms()
     const defaultAlgorithm = algorithms[0]
     const modes = BlockCipherEncoder.getModes()
     const paddingAvailable = BlockCipherEncoder.isPaddingAvailable()
 
-    await self.addSettings([
+    await this.addSettings([
       {
         name: 'algorithm',
         type: 'enum',
@@ -132,7 +134,7 @@ export default class BlockCipherEncoder extends Encoder {
       }
     ])
 
-    return self
+    return this
   }
 
   /**

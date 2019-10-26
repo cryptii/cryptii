@@ -24,10 +24,12 @@ export default class BytesViewer extends Viewer {
     return meta
   }
 
-  static async createAsync () {
-    const self = new this()
-    self._viewPrototype = TextViewerView
-    await self.addSettings([
+  async initAsync () {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+    this._viewPrototype = TextViewerView
+    await this.addSettings([
       {
         name: 'format',
         type: 'enum',
@@ -55,7 +57,7 @@ export default class BytesViewer extends Viewer {
       }
     ])
 
-    return self
+    return this
   }
 
   /**

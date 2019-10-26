@@ -21,9 +21,11 @@ export default class ReverseEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync() {
-    const self = new this()
-    await self.addSetting({
+  async initAsync() {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+    await this.addSetting({
       name: 'type',
       label: 'By',
       type: 'enum',
@@ -41,7 +43,7 @@ export default class ReverseEncoder extends Encoder {
       randomizable: false,
       style: 'radio'
     })
-    return self
+    return this
   }
 
   /**

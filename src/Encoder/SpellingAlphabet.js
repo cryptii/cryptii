@@ -8601,13 +8601,19 @@ export default class SpellingAlphabetEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync(alphabetSpecs = defaultAlphabetSpecs) {
-    const self = new this()
-    self._alphabetSpecs = alphabetSpecs
-    self._characterMap = {}
-    self._wordMap = {}
+  constructor (alphabetSpecs = defaultAlphabetSpecs) {
+    super()
+    this._alphabetSpecs = alphabetSpecs
+  }
 
-    await self.addSetting({
+  async initAsync() {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+    this._characterMap = {}
+    this._wordMap = {}
+
+    await this.addSetting({
       name: 'alphabet',
       type: 'enum',
       elements: this._alphabetSpecs.map(alphabet => alphabet.name),
@@ -8616,7 +8622,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
       style: 'radio'
     })
 
-    await self.addSetting({
+    await this.addSetting({
       name: 'variant',
       type: 'enum',
       elements: [''],
@@ -8624,15 +8630,15 @@ export default class SpellingAlphabetEncoder extends Encoder {
       randomizable: false
     })
 
-    const defaultAlphabet = self._alphabetSpecs.find(alphabet => alphabet.isDefault === true)
+    const defaultAlphabet = this._alphabetSpecs.find(alphabet => alphabet.isDefault === true)
 
     if (defaultAlphabet !== undefined) {
-      self.setSettingValue('alphabet', defaultAlphabet.name)
+      this.setSettingValue('alphabet', defaultAlphabet.name)
     } else {
-      self.buildTranslationMap()
+      this.buildTranslationMap()
     }
 
-    return self
+    return this
   }
 
   /**

@@ -25,9 +25,11 @@ export default class AlphabeticalSubstitutionEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync() {
-    const self = new this()
-    await self.addSettings([
+  async initAsync() {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+    await this.addSettings([
       {
         name: 'plaintextAlphabet',
         type: 'text',
@@ -44,8 +46,8 @@ export default class AlphabeticalSubstitutionEncoder extends Encoder {
         uniqueChars: true,
         minLength: 0,
         caseSensitivity: false,
-        validateValue: self.validateCiphertextValue.bind(self),
-        randomizeValue: self.randomizeCiphertextValue.bind(self)
+        validateValue: this.validateCiphertextValue.bind(this),
+        randomizeValue: this.randomizeCiphertextValue.bind(this)
       },
       {
         name: 'caseStrategy',
@@ -68,7 +70,7 @@ export default class AlphabeticalSubstitutionEncoder extends Encoder {
       }
     ])
 
-    return self
+    return this
   }
 
   /**

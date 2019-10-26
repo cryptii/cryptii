@@ -47,13 +47,15 @@ export default class PunycodeEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync() {
-    const self = new this()
+  async initAsync() {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
 
     // Create internal bootstring encoder instance
-    self._bootstringEncoder = await BootstringEncoder.createAsync()
-    self._bootstringEncoder.setSettingValues(bootstringSettingValues)
-    return self
+    this._bootstringEncoder = await new BootstringEncoder().initAsync()
+    this._bootstringEncoder.setSettingValues(bootstringSettingValues)
+    return this
   }
 
   /**

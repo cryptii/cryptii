@@ -123,7 +123,7 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
+    const encoder = await new SpellingAlphabetEncoder(alphabetSpecs).initAsync()
     assert.throws(() => encoder.setSettingValue('alphabet', 'BadAlphabet'), error =>
       error.message.includes('\'BadAlphabet\'') && error.message.includes('\'b\'')
     )
@@ -159,7 +159,7 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
+    const encoder = await new SpellingAlphabetEncoder(alphabetSpecs).initAsync()
     assert.throws(() => encoder.setSettingValue('alphabet', 'BadAlphabet'), error =>
       error.message.includes('\'BadAlphabet\'') && error.message.includes('\'BadWord\'')
     )
@@ -210,7 +210,7 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
+    const encoder = await new SpellingAlphabetEncoder(alphabetSpecs).initAsync()
     encoder.setSettingValue('variant', 'someVariant')
     const result = encoder.encode('xyz')
     assert.strictEqual(result.getString(), 'OverriddenWord1 Word2 OverriddenWord3')
@@ -240,7 +240,7 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
+    const encoder = await new SpellingAlphabetEncoder(alphabetSpecs).initAsync()
     encoder.setSettingValue('variant', 'someVariant')
     const result = encoder.decode('OverriddenWord3 AnotherOverriddenWordThree')
     assert.strictEqual(result.getString(), 'zz')
@@ -263,7 +263,7 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
+    const encoder = await new SpellingAlphabetEncoder(alphabetSpecs).initAsync()
     const result = encoder.encode('ab')
     assert.strictEqual(result.getString(), 'a Bravo')
   })
@@ -297,7 +297,7 @@ describe('SpellingAlphabetEncoder', () => {
       }
     ]
 
-    const encoder = await SpellingAlphabetEncoder.createAsync(alphabetSpecs)
+    const encoder = await new SpellingAlphabetEncoder(alphabetSpecs).initAsync()
     encoder.setSettingValue('variant', 'someOtherVariant')
     const result = encoder.encode('aaa')
     assert.strictEqual(result.getString(), 'a a a')

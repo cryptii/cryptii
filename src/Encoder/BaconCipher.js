@@ -50,9 +50,11 @@ export default class BaconCipherEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync() {
-    const self = new this()
-    await self.addSettings([
+  async initAsync() {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+    await this.addSettings([
       {
         name: 'variant',
         type: 'enum',
@@ -71,7 +73,7 @@ export default class BaconCipherEncoder extends Encoder {
         minLength: 1,
         maxLength: 1,
         randomizable: false,
-        validateValue: self.validateLetterSettingValue.bind(self)
+        validateValue: this.validateLetterSettingValue.bind(this)
       },
       {
         name: 'bMark',
@@ -82,11 +84,11 @@ export default class BaconCipherEncoder extends Encoder {
         minLength: 1,
         maxLength: 1,
         randomizable: false,
-        validateValue: self.validateLetterSettingValue.bind(self)
+        validateValue: this.validateLetterSettingValue.bind(this)
       }
     ])
 
-    return self
+    return this
   }
 
   /**

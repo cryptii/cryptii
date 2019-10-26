@@ -44,9 +44,11 @@ export default class MorseCodeEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync() {
-    const self = new this()
-    await self.addSettings([
+  async initAsync() {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+    await this.addSettings([
       {
         name: 'variant',
         type: 'enum',
@@ -71,7 +73,7 @@ export default class MorseCodeEncoder extends Encoder {
         value: '.',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateCodeMarkSettingValue.bind(self)
+        validateValue: this.validateCodeMarkSettingValue.bind(this)
       },
       {
         name: 'longerMark',
@@ -81,7 +83,7 @@ export default class MorseCodeEncoder extends Encoder {
         value: '-',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateCodeMarkSettingValue.bind(self)
+        validateValue: this.validateCodeMarkSettingValue.bind(this)
       },
       {
         name: 'spaceMark',
@@ -91,7 +93,7 @@ export default class MorseCodeEncoder extends Encoder {
         value: '/',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateCodeMarkSettingValue.bind(self)
+        validateValue: this.validateCodeMarkSettingValue.bind(this)
       },
       {
         name: 'signalOnMark',
@@ -102,7 +104,7 @@ export default class MorseCodeEncoder extends Encoder {
         value: '=',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateTimingMarkSettingValue.bind(self)
+        validateValue: this.validateTimingMarkSettingValue.bind(this)
       },
       {
         name: 'signalOffMark',
@@ -113,11 +115,11 @@ export default class MorseCodeEncoder extends Encoder {
         value: '.',
         minLength: 1,
         randomizable: false,
-        validateValue: this.validateTimingMarkSettingValue.bind(self)
+        validateValue: this.validateTimingMarkSettingValue.bind(this)
       }
     ])
 
-    return self
+    return this
   }
 
   /**

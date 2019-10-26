@@ -21,15 +21,17 @@ export default class HMACEncoder extends Encoder {
     return meta
   }
 
-  static async createAsync () {
-    const self = new this()
-    self.setEncodeOnly(true)
+  async initAsync () {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+    this.setEncodeOnly(true)
 
     // Create internal hash encoder instance
-    self._hashEncoder = await HashEncoder.createAsync()
-    const hashAlgorithmSetting = self._hashEncoder.getSetting('algorithm')
+    this._hashEncoder = await new HashEncoder().initAsync()
+    const hashAlgorithmSetting = this._hashEncoder.getSetting('algorithm')
 
-    self.addSettings([
+    this.addSettings([
       {
         name: 'key',
         type: 'bytes',
@@ -46,7 +48,7 @@ export default class HMACEncoder extends Encoder {
       }
     ])
 
-    return self
+    return this
   }
 
   /**
@@ -102,7 +104,7 @@ export default class HMACEncoder extends Encoder {
   async createDigest (name, message) {
     // Lazily create internal hash encoder instance
     if (this._hashEncoder === null) {
-      this._hashEncoder = await HashEncoder.createAsync()
+      this._hashEncoder = await new HashEncoder().initAsync()
     }
 
     // Configure algorithm
