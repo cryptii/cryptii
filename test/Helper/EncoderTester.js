@@ -61,9 +61,9 @@ export default class EncoderTester {
       `"${isEncoding ? contentPreview : expectedResultPreview}" ` +
       `${isEncoding ? '=>' : '<='} ` +
       `"${isEncoding ? expectedResultPreview : contentPreview}"`,
-      done => {
+      async () => {
         // create encoder brick instance
-        const encoder = new EncoderInvokable()
+        const encoder = EncoderInvokable.createAsync ? await EncoderInvokable.createAsync() : new EncoderInvokable()
 
         // apply settings, if any
         if (test.settings) {
@@ -72,18 +72,12 @@ export default class EncoderTester {
 
         // trigger encoder encode or decode
         const result = isEncoding
-          ? encoder.encode(content)
-          : encoder.decode(content)
+          ? await encoder.encode(content)
+          : await encoder.decode(content)
 
-        // resolve promise
-        Promise.resolve(result)
-          .then(result => {
-            // verify result
-            ChainUtil.assertEqual(result, expectedResult)
-            // no view should have been created during this process
-            assert.strictEqual(encoder.hasView(), false)
-          })
-          .then(done, done)
+        ChainUtil.assertEqual(result, expectedResult)
+        // no view should have been created during this process
+        assert.strictEqual(encoder.hasView(), false)
       }
     )
   }
