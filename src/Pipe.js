@@ -889,7 +889,9 @@ export default class Pipe extends Viewable {
    * @param {Brick} brick
    */
   async brickReplaceButtonDidClick (brick) {
+    // Show only bricks of the same type in the modal view
     const modalView = this.getLibraryModalView()
+    modalView.applyFilter(brickMeta => brickMeta.type === brick.getMeta().type)
 
     // Ignore event when library modal view is already visible
     if (modalView.isVisible()) {
@@ -925,9 +927,9 @@ export default class Pipe extends Viewable {
     // Track action
     EventManager.trigger('pipeAddButtonClick', { pipe: this, index })
 
-    // Build modal
-    const factory = this.getBrickFactory()
-    const modalView = new LibraryModalView(factory.getLibrary())
+    // Offer all bricks in the modal view
+    const modalView = this.getLibraryModalView()
+    modalView.clearFilter()
 
     let name
     try {
