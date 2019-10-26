@@ -117,9 +117,9 @@ export default class BrickView extends View {
         }, [
           View.createElement('button', {
             className: 'menu__button',
-            onClick: async evt => {
+            onClick: evt => {
               evt.preventDefault()
-              await this.getModel().viewMenuItemDidClick(this, item.name)
+              this.getModel().viewMenuItemDidClick(this, item.name).catch(err => { throw err})
             }
           }, item.label)
         ])
