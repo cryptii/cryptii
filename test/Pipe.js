@@ -62,8 +62,8 @@ describe('Pipe', () => {
     })
   })
   /** @test {Pipe.addBrick} */
-  describe('addBrick()', async () => {
-    it('should add first brick to an empty pipe', () => {
+  describe('addBrick()', () => {
+    it('should add first brick to an empty pipe', async () => {
       const pipe = new Pipe()
       const viewer = new TextViewer()
       await pipe.addBrick(viewer)

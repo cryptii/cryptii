@@ -347,7 +347,7 @@ export default class Pipe extends Viewable {
     })
 
     // Instanciate serialized bricks
-    bricks = bricks.map(brick =>
+    bricks = bricks.map(async brick =>
       !(brick instanceof Brick)
         ? await Brick.extract(brick, this.getBrickFactory())
         : brick)

@@ -49,7 +49,7 @@ if (EnvUtil.isBrowser() &&
     await app.run(pipeData)
   }
 
-  const initSync = () => init().catch(err => { throw err; })
+  const initSync = () => init().catch(err => { throw err })
 
   // Trigger initialization when the DOM is ready
   if (document.readyState !== 'loading') {
