@@ -35,14 +35,14 @@ export default class EncoderView extends BrickView {
     this._$encodeAction = View.createElement('a', {
       className: 'brick__action brick__action--active',
       href: '#',
-      onClick: this.actionDidClick.bind(this, 'encode'),
+      onClick: evt => this.actionDidClick.bind(this, 'encode')(evt).catch(err => { throw err; }),
       draggable: false
     }, 'Encode')
 
     this._$decodeAction = View.createElement('a', {
       className: 'brick__action',
       href: '#',
-      onClick: this.actionDidClick.bind(this, 'decode'),
+      onClick: evt => this.actionDidClick.bind(this, 'decode')(evt).catch(err => { throw err; }),
       draggable: false
     }, 'Decode')
 
