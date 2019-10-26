@@ -68,7 +68,7 @@ export default class Factory {
    * @param {...mixed} args Arguments passed to the invokable constructor
    * @return {object} Instantiated object
    */
-  create (identifier, ...args) {
+  async create (identifier, ...args) {
     if (!this.exists(identifier)) {
       throw new Error(
         `Can't create '${identifier}', invokable has not been registered.`)
@@ -79,7 +79,11 @@ export default class Factory {
 
     // the following lines do basically this: new invokable(...args)
     args.splice(0, 0, invokable)
-    return new (Function.prototype.bind.apply(invokable, args))()
+    const instance = new (Function.prototype.bind.apply(invokable, args))()
+    if (instance.initAsync) {
+      await instance.initAsync()
+    }
+    return instance
   }
 
   /**
