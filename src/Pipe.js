@@ -236,7 +236,7 @@ export default class Pipe extends Viewable {
     if (index === null) {
       index = this._bricks.indexOf(brick)
     }
-    await this.spliceBricks(index, 0, [brick.copy()])
+    await this.spliceBricks(index, 0, [await brick.copy()])
     return this
   }
 
