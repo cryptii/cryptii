@@ -22,7 +22,11 @@ export default class Form extends Viewable {
 
     this._fieldFactory = fieldFactory
     this._fields = []
-    this.addFields(fieldsOrSpecs)
+    this._fieldsOrSpecs = fieldsOrSpecs
+  }
+
+  async initAsync() {
+    await this.addFields(this._fieldsOrSpecs)
   }
 
   /**

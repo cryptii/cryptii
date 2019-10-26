@@ -72,9 +72,9 @@ describe('Form', () => {
   })
   /** @test {Form.addFields} */
   describe('addFields()', () => {
-    it('should add given field specs to the form and order fields by priority', () => {
+    it('should add given field specs to the form and order fields by priority', async () => {
       const form = new Form([], new FieldFactory())
-      form.addFields(getExampleFieldSpecs())
+      await form.addFields(getExampleFieldSpecs())
       const fields = form.getFields()
       const expectedNameOrder = [
         'model',

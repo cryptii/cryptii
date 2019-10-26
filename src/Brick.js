@@ -138,8 +138,8 @@ export default class Brick extends Viewable {
    * spec objects
    * @return {Brick} Fluent interface
    */
-  addSettings (fieldsOrSpecs) {
-    this._settingsForm.addFields(fieldsOrSpecs)
+  async addSettings (fieldsOrSpecs) {
+    await this._settingsForm.addFields(fieldsOrSpecs)
     return this
   }
 
