@@ -79,30 +79,30 @@ describe('Pipe', () => {
     })
   })
   /** @test {Pipe.removeBrick} */
-  describe('removeBrick()', () => {
+  describe('removeBrick()', async () => {
     it('should remove first brick from a pipe', () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract(examplePipeData, factory)
-      pipe.removeBrick(0)
+      await pipe.removeBrick(0)
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 2)
       assert.strictEqual(pipeBricks[0] instanceof AffineCipherEncoder, true)
       assert.strictEqual(pipeBricks[1] instanceof TextViewer, true)
       assert.strictEqual(pipe.hasView(), false)
     })
-    it('should remove middle brick from a pipe', () => {
+    it('should remove middle brick from a pipe', async () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract(examplePipeData, factory)
-      pipe.removeBrick(1)
+      await pipe.removeBrick(1)
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 2)
       assert.strictEqual(pipeBricks[0] instanceof TextViewer, true)
       assert.strictEqual(pipeBricks[1] instanceof TextViewer, true)
     })
-    it('should remove last brick from a pipe', () => {
+    it('should remove last brick from a pipe', async () => {
       const factory = new BrickFactory()
       const pipe = Pipe.extract(examplePipeData, factory)
-      pipe.removeBrick(2)
+      await pipe.removeBrick(2)
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 2)
       assert.strictEqual(pipeBricks[0] instanceof TextViewer, true)

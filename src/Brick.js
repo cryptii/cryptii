@@ -286,7 +286,7 @@ export default class Brick extends Viewable {
     // Decide what to do
     switch (name) {
       case 'remove':
-        this.getPipe().removeBrick(this)
+        await this.getPipe().removeBrick(this)
         break
       case 'hide':
         this.setHidden(true)
