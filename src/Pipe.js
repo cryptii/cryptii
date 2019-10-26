@@ -351,10 +351,10 @@ export default class Pipe extends Viewable {
     })
 
     // Instanciate serialized bricks
-    bricks = bricks.map(async brick =>
+    bricks = await Promise.all(bricks.map(async brick =>
       !(brick instanceof Brick)
         ? await Brick.extract(brick, this.getBrickFactory())
-        : brick)
+        : brick))
 
     // Splice internal brick array
     const removedBricks = this._bricks.splice.apply(this._bricks,
