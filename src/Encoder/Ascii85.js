@@ -44,7 +44,10 @@ export default class Ascii85Encoder extends Encoder {
    */
   constructor () {
     super()
-    this.addSetting({
+  }
+
+  async initAsync() {
+    await this.addSetting({
       name: 'variant',
       type: 'enum',
       label: 'Variant',

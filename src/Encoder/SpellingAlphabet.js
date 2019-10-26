@@ -8609,17 +8609,19 @@ export default class SpellingAlphabetEncoder extends Encoder {
     this._alphabetSpecs = alphabetSpecs
     this._characterMap = {}
     this._wordMap = {}
+  }
 
-    this.addSetting({
+  async initAsync() {
+    await this.addSetting({
       name: 'alphabet',
       type: 'enum',
-      elements: alphabetSpecs.map(alphabet => alphabet.name),
-      labels: alphabetSpecs.map(alphabet => alphabet.label),
+      elements: this._alphabetSpecs.map(alphabet => alphabet.name),
+      labels: this._alphabetSpecs.map(alphabet => alphabet.label),
       randomizable: false,
       style: 'radio'
     })
 
-    this.addSetting({
+    await this.addSetting({
       name: 'variant',
       type: 'enum',
       elements: [''],
@@ -8627,7 +8629,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
       randomizable: false
     })
 
-    const defaultAlphabet = alphabetSpecs.find(alphabet => alphabet.isDefault === true)
+    const defaultAlphabet = this._alphabetSpecs.find(alphabet => alphabet.isDefault === true)
 
     if (defaultAlphabet !== undefined) {
       this.setSettingValue('alphabet', defaultAlphabet.name)

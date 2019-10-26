@@ -25,7 +25,10 @@ export default class ROT13Encoder extends Encoder {
    */
   constructor () {
     super()
-    this.addSetting({
+  }
+
+  async initAsync() {
+    await this.addSetting({
       name: 'variant',
       type: 'enum',
       value: 'rot13',

@@ -26,7 +26,10 @@ export default class ReverseEncoder extends Encoder {
    */
   constructor () {
     super()
-    this.addSetting({
+  }
+
+  async initAsync() {
+    await this.addSetting({
       name: 'type',
       label: 'By',
       type: 'enum',

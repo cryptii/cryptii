@@ -47,8 +47,8 @@ export default class CharacterBlockEncoder extends Encoder {
    * @override
    * @return {CharacterBlockEncoder} Fluent interface
    */
-  registerSeparatorSetting () {
-    return this.addSetting({
+  async registerSeparatorSetting () {
+    return await this.addSetting({
       name: 'separator',
       type: 'text',
       value: ' ',

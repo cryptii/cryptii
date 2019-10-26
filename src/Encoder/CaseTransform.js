@@ -26,7 +26,10 @@ export default class CaseTransformEncoder extends Encoder {
    */
   constructor () {
     super()
-    this.addSetting({
+  }
+
+  async initAsync() {
+    await this.addSetting({
       name: 'case',
       type: 'enum',
       value: 'lower',

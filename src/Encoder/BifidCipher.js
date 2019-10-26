@@ -32,7 +32,10 @@ export default class BifidCipherEncoder extends Encoder {
    */
   constructor () {
     super()
-    this.addSetting({
+  }
+
+  async initAsync() {
+    await this.addSetting({
       name: 'key',
       type: 'text',
       value: '',
