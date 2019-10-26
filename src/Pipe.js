@@ -954,7 +954,7 @@ export default class Pipe extends Viewable {
       if (copy) {
         await this.duplicateBrick(brick, index)
       } else {
-        this.moveBrick(brick, index)
+        await this.moveBrick(brick, index)
       }
     } else {
       await this.spliceBricks(index, 0, [brick])
