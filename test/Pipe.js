@@ -31,9 +31,9 @@ const atbashBrick = {
 describe('Pipe', () => {
   /** @test {Pipe.extract} */
   describe('extract()', () => {
-    it('should extract pipe from structured data', () => {
+    it('should extract pipe from structured data', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract(examplePipeData, factory)
+      const pipe = await Pipe.extract(examplePipeData, factory)
       // Pipe bricks
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 3)
@@ -53,8 +53,8 @@ describe('Pipe', () => {
   })
   /** @test {Pipe.getBricks} */
   describe('getBricks()', () => {
-    it('should return a shallow copy of the containing bricks', () => {
-      const pipe = Pipe.extract(examplePipeData, new BrickFactory())
+    it('should return a shallow copy of the containing bricks', async () => {
+      const pipe = await Pipe.extract(examplePipeData, new BrickFactory())
       // Expect strictly the same array elements
       assert.deepStrictEqual(pipe.getBricks(), pipe.getBricks())
       // Expect a shallow copy of the array
@@ -72,7 +72,7 @@ describe('Pipe', () => {
     })
     it('should add brick to the end of a pipe', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract(examplePipeData, factory)
+      const pipe = await Pipe.extract(examplePipeData, factory)
       const viewer = new TextViewer()
       await pipe.addBrick(viewer)
       assert.strictEqual(pipe.getBricks()[3], viewer)
@@ -80,9 +80,9 @@ describe('Pipe', () => {
   })
   /** @test {Pipe.removeBrick} */
   describe('removeBrick()', async () => {
-    it('should remove first brick from a pipe', () => {
+    it('should remove first brick from a pipe', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract(examplePipeData, factory)
+      const pipe = await Pipe.extract(examplePipeData, factory)
       await pipe.removeBrick(0)
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 2)
@@ -92,7 +92,7 @@ describe('Pipe', () => {
     })
     it('should remove middle brick from a pipe', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract(examplePipeData, factory)
+      const pipe = await Pipe.extract(examplePipeData, factory)
       await pipe.removeBrick(1)
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 2)
@@ -101,7 +101,7 @@ describe('Pipe', () => {
     })
     it('should remove last brick from a pipe', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract(examplePipeData, factory)
+      const pipe = await Pipe.extract(examplePipeData, factory)
       await pipe.removeBrick(2)
       const pipeBricks = pipe.getBricks()
       assert.strictEqual(pipeBricks.length, 2)
@@ -113,7 +113,7 @@ describe('Pipe', () => {
   describe('replaceBrick()', () => {
     it('should replace a single encoder whilst maintaining result and direction (case 1 & 2)', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract({
+      const pipe = await Pipe.extract({
         items: [
           { name: 'text' },
           { name: 'affine-cipher', settings: { a: 7, b: 7 } },
@@ -146,16 +146,16 @@ describe('Pipe', () => {
   })
   /** @test {Pipe.spliceBricks} */
   describe('spliceBricks()', async () => {
-    it('should return removed bricks', () => {
+    it('should return removed bricks', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract(examplePipeData, factory)
+      const pipe = await Pipe.extract(examplePipeData, factory)
       const removingBrick = pipe.getBricks()[1]
       const removedBricks = await pipe.spliceBricks(1, 1)
       assert.strictEqual(removedBricks[0], removingBrick)
     })
     it('should replace the second encoder whilst maintaining result and direction (case 1 & 2)', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract({
+      const pipe = await Pipe.extract({
         items: [
           { name: 'text' },
           { name: 'affine-cipher', settings: { a: 7, b: 7 } },
@@ -186,7 +186,7 @@ describe('Pipe', () => {
     })
     it('should select the first bucket when replacing both encoders (case 3)', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract({
+      const pipe = await Pipe.extract({
         items: [
           { name: 'text' },
           { name: 'affine-cipher', settings: { a: 7, b: 7 } },
@@ -214,7 +214,7 @@ describe('Pipe', () => {
     })
     it('should keep propagation from last bucket when replacing the first encoder by two new ones (case 4)', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract({
+      const pipe = await Pipe.extract({
         items: [
           { name: 'text' },
           atbashBrick,
@@ -240,7 +240,7 @@ describe('Pipe', () => {
     })
     it('should keep propagation from last bucket when replacing the two first encoders by a single new one (case 4)', async () => {
       const factory = new BrickFactory()
-      const pipe = Pipe.extract({
+      const pipe = await Pipe.extract({
         items: [
           { name: 'text' },
           { name: 'rot13' },

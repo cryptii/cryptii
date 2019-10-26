@@ -53,13 +53,13 @@ export default class App extends Viewable {
    * @param {?object} [pipeData=null] Initial pipe data
    * @return {App} Fluent interface
    */
-  run (pipeData = null) {
+  async run (pipeData = null) {
     // Place browser attribute
     EnvUtil.placeBrowserAttribute()
 
     // Create and configure pipe instance
     if (pipeData !== null) {
-      this._pipe = Pipe.extract(pipeData, BrickFactory.getInstance())
+      this._pipe = await Pipe.extract(pipeData, BrickFactory.getInstance())
     } else {
       this._pipe = new Pipe()
       this._pipe.setBrickFactory(BrickFactory.getInstance())
