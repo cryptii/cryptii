@@ -20,15 +20,9 @@ export default class ROT13Encoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-  }
-
-  async initAsync() {
-    await this.addSetting({
+  static async createAsync() {
+    const self = new this()
+    await self.addSetting({
       name: 'variant',
       type: 'enum',
       value: 'rot13',
@@ -47,6 +41,7 @@ export default class ROT13Encoder extends Encoder {
       randomizable: false,
       style: 'radio'
     })
+    return self
   }
 
   /**

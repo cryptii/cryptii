@@ -62,18 +62,12 @@ export default class HashEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-  }
-
-  async initAsync() {
-    this.setEncodeOnly(true)
+  static async createAsync() {
+    const self = new this()
+    self.setEncodeOnly(true)
 
     const algorithms = HashEncoder.filterAvailableAlgorithms()
-    await this.addSetting({
+    await self.addSetting({
       name: 'algorithm',
       type: 'enum',
       value: 'sha256',
@@ -82,6 +76,7 @@ export default class HashEncoder extends Encoder {
       randomizable: false,
       style: 'radio'
     })
+    return self
   }
 
   /**

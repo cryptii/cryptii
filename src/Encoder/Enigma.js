@@ -365,14 +365,8 @@ export default class EnigmaEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-  }
-
-  async initAsync() {
+  static async createAsync() {
+    const self = new this()
     // Retrieve default model with its rotors
     const model = EnigmaEncoder.getModel('M3')
     const rotors = EnigmaEncoder.getRotors(model.slots[0].rotors)
@@ -380,7 +374,7 @@ export default class EnigmaEncoder extends Encoder {
     const rotorLabels = rotors.map(rotor => rotor.label)
     const reflectorRotors = EnigmaEncoder.getRotors(model.reflectorRotors)
 
-    await this.addSetting({
+    await self.addSetting({
       name: 'model',
       type: 'enum',
       value: model.name,
@@ -390,7 +384,7 @@ export default class EnigmaEncoder extends Encoder {
       randomizable: false
     })
 
-    await this.addSetting({
+    await self.addSetting({
       name: 'reflector',
       type: 'enum',
       value: reflectorRotors[0].name,
@@ -399,7 +393,7 @@ export default class EnigmaEncoder extends Encoder {
       width: 4
     })
 
-    await this.addSetting({
+    await self.addSetting({
       name: `positionReflector`,
       label: `Position`,
       type: 'number',
@@ -407,11 +401,11 @@ export default class EnigmaEncoder extends Encoder {
       integer: true,
       min: 1,
       max: 27,
-      describeValue: this.describePositionValue.bind(this),
+      describeValue: self.describePositionValue.bind(self),
       width: 4
     })
 
-    await this.addSetting({
+    await self.addSetting({
       name: `ringReflector`,
       label: `Ring`,
       type: 'number',
@@ -419,13 +413,13 @@ export default class EnigmaEncoder extends Encoder {
       integer: true,
       min: 1,
       max: 27,
-      describeValue: this.describePositionValue.bind(this),
+      describeValue: self.describePositionValue.bind(self),
       width: 4
     })
 
     // Register settings for each possible slot
     for (let i = 0; i < EnigmaEncoder.getMaxSlotCount(); i++) {
-      await this.addSetting({
+      await self.addSetting({
         name: `rotor${i + 1}`,
         label: `Rotor ${i + 1}`,
         type: 'enum',
@@ -436,7 +430,7 @@ export default class EnigmaEncoder extends Encoder {
         width: 4
       })
 
-      await this.addSetting({
+      await self.addSetting({
         name: `position${i + 1}`,
         label: `Position`,
         type: 'number',
@@ -444,11 +438,11 @@ export default class EnigmaEncoder extends Encoder {
         integer: true,
         min: 1,
         max: 27,
-        describeValue: this.describePositionValue.bind(this),
+        describeValue: self.describePositionValue.bind(self),
         width: 4
       })
 
-      await this.addSetting({
+      await self.addSetting({
         name: `ring${i + 1}`,
         label: `Ring`,
         type: 'number',
@@ -456,22 +450,22 @@ export default class EnigmaEncoder extends Encoder {
         integer: true,
         min: 1,
         max: 27,
-        describeValue: this.describePositionValue.bind(this),
+        describeValue: self.describePositionValue.bind(self),
         width: 4
       })
     }
 
-    await this.addSetting({
+    await self.addSetting({
       name: 'plugboard',
       type: 'text',
       value: '',
       caseSensitivity: false,
-      validateValue: this.validatePlugboardValue.bind(this),
+      validateValue: self.validatePlugboardValue.bind(self),
       filterValue: value => value.getString().trim().toLowerCase(),
-      randomizeValue: this.randomizePlugboardValue.bind(this)
+      randomizeValue: self.randomizePlugboardValue.bind(self)
     })
 
-    await this.addSetting({
+    await self.addSetting({
       name: 'includeForeignChars',
       type: 'boolean',
       label: 'Foreign Chars',
@@ -482,7 +476,8 @@ export default class EnigmaEncoder extends Encoder {
     })
 
     // Apply options and layout for given model
-    this.applyModel(model.name)
+    self.applyModel(model.name)
+    return self
   }
 
   /**

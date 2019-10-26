@@ -23,16 +23,10 @@ export default class UnicodeCodePointsEncoder extends CharacterBlockEncoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.setCharacterToBlockMode()
-  }
-
-  async initAsync() {
-    await this.addSetting({
+  static async createAsync() {
+    const self = new this()
+    self.setCharacterToBlockMode()
+    await self.addSetting({
       name: 'format',
       type: 'enum',
       value: 'unicode',
@@ -57,6 +51,7 @@ export default class UnicodeCodePointsEncoder extends CharacterBlockEncoder {
       randomizable: false,
       style: 'radio'
     })
+    return self
   }
 
   /**

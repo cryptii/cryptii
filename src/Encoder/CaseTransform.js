@@ -21,15 +21,9 @@ export default class CaseTransformEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-  }
-
-  async initAsync() {
-    await this.addSetting({
+  static async createAsync() {
+    const self = new this()
+    await self.addSetting({
       name: 'case',
       type: 'enum',
       value: 'lower',
@@ -50,6 +44,7 @@ export default class CaseTransformEncoder extends Encoder {
       randomizable: false,
       style: 'radio'
     })
+    return self
   }
 
   /**
