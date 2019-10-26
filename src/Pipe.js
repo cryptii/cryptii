@@ -335,7 +335,7 @@ export default class Pipe extends Viewable {
    * objects to be inserted into the pipe
    * @return {Brick[]} Array of bricks that have been removed
    */
-  spliceBricks (index, removeCount, bricks = []) {
+  async spliceBricks (index, removeCount, bricks = []) {
     // Normalize index
     index = index >= 0 ? index : Math.max(this._bricks.length + index + 1, 0)
 
@@ -349,7 +349,7 @@ export default class Pipe extends Viewable {
     // Instanciate serialized bricks
     bricks = bricks.map(brick =>
       !(brick instanceof Brick)
-        ? Brick.extract(brick, this.getBrickFactory())
+        ? await Brick.extract(brick, this.getBrickFactory())
         : brick)
 
     // Splice internal brick array
