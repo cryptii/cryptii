@@ -158,8 +158,8 @@ export default class Brick extends Viewable {
    * @throws {Error} If field name is already assigned.
    * @return {Brick} Fluent interface
    */
-  addSetting (fieldOrSpec) {
-    this._settingsForm.addField(fieldOrSpec)
+  async addSetting (fieldOrSpec) {
+    await this._settingsForm.addField(fieldOrSpec)
     return this
   }
 

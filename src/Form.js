@@ -55,8 +55,8 @@ export default class Form extends Viewable {
    * spec objects
    * @return {Form} Fluent interface
    */
-  addFields (fieldsOrSpecs) {
-    fieldsOrSpecs.forEach(this.addField.bind(this))
+  async addFields (fieldsOrSpecs) {
+    fieldsOrSpecs.forEach(async fieldOrSpecs => await this.addField(x))
     return this
   }
 
