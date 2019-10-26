@@ -279,7 +279,7 @@ export default class Brick extends Viewable {
    * @param {BrickView} view Sender
    * @param {string} name Menu item name
    */
-  viewMenuItemDidClick (view, name) {
+  async viewMenuItemDidClick (view, name) {
     // Track action
     EventManager.trigger('brickMenuItemClick', { brick: this, menuItem: name })
 
@@ -295,7 +295,7 @@ export default class Brick extends Viewable {
         // TODO Create a UI to communicate that brick duplication is not
         // possible with invalid settings.
         if (this.isValid()) {
-          this.getPipe().duplicateBrick(this)
+          await this.getPipe().duplicateBrick(this)
         }
         break
       case 'randomize':

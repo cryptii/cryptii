@@ -952,7 +952,7 @@ export default class Pipe extends Viewable {
   async viewBrickDidDrop (view, index, brick, copy = false) {
     if (brick instanceof Brick) {
       if (copy) {
-        this.duplicateBrick(brick, index)
+        await this.duplicateBrick(brick, index)
       } else {
         this.moveBrick(brick, index)
       }
