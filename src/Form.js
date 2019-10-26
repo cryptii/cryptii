@@ -26,7 +26,7 @@ export default class Form extends Viewable {
 
   static async createAsync(fieldsOrSpecs = [], fieldFactory = null) {
     const self = new this(fieldsOrSpecs, fieldFactory)
-    await this.addFields(fieldsOrSpecs)
+    await self.addFields(fieldsOrSpecs)
     return self
   }
 
@@ -61,7 +61,7 @@ export default class Form extends Viewable {
    * @return {Form} Fluent interface
    */
   async addFields (fieldsOrSpecs) {
-    fieldsOrSpecs.forEach(async fieldOrSpecs => await this.addField(x))
+    fieldsOrSpecs.forEach(async fieldOrSpec => await this.addField(fieldOrSpec))
     return this
   }
 

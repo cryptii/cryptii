@@ -44,7 +44,7 @@ export default class AlphabeticalSubstitutionEncoder extends Encoder {
         uniqueChars: true,
         minLength: 0,
         caseSensitivity: false,
-        validateValue: this.validateCiphertextValue.bind(self),
+        validateValue: self.validateCiphertextValue.bind(self),
         randomizeValue: self.randomizeCiphertextValue.bind(self)
       },
       {
