@@ -26,6 +26,7 @@ import NihilistCipherEncoder from '../Encoder/NihilistCipher'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
 import PolybiusSquareEncoder from '../Encoder/PolybiusSquare'
 import PunycodeEncoder from '../Encoder/Punycode'
+import RailFenceCipherEncoder from '../Encoder/RailFenceCipher'
 import RC4Encoder from '../Encoder/RC4'
 import ReplaceEncoder from '../Encoder/Replace'
 import ReverseEncoder from '../Encoder/Reverse'
@@ -77,6 +78,7 @@ export default class BrickFactory extends Factory {
       VigenereCipherEncoder,
       BaconCipherEncoder,
       AlphabeticalSubstitutionEncoder,
+      RailFenceCipherEncoder,
 
       // Polybius square ciphers
       PolybiusSquareEncoder,

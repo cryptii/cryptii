@@ -13,7 +13,29 @@ export default class LibraryModalView extends ModalView {
   constructor (library) {
     super('Library')
     this._library = library
+    this._filteredLibrary = library
     this._categories = {}
+  }
+
+  /**
+   * Resets filters offering all bricks available in the library.
+   * @return {LibraryModalView} Fluent interface
+   */
+  clearFilter () {
+    this._filteredLibrary = this._library
+    this.refresh()
+    return this
+  }
+
+  /**
+   * Applies the given filter callback on the brick library array.
+   * @param {function} filter Filter function
+   * @return {LibraryModalView} Fluent interface
+   */
+  applyFilter (filter) {
+    this._filteredLibrary = this._library.filter(filter)
+    this.refresh()
+    return this
   }
 
   /**
@@ -46,11 +68,11 @@ export default class LibraryModalView extends ModalView {
    * @return {HTMLElement}
    */
   renderBricks () {
-    // compose categories
+    // Compose categories
     const categories = []
     const categoryBricks = []
 
-    this._library.forEach(meta => {
+    this._filteredLibrary.forEach(meta => {
       const index = categories.indexOf(meta.category)
       if (index === -1) {
         categories.push(meta.category)
@@ -60,7 +82,7 @@ export default class LibraryModalView extends ModalView {
       }
     })
 
-    // render categories of bricks
+    // Render categories of bricks
     return View.createElement('ul', {
       className: 'modal-library__categories'
     }, categories.map((category, index) =>

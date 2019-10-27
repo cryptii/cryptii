@@ -54,6 +54,7 @@ Chain objects encapsulate UTF-8 text or binary based content exchanged between B
 | [`numeral-system`](https://cryptii.com/pipes/roman-numerals) | Transform | Translates numerals between systems |
 | [`polybius-square`](https://cryptii.com/pipes/polybius-square) | Polybius square | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
 | [`punycode`](https://cryptii.com/pipes/punycode) | Encoding | [Punycode](https://tools.ietf.org/html/rfc3492) |
+| [`rail-fence-cipher`](https://cryptii.com/pipes/rail-fence-cipher) | Ciphers | [Rail fence cipher](https://en.wikipedia.org/wiki/Rail_fence_cipher) |
 | [`rc4`](https://cryptii.com/pipes/rc4-encryption) | Modern cryptography | [RC4](https://en.wikipedia.org/wiki/RC4) incl. RC4-drop |
 | `replace` | Transform | Finds and replaces a given text |
 | [`reverse`](https://cryptii.com/pipes/reverse-text) | Transform | Reverses the order of bytes, characters or lines |
