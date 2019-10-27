@@ -63,11 +63,7 @@ export default class EncoderTester {
       `"${isEncoding ? expectedResultPreview : contentPreview}"`,
       async () => {
         // create encoder brick instance
-        const encoder = new EncoderInvokable()
-
-        if (encoder.initAsync) {
-          await encoder.initAsync()
-        }
+        const encoder = await new EncoderInvokable().initAsync()
 
         // apply settings, if any
         if (test.settings) {
