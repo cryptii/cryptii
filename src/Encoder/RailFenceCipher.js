@@ -20,12 +20,12 @@ export default class RailFenceCipherEncoder extends Encoder {
     return meta
   }
 
-  /**
-   * Constructor
-   */
-  constructor () {
-    super()
-    this.addSettings([
+  async initAsync () {
+    if (super.initAsync) {
+      await super.initAsync()
+    }
+
+    await this.addSettings([
       {
         name: 'key',
         type: 'number',
@@ -41,6 +41,8 @@ export default class RailFenceCipherEncoder extends Encoder {
         min: 0
       }
     ])
+
+    return this
   }
 
   /**
