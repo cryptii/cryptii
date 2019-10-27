@@ -57,9 +57,7 @@ export default class ADFGVXCipherEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     await this.addSettings([
       {
         name: 'variant',

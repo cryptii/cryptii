@@ -13,9 +13,7 @@ const BlockToCharacterMode = 1
  */
 export default class CharacterBlockEncoder extends Encoder {
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     this._mode = CharacterToBlockMode
     this.registerSeparatorSetting()
     return this

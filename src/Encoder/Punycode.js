@@ -48,9 +48,7 @@ export default class PunycodeEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
 
     // Create internal bootstring encoder instance
     this._bootstringEncoder = await new BootstringEncoder().initAsync()

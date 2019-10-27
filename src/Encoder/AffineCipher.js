@@ -24,9 +24,7 @@ export default class AffineCipherEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
 
     // Linear function
     // f(x) = ax + b

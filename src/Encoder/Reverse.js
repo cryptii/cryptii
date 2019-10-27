@@ -22,9 +22,7 @@ export default class ReverseEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     await this.addSetting({
       name: 'type',
       label: 'By',

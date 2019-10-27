@@ -24,9 +24,7 @@ export default class UnicodeCodePointsEncoder extends CharacterBlockEncoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     this.setCharacterToBlockMode()
     await this.addSetting({
       name: 'format',

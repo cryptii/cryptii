@@ -76,9 +76,7 @@ export default class BlockCipherEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
 
     const algorithms = BlockCipherEncoder.getAlgorithms()
     const defaultAlgorithm = algorithms[0]

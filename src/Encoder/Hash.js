@@ -63,9 +63,7 @@ export default class HashEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     this.setEncodeOnly(true)
 
     const algorithms = HashEncoder.filterAvailableAlgorithms()

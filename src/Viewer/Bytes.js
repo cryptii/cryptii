@@ -25,9 +25,7 @@ export default class BytesViewer extends Viewer {
   }
 
   async initAsync () {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     this._viewPrototype = TextViewerView
     await this.addSettings([
       {

@@ -21,9 +21,7 @@ export default class ROT13Encoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     await this.addSetting({
       name: 'variant',
       type: 'enum',

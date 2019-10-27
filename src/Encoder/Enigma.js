@@ -366,9 +366,7 @@ export default class EnigmaEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     // Retrieve default model with its rotors
     const model = EnigmaEncoder.getModel('M3')
     const rotors = EnigmaEncoder.getRotors(model.slots[0].rotors)

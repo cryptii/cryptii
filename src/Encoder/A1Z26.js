@@ -21,9 +21,7 @@ export default class A1Z26Encoder extends CharacterBlockEncoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
 
     await this.addSettings([
       {

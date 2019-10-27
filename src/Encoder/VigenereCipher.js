@@ -25,9 +25,7 @@ export default class VigenereCipherEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     await this.addSettings([
       {
         name: 'variant',

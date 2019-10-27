@@ -23,6 +23,10 @@ export default class Encoder extends Brick {
     this._lastTranslationMeta = null
   }
 
+  async initAsync() {
+    return this
+  }
+
   /**
    * Prepares and performs encode on given content.
    * @param {number[]|string|Uint8Array|Chain} content

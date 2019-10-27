@@ -33,9 +33,7 @@ export default class SpellingAlphabetEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
 
     if (this._alphabetSpecs === undefined) {
       this._alphabetSpecs = await ResourceLoader.loadJson('SpellingAlphabets.json')

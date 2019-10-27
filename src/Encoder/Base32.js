@@ -68,9 +68,7 @@ export default class Base32Encoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     await this.addSettings([
       {
         name: 'variant',

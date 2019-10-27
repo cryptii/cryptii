@@ -34,9 +34,7 @@ export default class IntegerEncoder extends Encoder {
   }
 
   async initAsync() {
-    if (super.initAsync) {
-      await super.initAsync()
-    }
+    await super.initAsync()
     await this.addSettings([
       {
         name: 'format',
