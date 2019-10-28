@@ -29,9 +29,14 @@ Please follow these steps to have your contribution considered:
 
 ## Design Principles
 
+- Carefully design long-term brick setting interfaces and keep them backwards compatible. This makes sure saved pipes can be restored at a later date.
 - If at all possible, all operations and features should be client-side and not rely on connections to an external server.
 
 ## Styleguides
+
+### Comments
+
+- Capitalize comments ("// Repeat translation" not "// repeat translation")
 
 ### Git Commit Messages
 
