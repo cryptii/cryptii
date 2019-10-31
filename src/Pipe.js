@@ -940,7 +940,7 @@ export default class Pipe extends Viewable {
     }
 
     // Create brick and add it to the pipe
-    const brick = factory.create(name)
+    const brick = this.getBrickFactory().create(name)
     this.spliceBricks(index, 0, [brick])
   }
 
