@@ -14,19 +14,5 @@
   &__content {
     padding: 40px 0;
     max-width: 848px;
-
-    h2, h3, h4, h5, h6 {
-      margin: 32px 0 16px;
-      @extend %t-h2;
-    }
-
-    p {
-      margin: 0 0 16px;
-      @extend %t-text;
-    }
-
-    a {
-      text-decoration: underline;
-    }
   }
 }
