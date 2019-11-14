@@ -194,4 +194,55 @@ export default class ArrayUtil {
     result = result.concat(array.slice(i))
     return result
   }
+
+  /**
+   * Composes a new array with elements having the given number of bits and
+   * translates the content of the source array to it.
+   * @param {number[]} src Source array
+   * @param {number} srcSize Bit size of source array elements
+   * @param {number} dstSize Bit size of destination array elements
+   * @param {boolean} [trimEnd=false] Wether to trim trailing empty elements
+   * @return {number[]|Uint8Array} Returns an array of numbers or an
+   * Uint8Array, if dstSize is set to 8.
+   */
+  static resizeBitSizedArray(src, srcSize, dstSize, trimEnd = false) {
+    const size = Math.ceil(src.length * srcSize / dstSize)
+    const dst = dstSize === 8 ? new Uint8Array(size) : new Array(size).fill(0)
+
+    // Destination element mask (e.g. 11111111b for dstSize = 8)
+    const dstElementMask = (1 << dstSize) - 1
+
+    let element, startBitIndex, endBitIndex, dstStartIndex, dstEndIndex
+    let rightBitOffset, remainder, j
+    let k = 0
+
+    for (let i = 0; i < src.length; i++) {
+      element = src[i]
+
+      // Start and end bit index of the current element
+      startBitIndex = i * srcSize
+      endBitIndex = (i + 1) * srcSize
+
+      // Start and end index in the destination array
+      dstStartIndex = Math.floor(startBitIndex / dstSize)
+      dstEndIndex = Math.floor(endBitIndex / dstSize)
+
+      // Calculate right bit offset in the last destination element
+      rightBitOffset = dstSize - endBitIndex % dstSize
+
+      // Begin at the end
+      dst[k = dstEndIndex] |= (element << rightBitOffset) & dstElementMask
+      remainder = element >> (dstSize - rightBitOffset)
+
+      // Inject each dst element until no remainder is left
+      j = dstEndIndex
+      while (--j >= dstStartIndex && remainder > 0) {
+        dst[k = j] |= remainder & dstElementMask
+        remainder = remainder >> dstSize
+      }
+    }
+
+    // Trim trailing elements at the end
+    return trimEnd ? dst.slice(0, k + 1) : dst
+  }
 }

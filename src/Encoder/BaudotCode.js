@@ -1,6 +1,6 @@
 
 import Encoder from '../Encoder'
-import MathUtil from '../MathUtil'
+import ArrayUtil from '../ArrayUtil'
 import TextEncoder from '../TextEncoder'
 
 const meta = {
@@ -171,41 +171,8 @@ export default class CaesarCipherEncoder extends Encoder {
       }
     }
 
-    // Prepare binary encoded output
-    // Each tape char is 5 bits long, create a bytes array to contain it
-    const charBits = 5
-    const size = Math.ceil(tape.length * charBits / 8)
-    const bytes = new Uint8Array(size)
-
-    // Go through tape chars and insert them into the byte array
-    let char, bitIndex, byteIndex, byteBitOffset, byteBits, overflowBits
-    for (let i = 0; i < tape.length; i++) {
-      char = tape[i]
-      bitIndex = i * charBits
-
-      // Index of the 'current byte' the first char bit is situated in
-      byteIndex = Math.floor(bitIndex / 8)
-
-      // Left bit offset in the current byte
-      byteBitOffset = bitIndex - byteIndex * 8
-
-      // Number of char bits situated in the current byte
-      byteBits = Math.min(8 - byteBitOffset, charBits)
-
-      // Number of char bits overflowing to the next byte
-      overflowBits = charBits - byteBits
-
-      // Combine char bits inside the current byte with the potential overflow
-      // of previous chars
-      bytes[byteIndex] |= char >> overflowBits << (8 - byteBitOffset - byteBits)
-
-      // Insert char bits that overflow into the next byte
-      if (overflowBits > 0) {
-        bytes[byteIndex + 1] = char << (8 - overflowBits) & 0xff
-      }
-    }
-
-    return bytes
+    // Compose byte array from 5-bit tape
+    return ArrayUtil.resizeBitSizedArray(tape, 5, 8)
   }
 
   /**
@@ -215,7 +182,40 @@ export default class CaesarCipherEncoder extends Encoder {
    * @return {number[]|string|Uint8Array|Chain|Promise} Decoded content
    */
   performDecode (content) {
-    throw new Error('Needs implementation')
+    // Retrieve character set
+    const variant = this.getSettingValue('variant')
+    const characterSet = this.getVariantCharacterSet(variant)
+    const switchToFigures = characterSet.indexOf('FS') % 32
+    const switchToLetters = characterSet.indexOf('LS') % 32
+
+    // Compose 5-bit tape from byte array
+    const tape = ArrayUtil.resizeBitSizedArray(content.getBytes(), 8, 5, true)
+    let result = new Array(tape.length)
+
+    // Go through tape and map each character to Unicode code points
+    let char, codePoint
+    let figureSet = false
+    let j = 0
+
+    for (let i = 0; i < tape.length; i++) {
+      char = tape[i]
+
+      if (!figureSet && char === switchToFigures) {
+        // Switch to figure set
+        figureSet = true
+      } else if (figureSet && char === switchToLetters) {
+        // Switch to letter set
+        figureSet = false
+      } else {
+        // Map tape character
+        codePoint = characterSet[char + (figureSet ? 32 : 0)]
+        if (codePoint !== null) {
+          result[j++] = codePoint
+        }
+      }
+    }
+
+    return result.slice(0, j)
   }
 
   /**
