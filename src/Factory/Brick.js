@@ -10,6 +10,7 @@ import Ascii85Encoder from '../Encoder/Ascii85'
 import BaconCipherEncoder from '../Encoder/BaconCipher'
 import Base32Encoder from '../Encoder/Base32'
 import Base64Encoder from '../Encoder/Base64'
+import BaudotCodeEncoder from '../Encoder/BaudotCode'
 import BifidCipherEncoder from '../Encoder/BifidCipher'
 import BitwiseOperationEncoder from '../Encoder/BitwiseOperation'
 import BlockCipherEncoder from '../Encoder/BlockCipher'
@@ -92,10 +93,11 @@ export default class BrickFactory extends Factory {
       Base32Encoder,
       Base64Encoder,
       Ascii85Encoder,
+      BaudotCodeEncoder,
+      UnicodeCodePointsEncoder,
       URLEncoder,
       PunycodeEncoder,
       BootstringEncoder,
-      UnicodeCodePointsEncoder,
       IntegerEncoder,
 
       // Modern cryptography
