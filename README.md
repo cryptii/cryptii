@@ -38,6 +38,7 @@ Chain objects encapsulate UTF-8 text or binary based content exchanged between B
 | [`bacon-cipher`](https://cryptii.com/pipes/bacon-cipher) | Ciphers | [Bacon's cipher](https://en.wikipedia.org/wiki/Bacon%27s_cipher) |
 | [`base32`](https://cryptii.com/pipes/base32) | Encoding | [Base32](https://en.wikipedia.org/wiki/Base32) incl. variants base32hex, z-base-32, … |
 | [`base64`](https://cryptii.com/pipes/text-to-base64) | Encoding | [Base64](https://en.wikipedia.org/wiki/Base64) incl. variants base64url, … |
+| [`baudot-code`](https://cryptii.com/pipes/baudot-code) | Encoding | [Baudot code](https://en.wikipedia.org/wiki/Baudot_code) |
 | [`bifid-cipher`](https://cryptii.com/pipes/bifid-cipher) | Polybius square | [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher) |
 | [`bitwise-operation`](https://cryptii.com/pipes/bitwise-calculator) | Transform | [Bitwise operations](https://en.wikipedia.org/wiki/Bitwise_operation) (NOT, AND, OR, …) |
 | [`block-cipher`](https://cryptii.com/pipes/aes-encryption) | Modern cryptography | [Block ciphers](https://en.wikipedia.org/wiki/Block_cipher) incl. [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) |
@@ -52,6 +53,7 @@ Chain objects encapsulate UTF-8 text or binary based content exchanged between B
 | [`morse-code`](https://cryptii.com/pipes/morse-code-translator) | Alphabets | [Morse code](https://en.wikipedia.org/wiki/Morse_code) (English) |
 | [`nihilist-cipher`](https://cryptii.com/pipes/nihilist-cipher) | Polybius square | [Nihilist cipher](https://en.wikipedia.org/wiki/Nihilist_cipher) |
 | [`numeral-system`](https://cryptii.com/pipes/roman-numerals) | Transform | Translates numerals between systems |
+| [`punched-tape`](https://cryptii.com/pipes/baudot-code) | View | [Punched tape](https://en.wikipedia.org/wiki/Punched_tape) |
 | [`polybius-square`](https://cryptii.com/pipes/polybius-square) | Polybius square | [Polybius square](https://en.wikipedia.org/wiki/Polybius_square) |
 | [`punycode`](https://cryptii.com/pipes/punycode) | Encoding | [Punycode](https://tools.ietf.org/html/rfc3492) |
 | [`rail-fence-cipher`](https://cryptii.com/pipes/rail-fence-cipher) | Ciphers | [Rail fence cipher](https://en.wikipedia.org/wiki/Rail_fence_cipher) |
