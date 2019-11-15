@@ -33,7 +33,7 @@ export default class PunchedTapeViewer extends Viewer {
       name: 'rows',
       type: 'number',
       value: 8,
-      min: 2,
+      min: 3,
       // Harvard Mark I used paper tape with twenty-four rows
       max: 25,
       randomizable: false

@@ -2,6 +2,15 @@
 import ViewerView from '../Viewer'
 import View from '../../View'
 
+// Tape layout variables
+const lineSpacing = 16
+const outerOffset = 16
+const tapeOffset = 11
+const markOffset = 8
+const holeSize = 6
+const sprocketSize = 3
+const gridSize = 13
+
 /**
  * Punched tape viewer view
  */
@@ -16,8 +25,9 @@ export default class PunchedTapeViewerView extends ViewerView {
     this._rows = 8
 
     this._$canvas = null
-    this._$holes = null
     this._$tapes = null
+    this._$marks = null
+    this._$holes = null
   }
 
   /**
@@ -29,7 +39,7 @@ export default class PunchedTapeViewerView extends ViewerView {
   setTape (tape, rows) {
     this._tape = tape
     this._rows = rows
-    return this.renderTape()
+    return this.setNeedsUpdate()
   }
 
   /**
@@ -54,6 +64,11 @@ export default class PunchedTapeViewerView extends ViewerView {
       'http://www.w3.org/2000/svg', 'path')
     this._$tapes.classList.add('viewer-punched-tape__tape')
 
+    // Marks
+    this._$marks = document.createElementNS(
+      'http://www.w3.org/2000/svg', 'path')
+    this._$marks.classList.add('viewer-punched-tape__mark')
+
     // Holes
     this._$holes = document.createElementNS(
       'http://www.w3.org/2000/svg', 'path')
@@ -64,10 +79,11 @@ export default class PunchedTapeViewerView extends ViewerView {
       'http://www.w3.org/2000/svg', 'svg')
     this._$canvas.classList.add('viewer-punched-tape__canvas')
     this._$canvas.appendChild(this._$tapes)
+    this._$canvas.appendChild(this._$marks)
     this._$canvas.appendChild(this._$holes)
 
     // Initial tape render
-    this.renderTape()
+    this.setNeedsUpdate()
 
     // Compose content element
     const $content = super.renderContent()
@@ -80,29 +96,31 @@ export default class PunchedTapeViewerView extends ViewerView {
    * @return {View}
    */
   layout () {
-    this.renderTape()
+    this.setNeedsUpdate()
     return super.layout()
   }
 
   /**
-   * Renders the given tape to the canvas
-   * @return {PunchedTapeViewerView} Fluent interface
+   * Updates view on model change.
+   * @return {View} Fluent interface
    */
-  renderTape () {
+  update () {
     const tape = this._tape
     const length = this._tape.length
-    const rows = this._rows
+    let rows = this._rows
+
+    // Configure the sprocket holes and add a row for them
+    // The bits on the narrower side of the tape are generally
+    // the least significant bits
+    const sprocketIndex = Math.floor((rows - 1) / 2)
+    rows++
 
     // Measure canvas width
     const width = this._$canvas.getBoundingClientRect().width
 
     // Layout
-    const lineSpacing = 12
-    const outerOffset = 16
-    const tapeOffset = 11
-    const holeSize = 6
-    const gridSize = 13
     const r = holeSize * 0.5
+    const s = sprocketSize * 0.5
 
     const tapeWidth = width - outerOffset * 2
     const charCols = Math.floor((tapeWidth - tapeOffset * 2) / gridSize) + 1
@@ -114,6 +132,7 @@ export default class PunchedTapeViewerView extends ViewerView {
     const height = tapeLines * (charHeight + outerOffset) + outerOffset
 
     // Render punched holes
+    const marksPath = []
     const holesPath = []
     let char, charX, charY, i, j
 
@@ -124,25 +143,41 @@ export default class PunchedTapeViewerView extends ViewerView {
       charX = outerOffset + tapeOffsetHr + (i % charCols) * gridSize
       charY = outerOffset + tapeOffset + Math.floor(i / charCols) * lineHeight
 
+      // Render char
       for (j = rows - 1; j >= 0; j--) {
-        if ((char & 1) !== 0) {
-          // Render punched hole
-          holesPath.push(`M ${charX - r} ${charY + j * gridSize}`)
-          holesPath.push(`a ${r},${r} 0 1,0 ${holeSize},0`)
-          holesPath.push(`a ${r},${r} 0 1,0 ${-holeSize},0`)
+        if (j === sprocketIndex) {
+          // Render sprocket hole
+          holesPath.push(`M ${charX - s} ${charY + j * gridSize}`)
+          holesPath.push(`a ${s},${s} 0 1,0 ${sprocketSize},0`)
+          holesPath.push(`a ${s},${s} 0 1,0 ${-sprocketSize},0`)
+        } else {
+          if ((char & 1) !== 0) {
+            // Render punched hole
+            holesPath.push(`M ${charX - r} ${charY + j * gridSize}`)
+            holesPath.push(`a ${r},${r} 0 1,0 ${holeSize},0`)
+            holesPath.push(`a ${r},${r} 0 1,0 ${-holeSize},0`)
+          }
+          char = char >> 1
         }
-        char = char >> 1
+      }
+
+      if (i % rows === 0 && rows >= 5) {
+        // Render base mark
+        marksPath.push(`M ${charX - s},${charY - tapeOffset + charHeight + markOffset}`)
+        marksPath.push(`a ${s},${s} 0 1,0 ${sprocketSize},0`)
+        marksPath.push(`a ${s},${s} 0 1,0 ${-sprocketSize},0`)
       }
     }
 
     // Render tape line rects
     const tapesPath = []
+    let tapeX, tapeY, tapeLineWidth
 
     for (y = 0; y < tapeLines; y++) {
       // Layout tape
-      const tapeX = outerOffset
-      const tapeY = outerOffset + y * lineHeight
-      const tapeLineWidth = y < tapeLines - 1 || length % charCols === 0
+      tapeX = outerOffset
+      tapeY = outerOffset + y * lineHeight
+      tapeLineWidth = y < tapeLines - 1 || length % charCols === 0
         ? tapeWidth
         : (length % charCols) * gridSize + 2 * tapeOffsetHr
 
@@ -160,7 +195,8 @@ export default class PunchedTapeViewerView extends ViewerView {
 
     // Apply changes to the DOM
     this._$canvas.style.height = `${height}px`
-    this._$holes.setAttribute('d', holesPath.join(' '))
     this._$tapes.setAttribute('d', tapesPath.join(' '))
+    this._$marks.setAttribute('d', marksPath.join(' '))
+    this._$holes.setAttribute('d', holesPath.join(' '))
   }
 }
