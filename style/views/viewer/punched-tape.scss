@@ -1,0 +1,16 @@
+
+.viewer-punched-tape {
+
+  &__canvas {
+    width: 100%;
+    min-height: 160px;
+  }
+
+  &__tape {
+    fill: $c-text-detail;
+  }
+
+  &__hole {
+    fill: $c-white;
+  }
+}

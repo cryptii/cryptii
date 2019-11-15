@@ -214,7 +214,6 @@ export default class ArrayUtil {
 
     let element, startBitIndex, endBitIndex, dstStartIndex, dstEndIndex
     let rightBitOffset, remainder, j
-    let k = 0
 
     for (let i = 0; i < src.length; i++) {
       element = src[i]
@@ -231,18 +230,26 @@ export default class ArrayUtil {
       rightBitOffset = dstSize - endBitIndex % dstSize
 
       // Begin at the end
-      dst[k = dstEndIndex] |= (element << rightBitOffset) & dstElementMask
+      dst[dstEndIndex] |= (element << rightBitOffset) & dstElementMask
       remainder = element >> (dstSize - rightBitOffset)
 
       // Inject each dst element until no remainder is left
       j = dstEndIndex
       while (--j >= dstStartIndex && remainder > 0) {
-        dst[k = j] |= remainder & dstElementMask
+        dst[j] |= remainder & dstElementMask
         remainder = remainder >> dstSize
       }
     }
 
-    // Trim trailing elements at the end
-    return trimEnd ? dst.slice(0, k + 1) : dst
+    if (trimEnd) {
+      // Trim trailing elements at the end
+      let k = dst.length - 1
+      while (dst[k] === 0) {
+        k--
+      }
+      return dst.slice(0, k + 1)
+    }
+
+    return dst
   }
 }

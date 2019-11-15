@@ -25,6 +25,7 @@ import IntegerEncoder from '../Encoder/Integer'
 import MorseCodeEncoder from '../Encoder/MorseCode'
 import NihilistCipherEncoder from '../Encoder/NihilistCipher'
 import NumeralSystemEncoder from '../Encoder/NumeralSystem'
+import PunchedTapeViewer from '../Viewer/PunchedTape'
 import PolybiusSquareEncoder from '../Encoder/PolybiusSquare'
 import PunycodeEncoder from '../Encoder/Punycode'
 import RailFenceCipherEncoder from '../Encoder/RailFenceCipher'
@@ -58,6 +59,7 @@ export default class BrickFactory extends Factory {
       // View
       TextViewer,
       BytesViewer,
+      PunchedTapeViewer,
 
       // Transform
       ReplaceEncoder,
