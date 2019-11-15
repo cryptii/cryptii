@@ -1,6 +1,8 @@
 
 import View from '../View'
 
+import closeIcon from '../../assets/icons/close.svg'
+
 /**
  * Modal view
  */
@@ -276,19 +278,22 @@ export default class ModalView extends View {
    * @return {HTMLElement}
    */
   renderHeader () {
+    const $closeButton = View.createElement('button', {
+      className: 'modal__btn-close',
+      onClick: evt => {
+        evt.preventDefault()
+        this.cancel()
+      }
+    })
+    $closeButton.innerHTML = closeIcon
+
     return View.createElement('header', {
       className: 'modal__header'
     }, [
       View.createElement('span', {
         className: 'modal__title'
       }, this._title),
-      View.createElement('button', {
-        className: 'modal__btn-close',
-        onClick: evt => {
-          evt.preventDefault()
-          this.cancel()
-        }
-      }, 'Cancel')
+      $closeButton
     ])
   }
 
