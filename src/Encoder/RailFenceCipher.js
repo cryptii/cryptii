@@ -31,14 +31,17 @@ export default class RailFenceCipherEncoder extends Encoder {
         type: 'number',
         value: 2,
         integer: true,
-        min: 2
+        min: 2,
+        // Pick a random key between 2 and 8
+        randomizeValue: random => random.nextInteger(2, 8)
       },
       {
         name: 'offset',
         type: 'number',
         value: 0,
         integer: true,
-        min: 0
+        min: 0,
+        randomizable: false
       }
     ])
   }
