@@ -11,9 +11,8 @@ const nodeResolve = require('rollup-plugin-node-resolve')
 const rename = require('gulp-rename')
 const revision = require('git-rev-sync')
 const rollup = require('gulp-better-rollup')
-const rollupReplace = require('rollup-plugin-replace')
+const rollupReplace = require('@rollup/plugin-replace')
 const sass = require('gulp-sass')
-const sassSVGInliner = require('sass-inline-svg')
 const sourcemaps = require('gulp-sourcemaps')
 const standard = require('gulp-standard')
 const terser = require('gulp-terser')
@@ -114,6 +113,7 @@ function script () {
               }
             ]
           ],
+          plugins: ['inline-svg'],
           exclude: ['node_modules/**']
         }),
         nodeResolve({
@@ -149,10 +149,7 @@ function style () {
     .pipe(
       sass({
         includePaths: ['node_modules'],
-        outputStyle: 'expanded',
-        functions: {
-          'inline-svg': sassSVGInliner(paths.assets)
-        }
+        outputStyle: 'expanded'
       })
         .on('error', sass.logError)
     )

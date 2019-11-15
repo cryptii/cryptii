@@ -1,4 +1,5 @@
 {
+  "plugins": ["inline-svg"],
   "presets": [
     [
       "@babel/preset-env",

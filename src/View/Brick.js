@@ -2,6 +2,17 @@
 import FormView from './Form'
 import View from '../View'
 
+import arrowIcon from '../../assets/icons/arrow-left.svg'
+import errorIcon from '../../assets/icons/error.svg'
+import menuIcon from '../../assets/icons/menu.svg'
+import caretIcon from '../../assets/icons/caret.svg'
+
+const statusIcons = {
+  forward: arrowIcon,
+  backward: arrowIcon,
+  error: errorIcon
+}
+
 /**
  * Brick view
  */
@@ -17,7 +28,8 @@ export default class BrickView extends View {
     this._$settings = null
     this._$header = null
     this._$status = null
-    this._$message = null
+    this._$statusIcon = null
+    this._$statusMessage = null
 
     this._menuVisible = false
     this._menuHideHandler = this.toggleMenu.bind(this)
@@ -52,27 +64,37 @@ export default class BrickView extends View {
    */
   renderHeader () {
     this._$menu = this.renderMenu()
+
+    const $menuButton = View.createElement('button', {
+      className: 'brick__btn-menu',
+      onClick: evt => {
+        evt.preventDefault()
+        this.toggleMenu()
+      }
+    })
+    $menuButton.innerHTML = menuIcon
+
+    const $caretIcon = View.createElement('div', {
+      className: 'brick__title-caret'
+    })
+    $caretIcon.innerHTML = caretIcon
+
     return View.createElement('header', {
       className: 'brick__header'
     }, [
-      View.createElement('h3', {
-        className: 'brick__title'
-      }, [
-        View.createElement('button', {
-          className: 'brick__btn-toggle',
-          onClick: evt => {
-            evt.preventDefault()
-            this.getModel().viewReplaceButtonDidClick(this)
-          }
-        }, this.getModel().getTitle())
-      ]),
       View.createElement('button', {
-        className: 'brick__btn-menu',
+        className: 'brick__title',
         onClick: evt => {
           evt.preventDefault()
-          this.toggleMenu()
+          this.getModel().viewReplaceButtonDidClick(this)
         }
-      }, 'Brick menu')
+      }, [
+        View.createElement('h3', {
+          className: 'brick__title-inner'
+        }, this.getModel().getTitle()),
+        $caretIcon
+      ]),
+      $menuButton
     ])
   }
 
@@ -155,17 +177,19 @@ export default class BrickView extends View {
    * @return {?HTMLElement}
    */
   renderStatus () {
-    this._$message = View.createElement('div', {
+    this._$statusIcon = View.createElement('div', {
+      className: 'brick__status-icon'
+    })
+
+    this._$statusMessage = View.createElement('div', {
       className: 'brick__status-message'
     })
 
     this._$status = View.createElement('footer', {
-      className: 'brick__status'
+      className: 'brick__status brick__status--hidden'
     }, [
-      View.createElement('div', {
-        className: 'brick__status-icon'
-      }),
-      this._$message
+      this._$statusIcon,
+      this._$statusMessage
     ])
 
     return this._$status
@@ -229,13 +253,34 @@ export default class BrickView extends View {
 
   /**
    * Updates Brick status and message.
-   * @param {string} status Status (e.g. success, error)
-   * @param {string} message Status message
+   * @param {string|null} status Status (e.g. success, error)
+   * @param {string|null} message Status message
    * @return {BrickView} Fluent interface
    */
   updateStatus (status, message = null) {
-    this._$status.className = `brick__status brick__status--${status}`
-    this._$message.innerText = message || ''
+    if (status === null) {
+      // Hide status
+      this._$status.classList.add('brick__status--hidden')
+      this._$statusIcon.innerHTML = null
+      this._$statusMessage.innerText = null
+    } else {
+      // Apply status
+      this._$status.className = `brick__status brick__status--${status}`
+
+      // Apply icon and message
+      this._$statusIcon.innerHTML = statusIcons[status] || ''
+      this._$statusMessage.innerText = message || ''
+
+      // Animate translation flash
+      if (status === 'forward' || status === 'backward') {
+        this._$status.classList.add(`brick__status--flash`)
+
+        // Force paint to trigger flash animation
+        this._$status.getBoundingClientRect()
+        this._$status.classList.remove('brick__status--flash')
+      }
+    }
+
     return this
   }
 }

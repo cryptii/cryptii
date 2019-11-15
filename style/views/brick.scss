@@ -8,7 +8,7 @@
   @extend %s-sheet;
 
   @media screen and (max-width: 448px) {
-    // styles applied when box reaches screen size
+    // Styles applied when box reaches screen size
     border-radius: 0;
   }
 
@@ -23,34 +23,30 @@
     cursor: -webkit-grab;
 
     .pipe--dragging & {
-
-      // inherit grabbing cursor from pipe
+      // Inherit grabbing cursor from pipe
       cursor: inherit;
     }
   }
 
   &__btn-menu {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 0;
     right: 0;
-    padding: 17px 16px;
-    font-size: 0;
+    width: 36px;
+    height: 48px;
+    color: $c-text-detail;
 
-    &::before {
-      content: '';
-      display: block;
-      width: 3px;
-      height: 14px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-image: inline-svg('icons/menu.svg',
-        (circle: (fill: $c-text-detail)));
+    &:hover {
+      color: $c-text;
     }
 
-    &:hover::before {
-      background-image: inline-svg('icons/menu.svg',
-        (circle: (fill: $c-text)));
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
     }
   }
 
@@ -83,45 +79,35 @@
   }
 
   &__title {
+    display: flex;
+    flex-direction: row;
     margin-top: 24px;
-    @extend %t-brick-headline;
+    max-width: 100%;
   }
 
-  &__btn-toggle {
-    display: inline-block;
-    position: relative;
-    max-width: 100%;
-    padding-right: 24px;
+  &__title-inner {
+    flex-basis: 0;
+    flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    @extend %t-brick-headline;
+  }
 
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 0;
+  &__title-caret {
+    margin-top: 4px;
+    margin-left: 4px;
+    pointer-events: none;
+
+    svg {
       width: 20px;
       height: 20px;
-      transform: translate(0, 3px);
-      margin-left: 2px;
-      line-height: 0;
-      background-image: inline-svg('icons/arrow-drop-down.svg',
-        (path: (fill: $c-primary)));
-      background-repeat: no-repeat;
-      background-size: 150% 150%;
-      background-position: center;
-
-      #{$block}.encoder & {
-        background-image: inline-svg('icons/arrow-drop-down.svg',
-          (path: (fill: $c-encoder)));
-      }
+      fill: currentColor;
     }
   }
 
   &__content {
-
+    line-height: 0;
   }
 
   &__status {
@@ -129,49 +115,65 @@
     min-height: 48px;
     @extend %t-text;
     word-break: break-word;
+    color: $c-text-detail;
+    transition-property: color;
+
+    &--hidden {
+      display: none;
+    }
+
+    &--error {
+      color: $c-text-error;
+    }
+
+    &--forward,
+    &--backward {
+      transition-delay: .5s;
+      transition-duration: .5s;
+    }
+
+    &--flash {
+      color: inherit;
+      transition-delay: 0s;
+      transition-duration: 0s;
+    }
   }
 
   &__status-icon {
     display: inline-block;
     position: relative;
-    top: 3px;
+    top: 2px;
     width: 16px;
     height: 16px;
     margin-right: 8px;
     background-repeat: no-repeat;
     background-size: 100% auto;
 
-    #{$block}__status--error & {
-      background-image: inline-svg('icons/error.svg',
-        (path: (fill: $c-text-error)));
-    }
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
 
-    #{$block}__status--forward &,
-    #{$block}__status--backward & {
-      background-image: inline-svg('icons/arrow-left.svg',
-        (path: (fill: $c-text-detail)));
+      #{$block}__status--forward &,
+      #{$block}__status--backward & {
 
-      @include breakpoint(xs, s) {
-        transform: rotate(90deg);
+        @include breakpoint(xs, s) {
+          transform: rotate(90deg);
+        }
       }
-    }
 
-    #{$block}__status--forward & {
-      transform: rotate(180deg);
+      #{$block}__status--forward & {
+        transform: rotate(180deg);
 
-      @include breakpoint(xs, s) {
-        transform: rotate(270deg);
+        @include breakpoint(xs, s) {
+          transform: rotate(270deg);
+        }
       }
     }
   }
 
   &__status-message {
     display: inline;
-    color: $c-text-detail;
     user-select: auto;
-
-    #{$block}__status--error & {
-      color: $c-text-error;
-    }
   }
 }
