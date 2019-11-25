@@ -111,8 +111,12 @@ export default class CaesarCipherEncoder extends Encoder {
 
     // Cached variant specs
     this._variantCharacterSet = []
+  }
 
-    this.addSetting({
+  async initAsync() {
+    await super.initAsync()
+
+    await this.addSetting({
       name: 'variant',
       type: 'enum',
       value: 'ita2',
@@ -120,6 +124,8 @@ export default class CaesarCipherEncoder extends Encoder {
       labels: variants.map(variant => variant.label),
       randomizable: false
     })
+
+    return this
   }
 
   /**
