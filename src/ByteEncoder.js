@@ -37,9 +37,11 @@ export default class ByteEncoder {
    * @return {Uint8Array} Bytes
    */
   static bytesFromHexString (string) {
-    // Fill up leading zero
+    string = StringUtil.removeWhitespaces(string)
+
+    // Fill up bytes with trailing zeros
     if (string.length % 2 === 1) {
-      string = '0' + string
+      string = string + '0'
     }
 
     // Decode each byte
@@ -72,9 +74,11 @@ export default class ByteEncoder {
    * @return {Uint8Array} Bytes
    */
   static bytesFromBinaryString (string) {
-    // Fill up leading zero digits
+    string = StringUtil.removeWhitespaces(string)
+
+    // Fill up with trailing zeros
     if (string.length % 8 > 0) {
-      string = ('0000000' + string).substr(string.length % 8 - 1)
+      string = string.padEnd(string.length - (string.length % 8) + 8, '0')
     }
 
     // Decode each byte

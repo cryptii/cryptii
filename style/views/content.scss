@@ -1,0 +1,47 @@
+
+.content {
+  @extend %t-text;
+
+  h2, h3, h4, h5, h6 {
+    margin: 32px 0 16px;
+    @extend %t-h2;
+  }
+
+  p {
+    margin: 24px 0;
+  }
+
+  ol,
+  ul {
+    padding-left: 40px;
+  }
+
+  ul {
+    list-style: disc outside;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  li,
+  li p {
+    margin: 8px 0;
+  }
+
+  a {
+    color: $c-primary;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}

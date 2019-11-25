@@ -1,5 +1,5 @@
 
-// body class to prevent the document from scrolling while modal is open
+// Body class to prevent the document from scrolling while modal is open
 .modal-visible {
   overflow: hidden;
 }
@@ -16,7 +16,7 @@
   visibility: hidden;
   outline: 0;
 
-  // the modal view depends on transition events of this element
+  // The modal view depends on transition events of this element
   transition-property: visibility;
   transition-duration: 0.6s;
 
@@ -125,18 +125,20 @@
     bottom: 0;
     padding: 0 24px;
     font-size: 0;
-    color: transparent;
+    color: $c-text-detail;
+
+    &:hover {
+      color: $c-text;
+    }
+
     @include each-breakpoint(modal-gutter) {
       padding-right: $value;
     }
 
-    &::before {
-      content: '';
-      @extend %i-close-light;
-    }
-
-    &:hover::before {
-      @extend %i-close;
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
     }
   }
 

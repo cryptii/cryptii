@@ -111,20 +111,13 @@ export default class EncoderView extends BrickView {
       if (translation.charCount !== null) {
         message +=
           `${translation.charCount} ` +
-          `${translation.charCount === 1 ? 'char' : 'chars'} `
+          `${translation.charCount === 1 ? 'char' : 'chars'}`
       } else {
         message +=
           `${translation.byteCount} ` +
-          `${translation.byteCount === 1 ? 'byte' : 'bytes'} `
+          `${translation.byteCount === 1 ? 'byte' : 'bytes'}`
       }
 
-      if (translation.duration < 10) {
-        message += `in ${parseInt(translation.duration * 100) / 100}ms`
-      } else if (translation.duration < 1000) {
-        message += `in ${parseInt(translation.duration)}ms`
-      } else {
-        message += `in ${parseInt(translation.duration / 1000)}s`
-      }
       return this.updateStatus(status, message)
     }
 

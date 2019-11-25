@@ -11,7 +11,6 @@
 
 // Symbols
 @import 'symbols/typography';
-@import 'symbols/icons';
 @import 'symbols/shapes';
 
 // Ground-zero styles
@@ -23,7 +22,6 @@
 // Views
 @import 'views/container';
 @import 'views/link-list';
-@import 'views/btn-more';
 
 // App views
 @import 'views/app';
@@ -32,6 +30,7 @@
 @import 'views/menu';
 @import 'views/featured';
 @import 'views/page';
+@import 'views/content';
 @import 'views/footer';
 @import 'views/pipe';
 
@@ -44,6 +43,7 @@
 @import 'views/viewer';
 @import 'views/encoder';
 @import 'views/viewer/text';
+@import 'views/viewer/punched-tape';
 
 // Field views
 @import 'views/field';

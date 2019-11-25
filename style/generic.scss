@@ -4,7 +4,7 @@
   box-sizing: border-box;
   transition-timing-function: ease;
 
-  // flex defaults
+  // Flex defaults
   flex-shrink: 0;
   flex-grow: 0;
   flex-basis: auto;
@@ -68,7 +68,7 @@ textarea {
 }
 
 input[type='number'] {
-  // hide number controls in firefox
+  // Hide number controls in firefox
   -moz-appearance: textfield;
 }
 
@@ -93,6 +93,11 @@ ol {
 ul,
 ol {
   list-style-type: none;
+  font: inherit;
+}
+
+li {
+  font: inherit;
 }
 
 a {

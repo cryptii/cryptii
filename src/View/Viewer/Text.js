@@ -150,12 +150,17 @@ export default class TextViewerView extends ViewerView {
    * @return {View} Fluent interface
    */
   update () {
-    // update status
+    // Update status
     const error = this.getModel().getError()
     if (error !== null) {
-      return this.updateStatus('error', error.message)
+      return this.updateStatus(
+        'error',
+        'Binary content can\'t be interpreted as text. ' +
+        'Try switching to the bytes view. ' +
+        error.message
+      )
     } else {
-      return this.updateStatus('success')
+      return this.updateStatus(null)
     }
   }
 }
