@@ -144,7 +144,7 @@ export default class PunchedTapeViewerView extends ViewerView {
       charY = outerOffset + tapeOffset + Math.floor(i / charCols) * lineHeight
 
       // Render char
-      for (j = rows - 1; j >= 0; j--) {
+      for (j = 0; j < rows; j++) {
         if (j === sprocketIndex) {
           // Render sprocket hole
           holesPath.push(`M ${charX - s} ${charY + j * gridSize}`)
