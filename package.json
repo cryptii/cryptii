@@ -1,8 +1,10 @@
 {
   "name": "cryptii",
-  "version": "4.0.7",
-  "description": "Framework and web app for encoding and decoding content.",
+  "version": "5.0.0",
+  "description": "Web app and framework offering modular conversion, encoding and encryption.",
+  "homepage": "https://cryptii.com/",
   "author": "Fränz Friederes",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/cryptii/cryptii.git"
@@ -10,49 +12,49 @@
   "bugs": {
     "url": "https://github.com/cryptii/cryptii/issues"
   },
-  "homepage": "https://cryptii.com/",
-  "license": "MIT",
   "scripts": {
-    "build": "gulp build",
-    "test": "gulp test",
-    "watch": "gulp"
-  },
-  "standard": {
-    "parser": "babel-eslint"
+    "build": "webpack --mode production",
+    "watch": "webpack --watch",
+    "test": "mocha --require babel-register tests/**/*.ts"
   },
   "dependencies": {
-    "detect-browser": "^4.8.0"
+    "detect-browser": "^4.8.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.0",
-    "@babel/polyfill": "^7.7.0",
-    "@babel/preset-env": "^7.7.0",
-    "@babel/register": "^7.7.0",
-    "@rollup/plugin-replace": "^2.2.0",
-    "babel-eslint": "^10.0.3",
-    "babel-plugin-inline-svg": "^1.0.1",
-    "core-js": "^3.4.1",
-    "del": "^5.1.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-numeric-separator": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/crypto-js": "^3.1.43",
+    "@types/react": "^16.9.21",
+    "@types/react-dom": "^16.9.5",
+    "autoprefixer": "^9.7.4",
+    "babel-loader": "^8.0.6",
+    "babel-register": "^6.26.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "core-js": "^3.6.4",
+    "crypto-js": "^3.3.0",
+    "css-loader": "^3.4.2",
     "git-rev-sync": "^1.12.0",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-better-rollup": "^4.0.1",
-    "gulp-clean-css": "^4.2.0",
-    "gulp-cli": "^2.2.0",
-    "gulp-header": "^2.0.7",
-    "gulp-mocha": "^7.0.2",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-standard": "^14.0.0",
-    "gulp-terser": "^1.2.0",
+    "mini-css-extract-plugin": "^0.8.2",
+    "mocha": "^7.0.1",
+    "node-sass": "^4.13.1",
     "normalize-scss": "^7.0.1",
-    "rollup": "^1.27.0",
-    "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.0.0",
-    "standard": "^14.3.1"
+    "postcss-loader": "^3.0.0",
+    "react-transition-group": "^4.3.0",
+    "regenerator-runtime": "^0.13.3",
+    "sass-loader": "^8.0.2",
+    "svg-inline-loader": "^0.8.2",
+    "terser-webpack-plugin": "^2.3.5",
+    "typescript": "^3.8.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   },
   "browserslist": [
     "last 1 version",

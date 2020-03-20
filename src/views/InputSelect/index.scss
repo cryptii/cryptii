@@ -1,0 +1,32 @@
+
+.input-select {
+  position: relative;
+
+  &__select {
+    width: 100%;
+    border: none;
+    padding: 8px 40px 8px 16px;
+    @extend %t-text;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  &__chevron {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 16px;
+    bottom: 0;
+    pointer-events: none;
+    color: $c-interactive;
+
+    svg {
+      width: 18px;
+      fill: currentColor;
+    }
+  }
+}

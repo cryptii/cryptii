@@ -1,0 +1,57 @@
+
+.input-text {
+  position: relative;
+  line-height: 0;
+
+  &__overlay,
+  &__textarea {
+    padding: 8px 16px;
+    @extend %t-text;
+
+    // Enforce field font rendering to be the same in the textarea and overlay
+    font-variant-ligatures: inherit;
+    letter-spacing: inherit;
+    tab-size: inherit;
+    text-indent: inherit;
+    text-rendering: inherit;
+    text-transform: inherit;
+    white-space: pre-wrap;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  &--monospace &__overlay,
+  &--monospace &__textarea {
+    @extend %t-field;
+  }
+
+  &__overlay {
+    // Text overlay pre rendered optionally on top of the textarea
+    // Allows for highlighting though using a fully accessible textarea
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  &__textarea {
+    // Height will be adapted by the component's autoresizing logic
+    width: 100%;
+    height: auto;
+  }
+
+  &__overlay + &__textarea {
+    // The overlay is only rendered when things are being highlighted in this
+    // field. If and only if the overlay is present, don't render the textarea
+    // value twice. Render selections though.
+    -webkit-text-fill-color: transparent;
+  }
+
+  &--multiline &__overlay,
+  &--multiline &__textarea {
+    // Indicate a multiline field by leaving an empty line at the end
+    padding: 16px 16px 40px;
+  }
+}

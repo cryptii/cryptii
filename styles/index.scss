@@ -1,0 +1,56 @@
+
+// Global variables, config switches
+@import 'variables/variables';
+@import 'variables/breakpoints';
+@import 'variables/colors';
+
+// Helpers
+@import 'helpers/breakpoint';
+@import 'helpers/each-breakpoint';
+@import 'helpers/browser';
+
+// Symbols
+@import 'symbols/typography';
+@import 'symbols/shapes';
+
+// Ground-zero styles
+@import 'node_modules/normalize-scss/sass/normalize/import-now';
+
+// Root
+:root {
+  --color-primary: #00A3E3;
+  --color-text: #1A3A47;
+  --color-text-secondary: #688097;
+  --color-background: #ffffff;
+  --color-background-app: #F2F4F6;
+  --color-line: #D2D9E0;
+}
+
+// Unclassed HTML elements
+@import 'generic';
+
+// Views
+@import 'views/App/index.scss';
+@import 'views/Brick/index.scss';
+@import 'views/BrickPlaceholder/index.scss';
+@import 'views/Field/index.scss';
+@import 'views/Form/index.scss';
+@import 'views/Icon/index.scss';
+@import 'views/InputNumber/index.scss';
+@import 'views/InputSelect/index.scss';
+@import 'views/InputSwitch/index.scss';
+@import 'views/InputText/index.scss';
+@import 'views/LibraryPanel/index.scss';
+@import 'views/MarkedChain/index.scss';
+@import 'views/Menu/index.scss';
+@import 'views/Pipe/index.scss';
+@import 'views/Toolbar/index.scss';
+
+// App views
+@import './views/modal';
+
+// Modal views
+@import './views/modal/library';
+
+// Brick views
+@import './views/viewer/punched-tape';

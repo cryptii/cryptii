@@ -1,0 +1,38 @@
+
+.form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+
+  &__field {
+    width: 100%;
+
+    @for $cols from 1 through 11 {
+      &[data-width="#{$cols}"] {
+        width: 100% * ($cols / 12);
+      }
+    }
+
+    &--first {
+
+      // Modifier applied on first field in each row
+      border-left: none;
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    color: $c-interactive;
+
+    svg {
+      display: inline-block;
+      width: 16px;
+      margin-right: 8px;
+      fill: currentColor;
+    }
+  }
+}

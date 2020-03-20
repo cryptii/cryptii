@@ -1,0 +1,90 @@
+
+* {
+  outline: none;
+  box-sizing: border-box;
+  transition-timing-function: ease;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  font-size: $default-font-size;
+  line-height: $default-line-height;
+}
+
+body {
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: $c-background;
+  color: $c-text;
+  @extend %t-text;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+  border: none;
+  background: none;
+  color: inherit;
+  text-align: left;
+  resize: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  -webkit-text-fill-color: $c-text;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+button,
+input,
+select,
+textarea,
+pre {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol,
+li {
+  list-style-type: none;
+  font: inherit;
+}
+
+a,
+button {
+  text-decoration: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+table {
+  border: none;
+  border-collapse: collapse;
+}
+
+img {
+  width: 100%;
+}

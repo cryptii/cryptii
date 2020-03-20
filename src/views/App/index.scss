@@ -1,0 +1,20 @@
+
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  background: $c-background-shaded;
+
+  &__panel {
+    width: 280px;
+    border-right: 1px solid $c-line;
+  }
+
+  &__content {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+}

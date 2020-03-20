@@ -1,0 +1,27 @@
+
+.marked-chain {
+  // Font rendering is defined by the parent
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  font-variant-ligatures: inherit;
+  letter-spacing: inherit;
+  tab-size: inherit;
+  text-indent: inherit;
+  text-rendering: inherit;
+  text-transform: inherit;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+
+  // Marks
+  mark {
+    background: none;
+    color: $c-interactive;
+
+    &.error {
+      color: $c-red;
+    }
+  }
+}

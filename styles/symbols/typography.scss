@@ -1,0 +1,56 @@
+
+%t-text {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+%t-h1 {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 48px;
+}
+
+%t-h2 {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+%t-h3 {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+%t-brick-action {
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+%t-brick-headline {
+  @extend %t-h3;
+}
+
+%t-field-label {
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+%t-field {
+  font-family: "Fira Mono", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+}

@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "library/*": ["./src/library/*"],
+      "bricks/*": ["./src/bricks/*"],
+      "views/*": ["./src/views/*"]
+    },
+    "sourceMap": true,
+    "module": "esnext",
+    "target": "ES2015",
+    "lib": ["ES2015", "dom"],
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

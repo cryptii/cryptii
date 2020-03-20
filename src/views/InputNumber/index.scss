@@ -1,0 +1,48 @@
+
+.input-number {
+  position: relative;
+
+  &__input {
+    width: 100%;
+    padding: 8px 40px;
+    text-align: center;
+    @extend %t-field;
+
+    // Hide number controls
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+  }
+
+  &__input::-webkit-inner-spin-button,
+  &__input::-webkit-outer-spin-button {
+    // Remove native number input spinners
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &__step-down,
+  &__step-up {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    color: $c-interactive;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+  }
+
+  &__step-down {
+    padding: 0 8px 0 16px;
+    left: 0;
+  }
+
+  &__step-up {
+    padding: 0 16px 0 8px;
+    right: 0;
+  }
+}

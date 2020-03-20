@@ -1,0 +1,38 @@
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  width: 56px;
+  height: 100%;
+  padding: 8px 0;
+
+  &__items {
+
+  }
+
+  &__item {
+
+    svg {
+      width: 20px;
+      fill: currentColor;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 48px;
+    color: $c-primary;
+
+    &:disabled {
+      color: $c-text-secondary;
+    }
+  }
+
+  &__divider {
+    margin: 8px 0;
+    border-bottom: 1px solid $c-line;
+  }
+}

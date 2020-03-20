@@ -1,0 +1,178 @@
+
+.brick {
+  $block: &;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  user-select: none;
+  border-radius: 4px;
+  @extend %s-sheet;
+
+  @media screen and (max-width: 448px) {
+    // Styles applied when box reaches screen size
+    border-radius: 0;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    position: relative;
+    height: 64px;
+    padding: 16px 64px 16px 16px;
+    border-bottom: 1px solid $c-line;
+
+    // Cursor
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+
+    .pipe--dragging & {
+      // Inherit grabbing cursor from pipe
+      cursor: inherit;
+    }
+  }
+
+  &__btn-menu {
+    display: flex;
+    width: 48px;
+    height: 64px;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: $c-text-detail;
+
+    &:hover {
+      color: $c-text;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    z-index: $z-index-menu;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    margin: 0 -6px;
+  }
+
+  &__action {
+    display: block;
+    padding: 0 6px;
+    @extend %t-brick-action;
+    color: $c-text-detail;
+
+    &--active {
+      color: inherit;
+    }
+  }
+
+  &__title {
+
+  }
+
+  &__title-inner {
+    flex-basis: 0;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    @extend %t-brick-headline;
+  }
+
+  &__title-caret {
+    margin-top: 4px;
+    margin-left: 4px;
+    pointer-events: none;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+  }
+
+  &__content {
+    line-height: 0;
+  }
+
+  &__status {
+    padding: 13px 16px;
+    min-height: 48px;
+    @extend %t-text;
+    word-break: break-word;
+    color: $c-text-detail;
+    transition-property: color;
+
+    &--hidden {
+      display: none;
+    }
+
+    &--error {
+      color: $c-text-error;
+    }
+
+    &--forward,
+    &--backward {
+      transition-delay: .5s;
+      transition-duration: .5s;
+    }
+
+    &--flash {
+      color: inherit;
+      transition-delay: 0s;
+      transition-duration: 0s;
+    }
+  }
+
+  &__status-icon {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+
+      #{$block}__status--forward &,
+      #{$block}__status--backward & {
+
+        @include breakpoint(xs, s) {
+          transform: rotate(90deg);
+        }
+      }
+
+      #{$block}__status--forward & {
+        transform: rotate(180deg);
+
+        @include breakpoint(xs, s) {
+          transform: rotate(270deg);
+        }
+      }
+    }
+  }
+
+  &__status-message {
+    display: inline;
+    user-select: auto;
+  }
+}

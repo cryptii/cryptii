@@ -1,0 +1,31 @@
+
+$c-white: #ffffff;
+$c-black: #000000;
+$c-red: #FF2000;
+$c-blue: #00b1d1;
+
+$c-primary: var(--color-primary);
+$c-interactive: var(--color-primary);
+
+$c-background: var(--color-background);
+$c-background-shaded: var(--color-background-app);
+
+$c-line: var(--color-line);
+$c-line-error: $c-red;
+
+$c-text: var(--color-text);
+$c-text-secondary: var(--color-text-secondary);
+$c-text-detail: #90999e;
+$c-text-primary: #00a3cc;
+$c-text-error: $c-red;
+
+$c-footer-text: #8898aa;
+
+$c-field-control-background: #e3e7ec;
+$c-field-label: $c-text-detail;
+
+$c-pipe: $c-primary;
+$c-pipe-background: $c-background-shaded;
+
+$c-viewer: $c-primary;
+$c-encoder: #ff9900;

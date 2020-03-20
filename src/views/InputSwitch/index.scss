@@ -1,0 +1,48 @@
+
+.input-switch {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+
+  &__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    visibility: hidden;
+  }
+
+  &__track {
+    width: 48px;
+    height: 24px;
+    padding: 3px;
+    border-radius: 16px;
+    border: 1px solid $c-line;
+  }
+
+  &__thumb {
+    width: 16px;
+    height: 16px;
+    background: $c-text-detail;
+    border-radius: 8px;
+    transform: none;
+    transition-property: transform, background;
+    transition-duration: 0.2s;
+  }
+
+  &__input:checked + &__track {
+
+  }
+
+  &__input:checked + &__track &__thumb {
+    transform: translate(24px, 0);
+    background: $c-primary;
+  }
+
+  &__label {
+    margin-left: 8px;
+  }
+}

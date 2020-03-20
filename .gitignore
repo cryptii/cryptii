@@ -1,5 +1,6 @@
 .DS_Store
 .sass-cache
+/.idea
 /.tmp*
 /dist
 node_modules
