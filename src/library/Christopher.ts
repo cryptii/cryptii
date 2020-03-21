@@ -1,10 +1,18 @@
 
+import Base64Encoder, { base64UrlOptions } from './Encoder/Base64Encoder'
 import Pipe from './Pipe'
+import UnicodeEncoder from './Encoder/UnicodeEncoder'
+import UTF8Encoder from './Encoder/UTF8Encoder'
 
 /**
- * Handles the communication to the cryptii service API.
+ * Handles the communication to the Christopher API.
  */
-export default class Service {
+export default class Christopher {
+  /**
+   * Static shared instance
+   */
+  private static sharedInstance: Christopher
+
   /**
    * Root service endpoint
    */
@@ -16,6 +24,7 @@ export default class Service {
    */
   constructor (rootEndpoint: string) {
     this.rootEndpoint = `${rootEndpoint}/v1`
+    Christopher.sharedInstance = this
   }
 
   /**
@@ -57,5 +66,35 @@ export default class Service {
     }
 
     return data
+  }
+
+  /**
+   * Shares the given pipe in a new window.
+   * @param pipe - Pipe instance to be shared
+   * @param target - Share target
+   */
+  sharePipe (pipe: Pipe, target: 'pipe'|'facebook'|'twitter'): void {
+    // TODO: Retrieve a token beforehand
+    const token = 'XXX'
+
+    // Compose share URL
+    const pipeJson = JSON.stringify(pipe.serialize())
+    const codePoints = UnicodeEncoder.codePointsFromString(pipeJson)
+    const data = Base64Encoder.encode(
+      UTF8Encoder.bytesFromCodePoints(codePoints),
+      base64UrlOptions)
+    const url = this.rootEndpoint +
+      `/pipes/create/${data}?token=${token}&target=${target}`
+
+    // Share in new window
+    window.open(url, '_blank')
+  }
+
+  /**
+   * Lazily creates a shared app instance and returns it.
+   * @returns Shared Christopher instance
+   */
+  static getSharedInstance (): Christopher {
+    return this.sharedInstance
   }
 }

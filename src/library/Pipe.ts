@@ -8,7 +8,7 @@ import EventManager from './EventManager'
 import InvalidInputError from './Error/InvalidInputError'
 import PipeView from '../views/Pipe'
 import PlaceholderBrick from './Brick/PlaceholderBrick'
-import Service from './Service'
+import Christopher from './Christopher'
 import UndoHistory from './UndoHistory'
 import Viewable from './Viewable'
 import ViewerBrick from './Brick/ViewerBrick'
@@ -20,7 +20,7 @@ export default class Pipe extends Viewable {
 
   private brickFactory?: BrickFactory
 
-  private service?: Service
+  private christopher?: Christopher
 
   private url?: string
 
@@ -51,7 +51,9 @@ export default class Pipe extends Viewable {
       undoEnabled: this.undoHistory.canUndo(),
       onUndoClick: this.undo.bind(this),
       redoEnabled: this.undoHistory.canRedo(),
-      onRedoClick: this.redo.bind(this)
+      onRedoClick: this.redo.bind(this),
+      onShareClick: (target: 'pipe'|'facebook'|'twitter') =>
+        this.getChristopher().sharePipe(this, target)
     }
   }
 
@@ -89,21 +91,21 @@ export default class Pipe extends Viewable {
   }
 
   /**
-   * Returns the service instance.
+   * Returns the christopher instance.
    */
-  getService (): Service {
-    if (this.service === undefined) {
-      this.service = Service.getSharedInstance()
+  getChristopher (): Christopher {
+    if (this.christopher === undefined) {
+      this.christopher = Christopher.getSharedInstance()
     }
-    return this.service
+    return this.christopher
   }
 
   /**
-   * Sets the service instance.
-   * @param service - New service instance
+   * Sets the christopher instance.
+   * @param christopher - New christopher instance
    */
-  setService (service: Service): void {
-    this.service = service
+  setChristopher (christopher: Christopher): void {
+    this.christopher = christopher
   }
 
   /**
@@ -960,7 +962,7 @@ export default class Pipe extends Viewable {
    * Stores this pipe using the backend service.
    */
   async store (): Promise<string> {
-    const data = await this.getService().storePipe(this)
+    const data = await this.getChristopher().storePipe(this)
     return data.url
   }
 

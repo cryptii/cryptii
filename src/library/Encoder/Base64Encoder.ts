@@ -40,15 +40,29 @@ export type Base64EncoderOptions = {
 }
 
 /**
- * Use Standard Base64 options by default
+ * Default Base64 alphabet
  */
-const defaultOptions: Base64EncoderOptions = {
-  alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
+const defaultAlphabet =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+/**
+ * Standard Base64 options
+ */
+export const base64Options: Base64EncoderOptions = {
+  alphabet: `${defaultAlphabet}+/`,
   padding: '=',
   paddingOptional: false,
   allowForeignCharacters: false,
   wrapLength: undefined,
   lineSeparator: '\r\n',
+}
+
+/**
+ * Base64url options
+ */
+export const base64UrlOptions: Base64EncoderOptions = {
+  alphabet: `${defaultAlphabet}-_`,
+  paddingOptional: true
 }
 
 /**
@@ -69,7 +83,7 @@ export default class Base64Encoder {
       paddingOptional,
       wrapLength,
       lineSeparator
-    } = Object.assign({}, defaultOptions, options)
+    } = Object.assign({}, base64Options, options)
 
     // Choose padding
     const paddingCharacter = !paddingOptional && padding ? padding : ''
@@ -128,7 +142,7 @@ export default class Base64Encoder {
       allowForeignCharacters,
       wrapLength,
       lineSeparator
-    } = Object.assign({}, defaultOptions, options)
+    } = Object.assign({}, base64Options, options)
 
     // Translate each character into an octet
     const length = string.length

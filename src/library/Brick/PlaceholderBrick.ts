@@ -73,7 +73,7 @@ export default class PlaceholderBrick extends Brick {
     }
 
     this.error = undefined
-    this.replacement = this.factory.loadAndCreate(this.data.name)
+    this.replacement = this.factory.loadAndCreate(this.data)
 
     this.replacement.then(brick => {
       this.replacement = brick

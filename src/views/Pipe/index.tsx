@@ -189,7 +189,7 @@ export default function Pipe(props: any): any {
               title: 'Get share link',
               icon: 'link',
               enabled: true,
-              onClick: () => props.onShareClick('link')
+              onClick: () => props.onShareClick('pipe')
             },
             {
               title: 'Share on Facebook',

@@ -1,13 +1,12 @@
 
-import ReactDOM from 'react-dom'
 import AppView from '../views/App'
 import BrickFactory from './Brick/BrickFactory'
+import Christopher from './Christopher'
 import EnvUtil from './Util/EnvUtil'
-import Pipe from './Pipe'
-import Service from './Service'
-import Viewable from './Viewable'
 import LibraryPanel from './Panel/LibraryPanel'
-
+import Pipe from './Pipe'
+import ReactDOM from 'react-dom'
+import Viewable from './Viewable'
 
 /**
  * Application instance
@@ -63,6 +62,9 @@ export default class App extends Viewable {
     super()
     this.config = Object.assign(App.defaultConfig, config)
     this.rootElement = rootElement
+
+    // Configure service
+    const christopher = new Christopher(this.config.serviceEndpoint)
 
     // Keep a reference to this shared instance
     App.sharedInstance = this
