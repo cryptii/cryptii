@@ -113,7 +113,7 @@ export default class TextField extends Field {
       // Invalid values may be of type string
       value: this.getValue().toString(),
       markedValue: result !== undefined && result.markedChain !== undefined
-        ? result.markedChain.render()
+        ? result.markedChain
         : undefined,
       onChange: this.setValue.bind(this)
     }

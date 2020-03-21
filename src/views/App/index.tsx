@@ -1,6 +1,7 @@
 
-import React, { useState } from 'react'
 import LibraryPanel from '../LibraryPanel'
+import React, { useState } from 'react'
+import Viewable from '../Viewable'
 
 export default function App(props: any): any {
   const [libraryVisible, setLibraryVisible] = useState(false)
@@ -13,7 +14,7 @@ export default function App(props: any): any {
         </div>
       )}
       <div className="app__content">
-        {props.pipe}
+        <Viewable instance={props.pipe} />
       </div>
     </div>
   )

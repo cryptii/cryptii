@@ -75,7 +75,7 @@ export default class Brick extends Viewable {
       id: this.id,
       name: this.name,
       title: this.title || this.name,
-      settingsForm: this.settingsForm.render(),
+      settingsForm: this.settingsForm,
       valid: this.isValid(),
       serialize: this.serialize.bind(this),
       menuItems: [

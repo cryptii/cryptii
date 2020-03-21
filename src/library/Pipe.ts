@@ -44,8 +44,7 @@ export default class Pipe extends Viewable {
    */
   compose (): any {
     return {
-      bricks: this.bricks.map(brick => brick.render()),
-      brickIds: this.bricks.map(brick => brick.getId()),
+      bricks: this.bricks,
       pipes: ['forward', 'forward', 'none'],
       onDragEnter: this.viewDidDragEnter.bind(this),
       onDragDrop: this.viewDidDragDrop.bind(this),

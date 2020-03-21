@@ -92,9 +92,7 @@ export default class Form extends Viewable {
       fields = fields.filter(field => field.getPriority() >= 0)
     }
     return {
-      fields: fields.map(field => field.render()),
-      fieldNames: fields.map(field => field.getName()),
-      widths: fields.map(field => field.getWidth()),
+      fields,
       onToggleClick: () => this.setExpanded(!this.isExpanded()),
       expanded: this.isExpanded(),
       expandable: this.isExpandable()

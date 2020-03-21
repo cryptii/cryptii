@@ -1,16 +1,17 @@
 
-import React from 'react'
 import Icon from '../Icon'
+import React from 'react'
+import Viewable from '../Viewable'
 
 export default function Form(props: any): any {
   let cols = 0
   return (
     <div className="form">
-      {props.fields.map((field: any, index: number) => {
+      {props.fields.map((field: any) => {
         let fieldClassName = 'form__field'
 
         // Keep track of field columns
-        const width = props.widths[index]
+        const width = field.getWidth()
         cols += width
         const first = cols > 12 || cols == width
         if (first) {
@@ -20,11 +21,11 @@ export default function Form(props: any): any {
 
         return (
           <div
-            key={props.fieldNames[index]}
+            key={field.getName()}
             className={fieldClassName}
             data-width={width}
           >
-            {field}
+            <Viewable instance={field} />
           </div>
         )
       })}

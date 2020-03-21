@@ -1,6 +1,7 @@
 
 import React, { useRef, useState } from 'react'
 import Toolbar from '../Toolbar'
+import Viewable from '../Viewable'
 
 /**
  * Drag event state
@@ -210,7 +211,9 @@ export default function Pipe(props: any): any {
           {props.bricks.map((brick: any, index: number) =>
             <>
               {index === 0 && renderPart(0, dragIndex)}
-              <div key={props.brickIds[index]} className="pipe__brick">{brick}</div>
+              <div key={brick.getId()} className="pipe__brick">
+                <Viewable instance={brick} />
+              </div>
               {renderPart(index + 1, dragIndex)}
             </>
           )}

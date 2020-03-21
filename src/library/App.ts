@@ -125,7 +125,7 @@ export default class App extends Viewable {
   compose (): any {
     return {
       panel: this.panel !== undefined ? this.panel.render() : undefined,
-      pipe: this.pipe !== undefined ? this.pipe.render() : undefined,
+      pipe: this.pipe !== undefined ? this.pipe : undefined,
       onShareClick: type => {
         console.log('Share link click', type)
       }

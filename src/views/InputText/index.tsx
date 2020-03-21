@@ -1,5 +1,6 @@
 
 import React, { useRef, useEffect, useCallback } from 'react'
+import Viewable from '../Viewable'
 
 export default function InputText(props: any): any {
   // Reference to the textarea element
@@ -47,8 +48,11 @@ export default function InputText(props: any): any {
 
   return (
     <div className={className}>
-      {props.markedValue &&
-        <div className="input-text__overlay">{props.markedValue}</div>}
+      {props.markedValue && (
+        <div className="input-text__overlay">
+          <Viewable instance={props.markedValue} />
+        </div>
+      )}
       <textarea
         className="input-text__textarea"
         ref={textareaRef}

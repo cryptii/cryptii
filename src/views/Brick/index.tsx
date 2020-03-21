@@ -2,6 +2,7 @@
 import Icon from '../Icon'
 import Menu from '../Menu'
 import React, { useRef, useState, useEffect } from 'react'
+import Viewable from '../Viewable'
 
 export default function Brick(props: any): any {
   // Reference to the brick element
@@ -51,7 +52,9 @@ export default function Brick(props: any): any {
           )}
         </div>
       </header>
-      <div className="brick__settings">{props.settingsForm}</div>
+      <div className="brick__settings">
+        <Viewable instance={props.settingsForm} />
+      </div>
       {props.children && <div className="brick__content">{props.children}</div>}
     </div>
   )
