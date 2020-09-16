@@ -37,6 +37,7 @@ export default class CaesarCipherEncoder extends Encoder {
         priority: 10,
         value: defaultShift,
         integer: true,
+        useBigInt: true,
         describeValue: this.describeShiftValue.bind(this),
         randomizeValue: this.randomizeShiftValue.bind(this)
       },
@@ -117,7 +118,14 @@ export default class CaesarCipherEncoder extends Encoder {
         }
       } else {
         // Shift character
-        y = MathUtil.mod(x + shift * (isEncode ? 1 : -1), m)
+        if (typeof shift !== 'bigint') {
+          y = MathUtil.mod(x + shift * (isEncode ? 1 : -1), m)
+        } else {
+          y = Number(MathUtil.mod(
+            BigInt(x) + shift * (isEncode ? 1n : -1n),
+            BigInt(m)
+          ))
+        }
 
         // Translate index to character following the case strategy
         if (caseStrategy === 'maintain' && uppercase) {
@@ -179,7 +187,12 @@ export default class CaesarCipherEncoder extends Encoder {
     // Shift the first character of the alphabet to describe the translation
     const { alphabet, shift } = this.getSettingValues()
     const plain = alphabet.getCharAt(0)
-    const index = MathUtil.mod(shift, alphabet.getLength())
+    const index = MathUtil.mod(
+      shift,
+      typeof shift !== 'bigint'
+        ? alphabet.getLength()
+        : BigInt(alphabet.getLength())
+    )
     const encoded = alphabet.getCharAt(index)
     return `${plain}→${encoded}`
   }

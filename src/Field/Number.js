@@ -11,13 +11,14 @@ export default class NumberField extends Field {
    * @param {string} name Field name
    * @param {object} spec Field spec
    * @param {boolean} [spec.integer=false] Wether to use integer values
-   * @param {?number} [spec.step=1] Step size
-   * @param {?number} [spec.min=null] Minimum value (inclusive)
-   * @param {?number} [spec.max=null] Maximum value (exclusive)
+   * @param {boolean} [spec.useBigInt=false] Wether to cast big values to BigInt
+   * @param {?number|BigInt} [spec.step=1] Step size
+   * @param {?number|BigInt} [spec.min=null] Minimum value (inclusive)
+   * @param {?number|BigInt} [spec.max=null] Maximum value (exclusive)
    * @param {?boolean} [spec.rotate=true] Wether the value should rotate
    * when stepping over limits. Rotation can only be enabled when both min and
    * max values are defined.
-   * @param {function(value: number, field: Field): ?string}
+   * @param {function(value: number|BigInt, field: Field): ?string}
    * [spec.describeValue] Function describing the given numeric value in
    * a context-based human-readable way. It only gets called with valid values.
    */
@@ -26,9 +27,18 @@ export default class NumberField extends Field {
     this._viewPrototype = NumberFieldView
 
     this._integer = spec.integer || false
+    this._useBigInt = spec.useBigInt && this._integer
+
     this._step = spec.step || 1
-    this._min = spec.min !== undefined ? spec.min : null
-    this._max = spec.max !== undefined ? spec.max : null
+
+    this._min =
+      spec.min !== undefined
+      ? spec.min
+      : (this._integer && !this._useBigInt ? Number.MIN_SAFE_INTEGER : null)
+    this._max =
+      spec.max !== undefined
+      ? spec.max
+      : (this._integer && !this._useBigInt ? Number.MAX_SAFE_INTEGER : null)
 
     this._rotate =
       spec.rotate !== undefined
@@ -58,7 +68,7 @@ export default class NumberField extends Field {
 
   /**
    * Returns how much to add or remove when stepping value up or down.
-   * @return {?number}
+   * @return {?number|BigInt}
    */
   getStep () {
     return this._step
@@ -66,7 +76,7 @@ export default class NumberField extends Field {
 
   /**
    * Sets step size.
-   * @param {?number} step Step size
+   * @param {?number|BigInt} step Step size
    * @return {NumberField} Fluent interface
    */
   setStep (step) {
@@ -76,14 +86,19 @@ export default class NumberField extends Field {
 
   /**
    * Step up or down value and repeat the process until finding a valid one.
-   * @param {number} step Relative step size
+   * @param {number|BigInt} step Relative step size
    * @param {number} [maxTries=100] Number of max tries to find a valid value
-   * @return {?number} Resulting value or null if unable to find
+   * @return {?number|BigInt} Resulting value or null if unable to find
    */
   stepValue (step, maxTries = 100) {
     let value = this.getValue()
     let tries = 0
     let valueFound = false
+
+    if (typeof value === 'bigint' || typeof step === 'bigint') {
+      value = BigInt(value)
+      step = BigInt(step)
+    }
 
     while (
       // Step value until a valid one is found or until max tries is reached
@@ -91,9 +106,9 @@ export default class NumberField extends Field {
       tries++ < maxTries &&
       // Stop when reaching limits with rotation disabled
       // eslint-disable-next-line no-unmodified-loop-condition
-      (this._rotate || step > 0 || value !== this._min) &&
+      (this._rotate || step > 0 || value != this._min) &&
       // eslint-disable-next-line no-unmodified-loop-condition
-      (this._rotate || step < 0 || value !== this._max)
+      (this._rotate || step < 0 || value != this._max)
     ) {
       // Add step to value
       value += step
@@ -133,7 +148,7 @@ export default class NumberField extends Field {
 
   /**
    * Returns minimum value (inclusive).
-   * @return {?number} Minimum value
+   * @return {?number|BigInt} Minimum value
    */
   getMin () {
     return this._min
@@ -141,7 +156,7 @@ export default class NumberField extends Field {
 
   /**
    * Sets minimum value (inclusive).
-   * @param {?number} min Minimum value
+   * @param {?number|BigInt} min Minimum value
    * @return {NumberField} Fluent interface
    */
   setMin (min) {
@@ -151,7 +166,7 @@ export default class NumberField extends Field {
 
   /**
    * Returns maximum value (exclusive).
-   * @return {?number} Maximum value
+   * @return {?number|BigInt} Maximum value
    */
   getMax () {
     return this._max
@@ -159,7 +174,7 @@ export default class NumberField extends Field {
 
   /**
    * Sets maximum value (exclusive).
-   * @param {?number} max Maximum value
+   * @param {?number|BigInt} max Maximum value
    * @return {NumberField} Fluent interface
    */
   setMax (max) {
@@ -218,7 +233,7 @@ export default class NumberField extends Field {
     const value = this.filterValue(rawValue)
 
     // Validate wether the value is a finite number
-    if (isNaN(value) || !isFinite(value)) {
+    if (typeof value !== 'bigint' && (isNaN(value) || !isFinite(value))) {
       return {
         key: 'numberNotNumeric',
         message: `The value is not numeric`
@@ -250,7 +265,18 @@ export default class NumberField extends Field {
    * @return {mixed} Filtered value
    */
   filterValue (rawValue) {
-    if (this.isInteger()) {
+    if (this._useBigInt && rawValue instanceof BigInt) {
+      rawValue = rawValue
+    } else if (this._useBigInt) {
+      const intValue = parseInt(rawValue)
+      if (intValue >= Number.MIN_SAFE_INTEGER &&
+          intValue <= Number.MAX_SAFE_INTEGER
+      ) {
+        rawValue = intValue
+      } else {
+        rawValue = BigInt(rawValue)
+      }
+    } else if (this._integer) {
       rawValue = parseInt(rawValue)
     } else {
       rawValue = parseFloat(rawValue)
@@ -268,12 +294,24 @@ export default class NumberField extends Field {
     if (value !== null) {
       return value
     }
-    if (this.getMin() !== null && this.getMax() !== null) {
-      return this.isInteger()
-        ? random.nextInteger(this.getMin(), Math.ceil(this.getMax()) - 1)
-        : random.nextFloat(this.getMin(), this.getMax())
+    if (this._min !== null && this._max !== null) {
+      return this._integer
+        ? random.nextInteger(this._min, Math.ceil(this._max) - 1)
+        : random.nextFloat(this._min, this._max)
     }
     return null
+  }
+
+  /**
+   * Serializes the field value to a JSON serializable value.
+   * @throws {Error} If field value is invalid.
+   * @throws {Error} If serialization is not possible.
+   * @return {mixed} Serialized data
+   */
+  serializeValue () {
+    // Encode BigInt instances as string
+    const value = this.getValue()
+    return value instanceof BigInt ? value.toString() : value
   }
 
   /**

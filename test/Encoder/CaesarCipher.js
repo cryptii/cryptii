@@ -38,5 +38,11 @@ describe('CaesarCipherEncoder', () => EncoderTester.test(CaesarCipherEncoder, [
     settings: { shift: 7, caseStrategy: 'strict' },
     content: 'Hello World',
     expectedResult: 'Hlssv Wvysk'
+  },
+  // BigInt test case
+  {
+    settings: { shift: '1000000000000000000' },
+    content: 'the quick brown fox jumps over the lazy dog',
+    expectedResult: 'hvs eiwqy pfckb tcl xiadg cjsf hvs zonm rcu'
   }
 ]))

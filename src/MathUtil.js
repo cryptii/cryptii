@@ -6,9 +6,9 @@ export default class MathUtil {
   /**
    * Custom modulo function always returning positive values.
    * @see http://stackoverflow.com/questions/1082917
-   * @param {number} x
-   * @param {number} m
-   * @return {number}
+   * @param {number|BigInt} x
+   * @param {number|BigInt} m
+   * @return {number|BigInt}
    */
   static mod (x, m) {
     m = m < 0 ? -m : m

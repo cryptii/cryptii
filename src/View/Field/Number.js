@@ -26,7 +26,7 @@ export default class NumberFieldView extends FieldView {
    */
   updateValue () {
     const value = this.getModel().getValue()
-    this._$input.value = value
+    this._$input.value = value.toString()
     this._updateValueDisplay()
     return this
   }
@@ -56,7 +56,7 @@ export default class NumberFieldView extends FieldView {
 
     if (displayEnabled) {
       // Update display value and description
-      this._$displayValue.innerText = value
+      this._$displayValue.innerText = value.toString()
       this._$displayDescription.innerText = valueDescription
     }
 
