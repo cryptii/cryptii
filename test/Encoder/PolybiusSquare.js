@@ -11,6 +11,13 @@ describe('PolybiusSquareEncoder', () => EncoderTester.test(PolybiusSquareEncoder
     expectedResult:
       '4423154145241325124234523321345324453235433451154244231531115554143422'
   },
+  // Test case for the i/j limitation
+  {
+    direction: 'encode',
+    content: 'thequickbrownfoxjumpsoverthelazydog',
+    expectedResult:
+      '4423154145241325124234523321345324453235433451154244231531115554143422'
+  },
   // Example from https://de.wikipedia.org/wiki/Polybios-Chiffre
   {
     settings: {

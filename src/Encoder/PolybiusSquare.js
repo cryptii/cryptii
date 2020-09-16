@@ -94,7 +94,15 @@ export default class PolybiusSquareEncoder extends Encoder {
   willTranslate (content, isEncode) {
     // Lowercase content if case sensitivity is set to false
     if (!this.getSettingValue('caseSensitivity')) {
-      return content.toLowerCase()
+      content = content.toLowerCase()
+    }
+    if (isEncode) {
+      // Standard Polybius square does not distinguish between 'i' and 'j'
+      // Replace all 'j' chars by 'i', if only 'i' is part of the alphabet
+      const alphabet = this.getSettingValue('alphabet').getCodePoints()
+      if (alphabet.indexOf(105) !== -1 && alphabet.indexOf(106) === -1) {
+        content = content.getString().replace(/j/g, 'i')
+      }
     }
     return content
   }
