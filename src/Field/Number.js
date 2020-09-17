@@ -265,9 +265,9 @@ export default class NumberField extends Field {
    * @return {mixed} Filtered value
    */
   filterValue (rawValue) {
-    if (this._useBigInt && rawValue instanceof BigInt) {
+    if (this._useBigInt && typeof rawValue === 'bigint') {
       // No filtering necessary
-    } else if (this._useBigInt && !(rawValue instanceof BigInt)) {
+    } else if (this._useBigInt && typeof rawValue !== 'bigint') {
       const intValue = parseInt(rawValue)
       if (intValue >= Number.MIN_SAFE_INTEGER &&
           intValue <= Number.MAX_SAFE_INTEGER
@@ -311,7 +311,7 @@ export default class NumberField extends Field {
   serializeValue () {
     // Encode BigInt instances as string
     const value = this.getValue()
-    return value instanceof BigInt ? value.toString() : value
+    return typeof value === 'bigint' ? value.toString() : value
   }
 
   /**
