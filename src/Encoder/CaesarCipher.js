@@ -122,7 +122,7 @@ export default class CaesarCipherEncoder extends Encoder {
           y = MathUtil.mod(x + shift * (isEncode ? 1 : -1), m)
         } else {
           y = Number(MathUtil.mod(
-            BigInt(x) + shift * (isEncode ? 1n : -1n),
+            BigInt(x) + shift * BigInt(isEncode ? 1 : -1),
             BigInt(m)
           ))
         }
