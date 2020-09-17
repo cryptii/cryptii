@@ -32,6 +32,7 @@ export default class RailFenceCipherEncoder extends Encoder {
         value: 2,
         integer: true,
         min: 2,
+        max: 99,
         // Pick a random key between 2 and 8
         randomizeValue: random => random.nextInteger(2, 8)
       },

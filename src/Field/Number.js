@@ -43,7 +43,7 @@ export default class NumberField extends Field {
     this._rotate =
       spec.rotate !== undefined
         ? spec.rotate
-        : (this._min !== null && this._max !== null)
+        : (spec.min !== undefined && spec.max !== undefined)
 
     this._describeValueCallback = spec.describeValue || null
   }
@@ -266,14 +266,14 @@ export default class NumberField extends Field {
    */
   filterValue (rawValue) {
     if (this._useBigInt && rawValue instanceof BigInt) {
-      rawValue = rawValue
-    } else if (this._useBigInt) {
+      // No filtering necessary
+    } else if (this._useBigInt && !(rawValue instanceof BigInt)) {
       const intValue = parseInt(rawValue)
       if (intValue >= Number.MIN_SAFE_INTEGER &&
           intValue <= Number.MAX_SAFE_INTEGER
       ) {
         rawValue = intValue
-      } else {
+      } else if (!isNaN(intValue)) {
         rawValue = BigInt(rawValue)
       }
     } else if (this._integer) {
