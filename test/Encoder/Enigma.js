@@ -155,6 +155,30 @@ describe('EnigmaEncoder', () => EncoderTester.test(EnigmaEncoder, [
       'fein scec hsuh rwar nemu onde ausn acze iglh l'
   },
   {
+    // Wheel-turnover mechanism edge case (GitHub issue #100)
+    settings: {
+      model: 'M4',
+      rotor1: 'beta',
+      rotor2: 'I',
+      rotor3: 'III',
+      rotor4: 'I',
+      position1: 1,
+      position2: 17,
+      position3: 12,
+      position4: 2,
+      ring1: 1,
+      ring2: 3,
+      ring3: 5,
+      ring4: 2,
+      reflector: 'UKW-B-thin',
+      plugboard: 'bq cr di ej kw mt os px uz gh'
+    },
+    content:
+      'inte llig ence poin tsto atta ckon thee astw allo fthe cast leat dawn',
+    expectedResult:
+      'odli oqsa pdtb ttnu eokz jbqz whly ndmm bvnd lanx tvrn ylvq mjko vrev'
+  },
+  {
     settings: {
       model: 'D',
       rotor1: 'III-D',

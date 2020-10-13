@@ -577,11 +577,14 @@ export default class EnigmaEncoder extends Encoder {
 
     // Collect slots, rotors, positions and rings for current translation
     const slots = model.slots
+    const slotCount = slots.length
+    const slotRotating = slots.map(slot => slot.rotating !== false)
     const rotors = []
     const positions = []
     const rings = []
+    const stepRotors = new Array(slotCount)
 
-    for (i = 0; i < slots.length; i++) {
+    for (i = 0; i < slotCount; i++) {
       const name = this.getSettingValue(`rotor${i + 1}`)
       rotors.push(EnigmaEncoder.getRotor(name))
       positions.push(this.getSettingValue(`position${i + 1}`) - 1)
@@ -594,6 +597,7 @@ export default class EnigmaEncoder extends Encoder {
     const entryRing = 0
 
     // Retrieve reflector config
+    const reflectorRotating = model.reflectorRotating === true
     const reflectorRotor =
       EnigmaEncoder.getRotor(this.getSettingValue('reflector'))
     let reflectorPosition = model.reflectorThumbwheel
@@ -602,6 +606,7 @@ export default class EnigmaEncoder extends Encoder {
     const reflectorRing = model.reflectorThumbwheel
       ? this.getSettingValue('ringReflector')
       : 0
+    let stepReflector
 
     // Compose plugboard wiring, if it is available for this model
     let plugboard = null
@@ -628,47 +633,58 @@ export default class EnigmaEncoder extends Encoder {
         return includeForeignChars ? codePoint : false
       }
 
+      // Engage model mechanism triggering rotors to rotate
+      stepRotors.fill(false)
+      stepReflector = false
+
       if (model.turnoverMechanism === 'cog') {
         // Engage cog-wheel driven wheel-turnover mechanism
         let turnover = true
-        i = slots.length - 1
-
-        while (turnover && i >= 0) {
-          if (slots[i].rotating !== false) {
+        i = slotCount
+        while (turnover && --i >= 0) {
+          if (slotRotating[i]) {
             turnover = EnigmaEncoder.rotorAtTurnover(rotors[i], positions[i])
-            positions[i]++
+            stepRotors[i] = true
           } else {
             turnover = false
           }
-          i--
         }
 
-        // Step reflector if it is rotating
-        if (turnover && model.reflectorRotating === true) {
-          reflectorPosition++
-        }
+        stepReflector = reflectorRotating && turnover
       } else {
-        // Engage lever driven wheel-turnover mechanism
-        let stepped = false
-        i = 1
+        // Engage wheel-turnover mechanism
+        for (i = 0; i < slotCount; i++) {
+          if (
+            slotRotating[i] &&
+            (reflectorRotating && i === 0 || slotRotating[i - 1]) &&
+            EnigmaEncoder.rotorAtTurnover(rotors[i], positions[i])
+          ) {
+            // Step this rotor
+            stepRotors[i] = true
 
-        while (!stepped && i < slots.length) {
-          stepped = EnigmaEncoder.rotorAtTurnover(rotors[i], positions[i])
-          if (stepped) {
-            // Shift current rotor, if it is not the last one (rotated later)
-            if (i !== slots.length - 1) {
-              positions[i]++
-            }
-            // Shift rotor on its left
-            if (slots[i - 1].rotating !== false) {
-              positions[i - 1]++
+            // Step left hand rotor (reflector at position 0)
+            if (i > 0) {
+              stepRotors[i - 1] = true
+            } else {
+              stepReflector = true
             }
           }
-          i++
         }
 
-        // Shift fast rotor at every turn
-        positions[positions.length - 1]++
+        // The fast rotor is stepped at every turn
+        stepRotors[slotCount - 1] = slotRotating[slotCount - 1]
+      }
+
+      // Step rotors
+      for (i = 0; i < slotCount; i++) {
+        if (stepRotors[i]) {
+          positions[i]++
+        }
+      }
+
+      // Step reflector
+      if (stepReflector) {
+        reflectorPosition++
       }
 
       // Wire characters through the plugboard, if any
