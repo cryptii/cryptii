@@ -21,7 +21,7 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
-    "detect-browser": "^5.1.1"
+    "detect-browser": "^5.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -31,9 +31,9 @@
     "@babel/register": "^7.11.5",
     "@rollup/plugin-replace": "^2.3.3",
     "babel-eslint": "^10.1.0",
-    "babel-plugin-inline-svg": "^1.1.0",
+    "babel-plugin-inline-svg": "^1.2.0",
     "core-js": "^3.6.5",
-    "del": "^5.1.0",
+    "del": "^6.0.0",
     "git-rev-sync": "^3.0.1",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
@@ -48,7 +48,7 @@
     "gulp-standard": "^14.0.0",
     "gulp-terser": "^1.4.0",
     "normalize-scss": "^7.0.1",
-    "rollup": "^2.26.11",
+    "rollup": "^2.30.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.0.0",

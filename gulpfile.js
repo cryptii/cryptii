@@ -123,7 +123,17 @@ function script () {
           include: ['node_modules/**'],
           ignore: ['os']
         })
-      ]
+      ],
+      onwarn: warning => {
+        // Skip certain warnings
+        // See https://stackoverflow.com/questions/43556940/
+        if (warning.code === 'THIS_IS_UNDEFINED') {
+          return
+        }
+
+        // Warn about everything else
+        console.warn(warning.message)
+      }
     }, {
       format: 'umd',
       strict: false,
