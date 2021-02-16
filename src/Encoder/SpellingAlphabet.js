@@ -134,18 +134,18 @@ const alphabetSpecs = [
   },
   {
     name: 'finnish-nato',
-    label: 'Finnish Defence Forces\' spelling alphabet',
-    characters: 'abcdefghijklmnopqrstuvwxxyzåäö0123456789.',
+    label: 'Finnish Defence Forces\' spelling alphabet in national use.',
+    characters: 'abcdefghijklmnopqrstuvwxxyzåäö0123456789',
     words: [
       'Alfa',     'Bravo',    'Charlie',  'Delta',    'Echo',     'Foxtrot',
       'Golf',     'Hotel',    'India',    'Juliett',  'Kilo',     'Lima',
       'Mike',     'November', 'Oscar',    'Papa',     'Quebec',   'Romeo',
       'Sierra',   'Tango',    'Uniform',  'Victor',   'Whiskey',  'X-ray',
       'Xray',     'Yankee',   'Zulu',     'Åke',      'Äiti',     'Öljy',
-      'Zero',     'One',      'Two',      'Three',    'Four',     'Five',
-      'Six',      'Seven',    'Eight',    'Nine',     'Stop'
+      'Nolla',    'Yksi',     'Kaksi',    'Kolme',    'Neljä',    'Viisi',
+      'Kuusi',    'Seitsemän','Kahdeksan','Yhdeksän'
     ],
-    spaceWord: '(space)'
+    spaceWord: '(väli)'
   }
   
   /* eslint-enable no-multi-spaces */
