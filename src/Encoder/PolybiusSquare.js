@@ -31,7 +31,7 @@ export default class PolybiusSquareEncoder extends Encoder {
       {
         name: 'alphabet',
         type: 'text',
-        value: 'abcdefghiklmnopqrstuvwxyz',
+        value: 'abcdefghijklmnopqrstuvwxyz',
         uniqueChars: true,
         minLength: 2,
         validateValue: this.validateAlphabetValue.bind(this),
