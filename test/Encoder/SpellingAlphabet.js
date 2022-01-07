@@ -66,5 +66,15 @@ describe('SpellingAlphabetEncoder', () => EncoderTester.test(SpellingAlphabetEnc
       'Иван Харитон (пробел) Борис Ульяна Леонид Ольга Киловатт (пробел) Дмитрий Антон ' +
       '(пробел) Василий Игрек Павел Елена Йот (пробел) Человек Антон Юрий (пробел) Один Два ' +
       'Три (пробел) Четыре Пять Шесть (пробел) Семь Восемь Девять Ноль Точка'
+  },
+  {
+    settings: { alphabet: 'polish' },
+    content: 'pchnąć w tę łódź jeża lub ośm skrzyń fig.',
+    expectedResult:
+      'Paweł Celina Henryk Nikodem ą Ćma (spacja) Walenty (spacja) ' +
+      'Tadeusz ę (spacja) Łukasz ó Dorota Źrebak (spacja) ' +
+      'Józef Edward Żaba Adam (spacja) Ludwik Urszula Barbara (spacja) ' +
+      'Olga Światowid Marian (spacja) Stefan Karol Roman Zygmunt Ypsylon ' +
+      'ń (spacja) Filip Ignacy Gustaw kropka'
   }
 ]))
