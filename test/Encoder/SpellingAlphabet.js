@@ -68,7 +68,7 @@ describe('SpellingAlphabetEncoder', () => EncoderTester.test(SpellingAlphabetEnc
       'Три (пробел) Четыре Пять Шесть (пробел) Семь Восемь Девять Ноль Точка'
   },
   {
-    settings: { alphabet: 'polish-official' },
+    settings: { alphabet: 'polish' },
     content: 'pchnąć w tę łódź jeża lub ośm skrzyń fig.',
     expectedResult:
       'Paweł Celina Henryk Nikodem ą Ćma (spacja) Walenty (spacja) ' +

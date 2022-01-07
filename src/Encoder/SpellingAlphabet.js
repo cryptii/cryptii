@@ -117,7 +117,7 @@ const alphabetSpecs = [
     spaceWord: '(пробел)'
   },
   {
-    name: 'polish-official',
+    name: 'polish',
     label: 'Polish spelling alphabet ',
     characters: 'abcćdefghijklłmnopqrsśtuvwxyzźż0123456789.',
     words: [
