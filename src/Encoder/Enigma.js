@@ -282,7 +282,7 @@ const rotorTable = [
 
   // Enigma I "Sondermaschine"
   'I-S',        'I',          'veosirzujdqckgwypnxaflthmb', 'q',
-  'II-S',       'II',         'uemoatqlshpkcyfwjzbgvxindr', 'e',
+  'II-S',       'II',         'uemoatqlshpkcyfwjzbgvxidnr', 'e',
   'III-S',      'III',        'tzhxmbsipnurjfdkeqvcwglaoy', 'v',
   'UKW-S',      'UKW',        'ciagsndrbytpzfulvhekoqxwjm', '',
 
