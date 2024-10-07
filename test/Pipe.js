@@ -1,14 +1,13 @@
-
 import assert from 'assert'
 import { describe, it } from 'mocha'
 
-import AffineCipherEncoder from '../src/Encoder/AffineCipher'
-import AlphabeticalSubstitutionEncoder from '../src/Encoder/AlphabeticalSubstitution'
-import BrickFactory from '../src/Factory/Brick'
-import Pipe from '../src/Pipe'
-import ROT13Encoder from '../src/Encoder/ROT13'
-import TextViewer from '../src/Viewer/Text'
-import VigenereCipherEncoder from '../src/Encoder/VigenereCipher'
+import AffineCipherEncoder from '../src/Encoder/AffineCipher.js'
+import AlphabeticalSubstitutionEncoder from '../src/Encoder/AlphabeticalSubstitution.js'
+import BrickFactory from '../src/Factory/Brick.js'
+import Pipe from '../src/Pipe.js'
+import ROT13Encoder from '../src/Encoder/ROT13.js'
+import TextViewer from '../src/Viewer/Text.js'
+import VigenereCipherEncoder from '../src/Encoder/VigenereCipher.js'
 
 const examplePipeData = {
   items: [

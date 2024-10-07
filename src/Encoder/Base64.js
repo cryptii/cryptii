@@ -1,7 +1,5 @@
-
-import ByteEncoder from '../ByteEncoder'
-import Encoder from '../Encoder'
-import StringUtil from '../StringUtil'
+import ByteEncoder from '../ByteEncoder.js'
+import Encoder from '../Encoder.js'
 
 const meta = {
   name: 'base64',

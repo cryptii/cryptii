@@ -1,6 +1,5 @@
-
-import Encoder from '../Encoder'
-import InvalidInputError from '../Error/InvalidInput'
+import Encoder from '../Encoder.js'
+import InvalidInputError from '../Error/InvalidInput.js'
 
 const meta = {
   name: 'integer',
@@ -242,9 +241,10 @@ export default class IntegerEncoder extends Encoder {
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
-      case 'type':
+      case 'type': {
         const typeIndex = typeNames.indexOf(this.getSettingValue('type'))
         this.getSetting('byteOrder').setVisible(typeBytes[typeIndex] > 1)
+      }
     }
   }
 }

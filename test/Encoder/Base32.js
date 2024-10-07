@@ -1,4 +1,3 @@
-
 import { describe } from 'mocha'
 
 import Base32Encoder from '../../src/Encoder/Base32'

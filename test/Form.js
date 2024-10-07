@@ -1,9 +1,8 @@
-
 import assert from 'assert'
 import { describe, it } from 'mocha'
 
-import FieldFactory from '../src/Factory/Field'
-import Form from '../src/Form'
+import FieldFactory from '../src/Factory/Field.js'
+import Form from '../src/Form.js'
 
 function getExampleFieldSpecs () {
   const fieldSpecs = [

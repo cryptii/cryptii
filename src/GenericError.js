@@ -1,4 +1,3 @@
-
 /**
  * Generic, extendable error.
  * Requires babel-plugin-transform-builtin-extend babel plugin.

@@ -1,4 +1,3 @@
-
 const version = 'v1'
 
 /**
@@ -37,7 +36,7 @@ export default class Service {
       method: 'POST',
       headers: {
         'Content-type': 'application/json; charset=utf-8',
-        'Authorization': `Bearer ${session.token}`
+        Authorization: `Bearer ${session.token}`
       },
       body: JSON.stringify(pipe.serialize())
     })

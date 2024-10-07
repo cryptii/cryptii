@@ -1,4 +1,3 @@
-
 import { describe } from 'mocha'
 
 import BootstringEncoder from '../../src/Encoder/Bootstring'

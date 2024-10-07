@@ -1,7 +1,6 @@
-
-import Encoder from '../Encoder'
-import StringUtil from '../StringUtil'
-import InvalidInputError from '../Error/InvalidInput'
+import Encoder from '../Encoder.js'
+import StringUtil from '../StringUtil.js'
+import InvalidInputError from '../Error/InvalidInput.js'
 
 const meta = {
   name: 'numeral-system',
@@ -169,7 +168,7 @@ export default class NumeralSystemEncoder extends Encoder {
     if (!NumeralSystemEncoder.isSafeInteger(number)) {
       throw new InvalidInputError(
         `Can't read '${string}' because the current environment does not ` +
-        `support arbitrarily large integers.`)
+        'support arbitrarily large integers.')
     }
 
     return number

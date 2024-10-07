@@ -1,5 +1,4 @@
-
-import Encoder from '../Encoder'
+import Encoder from '../Encoder.js'
 
 const meta = {
   name: 'bitwise-operation',

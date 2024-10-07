@@ -1,8 +1,7 @@
-
-import ArrayUtil from '../ArrayUtil'
-import Chain from '../Chain'
-import Encoder from '../Encoder'
-import PolybiusSquareEncoder from './PolybiusSquare'
+import ArrayUtil from '../ArrayUtil.js'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
+import PolybiusSquareEncoder from './PolybiusSquare.js'
 
 const meta = {
   name: 'adfgx-cipher',
@@ -94,7 +93,7 @@ export default class ADFGVXCipherEncoder extends Encoder {
     const variant = this.constructor.getVariant(defaultVariantName)
     this._polybiusSquare = new PolybiusSquareEncoder()
     this._polybiusSquare.setSettingValues({
-      alphabet: alphabet,
+      alphabet,
       rows: variant.squarePositions,
       columns: variant.squarePositions,
       separator: '',
@@ -171,8 +170,8 @@ export default class ADFGVXCipherEncoder extends Encoder {
 
     // Calculate the number of columns available in the last row as the
     // plaintext content may not have filled up the entire grid
-    let lastRowColumns = (length % keyLength) || keyLength
-    let rows = Math.ceil(length / keyLength)
+    const lastRowColumns = (length % keyLength) || keyLength
+    const rows = Math.ceil(length / keyLength)
 
     // Decode code points to Polybius square coordinates
     const polybius = new Array(length)
@@ -205,8 +204,8 @@ export default class ADFGVXCipherEncoder extends Encoder {
   mapElementsToSortedPosition (elements) {
     const length = elements.length
     const map = new Array(length)
-    let from = elements.slice()
-    let to = elements.slice().sort()
+    const from = elements.slice()
+    const to = elements.slice().sort()
     let index
 
     for (let k = 0; k < length; k++) {

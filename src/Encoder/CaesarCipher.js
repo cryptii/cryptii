@@ -1,6 +1,5 @@
-
-import Encoder from '../Encoder'
-import MathUtil from '../MathUtil'
+import Encoder from '../Encoder.js'
+import MathUtil from '../MathUtil.js'
 
 const meta = {
   name: 'caesar-cipher',

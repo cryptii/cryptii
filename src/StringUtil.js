@@ -1,4 +1,3 @@
-
 let iterator = 0
 
 /**

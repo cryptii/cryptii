@@ -1,8 +1,7 @@
-
 import assert from 'assert'
 import { describe, it } from 'mocha'
 
-import TextEncoder from '../src/TextEncoder'
+import TextEncoder from '../src/TextEncoder.js'
 
 const exampleASCII = {
   string: 'Hello World',

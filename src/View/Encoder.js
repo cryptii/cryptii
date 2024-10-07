@@ -1,6 +1,5 @@
-
-import BrickView from './Brick'
-import View from '../View'
+import BrickView from './Brick.js'
+import View from '../View.js'
 
 /**
  * Encoder brick view

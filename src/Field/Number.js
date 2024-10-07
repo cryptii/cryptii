@@ -1,6 +1,5 @@
-
-import Field from '../Field'
-import NumberFieldView from '../View/Field/Number'
+import Field from '../Field.js'
+import NumberFieldView from '../View/Field/Number.js'
 
 /**
  * Number field
@@ -33,12 +32,12 @@ export default class NumberField extends Field {
 
     this._min =
       spec.min !== undefined
-      ? spec.min
-      : (this._integer && !this._useBigInt ? Number.MIN_SAFE_INTEGER : null)
+        ? spec.min
+        : (this._integer && !this._useBigInt ? Number.MIN_SAFE_INTEGER : null)
     this._max =
       spec.max !== undefined
-      ? spec.max
-      : (this._integer && !this._useBigInt ? Number.MAX_SAFE_INTEGER : null)
+        ? spec.max
+        : (this._integer && !this._useBigInt ? Number.MAX_SAFE_INTEGER : null)
 
     this._rotate =
       spec.rotate !== undefined
@@ -106,9 +105,9 @@ export default class NumberField extends Field {
       tries++ < maxTries &&
       // Stop when reaching limits with rotation disabled
       // eslint-disable-next-line no-unmodified-loop-condition
-      (this._rotate || step > 0 || value != this._min) &&
+      (this._rotate || step > 0 || value !== this._min) &&
       // eslint-disable-next-line no-unmodified-loop-condition
-      (this._rotate || step < 0 || value != this._max)
+      (this._rotate || step < 0 || value !== this._max)
     ) {
       // Add step to value
       value += step
@@ -236,7 +235,7 @@ export default class NumberField extends Field {
     if (typeof value !== 'bigint' && (isNaN(value) || !isFinite(value))) {
       return {
         key: 'numberNotNumeric',
-        message: `The value is not numeric`
+        message: 'The value is not numeric'
       }
     }
 

@@ -1,4 +1,3 @@
-
 import { describe } from 'mocha'
 
 import EncoderTester from '../Helper/EncoderTester'

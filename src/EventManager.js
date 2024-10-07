@@ -1,4 +1,3 @@
-
 // shared instance
 let sharedInstance = null
 

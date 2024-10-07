@@ -204,15 +204,6 @@ $header-height: 96px !default;
       }
     }
 
-    @include breakpoint(xs, s) {
-
-      @include browser('ie/11') {
-        position: relative;
-        z-index: 1;
-        margin: -3px 0;
-      }
-    }
-
     @include breakpoint(s) {
       width: 448px;
     }
@@ -224,11 +215,6 @@ $header-height: 96px !default;
       @if $pipe-sticky-headers {
         position: sticky;
         top: $pipe-vertical-padding-m - 8px;
-      }
-
-      @include browser('ie/11') {
-        flex-basis: 360px;
-        flex-grow: 0;
       }
     }
   }

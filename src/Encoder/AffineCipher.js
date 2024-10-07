@@ -1,6 +1,5 @@
-
-import MathUtil from '../MathUtil'
-import Encoder from '../Encoder'
+import MathUtil from '../MathUtil.js'
+import Encoder from '../Encoder.js'
 
 const meta = {
   name: 'affine-cipher',
@@ -187,7 +186,7 @@ export default class AffineCipherEncoder extends Encoder {
       return {
         key: 'affineCipherFunctionInvalid',
         message:
-          `The value must be chosen such that it is coprime to the size ` +
+          'The value must be chosen such that it is coprime to the size ' +
           `of the alphabet (${m})`
       }
     }

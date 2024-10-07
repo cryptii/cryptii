@@ -1,6 +1,5 @@
-
-import EnumFieldView from '../View/Field/Enum'
-import Field from '../Field'
+import EnumFieldView from '../View/Field/Enum.js'
+import Field from '../Field.js'
 
 /**
  * Enum field
@@ -70,15 +69,15 @@ export default class EnumField extends Field {
     elements, labels = null, descriptions = null, revalidate = true
   ) {
     if (elements.length === 0) {
-      throw new Error(`Array of elements can't be empty.`)
+      throw new Error('Array of elements can\'t be empty.')
     }
 
     if (labels !== null && elements.length !== labels.length) {
-      throw new Error(`Element and label arrays require the same length.`)
+      throw new Error('Element and label arrays require the same length.')
     }
 
     if (descriptions !== null && elements.length !== descriptions.length) {
-      throw new Error(`Element and description arrays require the same length.`)
+      throw new Error('Element and description arrays require the same length.')
     }
 
     this._elements = elements
@@ -157,7 +156,7 @@ export default class EnumField extends Field {
     if (this._elements.indexOf(rawValue) === -1) {
       return {
         key: 'enumNotInHaystack',
-        message: `The value must be occur in the list of elements`
+        message: 'The value must be occur in the list of elements'
       }
     }
     return super.validateValue(rawValue)

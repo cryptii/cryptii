@@ -1,8 +1,7 @@
-
 import assert from 'assert'
 import { describe, it } from 'mocha'
 
-import Factory from '../src/Factory'
+import Factory from '../src/Factory.js'
 
 class Cat {
   constructor (name = null, age = null) {

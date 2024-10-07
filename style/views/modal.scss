@@ -143,9 +143,10 @@
   }
 
   &__content {
+    background: $c-background-shaded;
+
     @include each-breakpoint(modal-gutter) {
       padding: $value;
     }
-    background: $c-background-shaded;
   }
 }

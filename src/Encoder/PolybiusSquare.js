@@ -1,7 +1,6 @@
-
-import ArrayUtil from '../ArrayUtil'
-import Encoder from '../Encoder'
-import InvalidInputError from '../Error/InvalidInput'
+import ArrayUtil from '../ArrayUtil.js'
+import Encoder from '../Encoder.js'
+import InvalidInputError from '../Error/InvalidInput.js'
 
 const meta = {
   name: 'polybius-square',
@@ -223,15 +222,15 @@ export default class PolybiusSquareEncoder extends Encoder {
         if (index >= alphabetLength) {
           throw new InvalidInputError(
             `Polybius square cell at coordinates ${row},${column} are not ` +
-            `defined by the alphabet.`)
+            'defined by the alphabet.')
         }
 
         result[j++] = alphabet[index]
       } else if (row !== null || column !== null) {
         // Incomplete set of coordinates
         throw new InvalidInputError(
-          `Reached unexpected end of content. The last set of Polybius ` +
-          `square coordinates is incomplete.`)
+          'Reached unexpected end of content. The last set of Polybius ' +
+          'square coordinates is incomplete.')
       }
     }
 
@@ -276,7 +275,7 @@ export default class PolybiusSquareEncoder extends Encoder {
         message:
           `The alphabet size ${length} is too big for the given ` +
           `${rows}×${columns} Polybius square defined by the settings ` +
-          `'columns' and 'rows'.`
+          '\'columns\' and \'rows\'.'
       }
     }
 
@@ -287,7 +286,7 @@ export default class PolybiusSquareEncoder extends Encoder {
         message:
           `The alphabet size ${length} is too short for the given ` +
           `${rows}×${columns} Polybius square defined by the settings ` +
-          `'columns' and 'rows'.`
+          '\'columns\' and \'rows\'.'
       }
     }
 

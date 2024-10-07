@@ -1,4 +1,3 @@
-
 import { describe } from 'mocha'
 
 import Ascii85Encoder from '../../src/Encoder/Ascii85'

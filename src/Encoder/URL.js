@@ -1,7 +1,6 @@
-
-import Encoder from '../Encoder'
-import InvalidInputError from '../Error/InvalidInput'
-import TextEncodingError from '../Error/TextEncoding'
+import Encoder from '../Encoder.js'
+import InvalidInputError from '../Error/InvalidInput.js'
+import TextEncodingError from '../Error/TextEncoding.js'
 
 const meta = {
   name: 'url-encoding',

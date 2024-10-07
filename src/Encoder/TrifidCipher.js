@@ -1,6 +1,5 @@
-
-import Chain from '../Chain'
-import Encoder from '../Encoder'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
 
 const meta = {
   name: 'trifid-cipher',
@@ -179,9 +178,9 @@ export default class TrifidCipherEncoder extends Encoder {
    * @return {number[]} Cartesian coordinate positions (x, y, z)
    */
   cartesianCoordinatesFromIndex (index) {
-    let x = Math.floor(index / 9)
-    let y = Math.floor((index - x * 9) / 3)
-    let z = index - x * 9 - y * 3
+    const x = Math.floor(index / 9)
+    const y = Math.floor((index - x * 9) / 3)
+    const z = index - x * 9 - y * 3
     return [x + 1, y + 1, z + 1]
   }
 

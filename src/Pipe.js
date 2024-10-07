@@ -1,14 +1,13 @@
-
-import Brick from './Brick'
-import ByteEncoder from './ByteEncoder'
-import Chain from './Chain'
-import Encoder from './Encoder'
-import EventManager from './EventManager'
-import InvalidInputError from './Error/InvalidInput'
-import LibraryModalView from './View/Modal/Library'
-import PipeView from './View/Pipe'
-import Viewable from './Viewable'
-import Viewer from './Viewer'
+import Brick from './Brick.js'
+import ByteEncoder from './ByteEncoder.js'
+import Chain from './Chain.js'
+import Encoder from './Encoder.js'
+import EventManager from './EventManager.js'
+import InvalidInputError from './Error/InvalidInput.js'
+import LibraryModalView from './View/Modal/Library.js'
+import PipeView from './View/Pipe.js'
+import Viewable from './Viewable.js'
+import Viewer from './Viewer.js'
 
 /**
  * Arrangement of viewers and encoders.
@@ -185,7 +184,7 @@ export default class Pipe extends Viewable {
    */
   getBrick (index) {
     if (index < 0 || index > this._bricks.length) {
-      throw new Error(`Brick index is out of bounds.`)
+      throw new Error('Brick index is out of bounds.')
     }
     return this._bricks[index]
   }
@@ -231,7 +230,7 @@ export default class Pipe extends Viewable {
    */
   duplicateBrick (brick, index = null) {
     if (!this.containsBrick(brick)) {
-      throw new Error(`Brick is not part of the pipe.`)
+      throw new Error('Brick is not part of the pipe.')
     }
     if (index === null) {
       index = this._bricks.indexOf(brick)
@@ -249,7 +248,7 @@ export default class Pipe extends Viewable {
   moveBrick (brick, index) {
     const fromIndex = this._bricks.indexOf(brick)
     if (fromIndex === -1) {
-      throw new Error(`Brick is not part of the pipe.`)
+      throw new Error('Brick is not part of the pipe.')
     }
     if (index > fromIndex) {
       index--
@@ -272,7 +271,7 @@ export default class Pipe extends Viewable {
       index = this._bricks.indexOf(brickOrIndex)
       if (index === -1) {
         throw new Error(
-          `Brick is not part of the pipe and thus can't be removed.`)
+          'Brick is not part of the pipe and thus can\'t be removed.')
       }
     }
     this.spliceBricks(index, 1)
@@ -296,7 +295,7 @@ export default class Pipe extends Viewable {
           index = this._bricks.indexOf(brickOrIndex)
           if (index === -1) {
             throw new Error(
-              `Brick is not part of the pipe and thus can't be removed.`)
+              'Brick is not part of the pipe and thus can\'t be removed.')
           }
         }
         return index
@@ -320,7 +319,7 @@ export default class Pipe extends Viewable {
   replaceBrick (needle, replacement) {
     const index = this._bricks.indexOf(needle)
     if (index === -1) {
-      throw new Error(`Can't replace a brick not being part of the pipe.`)
+      throw new Error('Can\'t replace a brick not being part of the pipe.')
     }
     this.spliceBricks(index, 1, [replacement])
     return this
@@ -693,7 +692,7 @@ export default class Pipe extends Viewable {
   _getBrickState (brick, key) {
     const index = this._bricks.indexOf(brick)
     if (index === -1) {
-      throw new Error(`Brick is not part of the pipe and thus has no state.`)
+      throw new Error('Brick is not part of the pipe and thus has no state.')
     }
     return this._brickState[index][key]
   }
@@ -709,7 +708,7 @@ export default class Pipe extends Viewable {
   _setBrickState (brick, key, value) {
     const index = this._bricks.indexOf(brick)
     if (index === -1) {
-      throw new Error(`Brick is not part of the pipe and thus has no state.`)
+      throw new Error('Brick is not part of the pipe and thus has no state.')
     }
     this._brickState[index][key] = value
     return this
@@ -746,7 +745,8 @@ export default class Pipe extends Viewable {
     }
 
     if (!foundBrick) {
-      throw new Error(`Can't find bucket for brick. Brick is not part of Pipe.`)
+      throw new Error(
+        'Can\'t find bucket for brick. Brick is not part of Pipe.')
     }
     return encoderCount
   }
@@ -1056,8 +1056,8 @@ export default class Pipe extends Viewable {
     // Verify items
     if (!Array.isArray(data.items) || data.items.length === 0) {
       throw new Error(
-        `Pipe property 'items' is expected to be of type 'array' ` +
-        `and must not be empty`)
+        'Pipe property \'items\' is expected to be of type \'array\' ' +
+        'and must not be empty')
     }
 
     // Create pipe instance
@@ -1069,7 +1069,7 @@ export default class Pipe extends Viewable {
     if (data.id !== undefined && data.id !== null) {
       if (typeof data.id !== 'number') {
         throw new Error(
-          `Optional pipe property 'id' is expected to be of type 'number'`)
+          'Optional pipe property \'id\' is expected to be of type \'number\'')
       }
       pipe.setId(data.id)
     }
@@ -1078,7 +1078,7 @@ export default class Pipe extends Viewable {
     if (data.url !== undefined && data.url !== null) {
       if (typeof data.url !== 'string') {
         throw new Error(
-          `Optional pipe property 'url' is expected to be of type 'string'`)
+          'Optional pipe property \'url\' is expected to be of type \'string\'')
       }
       pipe.setUrl(data.url)
     }
@@ -1087,7 +1087,8 @@ export default class Pipe extends Viewable {
     if (data.title !== undefined && data.title !== null) {
       if (typeof data.title !== 'string') {
         throw new Error(
-          `Optional pipe property 'title' is expected to be of type 'string'`)
+          'Optional pipe property \'title\' is expected to be of ' +
+          'type \'string\'')
       }
       pipe.setTitle(data.title)
     }
@@ -1096,8 +1097,8 @@ export default class Pipe extends Viewable {
     if (data.description !== undefined && data.description !== null) {
       if (typeof data.description !== 'string') {
         throw new Error(
-          `Optional pipe property 'description' is expected to be of ` +
-          `type 'string'`)
+          'Optional pipe property \'description\' is expected to be of ' +
+          'type \'string\'')
       }
       pipe.setDescription(data.description)
     }
@@ -1109,27 +1110,29 @@ export default class Pipe extends Viewable {
     if (data.content !== undefined && data.content !== null) {
       if (typeof data.content !== 'object') {
         throw new Error(
-          `Optional pipe property 'content' is expected to be of type 'object'`)
+          'Optional pipe property \'content\' is expected to be of ' +
+          'type \'object\'')
       }
 
       if (data.content.data === undefined ||
           typeof data.content.data !== 'string') {
         throw new Error(
-          `Pipe property 'content.data' is expected to be of type 'string'`)
+          'Pipe property \'content.data\' is expected to be of ' +
+          'type \'string\'')
       }
 
       if (data.content.encoding !== undefined &&
           typeof data.content.encoding !== 'string') {
         throw new Error(
-          `Optional pipe property 'content.encoding' is expected to be of ` +
-          `type 'string'`)
+          'Optional pipe property \'content.encoding\' is expected to be of ' +
+          'type \'string\'')
       }
 
       if (data.content.index !== undefined &&
           typeof data.content.index !== 'number') {
         throw new Error(
-          `Optional pipe property 'content.index' is expected to be of ` +
-          `type 'number'`)
+          'Optional pipe property \'content.index\' is expected to be of ' +
+          'type \'number\'')
       }
 
       // Decode content
@@ -1143,8 +1146,9 @@ export default class Pipe extends Viewable {
           break
         default:
           throw new Error(
-            `Optional pipe property 'content.encoding' is set to an unsupported ` +
-            `encoding '${contentEncoding}'; Supported values: text, base64`)
+            'Optional pipe property \'content.encoding\' is set to an ' +
+            `unsupported encoding '${contentEncoding}'; Supported values: ` +
+            'text, base64')
       }
 
       // Inject content into pipe
@@ -1158,8 +1162,8 @@ export default class Pipe extends Viewable {
       } else {
         // Out of range error
         throw new Error(
-          `Optional pipe property 'content.index' is expected to be a number ` +
-          `ranging from 0 to ${pipe.getBucketLength() - 1}`)
+          'Optional pipe property \'content.index\' is expected to be a ' +
+          `number ranging from 0 to ${pipe.getBucketLength() - 1}`)
       }
     }
 

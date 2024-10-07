@@ -1,6 +1,5 @@
-
-import FieldView from '../Field'
-import View from '../../View'
+import FieldView from '../Field.js'
+import View from '../../View.js'
 
 /**
  * Enum field view
@@ -92,7 +91,7 @@ export default class EnumFieldView extends FieldView {
       $field.appendChild($radioGroup)
 
       // Render each option
-      elementLabels.map((label, index) => {
+      elementLabels.forEach((label, index) => {
         const optionId = `${this.getId()}-${index + 1}`
 
         const $radio = View.createElement('input', {

@@ -1,7 +1,6 @@
-
-import CharacterBlockEncoder from './CharacterBlock'
-import InvalidInputError from '../Error/InvalidInput'
-import TextEncoder from '../TextEncoder'
+import CharacterBlockEncoder from './CharacterBlock.js'
+import InvalidInputError from '../Error/InvalidInput.js'
+import TextEncoder from '../TextEncoder.js'
 
 const meta = {
   name: 'unicode-code-points',

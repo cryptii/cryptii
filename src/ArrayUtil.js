@@ -1,5 +1,4 @@
-
-import Random from './Random'
+import Random from './Random.js'
 
 /**
  * Utility class providing static methods for common array operations.
@@ -61,7 +60,7 @@ export default class ArrayUtil {
       let i = -1
       let equal = true
       while (equal && ++i < keys.length) {
-        let comparingKey = keys[i]
+        const comparingKey = keys[i]
         equal = ArrayUtil.isEqual(a[comparingKey], b[comparingKey])
       }
       return equal
@@ -205,7 +204,7 @@ export default class ArrayUtil {
    * @return {number[]|Uint8Array} Returns an array of numbers or an
    * Uint8Array, if dstSize is set to 8.
    */
-  static resizeBitSizedArray(src, srcSize, dstSize, trimEnd = false) {
+  static resizeBitSizedArray (src, srcSize, dstSize, trimEnd = false) {
     const size = Math.ceil(src.length * srcSize / dstSize)
     const dst = dstSize === 8 ? new Uint8Array(size) : new Array(size).fill(0)
 

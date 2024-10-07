@@ -1,7 +1,5 @@
-
-import ArrayUtil from '../ArrayUtil'
-import Chain from '../Chain'
-import Encoder from '../Encoder'
+import ArrayUtil from '../ArrayUtil.js'
+import Encoder from '../Encoder.js'
 
 const meta = {
   name: 'replace',

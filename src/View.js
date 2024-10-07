@@ -1,4 +1,3 @@
-
 const nonStandardAttributes = {
   role: 'role',
   ariaHidden: 'aria-hidden',

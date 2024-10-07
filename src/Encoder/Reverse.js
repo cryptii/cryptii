@@ -1,6 +1,5 @@
-
-import Chain from '../Chain'
-import Encoder from '../Encoder'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
 
 const meta = {
   name: 'reverse',

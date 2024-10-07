@@ -1,4 +1,3 @@
-
 import { describe } from 'mocha'
 
 import ByteEncoder from '../../src/ByteEncoder'

@@ -1,9 +1,8 @@
-
-import Chain from '../Chain'
-import Encoder from '../Encoder'
-import InvalidInputError from '../Error/InvalidInput'
-import MathUtil from '../MathUtil'
-import PolybiusSquareEncoder from './PolybiusSquare'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
+import InvalidInputError from '../Error/InvalidInput.js'
+import MathUtil from '../MathUtil.js'
+import PolybiusSquareEncoder from './PolybiusSquare.js'
 
 const meta = {
   name: 'nihilist-cipher',
@@ -73,7 +72,7 @@ export default class NihilistCipherEncoder extends Encoder {
     // Create internal Polybius square encoder instance
     this._polybiusSquare = new PolybiusSquareEncoder()
     this._polybiusSquare.setSettingValues({
-      alphabet: alphabet,
+      alphabet,
       rows: '12345',
       columns: '12345',
       separator: '',
@@ -180,12 +179,13 @@ export default class NihilistCipherEncoder extends Encoder {
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
-      case 'alphabet':
+      case 'alphabet': {
         // Create mixed alphabet
         const mixedAlphabet = value.extend(alphabet)
         this._polybiusSquare.setSettingValue('alphabet', mixedAlphabet)
         this.getSetting('key').setWhitelistChars(mixedAlphabet)
         break
+      }
     }
   }
 }

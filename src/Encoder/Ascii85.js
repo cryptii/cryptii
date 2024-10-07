@@ -1,7 +1,6 @@
-
-import Encoder from '../Encoder'
-import InvalidInputError from '../Error/InvalidInput'
-import StringUtil from '../StringUtil'
+import Encoder from '../Encoder.js'
+import InvalidInputError from '../Error/InvalidInput.js'
+import StringUtil from '../StringUtil.js'
 
 const meta = {
   name: 'ascii85',

@@ -1,9 +1,8 @@
-
 import assert from 'assert'
 import { it } from 'mocha'
 
-import Chain from '../../src/Chain'
-import ChainUtil from './ChainUtil'
+import Chain from '../../src/Chain.js'
+import ChainUtil from './ChainUtil.js'
 
 /**
  * Utility class for testing Encoder objects.

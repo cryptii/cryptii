@@ -1,8 +1,7 @@
-
-import EnvUtil from '../EnvUtil'
-import Encoder from '../Encoder'
-import md5 from './Hash/md5'
-import nodeCrypto from 'crypto'
+import EnvUtil from '../EnvUtil.js'
+import Encoder from '../Encoder.js'
+import md5 from './Hash/md5.js'
+import nodeCrypto from 'node:crypto'
 
 const meta = {
   name: 'hash',

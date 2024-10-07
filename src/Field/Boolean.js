@@ -1,6 +1,5 @@
-
-import BooleanFieldView from '../View/Field/Boolean'
-import Field from '../Field'
+import BooleanFieldView from '../View/Field/Boolean.js'
+import Field from '../Field.js'
 
 const knownTrueValues = [true, 1, '1', 'true']
 const knownFalseValues = [false, 0, '0', 'false']
@@ -50,7 +49,7 @@ export default class BooleanField extends Field {
         knownFalseValues.indexOf(rawValue) === -1) {
       return {
         key: 'booleanInvalid',
-        message: `The value is not a boolean`
+        message: 'The value is not a boolean'
       }
     }
     return super.validateValue(rawValue)

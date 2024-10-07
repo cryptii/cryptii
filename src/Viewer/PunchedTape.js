@@ -1,8 +1,6 @@
-
-import ArrayUtil from '../ArrayUtil'
-import Chain from '../Chain'
-import PunchedTapeViewerView from '../View/Viewer/PunchedTape'
-import Viewer from '../Viewer'
+import ArrayUtil from '../ArrayUtil.js'
+import PunchedTapeViewerView from '../View/Viewer/PunchedTape.js'
+import Viewer from '../Viewer.js'
 
 const meta = {
   name: 'punched-tape',

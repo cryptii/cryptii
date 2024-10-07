@@ -1,6 +1,5 @@
-
-import Chain from '../Chain'
-import Encoder from '../Encoder'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
 
 const meta = {
   name: 'case-transform',
@@ -114,7 +113,7 @@ export default class CaseTransformEncoder extends Encoder {
     return Chain.wrap(
       content.getChars()
         .map(char => {
-          let lowerChar = char.toLowerCase()
+          const lowerChar = char.toLowerCase()
           return char !== lowerChar ? lowerChar : char.toUpperCase()
         })
         .join('')

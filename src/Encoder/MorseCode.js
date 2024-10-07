@@ -1,7 +1,6 @@
-
-import Encoder from '../Encoder'
-import StringUtil from '../StringUtil'
-import InvalidInputError from '../Error/InvalidInput'
+import Encoder from '../Encoder.js'
+import StringUtil from '../StringUtil.js'
+import InvalidInputError from '../Error/InvalidInput.js'
 
 const meta = {
   name: 'morse-code',
@@ -143,7 +142,7 @@ export default class MorseCodeEncoder extends Encoder {
     let string = content.toLowerCase().getChars()
       // Encode each character
       .map(char => {
-        let code = MorseCodeEncoder.encodeCharacter(
+        const code = MorseCodeEncoder.encodeCharacter(
           char, shortMark, longerMark, spaceMark)
 
         if (code === null) {
@@ -263,7 +262,7 @@ export default class MorseCodeEncoder extends Encoder {
     if (mark.match(/\s/) !== null) {
       return {
         key: 'morseCodeMarkWhitespaceNotAllowed',
-        message: `Whitespaces are not allowed inside morse code marks`
+        message: 'Whitespaces are not allowed inside morse code marks'
       }
     }
 
@@ -275,7 +274,7 @@ export default class MorseCodeEncoder extends Encoder {
     if (equalSettingName !== undefined) {
       return {
         key: 'morseCodeMarkNotUnique',
-        message: `Morse code marks need to be different from each other`
+        message: 'Morse code marks need to be different from each other'
       }
     }
 
@@ -300,7 +299,7 @@ export default class MorseCodeEncoder extends Encoder {
     if (equalSettingName !== undefined) {
       return {
         key: 'morseCodeMarkNotUnique',
-        message: `Timing marks need to be different from each other`
+        message: 'Timing marks need to be different from each other'
       }
     }
 

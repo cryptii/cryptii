@@ -1,8 +1,7 @@
-
-import BrickView from './View/Brick'
-import EventManager from './EventManager'
-import Form from './Form'
-import Viewable from './Viewable'
+import BrickView from './View/Brick.js'
+import EventManager from './EventManager.js'
+import Form from './Form.js'
+import Viewable from './Viewable.js'
 
 /**
  * Abstract element of the pipe
@@ -15,7 +14,7 @@ export default class Brick extends Viewable {
    * @return {object}
    */
   static getMeta () {
-    throw new Error(`Brick static method 'getMeta' has not been overridden.`)
+    throw new Error('Brick static method \'getMeta\' has not been overridden.')
   }
 
   /**
@@ -354,7 +353,7 @@ export default class Brick extends Viewable {
    */
   copy () {
     if (!this.isValid()) {
-      throw new Error(`Invalid bricks can't be copied.`)
+      throw new Error('Invalid bricks can\'t be copied.')
     }
     const copy = new this.constructor()
     copy.setTitle(this.getTitle())
@@ -374,7 +373,7 @@ export default class Brick extends Viewable {
     // Verify name
     if (typeof data.name !== 'string') {
       throw new Error(
-        `Brick property 'name' is expected to be of type 'string'`)
+        'Brick property \'name\' is expected to be of type \'string\'')
     }
 
     const name = data.name
@@ -392,7 +391,9 @@ export default class Brick extends Viewable {
     if (data.title !== undefined) {
       if (typeof data.title !== 'string') {
         throw new Error(
-          `Optional brick property 'title' is expected to be of type 'string'`)
+          'Optional brick property \'title\' is expected to be of ' +
+          'type \'string\''
+        )
       }
       brick.setTitle(data.title)
     }
@@ -401,7 +402,9 @@ export default class Brick extends Viewable {
     if (data.hidden !== undefined) {
       if (typeof data.hidden !== 'boolean') {
         throw new Error(
-          `Optional brick property 'hidden' is expected to be of type 'boolean'`)
+          'Optional brick property \'hidden\' is expected to be of ' +
+          'type \'boolean\''
+        )
       }
       brick.setHidden(data.hidden)
     }
@@ -410,10 +413,14 @@ export default class Brick extends Viewable {
     if (data.reverse !== undefined) {
       if (typeof brick.setReverse !== 'function') {
         throw new Error(
-          `Optional brick property 'reverse' can only be set on encoder bricks`)
+          'Optional brick property \'reverse\' can only be set on ' +
+          'encoder bricks'
+        )
       } else if (typeof data.reverse !== 'boolean') {
         throw new Error(
-          `Optional brick property 'reverse' is expected to be of type 'boolean'`)
+          'Optional brick property \'reverse\' is expected to be of ' +
+          'type \'boolean\''
+        )
       }
       brick.setReverse(data.reverse)
     }

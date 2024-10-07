@@ -1,7 +1,6 @@
+import View from '../View.js'
 
-import View from '../View'
-
-import closeIcon from '../../assets/icons/close.svg'
+const closeIconSvg = '<svg viewBox="0 0 16 16"><polygon points="15 2.41 13.59 1 8 6.59 2.41 1 1 2.41 6.59 8 1 13.59 2.41 15 8 9.41 13.59 15 15 13.59 9.41 8"/></svg>'
 
 /**
  * Modal view
@@ -285,7 +284,7 @@ export default class ModalView extends View {
         this.cancel()
       }
     })
-    $closeButton.innerHTML = closeIcon
+    $closeButton.innerHTML = closeIconSvg
 
     return View.createElement('header', {
       className: 'modal__header'

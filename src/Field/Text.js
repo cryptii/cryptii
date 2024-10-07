@@ -1,8 +1,7 @@
-
-import ArrayUtil from '../ArrayUtil'
-import Chain from '../Chain'
-import Field from '../Field'
-import TextFieldView from '../View/Field/Text'
+import ArrayUtil from '../ArrayUtil.js'
+import Chain from '../Chain.js'
+import Field from '../Field.js'
+import TextFieldView from '../View/Field/Text.js'
 
 /**
  * Text field
@@ -185,7 +184,7 @@ export default class TextField extends Field {
     if (typeof rawValue.toString !== 'function') {
       return {
         key: 'textInvalidString',
-        message: `The value can't be casted to a string`
+        message: 'The value can\'t be casted to a string'
       }
     }
 
@@ -215,14 +214,14 @@ export default class TextField extends Field {
     if (this._uniqueChars && !ArrayUtil.isUnique(value.getCodePoints())) {
       return {
         key: 'textCharactersNotUnique',
-        message: `The value must not contain duplicate characters`
+        message: 'The value must not contain duplicate characters'
       }
     }
 
     // Validate character whitelist and blacklist
     if (this._whitelistChars !== null || this._blacklistChars !== null) {
-      let whitelist = this._whitelistChars
-      let blacklist = this._blacklistChars
+      const whitelist = this._whitelistChars
+      const blacklist = this._blacklistChars
       let invalidChars = []
       let c
 
@@ -239,7 +238,7 @@ export default class TextField extends Field {
         return {
           key: 'textForbiddenCharacter',
           message:
-            `The value contains forbidden characters: ` +
+            'The value contains forbidden characters: ' +
             `'${invalidChars.join('')}'`
         }
       }

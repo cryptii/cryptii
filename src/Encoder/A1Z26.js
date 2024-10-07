@@ -1,5 +1,4 @@
-
-import CharacterBlockEncoder from './CharacterBlock'
+import CharacterBlockEncoder from './CharacterBlock.js'
 
 const meta = {
   name: 'a1z26',

@@ -1,7 +1,6 @@
-
-import Encoder from '../Encoder'
-import InvalidInputError from '../Error/InvalidInput'
-import MathUtil from '../MathUtil'
+import Encoder from '../Encoder.js'
+import InvalidInputError from '../Error/InvalidInput.js'
+import MathUtil from '../MathUtil.js'
 
 const meta = {
   name: 'bootstring',
@@ -185,12 +184,12 @@ export default class BootstringEncoder extends Encoder {
       } else if (input[i] < n) {
         throw new InvalidInputError(
           `Unexpected code point at index ${i}, consider changing initial n ` +
-          `to include this code point`)
+          'to include this code point')
       }
     }
 
     let h = output.length
-    let b = output.length
+    const b = output.length
     if (b > 0) {
       output.push(delimiter)
     }
@@ -434,33 +433,39 @@ export default class BootstringEncoder extends Encoder {
    */
   settingValueDidChange (setting, value) {
     switch (setting.getName()) {
-      case 'basicRangeStart':
+      case 'basicRangeStart': {
         this.getSetting('basicRangeEnd').setMin(setting.getValue() + minBase)
         this.getSetting('digitMapping').revalidateValue()
         this.getSetting('delimiter').revalidateValue()
         break
-      case 'basicRangeEnd':
+      }
+      case 'basicRangeEnd': {
         this.getSetting('basicRangeStart').setMax(setting.getValue() - minBase)
         this.getSetting('digitMapping').revalidateValue()
         this.getSetting('delimiter').revalidateValue()
         break
-      case 'digitMapping':
+      }
+      case 'digitMapping': {
         // The base depends on the digit mapping
         const base = setting.getValue().getLength()
         this.getSetting('tmax').setMax(base - 1)
         this.getSetting('delimiter').revalidateValue()
         this.getSetting('initialBias').revalidateValue()
         break
-      case 'tmin':
+      }
+      case 'tmin': {
         this.getSetting('initialBias').revalidateValue()
         break
-      case 'tmax':
+      }
+      case 'tmax': {
         this.getSetting('tmin').setMax(setting.getValue())
         break
-      case 'caseSensitivity':
+      }
+      case 'caseSensitivity': {
         this.getSetting('digitMapping').setCaseSensitivity(value)
         this.getSetting('delimiter').setCaseSensitivity(value)
         break
+      }
     }
   }
 
@@ -487,7 +492,7 @@ export default class BootstringEncoder extends Encoder {
         key: 'bootstringDigitMappingInvalid',
         message:
           `Character at index ${invalidIndex} needs to be part of the given ` +
-          `basic code point range`
+          'basic code point range'
       }
     }
 
@@ -518,8 +523,8 @@ export default class BootstringEncoder extends Encoder {
       return {
         key: 'bootstringDelimiterInvalid',
         message:
-          `The value must be part of the basic code point range while ` +
-          `not having a digit mapped to it`
+          'The value must be part of the basic code point range while ' +
+          'not having a digit mapped to it'
       }
     }
 

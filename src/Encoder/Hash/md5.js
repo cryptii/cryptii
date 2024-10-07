@@ -1,4 +1,3 @@
-
 // magic initialization constants
 const IA = 0x67452301
 const IB = 0xefcdab89
@@ -35,7 +34,7 @@ export default function md5 (bytes) {
   bytes = Array.from(bytes)
 
   // track number of bytes before preprocessing
-  let b = bytes.length
+  const b = bytes.length
 
   // RFC 1321 3.1: Step 1. Append Padding Bits
 
@@ -66,8 +65,8 @@ export default function md5 (bytes) {
   }
 
   // let m denote the words of the resulting message
-  let n = bytes.length / 4
-  let m = new Array(n)
+  const n = bytes.length / 4
+  const m = new Array(n)
 
   for (let i = 0; i < n; i++) {
     // each consecutive group of four bytes is interpreted as a word with the
@@ -82,7 +81,7 @@ export default function md5 (bytes) {
   // RFC 1321 3.3: Step 3. Initialize MD Buffer
 
   // load magic initialization constants A, B, C & D
-  let context = [IA, IB, IC, ID]
+  const context = [IA, IB, IC, ID]
 
   // RFC 1321 3.4 Step 4. Process Message in 16-Word Blocks
   for (let i = 0; i < n; i += 16) {
@@ -93,7 +92,7 @@ export default function md5 (bytes) {
 
   // the message digest produced as output is A, B, C, D. That is, we begin with
   // the low-order byte of A, and end with the high-order byte of D.
-  let result = new Array(16)
+  const result = new Array(16)
   for (let i = 0, j = 0; j < 16; i++, j += 4) {
     result[j] = (context[i] & 0xff)
     result[j + 1] = ((context[i] >> 8) & 0xff)

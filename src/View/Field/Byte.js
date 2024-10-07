@@ -1,8 +1,7 @@
-
-import ByteEncoder from '../../ByteEncoder'
-import FieldView from '../Field'
-import StringUtil from '../../StringUtil'
-import View from '../../View'
+import ByteEncoder from '../../ByteEncoder.js'
+import FieldView from '../Field.js'
+import StringUtil from '../../StringUtil.js'
+import View from '../../View.js'
 
 /**
  * Byte field view
@@ -71,7 +70,7 @@ export default class ByteFieldView extends FieldView {
 
     // Verify hexadecimal format
     if (string.match(/^[0-9a-f]+$/gi) === null) {
-      return this.setMessage(`The value contains non-hexadecimal characters`)
+      return this.setMessage('The value contains non-hexadecimal characters')
     }
 
     // Clear message

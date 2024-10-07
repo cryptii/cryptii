@@ -1,6 +1,5 @@
-
-import PolybiusSquareEncoder from './PolybiusSquare'
-import Encoder from '../Encoder'
+import PolybiusSquareEncoder from './PolybiusSquare.js'
+import Encoder from '../Encoder.js'
 
 const meta = {
   name: 'bifid-cipher',
@@ -44,7 +43,7 @@ export default class BifidCipherEncoder extends Encoder {
     // Create internal Polybius square encoder instance
     this._polybiusSquare = new PolybiusSquareEncoder()
     this._polybiusSquare.setSettingValues({
-      alphabet: alphabet,
+      alphabet,
       rows: '12345',
       columns: '12345',
       separator: '',

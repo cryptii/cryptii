@@ -1,5 +1,4 @@
-
-import InvalidInputError from './InvalidInput'
+import InvalidInputError from './InvalidInput.js'
 
 /**
  * Errors thrown due to malformed text encoded bytes.

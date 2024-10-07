@@ -1,9 +1,8 @@
-
-import ByteEncoder from '../ByteEncoder'
-import Chain from '../Chain'
-import StringUtil from '../StringUtil'
-import TextViewerView from '../View/Viewer/Text'
-import Viewer from '../Viewer'
+import ByteEncoder from '../ByteEncoder.js'
+import Chain from '../Chain.js'
+import StringUtil from '../StringUtil.js'
+import TextViewerView from '../View/Viewer/Text.js'
+import Viewer from '../Viewer.js'
 
 const meta = {
   name: 'bytes',

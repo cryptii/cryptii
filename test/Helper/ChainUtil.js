@@ -1,7 +1,7 @@
-
 import assert from 'assert'
-import ByteEncoder from '../../src/ByteEncoder'
-import Chain from '../../src/Chain'
+
+import ByteEncoder from '../../src/ByteEncoder.js'
+import Chain from '../../src/Chain.js'
 
 const previewLength = 32
 

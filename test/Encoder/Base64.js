@@ -1,4 +1,3 @@
-
 import { describe } from 'mocha'
 
 import Base64Encoder from '../../src/Encoder/Base64'

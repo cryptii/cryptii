@@ -1,8 +1,7 @@
-
-import ArrayUtil from '../ArrayUtil'
-import Encoder from '../Encoder'
-import MathUtil from '../MathUtil'
-import StringUtil from '../StringUtil'
+import ArrayUtil from '../ArrayUtil.js'
+import Encoder from '../Encoder.js'
+import MathUtil from '../MathUtil.js'
+import StringUtil from '../StringUtil.js'
 
 const meta = {
   name: 'enigma',
@@ -120,15 +119,24 @@ const models = [
     reflectorRotors: ['UKW-T'],
     reflectorThumbwheel: true,
     slots: [
-      { rotors: [
-        'I-T', 'II-T', 'III-T', 'IV-T',
-        'V-T', 'VI-T', 'VII-T', 'VIII-T'] },
-      { rotors: [
-        'I-T', 'II-T', 'III-T', 'IV-T',
-        'V-T', 'VI-T', 'VII-T', 'VIII-T'] },
-      { rotors: [
-        'I-T', 'II-T', 'III-T', 'IV-T',
-        'V-T', 'VI-T', 'VII-T', 'VIII-T'] }
+      {
+        rotors: [
+          'I-T', 'II-T', 'III-T', 'IV-T',
+          'V-T', 'VI-T', 'VII-T', 'VIII-T'
+        ]
+      },
+      {
+        rotors: [
+          'I-T', 'II-T', 'III-T', 'IV-T',
+          'V-T', 'VI-T', 'VII-T', 'VIII-T'
+        ]
+      },
+      {
+        rotors: [
+          'I-T', 'II-T', 'III-T', 'IV-T',
+          'V-T', 'VI-T', 'VII-T', 'VIII-T'
+        ]
+      }
     ]
   },
   {
@@ -398,8 +406,8 @@ export default class EnigmaEncoder extends Encoder {
     })
 
     this.addSetting({
-      name: `positionReflector`,
-      label: `Position`,
+      name: 'positionReflector',
+      label: 'Position',
       type: 'number',
       value: 1,
       integer: true,
@@ -410,8 +418,8 @@ export default class EnigmaEncoder extends Encoder {
     })
 
     this.addSetting({
-      name: `ringReflector`,
-      label: `Ring`,
+      name: 'ringReflector',
+      label: 'Ring',
       type: 'number',
       value: 1,
       integer: true,
@@ -436,7 +444,7 @@ export default class EnigmaEncoder extends Encoder {
 
       this.addSetting({
         name: `position${i + 1}`,
-        label: `Position`,
+        label: 'Position',
         type: 'number',
         value: 1,
         integer: true,
@@ -448,7 +456,7 @@ export default class EnigmaEncoder extends Encoder {
 
       this.addSetting({
         name: `ring${i + 1}`,
-        label: `Ring`,
+        label: 'Ring',
         type: 'number',
         value: 1,
         integer: true,
@@ -656,7 +664,7 @@ export default class EnigmaEncoder extends Encoder {
         for (i = 0; i < slotCount; i++) {
           if (
             slotRotating[i] &&
-            (reflectorRotating && i === 0 || slotRotating[i - 1]) &&
+            ((reflectorRotating && i === 0) || slotRotating[i - 1]) &&
             EnigmaEncoder.rotorAtTurnover(rotors[i], positions[i])
           ) {
             // Step this rotor
@@ -814,8 +822,8 @@ export default class EnigmaEncoder extends Encoder {
       return {
         key: 'enigmaPlugboardInvalidFormat',
         message:
-          `Invalid plugboard format: pairs of letters to be swapped ` +
-          `expected (e.g. 'ab cd ef')`
+          'Invalid plugboard format: pairs of letters to be swapped ' +
+          'expected (e.g. \'ab cd ef\')'
       }
     }
 
@@ -823,7 +831,7 @@ export default class EnigmaEncoder extends Encoder {
     if (!ArrayUtil.isUnique(plugboard.replace(/\s/g, '').split(''))) {
       return {
         key: 'enigmaPlugboardPairsNotUnique',
-        message: `Pairs of letters to be swapped need to be unique`
+        message: 'Pairs of letters to be swapped need to be unique'
       }
     }
 

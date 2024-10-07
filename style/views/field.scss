@@ -1,4 +1,6 @@
 
+@use 'sass:math';
+
 .field {
   $block: &;
   display: flex;
@@ -72,7 +74,7 @@
   // Width modifier
   @for $cols from 1 through 11 {
     &[data-width="#{$cols}"] {
-      width: 100% * ($cols / 12);
+      width: 100% * math.div($cols, 12);
 
       @if $cols < 8 {
         // Remove label border for small field cells

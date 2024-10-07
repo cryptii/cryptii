@@ -1,8 +1,7 @@
 # cryptii
 
-[![Build Status](https://travis-ci.org/cryptii/cryptii.svg?branch=dev)](https://travis-ci.org/cryptii/cryptii)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 
 Web app and framework offering modular conversion, encoding and encryption. Translations are done client side without any server interaction — [cryptii.com](https://cryptii.com)
 
@@ -13,9 +12,9 @@ Web app and framework offering modular conversion, encoding and encryption. Tran
 - Clone the repository: `git clone git@github.com:cryptii/cryptii.git`
 - Build project locally:
   - Ensure you have Node.js of version specified in `.nvmrc` installed.
-  - Install dependencies: `npm ci`
+  - Install dependencies: `npm install`
   - Run build tasks: `npm run build`
-  - Run build tasks on file change: `npm run watch`
+  - Run build tasks on file change: `npm run dev`
 - [Contribute to the project](CONTRIBUTING.md) or [report an issue](https://github.com/cryptii/cryptii/issues/new/choose)
 
 ## Concept

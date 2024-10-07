@@ -1,7 +1,6 @@
-
-import Encoder from '../Encoder'
-import ArrayUtil from '../ArrayUtil'
-import TextEncoder from '../TextEncoder'
+import Encoder from '../Encoder.js'
+import ArrayUtil from '../ArrayUtil.js'
+import TextEncoder from '../TextEncoder.js'
 
 const meta = {
   name: 'baudot-code',
@@ -40,8 +39,16 @@ const variants = [
     label: 'Original Baudot - Continental European',
     extends: 'ita1',
     overrides: {
-      3: 'É',    17: 'T',   35: '&',   38: 'º',   43: 'h',   46: 'f',
-      49: '.',   52: ';',   53: '!',   62: '№'
+      3: 'É',
+      17: 'T',
+      35: '&',
+      38: 'º',
+      43: 'h',
+      46: 'f',
+      49: '.',
+      52: ';',
+      53: '!',
+      62: '№'
     }
   },
   {
@@ -49,8 +56,18 @@ const variants = [
     label: 'Original Baudot - Domestic UK',
     extends: 'ita1',
     overrides: {
-      3: '/',    18: '-',   35: '⅟',   38: '³',   43: '¹',   46: '⁵',
-      49: '.',   50: '⁹',   52: '⁷',   53: '²',   62: '£',   63: '+'
+      3: '/',
+      18: '-',
+      35: '⅟',
+      38: '³',
+      43: '¹',
+      46: '⁵',
+      49: '.',
+      50: '⁹',
+      52: '⁷',
+      53: '²',
+      62: '£',
+      63: '+'
     }
   },
   {
@@ -82,10 +99,30 @@ const variants = [
     label: 'Baudot-Murray - Murray Code',
     extends: 'ita2',
     overrides: {
-      0: ' ',    2: null,   4: 15,     8: '\n',   31: '*',   32: ' ',
-      34: null,  35: null,  36: 'LS',  40: '\n',  41: '²',   43: '⁷',
-      44: '-',   45: '⅟',   46: '(',   47: '⁹',   49: '.',   50: '/',
-      52: '⁵',   58: '³',   60: ',',   61: '£',   62: ')',   63: '*'
+      0: ' ',
+      2: null,
+      4: 15,
+      8: '\n',
+      31: '*',
+      32: ' ',
+      34: null,
+      35: null,
+      36: 'LS',
+      40: '\n',
+      41: '²',
+      43: '⁷',
+      44: '-',
+      45: '⅟',
+      46: '(',
+      47: '⁹',
+      49: '.',
+      50: '/',
+      52: '⁵',
+      58: '³',
+      60: ',',
+      61: '£',
+      62: ')',
+      63: '*'
     }
   }
   /* eslint-enable no-multi-spaces */
@@ -138,7 +175,7 @@ export default class CaesarCipherEncoder extends Encoder {
     const codePoints = content.getCodePoints()
     const m = codePoints.length
 
-    let tape = []
+    const tape = []
     let index, codePoint
     let figureSet = false
 
@@ -190,7 +227,7 @@ export default class CaesarCipherEncoder extends Encoder {
 
     // Compose 5-bit tape from byte array
     const tape = ArrayUtil.resizeBitSizedArray(content.getBytes(), 8, 5, true)
-    let result = new Array(tape.length)
+    const result = new Array(tape.length)
 
     // Go through tape and map each character to Unicode code points
     let char, codePoint
@@ -248,14 +285,14 @@ export default class CaesarCipherEncoder extends Encoder {
 
     // Apply overrides
     if (spec.overrides) {
-      for (let i in spec.overrides) {
+      for (const i in spec.overrides) {
         characterSet[i] = spec.overrides[i]
       }
     }
 
     // Map string chars to code points
     for (let i = 0; i < characterSet.length; i++) {
-      let entry = characterSet[i]
+      const entry = characterSet[i]
       if (entry !== 'FS' && entry !== 'LS' && entry !== null) {
         characterSet[i] =
           typeof entry === 'string'

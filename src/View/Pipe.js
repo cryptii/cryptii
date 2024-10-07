@@ -1,7 +1,6 @@
-
-import BrickView from './Brick'
-import Encoder from '../Encoder'
-import View from '../View'
+import BrickView from './Brick.js'
+import Encoder from '../Encoder.js'
+import View from '../View.js'
 
 // scroll handle speed (px / second)
 const scrollHandleSpeed = 1000
@@ -236,14 +235,14 @@ export default class PipeView extends View {
    */
   _createCollapsedPart (bricks) {
     return View.createElement('button', {
-      className: `pipe__part-collapsed`,
+      className: 'pipe__part-collapsed',
       onClick: evt => {
         this.getModel().viewHiddenBrickGroupDidClick(this, bricks)
         evt.preventDefault()
       }
     }, bricks.map(() =>
       View.createElement('div', {
-        className: `pipe__part-collapsed-fold`
+        className: 'pipe__part-collapsed-fold'
       })
     ))
   }

@@ -1,12 +1,11 @@
-
-import Factory from '../Factory'
+import Factory from '../Factory.js'
 
 // Package fields
-import BooleanField from '../Field/Boolean'
-import ByteField from '../Field/Byte'
-import EnumField from '../Field/Enum'
-import NumberField from '../Field/Number'
-import TextField from '../Field/Text'
+import BooleanField from '../Field/Boolean.js'
+import ByteField from '../Field/Byte.js'
+import EnumField from '../Field/Enum.js'
+import NumberField from '../Field/Number.js'
+import TextField from '../Field/Text.js'
 
 // Singleton instance
 let instance = null
@@ -31,7 +30,7 @@ export default class FieldFactory extends Factory {
     }
 
     // Register each field
-    for (let name in invokables) {
+    for (const name in invokables) {
       this.register(name, invokables[name])
     }
   }
@@ -53,12 +52,12 @@ export default class FieldFactory extends Factory {
   create (spec) {
     // Validate name
     if (!spec.name) {
-      throw new Error(`Field specification requires a 'name' field.`)
+      throw new Error('Field specification requires a \'name\' field.')
     }
 
     // Validate type
     if (!spec.type) {
-      throw new Error(`Field specification requires a 'type' field.`)
+      throw new Error('Field specification requires a \'type\' field.')
     } else if (!this.exists(spec.type)) {
       throw new Error(`Unknown Field type '${spec.type}'.`)
     }

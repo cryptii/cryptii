@@ -1,16 +1,15 @@
+import FormView from './Form.js'
+import View from '../View.js'
 
-import FormView from './Form'
-import View from '../View'
-
-import arrowIcon from '../../assets/icons/arrow-left.svg'
-import errorIcon from '../../assets/icons/error.svg'
-import menuIcon from '../../assets/icons/menu.svg'
-import caretIcon from '../../assets/icons/caret.svg'
+const arrowLeftSvg = '<svg viewBox="0 0 16 16"><polygon points="16 7 3.83 7 7.41 3.41 6 2 0 8 6 14 7.41 12.59 3.83 9 16 9"/></svg>'
+const caretIconSvg = '<svg viewBox="0 0 16 16"><polygon points="3 6 8 11 13 6"/></svg>'
+const errorIconSvg = '<svg viewBox="0 0 16 16"><polygon points="15 2.41 13.59 1 8 6.59 2.41 1 1 2.41 6.59 8 1 13.59 2.41 15 8 9.41 13.59 15 15 13.59 9.41 8"/></svg>'
+const menuIconSvg = '<svg viewBox="0 0 16 16" fill="#000" title="Menu"><circle cx="8" cy="2" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="14" r="1.5"/></svg>'
 
 const statusIcons = {
-  forward: arrowIcon,
-  backward: arrowIcon,
-  error: errorIcon
+  forward: arrowLeftSvg,
+  backward: arrowLeftSvg,
+  error: errorIconSvg
 }
 
 /**
@@ -72,12 +71,12 @@ export default class BrickView extends View {
         this.toggleMenu()
       }
     })
-    $menuButton.innerHTML = menuIcon
+    $menuButton.innerHTML = menuIconSvg
 
     const $caretIcon = View.createElement('div', {
       className: 'brick__title-caret'
     })
-    $caretIcon.innerHTML = caretIcon
+    $caretIcon.innerHTML = caretIconSvg
 
     return View.createElement('header', {
       className: 'brick__header'
@@ -273,7 +272,7 @@ export default class BrickView extends View {
 
       // Animate translation flash
       if (status === 'forward' || status === 'backward') {
-        this._$status.classList.add(`brick__status--flash`)
+        this._$status.classList.add('brick__status--flash')
 
         // Force paint to trigger flash animation
         this._$status.getBoundingClientRect()

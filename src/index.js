@@ -1,6 +1,6 @@
-
-import App from './App'
-import EnvUtil from './EnvUtil'
+import '../style/index.scss'
+import App from './App.js'
+import EnvUtil from './EnvUtil.js'
 
 export { App }
 export { EnvUtil }
@@ -33,7 +33,7 @@ export { default as Viewer } from './Viewer'
 
 // Check if we are running in the browser and if the init flag is set
 if (EnvUtil.isBrowser() &&
-    document.querySelector('script[data-cryptii-init]') !== null) {
+    document.querySelector('script[data-cryptii-config]') !== null) {
   // Define app initialization in the browser
   const init = () => {
     // Read optional pipe content

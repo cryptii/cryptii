@@ -1,8 +1,7 @@
-
 import assert from 'assert'
 import { describe, it } from 'mocha'
 
-import StringUtil from '../src/StringUtil'
+import StringUtil from '../src/StringUtil.js'
 
 /** @test {StringUtil} */
 describe('StringUtil', () => {

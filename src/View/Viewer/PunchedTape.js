@@ -1,6 +1,4 @@
-
-import ViewerView from '../Viewer'
-import View from '../../View'
+import ViewerView from '../Viewer.js'
 
 // Tape layout variables
 const lineSpacing = 16
@@ -171,7 +169,7 @@ export default class PunchedTapeViewerView extends ViewerView {
 
     // Render tape line rects
     const tapesPath = []
-    let tapeX, tapeY, tapeLineWidth
+    let y, tapeX, tapeY, tapeLineWidth
 
     for (y = 0; y < tapeLines; y++) {
       // Layout tape

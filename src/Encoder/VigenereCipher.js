@@ -1,7 +1,6 @@
-
-import Chain from '../Chain'
-import Encoder from '../Encoder'
-import MathUtil from '../MathUtil'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
+import MathUtil from '../MathUtil.js'
 
 const meta = {
   name: 'vigenere-cipher',

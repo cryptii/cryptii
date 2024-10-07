@@ -1,9 +1,8 @@
-
 import assert from 'assert'
 import { describe, it } from 'mocha'
 
-import Field from '../src/Field'
-import Chain from '../src/Chain'
+import Field from '../src/Field.js'
+import Chain from '../src/Chain.js'
 
 /** @test {Field} */
 describe('Field', () => {

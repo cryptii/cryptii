@@ -1,5 +1,4 @@
-
-import TextEncodingError from './Error/TextEncoding'
+import TextEncodingError from './Error/TextEncoding.js'
 
 /**
  * Utility class providing static methods for string, Unicode code point
@@ -210,7 +209,7 @@ export default class TextEncoder {
         // Continuation byte identified
         if (--remainingBytes < 0) {
           throw new TextEncodingError(
-            `Invalid UTF-8 encoded text: ` +
+            'Invalid UTF-8 encoded text: ' +
             `Unexpected continuation byte at 0x${i.toString(16)}`, i)
         }
 
@@ -224,7 +223,7 @@ export default class TextEncoder {
       } else if (remainingBytes > 0) {
         // this must be a continuation byte
         throw new TextEncodingError(
-          `Invalid UTF-8 encoded text: ` +
+          'Invalid UTF-8 encoded text: ' +
           `Continuation byte expected at 0x${i.toString(16)}`, i)
       } else if (byte <= 0b01111111) {
         // 1 byte code point
@@ -243,14 +242,14 @@ export default class TextEncoder {
         remainingBytes = 3
       } else {
         throw new TextEncodingError(
-          `Invalid UTF-8 encoded text: ` +
+          'Invalid UTF-8 encoded text: ' +
           `Invalid byte ${byte} at 0x${i.toString(16)}`, i)
       }
     }
 
     if (remainingBytes !== 0) {
       throw new TextEncodingError(
-        `Invalid UTF-8 encoded text: Unexpected end of bytes`)
+        'Invalid UTF-8 encoded text: Unexpected end of bytes')
     }
 
     // Slice the fixed size array to the portion actually in use

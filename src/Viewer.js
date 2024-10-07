@@ -1,6 +1,5 @@
-
-import Brick from './Brick'
-import InvalidInputError from './Error/InvalidInput'
+import Brick from './Brick.js'
+import InvalidInputError from './Error/InvalidInput.js'
 
 /**
  * Abstract brick for viewing and editing content.
@@ -24,10 +23,10 @@ export default class Viewer extends Brick {
   async view (content) {
     try {
       // check for invalid settings
-      let invalidSettings = this.getSettingsForm().getInvalidFields()
+      const invalidSettings = this.getSettingsForm().getInvalidFields()
       if (invalidSettings.length > 0) {
         throw new InvalidInputError(
-          `Can't view content with invalid settings: ` +
+          'Can\'t view content with invalid settings: ' +
           invalidSettings.map(setting => setting.getLabel()).join(', '))
       }
 

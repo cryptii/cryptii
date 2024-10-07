@@ -1,6 +1,5 @@
-
-import Chain from '../Chain'
-import Encoder from '../Encoder'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
 
 // Modes
 const CharacterToBlockMode = 0
@@ -76,19 +75,20 @@ export default class CharacterBlockEncoder extends Encoder {
    */
   performEncode (content) {
     switch (this._mode) {
-      case CharacterToBlockMode:
+      case CharacterToBlockMode: {
         const blocks = content.getCodePoints()
           .map((codePoint, index) =>
             this.performCharEncodeToBlock(codePoint, index, content))
           .filter(block => block !== null)
           .map(Chain.wrap)
         return Chain.join(blocks, this.getSeparator())
-
-      case BlockToCharacterMode:
+      }
+      case BlockToCharacterMode: {
         return content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockEncodeToChar(block, index, blocks, content))
           .filter(codePoint => codePoint !== null)
+      }
     }
   }
 
@@ -100,19 +100,20 @@ export default class CharacterBlockEncoder extends Encoder {
    */
   performDecode (content) {
     switch (this._mode) {
-      case CharacterToBlockMode:
+      case CharacterToBlockMode: {
         return content.split(this.getSeparator())
           .map((block, index, blocks) =>
             this.performBlockDecodeToChar(block, index, blocks, content))
           .filter(codePoint => codePoint !== null)
-
-      case BlockToCharacterMode:
+      }
+      case BlockToCharacterMode: {
         const blocks = content.getCodePoints()
           .map((codePoint, index) =>
             this.performCharDecodeToBlock(codePoint, index, content))
           .filter(block => block !== null)
           .map(Chain.wrap)
         return Chain.join(blocks, this.getSeparator())
+      }
     }
   }
 

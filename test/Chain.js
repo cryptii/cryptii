@@ -1,8 +1,7 @@
-
 import assert from 'assert'
 import { describe, it } from 'mocha'
 
-import Chain from '../src/Chain'
+import Chain from '../src/Chain.js'
 
 const exampleEmoji = {
   string: '🦊🚀',

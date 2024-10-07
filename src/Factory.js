@@ -1,4 +1,3 @@
-
 /**
  * Abstract factory implementation resolving registered identifiers to
  * invokables to create instances.
@@ -44,7 +43,7 @@ export default class Factory {
   register (identifier, invokable) {
     if (this.exists(identifier)) {
       throw new Error(
-        `Invokable can't be registered. ` +
+        'Invokable can\'t be registered. ' +
         `Identifier ${identifier} already exists.`)
     }
     // register invokable

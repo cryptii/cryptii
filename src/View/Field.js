@@ -1,6 +1,5 @@
-
-import StringUtil from '../StringUtil'
-import View from '../View'
+import StringUtil from '../StringUtil.js'
+import View from '../View.js'
 
 /**
  * Field view

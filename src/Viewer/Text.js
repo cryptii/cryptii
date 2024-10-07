@@ -1,7 +1,6 @@
-
-import Chain from '../Chain'
-import TextViewerView from '../View/Viewer/Text'
-import Viewer from '../Viewer'
+import Chain from '../Chain.js'
+import TextViewerView from '../View/Viewer/Text.js'
+import Viewer from '../Viewer.js'
 
 const meta = {
   name: 'text',

@@ -1,19 +1,16 @@
-
-/* globals CRYPTII_VERSION */
-
-import AppView from './View/App'
-import BrickFactory from './Factory/Brick'
-import EnvUtil from './EnvUtil'
-import Pipe from './Pipe'
-import Service from './Service'
-import Viewable from './Viewable'
+import AppView from './View/App.js'
+import BrickFactory from './Factory/Brick.js'
+import EnvUtil from './EnvUtil.js'
+import Pipe from './Pipe.js'
+import Service from './Service.js'
+import Viewable from './Viewable.js'
 
 /**
  * Config defaults
  * @type {object}
  */
 const defaultConfig = {
-  version: CRYPTII_VERSION,
+  version: 'unknown',
   scope: '/',
   serviceEndpoint: 'https://cryptii.com/api',
   serviceWorkerUrl: null
@@ -54,9 +51,6 @@ export default class App extends Viewable {
    * @return {App} Fluent interface
    */
   run (pipeData = null) {
-    // Place browser attribute
-    EnvUtil.placeBrowserAttribute()
-
     // Create and configure pipe instance
     if (pipeData !== null) {
       this._pipe = Pipe.extract(pipeData, BrickFactory.getInstance())
@@ -92,7 +86,7 @@ export default class App extends Viewable {
       document.addEventListener('keydown', evt => {
         if (evt.ctrlKey && evt.key === 'i') {
           evt.preventDefault()
-          alert(this.debug())
+          window.alert(this.debug())
         }
       })
     }
@@ -108,8 +102,7 @@ export default class App extends Viewable {
   debug () {
     return JSON.stringify({
       version: this._config.version,
-      env: EnvUtil.identify(),
-      pipe: this.getPipe().serialize(),
+      pipe: this.getPipe().serialize()
     })
   }
 

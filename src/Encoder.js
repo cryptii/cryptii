@@ -1,10 +1,9 @@
-
-import Brick from './Brick'
-import Chain from './Chain'
-import EncoderView from './View/Encoder'
-import EventManager from './EventManager'
-import InvalidInputError from './Error/InvalidInput'
-import MathUtil from './MathUtil'
+import Brick from './Brick.js'
+import Chain from './Chain.js'
+import EncoderView from './View/Encoder.js'
+import EventManager from './EventManager.js'
+import InvalidInputError from './Error/InvalidInput.js'
+import MathUtil from './MathUtil.js'
 
 /**
  * Abstract Brick for encoding and decoding content.

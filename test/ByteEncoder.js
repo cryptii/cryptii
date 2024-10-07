@@ -1,8 +1,7 @@
-
 import assert from 'assert'
 import { describe, it } from 'mocha'
 
-import ByteEncoder from '../src/ByteEncoder'
+import ByteEncoder from '../src/ByteEncoder.js'
 
 const hexTests = [
   {

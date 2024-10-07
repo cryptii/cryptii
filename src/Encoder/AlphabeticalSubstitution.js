@@ -1,7 +1,6 @@
-
-import Chain from '../Chain'
-import Encoder from '../Encoder'
-import ArrayUtil from '../ArrayUtil'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
+import ArrayUtil from '../ArrayUtil.js'
 
 const meta = {
   name: 'alphabetical-substitution',
@@ -176,7 +175,7 @@ export default class AlphabeticalSubstitutionEncoder extends Encoder {
     if (rawValue.getLength() > plaintextAlphabet.getLength()) {
       return {
         key: 'alphabetContainsUnusedCharacters',
-        message: `The ciphertext alphabet is longer than the plaintext alphabet`
+        message: 'The ciphertext alphabet is longer than the plaintext alphabet'
       }
     }
 

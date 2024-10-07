@@ -1,9 +1,8 @@
-
-import Chain from './Chain'
-import FieldView from './View/Field'
-import Random from './Random'
-import StringUtil from './StringUtil'
-import Viewable from './Viewable'
+import Chain from './Chain.js'
+import FieldView from './View/Field.js'
+import Random from './Random.js'
+import StringUtil from './StringUtil.js'
+import Viewable from './Viewable.js'
 
 /**
  * Abstract field
@@ -357,7 +356,7 @@ export default class Field extends Viewable {
    */
   serializeValue () {
     if (!this.isValid()) {
-      throw new Error(`Invalid field values can't be serialized.`)
+      throw new Error('Invalid field values can\'t be serialized.')
     }
     const value = this.getValue()
     if (
@@ -367,8 +366,8 @@ export default class Field extends Viewable {
       value !== null
     ) {
       throw new Error(
-        `Field value serialization is not possible. Generic fields can ` +
-        `only serialize boolean, number, string or null values safely. ` +
+        'Field value serialization is not possible. Generic fields can ' +
+        'only serialize boolean, number, string or null values safely. ' +
         `Received value type '${typeof value}'.`)
     }
     return value

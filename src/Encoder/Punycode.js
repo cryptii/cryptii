@@ -1,8 +1,7 @@
-
-import BootstringEncoder from './Bootstring'
-import Chain from '../Chain'
-import Encoder from '../Encoder'
-import InvalidInputError from '../Error/InvalidInput'
+import BootstringEncoder from './Bootstring.js'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
+import InvalidInputError from '../Error/InvalidInput.js'
 
 const meta = {
   name: 'punycode',

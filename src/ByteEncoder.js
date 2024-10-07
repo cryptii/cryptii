@@ -1,6 +1,5 @@
-
-import StringUtil from './StringUtil'
-import ByteEncodingError from './Error/ByteEncoding'
+import StringUtil from './StringUtil.js'
+import ByteEncodingError from './Error/ByteEncoding.js'
 
 /**
  * Default Base64 options
@@ -186,7 +185,6 @@ export default class ByteEncoder {
     const {
       alphabet,
       padding,
-      paddingOptional,
       foreignCharacters,
       maxLineLength,
       lineSeparator
@@ -226,8 +224,8 @@ export default class ByteEncoder {
     const paddingSize = (4 - octets.length % 4) % 4
     if (paddingSize === 3) {
       throw new ByteEncodingError(
-        `A single remaining encoded character in the last quadruple or a ` +
-        `padding of 3 characters is not allowed`)
+        'A single remaining encoded character in the last quadruple or a ' +
+        'padding of 3 characters is not allowed')
     }
 
     // Fill up octets

@@ -1,6 +1,5 @@
-
-import ViewerView from '../Viewer'
-import View from '../../View'
+import ViewerView from '../Viewer.js'
+import View from '../../View.js'
 
 /**
  * Text viewer view

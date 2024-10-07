@@ -1,6 +1,5 @@
-
-import FieldView from '../Field'
-import View from '../../View'
+import FieldView from '../Field.js'
+import View from '../../View.js'
 
 /**
  * Text field view

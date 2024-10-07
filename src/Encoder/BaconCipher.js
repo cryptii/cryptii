@@ -1,8 +1,7 @@
-
-import ArrayUtil from '../ArrayUtil'
-import Chain from '../Chain'
-import Encoder from '../Encoder'
-import StringUtil from '../StringUtil'
+import ArrayUtil from '../ArrayUtil.js'
+import Chain from '../Chain.js'
+import Encoder from '../Encoder.js'
+import StringUtil from '../StringUtil.js'
 
 const meta = {
   name: 'bacon-cipher',

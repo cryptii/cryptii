@@ -1,6 +1,5 @@
-
-import ModalView from '../Modal'
-import View from '../../View'
+import ModalView from '../Modal.js'
+import View from '../../View.js'
 
 /**
  * Library modal view

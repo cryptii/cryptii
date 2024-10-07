@@ -1,7 +1,6 @@
-
-import ByteEncoder from '../ByteEncoder'
-import ByteFieldView from '../View/Field/Byte'
-import Field from '../Field'
+import ByteEncoder from '../ByteEncoder.js'
+import ByteFieldView from '../View/Field/Byte.js'
+import Field from '../Field.js'
 
 /**
  * Byte setting
@@ -154,7 +153,7 @@ export default class ByteField extends Field {
     if (typeof data !== 'string') {
       throw new Error(
         `Value of field '${this.getName()}' is expected to be a valid ` +
-        `base64 string.`)
+        'base64 string.')
     }
     return ByteEncoder.bytesFromBase64String(data)
   }

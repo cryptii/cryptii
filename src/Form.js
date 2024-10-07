@@ -1,8 +1,7 @@
-
-import Field from './Field'
-import FieldFactory from './Factory/Field'
-import FormView from './View/Form'
-import Viewable from './Viewable'
+import Field from './Field.js'
+import FieldFactory from './Factory/Field.js'
+import FormView from './View/Form.js'
+import Viewable from './Viewable.js'
 
 /**
  * Collection of fields.
@@ -157,7 +156,7 @@ export default class Form extends Viewable {
    * @return {Form} Fluent interface
    */
   setFieldValues (namedValues) {
-    for (let name in namedValues) {
+    for (const name in namedValues) {
       this.setFieldValue(name, namedValues[name])
     }
     return this
@@ -264,15 +263,15 @@ export default class Form extends Viewable {
   extractValues (data) {
     if (typeof data !== 'object') {
       throw new Error(
-        `Serialized form values is expected to be an object mapping ` +
-        `field names to their respective serialized values. ` +
+        'Serialized form values is expected to be an object mapping ' +
+        'field names to their respective serialized values. ' +
         `Received value type '${typeof data}'.`)
     }
     const namedValues = {}
-    for (let name in data) {
+    for (const name in data) {
       if (typeof name !== 'string') {
         throw new Error(
-          `Field name is expected to be a string. ` +
+          'Field name is expected to be a string. ' +
           `Received type '${typeof name}'.`)
       }
       const field = this.getField(name)

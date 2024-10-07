@@ -1,5 +1,4 @@
-
-import View from '../View'
+import View from '../View.js'
 
 /**
  * App view

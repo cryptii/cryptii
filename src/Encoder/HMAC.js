@@ -1,6 +1,5 @@
-
-import Encoder from '../Encoder'
-import HashEncoder from './Hash'
+import Encoder from '../Encoder.js'
+import HashEncoder from './Hash.js'
 
 const meta = {
   name: 'hmac',

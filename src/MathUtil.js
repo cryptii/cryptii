@@ -1,4 +1,3 @@
-
 /**
  * Utility class providing static methods for common math operations.
  */
@@ -12,7 +11,7 @@ export default class MathUtil {
    */
   static mod (x, m) {
     m = m < 0 ? -m : m
-    let r = x % m
+    const r = x % m
     return (r < 0 ? r + m : r)
   }
 
@@ -45,7 +44,7 @@ export default class MathUtil {
    */
   static gcd (a, b) {
     while (b !== 0) {
-      let h = a % b
+      const h = a % b
       a = b
       b = h
     }
@@ -64,7 +63,7 @@ export default class MathUtil {
     if (b === 0) {
       return [1, 0, a]
     } else {
-      let [x, y, d] = MathUtil.xgcd(b, a % b)
+      const [x, y, d] = MathUtil.xgcd(b, a % b)
       return [y, x - y * MathUtil.div(a, b), d]
     }
   }

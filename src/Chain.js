@@ -1,8 +1,7 @@
-
-import ArrayUtil from './ArrayUtil'
-import ByteEncoder from './ByteEncoder'
-import TextEncoder from './TextEncoder'
-import TextEncodingError from './Error/TextEncoding'
+import ArrayUtil from './ArrayUtil.js'
+import ByteEncoder from './ByteEncoder.js'
+import TextEncoder from './TextEncoder.js'
+import TextEncodingError from './Error/TextEncoding.js'
 
 // empty chain instance instantiated lazily by static Chain.empty method
 let emptyChain = null
@@ -42,7 +41,7 @@ export default class Chain {
           // Validate array of code points
           if (!TextEncoder.validateCodePoints(value)) {
             throw new Error(
-              `Chain constructor expects a valid array of code points.`)
+              'Chain constructor expects a valid array of code points.')
           }
           // Initializes chain with code points
           this._codePoints = value
@@ -57,7 +56,7 @@ export default class Chain {
           break
         default:
           throw new Error(
-            `Chain constructor expects one optional parameter of type ` +
+            'Chain constructor expects one optional parameter of type ' +
             `Array, String or Uint8Array. Received unexpected ${valueType}.`)
       }
     }
