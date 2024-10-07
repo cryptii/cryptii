@@ -284,7 +284,7 @@ const rotorTable = [
   'I-N',        'I',          'wtokasuyvrbxjhqcpzefmdinlg', 'q',
   'II-N',       'II',         'gjlpubswemctqvhxaofzdrkyni', 'e',
   'III-N',      'III',        'jwfmhnbpusdytixvzgrqlaoekc', 'v',
-  'IV-N',       'IV',         'esovpzjayquirhxlnftgkdcmwb', 'j',
+  'IV-N',       'IV',         'fgzjmvxepbwshqtliudykcnrao', 'j',
   'V-N',        'V',          'hejxqotzbvfdascilwpgynmurk', 'z',
   'UKW-N',      'UKW',        'mowjypuxndsraibfvlkzgqchet', '',
 
