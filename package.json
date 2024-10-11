@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "cryptii",
-  "version": "4.0.8",
+  "version": "4.0.10",
   "description": "A web app for modular conversion, encoding, and encryption, all performed directly in your browser with no server interaction.",
   "author": "Fränz Friederes",
   "repository": {
