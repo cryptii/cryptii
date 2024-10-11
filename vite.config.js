@@ -5,5 +5,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     manifest: 'manifest.json'
-  }
+  },
+  plugins: [
+    {
+      name: 'remove-attributes',
+      transformIndexHtml: (html) =>
+        html.replaceAll(/( type="module")? crossorigin/g, '')
+    }
+  ]
 })
