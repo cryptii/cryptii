@@ -7,8 +7,9 @@
 }
 
 %t-text-link {
-  @extend %t-text;
+  font-family: Roboto, sans-serif;
   font-weight: 500;
+  font-size: 16px;
   line-height: 1.8;
 }
 
@@ -40,7 +41,10 @@
 }
 
 %t-pipe-headline {
-  @extend %t-h1;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 1.5;
 }
 
 %t-brick-action {

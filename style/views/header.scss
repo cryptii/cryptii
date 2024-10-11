@@ -43,7 +43,7 @@ $header-height: 96px !default;
 
   &__brand {
     display: block;
-    line-height: 1.4;
+    line-height: 0;
     @extend %t-brand;
   }
 

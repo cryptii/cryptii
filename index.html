@@ -1,111 +1,136 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>The Enigma machine: Encrypt and decrypt online — Cryptii</title>
+  <title>cryptii local</title>
 
-    <!-- Style -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500%7CSource+Code+Pro:400&amp;subset=latin-ext">
+  <script type="module" src="/src/index.js"></script>
 
-    <!-- Script -->
-    <script type="module" src="/src/index.js"></script>
-    <script type="application/json" data-cryptii-config>
-      {}
-    </script>
-    <script type="application/vnd.cryptii.pipe+json" data-cryptii-pipe>
-      {
-        "items": [
-          {
-            "name": "text",
-            "alias": "Plaintext"
-          },
-          {
-            "name": "baudot-code"
-          },
-          {
-            "name": "punched-tape",
-            "settings": {
-              "rows": 5
-            }
-          },
-          {
-            "name": "bytes",
-            "alias": "Ciphertext",
-            "settings": {
-              "groupBits": 5,
-              "format": "binary"
-            }
+  <script type="application/json" data-cryptii-config>
+    {}
+  </script>
+
+  <script type="application/vnd.cryptii.pipe+json" data-cryptii-pipe>
+    {
+      "$schema": "https://cryptii.com/schemas/pipe.json",
+      "items": [
+        {
+          "name": "text"
+        },
+        {
+          "name": "enigma",
+          "settings": {
+            "model": "M3",
+            "rotor1": "VI",
+            "rotor2": "I",
+            "rotor3": "III",
+            "position1": 1,
+            "position2": 17,
+            "position3": 12,
+            "reflector": "UKW-B",
+            "plugboard": "bq cr di ej kw mt os px uz gh"
           }
-        ],
-        "content": {
-          "data": "The quick brown fox jumps over the lazy dog."
+        },
+        {
+          "name": "text"
         }
+      ],
+      "content": {
+        "data": "The quick brown fox jumps over the lazy dog."
       }
-    </script>
+    }
+  </script>
 
-  </head>
-  <body>
+</head>
+<body>
 
-    <div class="app">
+  <div class="app">
 
-      <header class="app__header header">
-        <div class="header__inner">
-          <div class="header__item">
-            <a class="header__brand" href="index.html">Cryptii</a>
-          </div>
-          <div class="header__item">
-            <span class="header__badge">local</span>
-          </div>
+    <header class="app__header header">
+      <div class="header__inner">
+        <div class="header__item">
+          <span class="header__brand">
+            <svg width="114" height="36" viewBox="0 0 114 36" fill="none" aria-labelledby="app_logo">
+              <title id="app_logo">cryptii</title>
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M102.803 7.40977C101.817 7.40977 101.005 8.22217 101.005 9.20866C101.005 10.1951 101.817 11.0075 102.803 11.0075C103.79 11.0075 104.602 10.1951 104.602 9.20866C104.602 8.22217 103.79 7.40977 102.803 7.40977ZM93.9832 10.0791H96.9426V12.8645H99.2057V15.5048H96.9426V23.8319H93.9832V15.5048H91.9231V12.8645H93.9832V10.0791ZM63.9533 12.6323C63.402 12.6323 62.8798 12.7774 62.3575 13.0385C61.8353 13.2997 61.4 13.6768 61.0519 14.1411C60.9387 14.2543 60.8431 14.4028 60.7515 14.5454L60.7514 14.5454L60.7512 14.5457L60.7511 14.5459C60.7254 14.5858 60.7001 14.6253 60.6747 14.6633L60.6167 12.8644H57.7733V23.8319H60.7327V18.1451C60.7327 17.7969 60.7907 17.4777 60.9068 17.1876C61.0229 16.8974 61.1969 16.6363 61.4 16.4332C61.6031 16.2301 61.8643 16.056 62.1254 15.94C62.4155 15.8239 62.7057 15.7659 63.0539 15.7659C63.315 15.7659 63.5471 15.7949 63.7792 15.8529C64.0113 15.911 64.2144 15.998 64.3595 16.085L65.1429 12.8644C64.9978 12.8064 64.7947 12.7484 64.5916 12.7194C64.5279 12.7103 64.4642 12.6983 64.3996 12.6862C64.2582 12.6597 64.1126 12.6323 63.9533 12.6323ZM50.0845 15.6208C50.5197 15.3597 51.0129 15.2146 51.5932 15.2146C51.9414 15.2146 52.2896 15.2726 52.6377 15.3887C52.9859 15.5048 53.276 15.6788 53.5952 15.911C53.8853 16.1141 54.1175 16.3752 54.3206 16.6363L55.9454 14.6924C55.4811 14.054 54.8428 13.5608 54.0304 13.2126C53.218 12.8645 52.3186 12.6614 51.3321 12.6614C50.2876 12.6614 49.3301 12.9225 48.5177 13.4157C47.6763 13.909 47.038 14.5763 46.5447 15.4467C46.0805 16.3172 45.8194 17.2746 45.8194 18.3772C45.8194 19.4797 46.0515 20.4372 46.5447 21.3076C47.009 22.1781 47.6763 22.8454 48.5177 23.3386C49.3591 23.8319 50.2876 24.093 51.3321 24.093C52.2605 24.093 53.131 23.9189 53.9724 23.5417C54.8138 23.1645 55.4521 22.7003 55.9164 22.091L54.3206 20.1471C54.0884 20.4372 53.8273 20.6983 53.5372 20.9014C53.247 21.1045 52.9569 21.2496 52.6377 21.3657C52.5399 21.3745 52.4393 21.3862 52.3368 21.398C52.105 21.4248 51.8636 21.4527 51.6222 21.4527C51.071 21.4527 50.5777 21.3076 50.1425 21.0465C49.7073 20.7564 49.3591 20.4082 49.098 19.9149C48.8369 19.4507 48.7208 18.9284 48.7208 18.3482C48.7208 17.7389 48.8369 17.1876 49.098 16.7234C49.3011 16.2591 49.6493 15.8819 50.0845 15.6208ZM72.1372 19.594C72.1644 19.5107 72.1924 19.4246 72.2224 19.3347L74.5145 12.8935H77.8802L73.2669 23.8609L71.381 28.6192H68.3925L70.4525 23.8029L65.4911 12.8645H68.8277L71.497 19.1896C71.5932 19.3819 71.6694 19.5941 71.7587 19.8427C71.7772 19.8942 71.7963 19.9472 71.8162 20.002L71.9033 20.2631C71.9893 20.048 72.0594 19.8328 72.1372 19.594ZM88.2963 13.3867C87.542 12.8935 86.7006 12.6614 85.7431 12.6614C85.1338 12.6614 84.5245 12.7774 83.9732 13.0095C83.3929 13.2416 82.9287 13.5608 82.5515 13.909C82.4645 13.996 82.4064 14.0831 82.3484 14.1701L82.2904 12.8354H79.447V28.3871H82.4064V22.5843C82.4161 22.5939 82.4226 22.6036 82.429 22.6133C82.4419 22.6326 82.4548 22.652 82.4935 22.6713C82.8997 23.0775 83.3639 23.3967 83.9442 23.6288C84.5245 23.8609 85.1338 24.006 85.7721 24.006C86.7296 24.006 87.571 23.7738 88.3254 23.2806C89.0797 22.7874 89.66 22.12 90.0952 21.2496C90.5304 20.3792 90.7335 19.4217 90.7335 18.3191C90.7335 17.2166 90.5304 16.2301 90.0952 15.3887C89.631 14.5473 89.0507 13.88 88.2963 13.3867ZM87.4839 20.002C87.2518 20.4662 86.9327 20.8434 86.4975 21.1045C86.0912 21.3657 85.598 21.5107 85.0758 21.5107C84.5245 21.5107 84.0312 21.3657 83.625 21.1045C83.2188 20.8434 82.8997 20.4662 82.6385 20.002C82.4064 19.5378 82.2904 18.9865 82.2904 18.3482C82.2904 17.7389 82.4064 17.1876 82.6385 16.6943C82.8707 16.2301 83.1898 15.8529 83.625 15.5918C84.0312 15.3307 84.5245 15.2146 85.0758 15.2146C85.627 15.2146 86.1203 15.3597 86.5265 15.6208C86.9327 15.8819 87.2518 16.2591 87.4839 16.7234C87.7161 17.1876 87.8321 17.7389 87.8321 18.3482C87.8611 18.9575 87.7451 19.5087 87.4839 20.002ZM104.283 12.8645H101.353V23.8319H104.283V12.8645ZM107.707 12.8645H110.637V23.8319H107.707V12.8645ZM110.957 9.23765C110.957 10.2241 110.144 11.0365 109.158 11.0365C108.171 11.0365 107.359 10.2241 107.359 9.23765C107.359 8.25117 108.171 7.43877 109.158 7.43877C110.144 7.43877 110.957 8.25117 110.957 9.23765Z"
+                fill="#002F6D"></path>
+              <path d="M33 25H25V33H33V25Z" fill="#159AED"></path>
+              <path
+                d="M17.9856 27.1661L15.8484 25H14V26.8484L16.1661 28.9856L14 31.1516V33H15.8484L17.9856 30.8339L20.1516 33H22V31.1516L19.8339 28.9856L22 26.8484V25H20.1516L17.9856 27.1661Z"
+                fill="#159AED"></path>
+              <path
+                d="M7 24.535C4.5361 24.535 2.536 26.5421 2.536 28.9855C2.536 31.4288 4.5361 33.465 7 33.465C9.46389 33.465 11.464 31.4579 11.464 28.9855C11.464 26.513 9.43491 24.535 7 24.535Z"
+                fill="#159AED"></path>
+              <path
+                d="M7.01444 19.8339L9.15162 22H11V20.1516L8.83393 17.9856L11 15.8484V14H9.15162L7.01444 16.1661L4.84838 14H3V15.8484L5.16606 17.9856L3 20.1516V22H4.84838L7.01444 19.8339Z"
+                fill="#159AED"></path>
+              <path
+                d="M29 2.54275C26.5361 2.54275 24.536 4.54982 24.536 6.9932C24.536 9.43659 26.5361 11.4727 29 11.4727C31.4639 11.4727 33.464 9.46568 33.464 6.9932C33.464 4.52073 31.4349 2.54275 29 2.54275Z"
+                fill="#159AED"></path>
+              <path d="M22.0117 3H13.9884V11.0155H22.0117V3Z" fill="#159AED"></path>
+            </svg>
+          </span>
+        </div>
+        <div class="header__item">
+          <span class="header__badge">local</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="app__pipe pipe">
+      <header class="pipe__header">
+        <div class="container">
+          <h1 class="pipe__title">You are viewing the local version of cryptii</h1>
+          <p class="pipe__description">
+            Please note that some features and the latest updates may not be available in this version. To access the
+            full version with the latest content and updates, please visit <a
+              href="https://cryptii.com/?utm_medium=referral&utm_campaign=local_version" target="_blank"
+              rel="noopener">cryptii.com</a>.
+          </p>
         </div>
       </header>
+      <div class="pipe__scrollable"></div>
+    </article>
 
-      <article class="app__pipe pipe">
-        <header class="pipe__header">
-          <div class="container">
-            <h1 class="pipe__title">Modular online encoding, encryption and conversion tool</h1>
-            <p class="pipe__description">
-              Web app that encodes, decodes, encrypts, decrypts, converts, translates, simulates and views content online offering a variety of ciphers, formats, algorithms and methods
-            </p>
-          </div>
-        </header>
-        <div class="pipe__scrollable"></div>
-      </article>
-
-      <footer class="app__footer footer">
-        <div class="container">
-          <div class="footer__inner">
-            <h2 class="footer__brand"><a href="https://cryptii.com">Cryptii</a></h2>
-            <p class="footer__description">
-              Web app that encodes, decodes, encrypts, decrypts, converts, translates, simulates and
-              views content online offering a variety of ciphers, formats, algorithms and methods.
-              Designed and built with love by <a href="https://fraenz.frieder.es/" target="_blank" rel="noopener">@ffraenz</a>.
-              Code licensed <a href="https://github.com/cryptii/cryptii/blob/dev/LICENSE.md" target="_blank" rel="noopener">MIT</a>.
-            </p>
-            <ul class="footer__link-list link-list">
-              <li class="link-list__item">
-                <a class="link-list__link" href="https://cryptii.com">
-                  Live version
-                </a>
-              </li>
-              <li class="link-list__item">
-                <a class="link-list__link" href="https://github.com/cryptii/cryptii" target="_blank" rel="noopener">
-                  GitHub
-                </a>
-              </li>
-              <li class="link-list__item">
-                <a class="link-list__link" href="https://github.com/cryptii/cryptii/issues/new" target="_blank" rel="noopener">
-                  Report an issue
-                </a>
-              </li>
-            </ul>
-          </div>
+    <footer class="app__footer footer">
+      <div class="container">
+        <div class="footer__inner">
+          <h2 class="footer__brand"><a href="https://cryptii.com/?utm_medium=referral&utm_campaign=local_version"
+              target="_blank" rel="noopener">cryptii</a></h2>
+          <p class="footer__description">
+            A web app for modular conversion, encoding, and encryption, all performed directly in your browser with no
+            server interaction. This Open Source project is licensed under the MIT License.
+            <a href="https://wierk.lu/?utm_source=cryptii.com&utm_medium=referral&utm_campaign=products" target="_blank"
+              rel="noopener">Crafted by Wierk.</a>
+          </p>
+          <ul class="footer__link-list link-list">
+            <li class="link-list__item">
+              <a class="link-list__link" href="https://cryptii.com/?utm_medium=referral&utm_campaign=local_version"
+                target="_blank" rel="noopener">
+                Online version
+              </a>
+            </li>
+            <li class="link-list__item">
+              <a class="link-list__link" href="https://github.com/cryptii/cryptii" target="_blank" rel="noopener">
+                GitHub
+              </a>
+            </li>
+            <li class="link-list__item">
+              <a class="link-list__link" href="https://github.com/cryptii/cryptii/issues/new/choose" target="_blank"
+                rel="noopener">
+                Report an issue
+              </a>
+            </li>
+          </ul>
         </div>
-      </footer>
+      </div>
+    </footer>
 
-    </div>
+  </div>
 
-  </body>
+</body>
 </html>
