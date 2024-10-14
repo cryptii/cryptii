@@ -114,7 +114,39 @@ const alphabetSpecs = [
       'Семь',   'Восемь',   'Девять',       'Точка'
     ],
     spaceWord: '(пробел)'
+  },
+  {
+    name: 'finnish',
+    label: 'Finnish (unofficial) spelling alphabet',
+    characters: 'abcdefghijklmnopqrstuvwxyzåäö0123456789',
+    words: [
+      'Aarne',      'Bertta',     'Celsius',    'Daavid',     'Eemeli',
+      'Faarao',     'Gideon',     'Heikki',     'Iivari',     'Jussi',
+      'Kalle',      'Lauri',      'Matti',      'Niilo',      'Otto',
+      'Paavo',      'Kuu',        'Risto',      'Sakari',     'Tyyne',
+      'Urho',       'Vihtori',    'Wiski',      'Äksä',       'Yrjö',
+      'Tseta',      'Åke',        'Äiti',       'Öljy',       'Nolla',
+      'Yksi',       'Kaksi',      'Kolme',      'Neljä',      'Viisi',
+      'Kuusi',      'Seitsemän',  'Kahdeksan',  'Yhdeksän'
+    ],
+    spaceWord: '(väli)'
+  },
+  {
+    name: 'finnish-nato',
+    label: 'Finnish Defence Forces\' spelling alphabet in national use.',
+    characters: 'abcdefghijklmnopqrstuvwxxyzåäö0123456789',
+    words: [
+      'Alfa',     'Bravo',    'Charlie',  'Delta',    'Echo',     'Foxtrot',
+      'Golf',     'Hotel',    'India',    'Juliett',  'Kilo',     'Lima',
+      'Mike',     'November', 'Oscar',    'Papa',     'Quebec',   'Romeo',
+      'Sierra',   'Tango',    'Uniform',  'Victor',   'Whiskey',  'X-ray',
+      'Xray',     'Yankee',   'Zulu',     'Åke',      'Äiti',     'Öljy',
+      'Nolla',    'Yksi',     'Kaksi',    'Kolme',    'Neljä',    'Viisi',
+      'Kuusi',    'Seitsemän','Kahdeksan','Yhdeksän'
+    ],
+    spaceWord: '(väli)'
   }
+  
   /* eslint-enable no-multi-spaces */
 ]
 
