@@ -22,7 +22,6 @@ const algorithms = [
     label: 'SHA-1',
     blockSize: 64,
     browserAlgorithm: 'SHA-1',
-    browserExceptions: ['ie=11', 'edge'],
     nodeAlgorithm: 'sha1'
   },
   {
@@ -44,7 +43,6 @@ const algorithms = [
     label: 'SHA-512',
     blockSize: 128,
     browserAlgorithm: 'SHA-512',
-    browserExceptions: ['ie=11'],
     nodeAlgorithm: 'sha512'
   }
 ]
@@ -151,9 +149,6 @@ export default class HashEncoder extends Encoder {
 
       // Browser environment
       if (!isNode && algorithm.browserAlgorithm !== undefined) {
-        if (algorithm.browserExceptions !== undefined) {
-          return !EnvUtil.match.apply(EnvUtil, algorithm.browserExceptions)
-        }
         return true
       }
 
