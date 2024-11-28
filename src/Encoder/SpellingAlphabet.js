@@ -114,6 +114,23 @@ const alphabetSpecs = [
       'Семь',   'Восемь',   'Девять',       'Точка'
     ],
     spaceWord: '(пробел)'
+  },
+  {
+    name: 'polish',
+    label: 'Polish spelling alphabet ',
+    characters: 'abcćdefghijklłmnopqrsśtuvwxyzźż0123456789.',
+    words: [
+      'Adam',      'Barbara',     'Celina',    'Ćma',       'Dorota',  
+      'Edward',    'Filip',       'Gustaw',    'Henryk',    'Ignacy',  
+      'Józef',     'Karol',       'Ludwik',    'Łukasz',    'Marian',  
+      'Nikodem',   'Olga',        'Paweł',     'Quantum',   'Roman',  
+      'Stefan',    'Światowid',   'Tadeusz',   'Urszula',   'Violetta',  
+      'Walenty',   'Xawery',      'Ypsylon',   'Zygmunt',   'Źrebak',  
+      'Żaba',      'Zero',        'Jedynka',   'Dwa',       'Trzy',  
+      'Cztery',    'Piątka',      'Sześć',     'Siedem',   'Osiem',
+      'Dziewięć',  'kropka'
+    ],
+    spaceWord: '(spacja)'
   }
   /* eslint-enable no-multi-spaces */
 ]
