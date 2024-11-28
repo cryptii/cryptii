@@ -66,5 +66,29 @@ describe('SpellingAlphabetEncoder', () => EncoderTester.test(SpellingAlphabetEnc
       'Иван Харитон (пробел) Борис Ульяна Леонид Ольга Киловатт (пробел) Дмитрий Антон ' +
       '(пробел) Василий Игрек Павел Елена Йот (пробел) Человек Антон Юрий (пробел) Один Два ' +
       'Три (пробел) Четыре Пять Шесть (пробел) Семь Восемь Девять Ноль Точка'
+  },
+  {
+    settings: { alphabet: 'finnish' },
+    content: 'wieniläinen siouxia puhuva ökyzombi diggaa åsan roquefort-tacoja 123 456 7890',
+    expectedResult:
+      'Wiski Iivari Eemeli Niilo Iivari Lauri Äiti Iivari Niilo Eemeli ' +
+      'Niilo (väli) Sakari Iivari Otto Urho Äksä Iivari Aarne (väli) ' +
+      'Paavo Urho Heikki Urho Vihtori Aarne (väli) Öljy Kalle Yrjö Tseta ' +
+      'Otto Matti Bertta Iivari (väli) Daavid Iivari Gideon Gideon ' +
+      'Aarne Aarne (väli) Åke Sakari Aarne Niilo (väli) Risto Otto Kuu ' +
+      'Urho Eemeli Faarao Otto Risto Tyyne - Tyyne Aarne Celsius Otto ' +
+      'Jussi Aarne (väli) Yksi Kaksi Kolme (väli) Neljä Viisi Kuusi ' +
+      '(väli) Seitsemän Kahdeksan Yhdeksän Nolla'
+  },
+  {
+    settings: { alphabet: 'finnish-nato' },
+    content: 'wieniläinen siouxia puhuva ökyzombi diggaa åsan roquefort-tacoja 123 456 7890',
+    expectedResult:
+      'Whiskey India Echo November India Lima Äiti India November Echo November (väli) ' +
+      'Sierra India Oscar Uniform X-ray India Alfa (väli) Papa Uniform Hotel Uniform Victor Alfa (väli) ' +
+      'Öljy Kilo Yankee Zulu Oscar Mike Bravo India (väli) Delta India Golf Golf Alfa Alfa (väli) ' +
+      'Åke Sierra Alfa November (väli) ' +
+      'Romeo Oscar Quebec Uniform Echo Foxtrot Oscar Romeo Tango - Tango Alfa Charlie Oscar Juliett Alfa ' +
+      '(väli) Yksi Kaksi Kolme (väli) Neljä Viisi Kuusi (väli) Seitsemän Kahdeksan Yhdeksän Nolla'
   }
 ]))
